@@ -46,7 +46,7 @@ const categoryMeta: Record<
   },
   Gita: {
     icon: "🎵",
-    nameHindi: "श्रीमद्भगवद्गीता",
+    nameHindi: "गीता",
     description: "भगवान श्रीकृष्ण का दिव्य उपदेश",
   },
   Chalisa: {
@@ -71,7 +71,7 @@ const categoryMeta: Record<
   },
   Other: {
     icon: "📜",
-    nameHindi: "अन्य धर्मग्रंथ",
+    nameHindi: "अन्य",
     description: "विशिष्ट धार्मिक एवं दार्शनिक ग्रन्थ",
   },
 };
@@ -139,7 +139,33 @@ const jsonLd = {
       <div class="sacred-hero-invocation">॥ श्रीहरिः ॥</div>
 
       <h1 id="hero-heading">ज्ञानकोश</h1>
-      <p>वैदिक एवं पौराणिक धर्मग्रंथों का डिजिटल पुस्तकालय।</p>
+      <p class="hero-subtitle">वैदिक एवं पौराणिक धर्मग्रंथों का डिजिटल पुस्तकालय।</p>
+
+      <!-- Category Bubbles for Smaller Screens (shown in place of subtitle) -->
+      <nav class="hero-category-bubbles" aria-label="धर्मग्रंथ श्रेणियां">
+        {
+          CATEGORIES.map(
+            (cat) =>
+              categoryCounts[cat] > 0 && (
+                <a
+                  href={`${base}/category/${cat.toLowerCase()}`}
+                  class="category-bubble"
+                  title={`${categoryMeta[cat]?.nameHindi || cat} श्रेणी देखें`}
+                >
+                  <span class="bubble-icon" aria-hidden="true">
+                    {categoryMeta[cat]?.icon}
+                  </span>
+                  <span class="bubble-label">
+                    {categoryMeta[cat]?.nameHindi || cat}
+                  </span>
+                  <span class="bubble-count">
+                    {toHindiDigits(categoryCounts[cat])}
+                  </span>
+                </a>
+              ),
+          )
+        }
+      </nav>
     </div>
   </section>
 

@@ -40,12 +40,12 @@ function toHindiDigits(num: number): string {
 const categoryMeta: Record<string, { icon: string; nameHindi: string; description: string }> = {
   Veda:      { icon: '🔥', nameHindi: 'वेद', description: 'सनातन वैदिक ऋचाएं, संहिताएं एवं मन्त्र — ऋग्वेद, सामवेद, यजुर्वेद एवं अथर्ववेद।' },
   Upanishad: { icon: '🕉️', nameHindi: 'उपनिषद्', description: 'वेदान्त दर्शन के आधारभूत पावन उपनिषद् — आत्मज्ञान एवं ब्रह्मविद्या का अमृत।' },
-  Gita:    { icon: '🎵', nameHindi: 'श्रीमद्भगवद्गीता', description: 'कुरुक्षेत्र के पावन रणक्षेत्र में भगवान श्रीकृष्ण का पावन दिव्य उपदेश।' },
-  Chalisa: { icon: '🪔', nameHindi: 'चालीसा', description: 'चालीस पावन पदों वाले देवी-देवताओं के स्तोत्र एवं नित्य पाठ।' },
-  Purana:  { icon: '📖', nameHindi: 'पुराण', description: 'अठारह महापुराण एवं उपपुराण — सनातन इतिहास, सृष्टि-वर्णन एवं भक्ति-गाथा।' },
+  Gita:      { icon: '🎵', nameHindi: 'गीता', description: 'कुरुक्षेत्र के पावन रणक्षेत्र में भगवान श्रीकृष्ण का पावन दिव्य उपदेश।' },
+  Chalisa:   { icon: '🪔', nameHindi: 'चालीसा', description: 'चालीस पावन पदों वाले देवी-देवताओं के स्तोत्र एवं नित्य पाठ।' },
+  Purana:    { icon: '📖', nameHindi: 'पुराण', description: 'अठारह महापुराण एवं उपपुराण — सनातन इतिहास, सृष्टि-वर्णन एवं भक्ति-गाथा।' },
   Stotra:    { icon: '🌸', nameHindi: 'स्तोत्र', description: 'ऋषि-मुनियों एवं सन्तों द्वारा रचित देवी-देवताओं की पावन स्तुतियां।' },
   Aarti:     { icon: '🪔', nameHindi: 'आरती', description: 'सनातन परम्परा की पावन मंगल आरतियाँ एवं नित्य देव-स्तुतियां।' },
-  Other:   { icon: '📜', nameHindi: 'अन्य धर्मग्रंथ', description: 'विशिष्ट धार्मिक, दार्शनिक एवं आध्यात्मिक धर्मग्रंथ।' },
+  Other:     { icon: '📜', nameHindi: 'अन्य', description: 'विशिष्ट धार्मिक, दार्शनिक एवं आध्यात्मिक धर्मग्रंथ।' },
 };
 
 const meta = categoryMeta[category] ?? { icon: '📜', nameHindi: category, description: `${category} श्रेणी के पावन धर्मग्रंथ।` };
@@ -107,9 +107,31 @@ const jsonLdBreadcrumb = {
       <h1 id="category-title" style="font-family:var(--font-devanagari);">
         <span aria-hidden="true">{meta.icon}</span> {meta.nameHindi}
       </h1>
-      <p style="font-family:var(--font-devanagari);color:var(--color-text-muted);margin-top:0.5rem;max-width:55ch;font-size:1.05rem;">
+      <p class="category-subtitle" style="font-family:var(--font-devanagari);color:var(--color-text-muted);margin-top:0.5rem;max-width:55ch;font-size:1.05rem;">
         {meta.description}
       </p>
+
+      <!-- Category Bubbles for Smaller Screens (shown in place of subtitle) -->
+      <nav class="category-bubbles-nav" aria-label="धर्मग्रंथ श्रेणियां">
+        {
+          CATEGORIES.map((cat) => (
+            <a
+              href={`${base}/category/${cat.toLowerCase()}`}
+              class={`category-bubble ${cat === category ? 'active' : ''}`}
+              aria-current={cat === category ? 'page' : undefined}
+              title={`${categoryMeta[cat]?.nameHindi || cat} श्रेणी`}
+            >
+              <span class="bubble-icon" aria-hidden="true">
+                {categoryMeta[cat]?.icon}
+              </span>
+              <span class="bubble-label">
+                {categoryMeta[cat]?.nameHindi || cat}
+              </span>
+            </a>
+          ))
+        }
+      </nav>
+
       <p style="font-family:var(--font-devanagari);font-size:0.9rem;color:var(--color-text-faint);margin-top:0.75rem;font-weight:600;">
         {toHindiDigits(texts.length)} ग्रंथ उपलब्ध
       </p>

@@ -6,7 +6,7 @@ This document tracks all planned sacred texts, scriptures, and stotras for Gyank
 
 ## ✅ Completed in Phases 1, 2, 3, 4 & 5 (69 Texts Total)
 
-### 🪔 Chalisa (12)
+### 🪔 चालीसा (12)
 - [x] श्री हनुमान चालीसा (`hanuman-chalisa.md`)
 - [x] श्री शिव चालीसा (`shiva-chalisa.md`)
 - [x] श्री दुर्गा चालीसा (`durga-chalisa.md`)
@@ -20,7 +20,7 @@ This document tracks all planned sacred texts, scriptures, and stotras for Gyank
 - [x] श्री गायत्री चालीसा (`gayatri-chalisa.md`)
 - [x] श्री भैरव चालीसा (`bhairav-chalisa.md`)
 
-### 🌸 Stotras, Ashtakams & Sahasranamas (16)
+### 🌸 स्तोत्र, अष्टक एवं सहस्रनाम (16)
 - [x] श्री विष्णु सहस्रनाम स्तोत्रम् (`vishnu-sahasranama.md`)
 - [x] श्री ललिता सहस्रनाम स्तोत्रम् (`lalita-sahasranama.md`)
 - [x] शिवमहिम्नः स्तोत्रम् (`shiva-mahimna-stotram.md`)
@@ -38,7 +38,7 @@ This document tracks all planned sacred texts, scriptures, and stotras for Gyank
 - [x] दुर्गा सप्तशती मुख्य स्तोत्र — कवच, अर्गला, कीलक (`durga-saptashati-traya.md`)
 - [x] दामोदराष्टकम् (`damodarashtakam.md`)
 
-### 🎵 Gita (19 — सम्पूर्ण भगवद्गीता एवं अष्टावक्र गीता)
+### 🎵 गीता (19 — सम्पूर्ण भगवद्गीता एवं अष्टावक्र गीता)
 - [x] श्रीमद्भगवद्गीता — अध्याय १: अर्जुनविषादयोग (`bhagavad-gita-ch1.md`)
 - [x] श्रीमद्भगवद्गीता — अध्याय २: सांख्ययोग (`bhagavad-gita-ch2.md`)
 - [x] श्रीमद्भगवद्गीता — अध्याय ३: कर्मयोग (`bhagavad-gita-ch3.md`)
@@ -59,14 +59,14 @@ This document tracks all planned sacred texts, scriptures, and stotras for Gyank
 - [x] श्रीमद्भगवद्गीता — अध्याय १८: मोक्षसंन्यासयोग (`bhagavad-gita-ch18.md`)
 - [x] अष्टावक्र गीता — महर्षि अष्टावक्र एवं जनक संवाद (`ashtavakra-gita.md`)
 
-### 🔥 Veda (5)
+### 🔥 वेद (5)
 - [x] ऋग्वेद — मण्डल १, सूक्त १ (`rigveda-mandala1.md`)
 - [x] श्री सूक्तम् — ऋग्वेद खिलभाग (`sri-suktam.md`)
 - [x] पुरुष सूक्तम् — ऋग्वेद १०.९० (`purusha-suktam.md`)
 - [x] नारायण सूक्तम् — यजुर्वेद तैत्तिरीय आरण्यक (`narayana-suktam.md`)
 - [x] दुर्गा सूक्तम् — महानारायण उपनिषद् (`durga-suktam.md`)
 
-### 🕉️ Upanishad (7 — मुख्य उपनिषद्)
+### 🕉️ उपनिषद् (7 — मुख्य उपनिषद्)
 - [x] ईशावास्योपनिषद् (`isha-upanishad.md`)
 - [x] माण्डूक्योपनिषद् (`mandukya-upanishad.md`)
 - [x] केनोपनिषद् (`kena-upanishad.md`)
@@ -75,15 +75,15 @@ This document tracks all planned sacred texts, scriptures, and stotras for Gyank
 - [x] मुण्डकोपनिषद् (`mundaka-upanishad.md`)
 - [x] तैत्तिरीयोपनिषद् (`taittiriya-upanishad.md`)
 
-### 🪔 Aarti (6 — नित्य दैनिक आरतियाँ)
+### 🪔 आरती (6 — नित्य दैनिक आरतियाँ)
 - [x] आरती कुंजबिहारी की (`aarti-kunjbihari-ki.md`)
 - [x] आरती ॐ जय जगदीश हरे (`aarti-jai-jagdish-hare.md`)
-- [x] आरती कीजै हनुमान लला की (`aarti-hanuman-ji.md`)
+- [x] आरती हनुमान लला की (`aarti-hanuman-ji.md`)
 - [x] आरती जय शिव ओंकारा (`aarti-shiva-ji.md`)
 - [x] आरती जय अम्बे गौरी (`aarti-durga-mata.md`)
 - [x] आरती जय गणेश देवा (`aarti-ganesh-ji.md`)
 
-### 📜 Other / Niti & Puranic Selections (4)
+### 📜 अन्य (4 — नीति एवं पौराणिक संग्रह)
 - [x] चाणक्य नीति (`chanakya-niti.md`)
 - [x] विदुर नीति (`vidura-niti.md`)
 - [x] गोपी गीत — श्रीमद्भागवत महापुराण (`gopi-geet.md`)

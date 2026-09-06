@@ -625,3 +625,102 @@ a:hover { opacity: 0.8; }
   padding: 0 5px;
   border-radius: 8px;
 }
+
+/* ─── Hero Category Bubbles (Smaller screens — in place of subtitle) ─── */
+
+.hero-category-bubbles,
+.category-bubbles-nav {
+  display: none; /* Hidden on desktop */
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem 0.6rem;
+  margin: 1.1rem auto 0;
+  max-width: 650px;
+  padding: 0 0.5rem;
+}
+
+.category-bubble {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.85rem;
+  font-family: var(--font-devanagari);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  background: var(--color-bg-card);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  text-decoration: none;
+  box-shadow: 0 2px 6px rgba(70, 50, 30, 0.06);
+  transition: all var(--transition-fast);
+  -webkit-tap-highlight-color: transparent;
+  line-height: 1.35;
+}
+
+.category-bubble:hover,
+.category-bubble:focus-visible {
+  color: #fffdf7;
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  transform: translateY(-1.5px);
+  box-shadow: 0 4px 12px rgba(142, 27, 20, 0.2);
+}
+
+.category-bubble:active {
+  transform: translateY(0);
+}
+
+.category-bubble.active {
+  background: var(--color-accent);
+  color: #fffdf7;
+  border-color: var(--color-accent);
+  box-shadow: 0 3px 8px rgba(142, 27, 20, 0.25);
+}
+
+.category-bubble .bubble-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.category-bubble .bubble-label {
+  letter-spacing: 0.02em;
+}
+
+.category-bubble .bubble-count {
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: rgba(142, 27, 20, 0.08);
+  color: var(--color-accent);
+  padding: 0.08rem 0.45rem;
+  border-radius: 9999px;
+  margin-left: 0.15rem;
+}
+
+.category-bubble:hover .bubble-count,
+.category-bubble.active .bubble-count {
+  background: rgba(255, 255, 255, 0.25);
+  color: #fffdf7;
+}
+
+/* ─── Smaller Screens (<= 860px) Responsive Adaptations ─── */
+@media (max-width: 860px) {
+  /* Hide the crowded header navigation */
+  .site-header nav {
+    display: none !important;
+  }
+
+  /* Hide the subtitle in hero and category header */
+  .catalog-hero .hero-subtitle,
+  .category-header .category-subtitle {
+    display: none !important;
+  }
+
+  /* Show category bubbles in place of the subtitle */
+  .hero-category-bubbles,
+  .category-bubbles-nav {
+    display: flex !important;
+  }
+}
+
