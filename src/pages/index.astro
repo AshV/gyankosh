@@ -171,6 +171,27 @@ const jsonLd = {
 
   <!-- Main Unified Library Shelf Container -->
   <div class="container">
+    <!-- Saved Texts Shelf (Always on top when items are saved) -->
+    <section id="saved-shelf" class="saved-shelf catalog-section" style="display: none; padding-top: 0; padding-bottom: 2rem;" aria-label="सहेजे गए ग्रंथ">
+      <div class="saved-shelf-header">
+        <h2 class="catalog-section-title">
+          <span aria-hidden="true">🔖</span> सहेजे गए ग्रंथ
+          <span id="saved-count-badge" class="saved-count-chip">०</span>
+        </h2>
+        <span class="saved-shelf-note">आपके द्वारा सहेजे गए पावन ग्रंथ — नित्य पठन एवं मनन हेतु</span>
+      </div>
+      <div class="book-grid" id="saved-book-grid" role="list" aria-label="सहेजे गए ग्रंथ सूची">
+        <!-- Dynamically populated from client-side saved list -->
+      </div>
+    </section>
+
+    <!-- All Texts Section Header (shown when saved shelf is active) -->
+    <div id="all-texts-header" class="all-texts-header" style="display: none;">
+      <h2 class="catalog-section-title">
+        <span aria-hidden="true">📚</span> सम्पूर्ण धर्मग्रंथ
+      </h2>
+    </div>
+
     <!-- Category Filter Controls -->
     <section
       class="search-filter-section"
@@ -238,6 +259,7 @@ const jsonLd = {
           <div
             role="listitem"
             class="book-card-wrapper"
+            data-slug={text.id}
             data-title={text.data.title}
             data-author={text.data.author || ""}
             data-description={text.data.description}
@@ -287,7 +309,66 @@ const jsonLd = {
       .join("");
   }
 
+  // Refresh saved texts shelf on top
+  function refreshGyankoshSavedShelf() {
+    const savedShelf = document.getElementById("saved-shelf");
+    const savedGrid = document.getElementById("saved-book-grid");
+    const savedCountBadge = document.getElementById("saved-count-badge");
+    const allTextsHeader = document.getElementById("all-texts-header");
+    if (!savedShelf || !savedGrid) return;
+
+    let saved: string[] = [];
+    try {
+      saved = JSON.parse(localStorage.getItem("gyankosh_saved") || "[]");
+    } catch {
+      saved = [];
+    }
+
+    if (!saved.length) {
+      savedShelf.style.display = "none";
+      if (allTextsHeader) allTextsHeader.style.display = "none";
+      return;
+    }
+
+    savedGrid.innerHTML = "";
+    let count = 0;
+
+    saved.forEach((slug) => {
+      const orig = document.querySelector<HTMLElement>(
+        `#book-grid .book-card-wrapper[data-slug="${slug}"]`
+      );
+      if (orig) {
+        const clone = orig.cloneNode(true) as HTMLElement;
+        clone.classList.add("visible");
+        savedGrid.appendChild(clone);
+        count++;
+      }
+    });
+
+    if (count > 0) {
+      if (savedCountBadge) savedCountBadge.textContent = toHindiDigits(count);
+      savedShelf.style.display = "block";
+      if (allTextsHeader) allTextsHeader.style.display = "block";
+    } else {
+      savedShelf.style.display = "none";
+      if (allTextsHeader) allTextsHeader.style.display = "none";
+    }
+
+    // Refresh states on newly cloned buttons
+    if (typeof (window as any).updateSaveButtonStates === "function") {
+      (window as any).updateSaveButtonStates();
+    }
+  }
+
+  (window as any).refreshGyankoshSavedShelf = refreshGyankoshSavedShelf;
+
+  window.addEventListener("gyankosh:saved-changed", () => {
+    refreshGyankoshSavedShelf();
+  });
+
   document.addEventListener("DOMContentLoaded", () => {
+    refreshGyankoshSavedShelf();
+
     const filterPills = document.querySelectorAll(".filter-pill");
     const bookWrappers = document.querySelectorAll(
       ".book-card-wrapper",

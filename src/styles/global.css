@@ -374,9 +374,10 @@ a:hover { opacity: 0.8; }
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: var(--space-xs);
   margin-top: auto;
   padding-top: var(--space-sm);
-  border-top: none;
+  border-top: 1px solid var(--color-border-subtle);
   position: relative;
 }
 
@@ -418,9 +419,11 @@ a:hover { opacity: 0.8; }
 
 .book-card-badges {
   display: flex;
-  gap: 0.4rem;
+  gap: 0.35rem;
   flex-wrap: wrap;
   align-items: center;
+  flex: 1;
+  min-width: 0;
 }
 
 .language-badge {
@@ -437,20 +440,7 @@ a:hover { opacity: 0.8; }
 }
 
 .book-card-cta {
-  font-family: var(--font-devanagari);
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--color-accent);
-  opacity: 0;
-  transform: translateX(5px);
-  transition: opacity var(--transition-fast), transform var(--transition-fast);
-  position: absolute;
-  right: var(--space-lg);
-}
-
-.book-card:hover .book-card-cta {
-  opacity: 1;
-  transform: translateX(0);
+  display: none;
 }
 
 /* ─── Filter Bar ─────────────────────────────────────────── */
@@ -723,4 +713,148 @@ a:hover { opacity: 0.8; }
     display: flex !important;
   }
 }
+
+/* ─── Card Quick Actions (Save & Share) in Footer ─────────── */
+.book-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.card-action-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border-subtle);
+  background: var(--color-bg-elevated);
+  color: var(--color-text-muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  box-shadow: 0 1px 2px rgba(70, 50, 30, 0.05);
+  transition: all var(--transition-fast);
+}
+
+.card-action-btn:hover {
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+  transform: translateY(-1px) scale(1.08);
+  box-shadow: 0 2px 6px rgba(142, 27, 20, 0.15);
+}
+
+.card-action-btn:active {
+  transform: scale(0.94);
+}
+
+.card-action-btn.is-saved {
+  background: var(--color-accent);
+  color: #fffdf7;
+  border-color: var(--color-accent);
+  box-shadow: 0 2px 6px rgba(142, 27, 20, 0.25);
+}
+
+.card-action-btn.is-saved svg {
+  fill: currentColor;
+}
+
+.book-card-cover-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+
+.book-card-title-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ─── Saved Shelf (Always on top) ────────────────────────── */
+.saved-shelf {
+  background: var(--color-bg-card);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-xl);
+  box-shadow: var(--shadow-card);
+  position: relative;
+}
+
+.saved-shelf-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-xs);
+  border-bottom: 2px solid var(--color-border);
+}
+
+.saved-shelf-header .catalog-section-title {
+  margin-bottom: 0;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.saved-count-chip {
+  font-family: var(--font-devanagari);
+  font-size: 0.85rem;
+  font-weight: 700;
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  padding: 0.15rem 0.55rem;
+  border-radius: var(--radius-pill);
+  margin-left: 0.4rem;
+}
+
+.saved-shelf-note {
+  font-family: var(--font-devanagari);
+  font-size: 0.88rem;
+  color: var(--color-text-faint);
+}
+
+.all-texts-header {
+  margin-bottom: var(--space-md);
+}
+
+/* ─── Gyankosh Toast Notification ────────────────────────── */
+.gyankosh-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(40px);
+  background: #1e1915;
+  color: #fffdf7;
+  padding: 0.65rem 1.25rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-devanagari);
+  font-size: 0.95rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--color-gold);
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+}
+
+.gyankosh-toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.gyankosh-toast .toast-icon {
+  color: var(--color-gold);
+  font-size: 1.1rem;
+}
+
 

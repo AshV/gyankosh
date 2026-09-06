@@ -134,9 +134,13 @@ html.is-fullscreen .reader-viewport,
   transition: all var(--transition-fast);
 }
 
-.icon-btn:hover, .icon-btn.active {
+.icon-btn:hover, .icon-btn.active, .icon-btn.is-saved {
   background: var(--color-accent);
   color: #fffdf7;
+}
+
+.icon-btn.is-saved svg {
+  fill: currentColor;
 }
 
 /* ─── Chanting Mode Button (पाठ मोड — केवल मूल श्लोक) ──────── */

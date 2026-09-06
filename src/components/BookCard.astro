@@ -56,34 +56,37 @@ const resolvedCoverImage = coverImage
   : `${base}/covers/${slug}.jpg`;
 ---
 
-<a
-  href={readUrl}
+<div
   class="book-card"
   data-slug={slug}
   data-category={category}
-  aria-label={`पठन: ${title}`}
+  data-read-url={readUrl}
 >
-  <!-- Generated / Album Cover Art -->
+  <!-- Generated / Album Cover Art (100% Unobstructed) -->
   <div class="book-card-cover">
-    <img 
-      src={resolvedCoverImage} 
-      alt={`${title}${author ? ` — ${author}` : ''} पुस्तक आवरण`} 
-      class="book-card-cover-img"
-      loading="lazy"
-      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-    />
-    <div 
-      class="book-card-cover-pattern" 
-      style={`background: linear-gradient(135deg, ${coverColor}, color-mix(in hsl, ${coverColor}, black 35%));`}
-      aria-hidden="true"
-    >
-      <span class="book-card-cover-title" aria-hidden="true">{title.charAt(0)}</span>
-    </div>
+    <a href={readUrl} class="book-card-cover-link" aria-label={`पठन: ${title}`}>
+      <img 
+        src={resolvedCoverImage} 
+        alt={`${title}${author ? ` — ${author}` : ''} पुस्तक आवरण`} 
+        class="book-card-cover-img"
+        loading="lazy"
+        onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='flex';"
+      />
+      <div 
+        class="book-card-cover-pattern" 
+        style={`background: linear-gradient(135deg, ${coverColor}, color-mix(in hsl, ${coverColor}, black 35%));`}
+        aria-hidden="true"
+      >
+        <span class="book-card-cover-title" aria-hidden="true">{title.charAt(0)}</span>
+      </div>
+    </a>
   </div>
 
   <!-- Card Body -->
   <div class="book-card-body">
-    <p class="book-card-title">{title}</p>
+    <a href={readUrl} class="book-card-title-link">
+      <p class="book-card-title">{title}</p>
+    </a>
 
     <div class="book-card-footer">
       <div class="book-card-badges">
@@ -107,10 +110,41 @@ const resolvedCoverImage = coverImage
         <span class="progress-label"></span>
       </span>
 
-      <span class="book-card-cta" aria-hidden="true">पढ़ें →</span>
+      <!-- Action Buttons (Save & Share) in Footer -->
+      <div class="book-card-actions" role="toolbar" aria-label="त्वरित क्रियाएं">
+        <button
+          type="button"
+          class="card-action-btn card-save-btn"
+          data-save-slug={slug}
+          data-save-title={title}
+          aria-label={`सहेजें: ${title}`}
+          title="ग्रंथ सहेजें"
+        >
+          <svg class="icon-bookmark" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+          </svg>
+        </button>
+        <button
+          type="button"
+          class="card-action-btn card-share-btn"
+          data-share-slug={slug}
+          data-share-title={title}
+          data-share-url={readUrl}
+          aria-label={`साझा करें: ${title}`}
+          title="साझा करें"
+        >
+          <svg class="icon-share" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="18" cy="5" r="3" />
+            <circle cx="6" cy="12" r="3" />
+            <circle cx="18" cy="19" r="3" />
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+          </svg>
+        </button>
+      </div>
     </div>
   </div>
-</a>
+</div>
 
 <script>
   function toHindiDigits(num: number): string {
@@ -118,8 +152,143 @@ const resolvedCoverImage = coverImage
     return num.toString().split('').map(d => digits[parseInt(d, 10)] || d).join('');
   }
 
+  // Toast notification helper
+  function showGyankoshToast(message: string, icon = '✓') {
+    let toast = document.getElementById('gyankosh-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'gyankosh-toast';
+      toast.className = 'gyankosh-toast';
+      document.body.appendChild(toast);
+    }
+    toast.innerHTML = `<span class="toast-icon">${icon}</span> <span>${message}</span>`;
+    toast.classList.add('show');
+    clearTimeout((window as any).__gyankoshToastTimer);
+    (window as any).__gyankoshToastTimer = setTimeout(() => {
+      toast?.classList.remove('show');
+    }, 2600);
+  }
+  (window as any).showGyankoshToast = showGyankoshToast;
+
+  function getSavedSlugs(): string[] {
+    try {
+      return JSON.parse(localStorage.getItem('gyankosh_saved') || '[]');
+    } catch {
+      return [];
+    }
+  }
+
+  function updateSaveButtonStates() {
+    const saved = getSavedSlugs();
+    document.querySelectorAll<HTMLElement>('.card-save-btn').forEach(btn => {
+      const slug = btn.getAttribute('data-save-slug');
+      if (!slug) return;
+      const isSaved = saved.includes(slug);
+      btn.classList.toggle('is-saved', isSaved);
+      btn.setAttribute('aria-pressed', isSaved ? 'true' : 'false');
+      btn.title = isSaved ? 'सहेजा गया (हटाने हेतु क्लिक करें)' : 'ग्रंथ सहेजें';
+      const path = btn.querySelector<SVGPathElement>('svg path');
+      if (path) {
+        path.style.fill = isSaved ? 'currentColor' : 'none';
+      }
+    });
+  }
+  (window as any).updateSaveButtonStates = updateSaveButtonStates;
+
+  function toggleSaveSlug(slug: string): boolean {
+    const saved = getSavedSlugs();
+    const idx = saved.indexOf(slug);
+    let isSaved = false;
+    if (idx >= 0) {
+      saved.splice(idx, 1);
+      isSaved = false;
+    } else {
+      saved.unshift(slug); // newest at top!
+      isSaved = true;
+    }
+    localStorage.setItem('gyankosh_saved', JSON.stringify(saved));
+    window.dispatchEvent(new CustomEvent('gyankosh:saved-changed', { detail: { slug, isSaved, saved } }));
+    return isSaved;
+  }
+  (window as any).toggleSaveSlug = toggleSaveSlug;
+
+  async function shareText(title: string, url: string) {
+    const fullUrl = url.startsWith('http') ? url : window.location.origin + url;
+    const shareData = {
+      title: `${title} — ज्ञानकोश`,
+      text: `पढ़िए ${title} — ज्ञानकोश सनातन धर्मग्रंथ संग्रह पर:`,
+      url: fullUrl,
+    };
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+        return;
+      } catch (err: any) {
+        if (err.name === 'AbortError') return;
+      }
+    }
+    try {
+      await navigator.clipboard.writeText(fullUrl);
+      showGyankoshToast('🔗 लिंक कॉपी किया गया!');
+    } catch {
+      window.prompt('ग्रंथ लिंक कॉपी करें:', fullUrl);
+    }
+  }
+  (window as any).shareGyankoshText = shareText;
+
+  // Single delegated click handler for all cards
+  if (!(window as any).__gyankoshCardEventsAttached) {
+    (window as any).__gyankoshCardEventsAttached = true;
+
+    document.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+
+      // 1. Save button clicked
+      const saveBtn = target.closest('.card-save-btn') as HTMLElement;
+      if (saveBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+        const slug = saveBtn.getAttribute('data-save-slug');
+        const title = saveBtn.getAttribute('data-save-title') || 'ग्रंथ';
+        if (slug) {
+          const isSaved = toggleSaveSlug(slug);
+          updateSaveButtonStates();
+          showGyankoshToast(isSaved ? `🔖 '${title}' सहेज लिया गया` : `'${title}' सहेजे गए से हटाया गया`);
+          if (typeof (window as any).refreshGyankoshSavedShelf === 'function') {
+            (window as any).refreshGyankoshSavedShelf();
+          }
+        }
+        return;
+      }
+
+      // 2. Share button clicked
+      const shareBtn = target.closest('.card-share-btn') as HTMLElement;
+      if (shareBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+        const title = shareBtn.getAttribute('data-share-title') || 'ग्रंथ';
+        const url = shareBtn.getAttribute('data-share-url') || window.location.href;
+        shareText(title, url);
+        return;
+      }
+
+      // 3. Card click (when clicked outside specific buttons or links)
+      const card = target.closest('.book-card') as HTMLElement;
+      if (card && !target.closest('a') && !target.closest('button')) {
+        const readUrl = card.getAttribute('data-read-url');
+        if (readUrl) {
+          window.location.href = readUrl;
+        }
+      }
+    });
+
+    window.addEventListener('gyankosh:saved-changed', () => {
+      updateSaveButtonStates();
+    });
+  }
+
   // Populate reading progress badges from localStorage (runs client-side)
-  document.addEventListener('DOMContentLoaded', () => {
+  function updateProgressBadges() {
     const badges = document.querySelectorAll<HTMLElement>('[data-progress-badge]');
     badges.forEach(badge => {
       const slug = badge.dataset.progressBadge!;
@@ -138,5 +307,10 @@ const resolvedCoverImage = coverImage
         } catch {}
       }
     });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    updateProgressBadges();
+    updateSaveButtonStates();
   });
 </script>
