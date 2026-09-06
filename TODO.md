@@ -4,7 +4,7 @@ This document tracks all planned sacred texts, scriptures, and stotras for Gyank
 
 ---
 
-## ✅ Completed in Phases 1, 2, 3 & 4 (57 Texts Total)
+## ✅ Completed in Phases 1, 2, 3, 4 & 5 (69 Texts Total)
 
 ### 🪔 Chalisa (12)
 - [x] श्री हनुमान चालीसा (`hanuman-chalisa.md`)
@@ -20,7 +20,7 @@ This document tracks all planned sacred texts, scriptures, and stotras for Gyank
 - [x] श्री गायत्री चालीसा (`gayatri-chalisa.md`)
 - [x] श्री भैरव चालीसा (`bhairav-chalisa.md`)
 
-### 🌸 Stotras, Ashtakams & Sahasranamas (14)
+### 🌸 Stotras, Ashtakams & Sahasranamas (16)
 - [x] श्री विष्णु सहस्रनाम स्तोत्रम् (`vishnu-sahasranama.md`)
 - [x] श्री ललिता सहस्रनाम स्तोत्रम् (`lalita-sahasranama.md`)
 - [x] शिवमहिम्नः स्तोत्रम् (`shiva-mahimna-stotram.md`)
@@ -35,8 +35,10 @@ This document tracks all planned sacred texts, scriptures, and stotras for Gyank
 - [x] कालभैरवाष्टकम् (`kala-bhairava-ashtakam.md`)
 - [x] नवग्रह स्तोत्रम् (`navagraha-stotram.md`)
 - [x] गंगा स्तोत्रम् (`ganga-stotram.md`)
+- [x] दुर्गा सप्तशती मुख्य स्तोत्र — कवच, अर्गला, कीलक (`durga-saptashati-traya.md`)
+- [x] दामोदराष्टकम् (`damodarashtakam.md`)
 
-### 🎵 Gita (18 — सम्पूर्ण श्रीमद्भगवद्गीता)
+### 🎵 Gita (19 — सम्पूर्ण भगवद्गीता एवं अष्टावक्र गीता)
 - [x] श्रीमद्भगवद्गीता — अध्याय १: अर्जुनविषादयोग (`bhagavad-gita-ch1.md`)
 - [x] श्रीमद्भगवद्गीता — अध्याय २: सांख्ययोग (`bhagavad-gita-ch2.md`)
 - [x] श्रीमद्भगवद्गीता — अध्याय ३: कर्मयोग (`bhagavad-gita-ch3.md`)
@@ -55,6 +57,7 @@ This document tracks all planned sacred texts, scriptures, and stotras for Gyank
 - [x] श्रीमद्भगवद्गीता — अध्याय १६: दैवासुरसम्पद्विभागयोग (`bhagavad-gita-ch16.md`)
 - [x] श्रीमद्भगवद्गीता — अध्याय १७: श्रद्धात्रयविभागयोग (`bhagavad-gita-ch17.md`)
 - [x] श्रीमद्भगवद्गीता — अध्याय १८: मोक्षसंन्यासयोग (`bhagavad-gita-ch18.md`)
+- [x] अष्टावक्र गीता — महर्षि अष्टावक्र एवं जनक संवाद (`ashtavakra-gita.md`)
 
 ### 🔥 Veda (5)
 - [x] ऋग्वेद — मण्डल १, सूक्त १ (`rigveda-mandala1.md`)
@@ -72,7 +75,18 @@ This document tracks all planned sacred texts, scriptures, and stotras for Gyank
 - [x] मुण्डकोपनिषद् (`mundaka-upanishad.md`)
 - [x] तैत्तिरीयोपनिषद् (`taittiriya-upanishad.md`)
 
-### 📖 Purana / Itihasa (1)
+### 🪔 Aarti (6 — नित्य दैनिक आरतियाँ)
+- [x] आरती कुंजबिहारी की (`aarti-kunjbihari-ki.md`)
+- [x] आरती ॐ जय जगदीश हरे (`aarti-jai-jagdish-hare.md`)
+- [x] आरती कीजै हनुमान लला की (`aarti-hanuman-ji.md`)
+- [x] आरती जय शिव ओंकारा (`aarti-shiva-ji.md`)
+- [x] आरती जय अम्बे गौरी (`aarti-durga-mata.md`)
+- [x] आरती जय गणेश देवा (`aarti-ganesh-ji.md`)
+
+### 📜 Other / Niti & Puranic Selections (4)
+- [x] चाणक्य नीति (`chanakya-niti.md`)
+- [x] विदुर नीति (`vidura-niti.md`)
+- [x] गोपी गीत — श्रीमद्भागवत महापुराण (`gopi-geet.md`)
 - [x] श्री सुन्दरकाण्ड — श्रीरामचरितमानस (`sundarkand.md`)
 
 ---
@@ -126,18 +140,18 @@ This document tracks all planned sacred texts, scriptures, and stotras for Gyank
 
 ---
 
-## 📌 Phase 5: Practical Wisdom, Niti & Puranic Selections (P2)
+## 📌 Phase 5: Practical Wisdom, Niti, Puranic Selections & Daily Aartis [COMPLETED]
 
-- [ ] **चाणक्य नीति (Chanakya Niti)** — आचार्य चाणक्य के १७ अध्यायों के चयनित नीति श्लोक
-- [ ] **विदुर नीति (Vidura Niti)** — महाभारत उद्योगपर्व (महात्मा विदुर एवं धृतराष्ट्र संवाद)
-- [ ] **अष्टावक्र गीता (Ashtavakra Gita)** — महर्षि अष्टावक्र एवं राजा जनक का अद्वैत संवाद (२० प्रकरण)
-- [ ] **दुर्गा सप्तशती मुख्य स्तोत्र (Durga Saptashati Key Stotras)** — देवी कवचम्, अर्गला स्तोत्रम्, कीलकम्
-- [ ] **गोपी गीत (Gopi Geet)** — श्रीमद्भागवत महापुराण (दशम स्कन्ध, अध्याय ३१)
-- [ ] **दामोदराष्टकम् (Damodarashtakam)** — पद्मपुराण (नमामीश्वरं सच्चिदानन्दरूपं)
-- [ ] **दैनिक प्रमुख आरतियाँ (Daily Aartis Collection)**:
-  - आरती कुंजबिहारी की
-  - जय जगदीश हरे
-  - श्री हनुमान जी की आरती (आरती कीजै हनुमान लला की)
-  - शिव जी की आरती (जय शिव ओंकारा)
-  - दुर्गा माता की आरती (जय अम्बे गौरी)
-  - श्री गणेश जी की आरती (जय गणेश जय गणेश देवा)
+- [x] **चाणक्य नीति (Chanakya Niti)** — आचार्य चाणक्य विरचित कालजयी नीति-सूत्र (`chanakya-niti.md`)
+- [x] **विदुर नीति (Vidura Niti)** — महाभारत उद्योगपर्व (महात्मा विदुर एवं धृतराष्ट्र संवाद) (`vidura-niti.md`)
+- [x] **अष्टावक्र गीता (Ashtavakra Gita)** — महर्षि अष्टावक्र एवं राजा जनक का अद्वैत संवाद (`ashtavakra-gita.md`)
+- [x] **दुर्गा सप्तशती मुख्य स्तोत्र (Durga Saptashati Key Stotras)** — देवी कवचम्, अर्गला स्तोत्रम्, कीलकम् (`durga-saptashati-traya.md`)
+- [x] **गोपी गीत (Gopi Geet)** — श्रीमद्भागवत महापुराण, दशम स्कन्ध, अध्याय ३१ (`gopi-geet.md`)
+- [x] **दामोदराष्टकम् (Damodarashtakam)** — पद्मपुराणान्तर्गतम्, सत्यव्रत मुनि (`damodarashtakam.md`)
+- [x] **दैनिक प्रमुख आरतियाँ (Daily Aartis Collection — 6 Dedicated Texts)**:
+  - [x] आरती कुंजबिहारी की (`aarti-kunjbihari-ki.md`)
+  - [x] आरती ॐ जय जगदीश हरे (`aarti-jai-jagdish-hare.md`)
+  - [x] आरती कीजै हनुमान लला की (`aarti-hanuman-ji.md`)
+  - [x] आरती जय शिव ओंकारा (`aarti-shiva-ji.md`)
+  - [x] आरती जय अम्बे गौरी (`aarti-durga-mata.md`)
+  - [x] आरती जय गणेश देवा (`aarti-ganesh-ji.md`)
