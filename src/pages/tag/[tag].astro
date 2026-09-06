@@ -107,16 +107,13 @@ const jsonLdBreadcrumb = {
         <ol style="display:flex;gap:0.5rem;list-style:none;font-family:var(--font-devanagari);font-size:0.9rem;color:var(--color-text-muted);margin-bottom:1rem;">
           <li><a href={`${base}/`} style="color:var(--color-accent);text-decoration:none;">मुख्य सूची</a></li>
           <li aria-hidden="true">/</li>
-          <li aria-current="page" style="color:var(--color-ink);font-weight:700;">🏷️ {tagName}</li>
+          <li aria-current="page" style="color:var(--color-ink);font-weight:700;">🪷 {tagName}</li>
         </ol>
       </nav>
 
       <h1 id="tag-title" style="font-family:var(--font-devanagari);">
-        <span aria-hidden="true">🏷️</span> {tagName}
+        <span aria-hidden="true">🪷</span> {tagName}
       </h1>
-      <p style="font-family:var(--font-devanagari);color:var(--color-text-muted);margin-top:0.5rem;max-width:55ch;font-size:1.05rem;">
-        '{tagName}' विषय से संबंधित पावन धर्मग्रंथ।
-      </p>
       <p style="font-family:var(--font-devanagari);font-size:0.9rem;color:var(--color-text-faint);margin-top:0.75rem;font-weight:600;">
         {toHindiDigits(texts.length)} ग्रंथ उपलब्ध
       </p>
