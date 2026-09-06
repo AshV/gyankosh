@@ -4,7 +4,7 @@ This document tracks all planned sacred texts, scriptures, and stotras for Gyank
 
 ---
 
-## ✅ Completed in Phases 1, 2 & 3 (50 Texts Total)
+## ✅ Completed in Phases 1, 2, 3 & 4 (57 Texts Total)
 
 ### 🪔 Chalisa (12)
 - [x] श्री हनुमान चालीसा (`hanuman-chalisa.md`)
@@ -63,6 +63,15 @@ This document tracks all planned sacred texts, scriptures, and stotras for Gyank
 - [x] नारायण सूक्तम् — यजुर्वेद तैत्तिरीय आरण्यक (`narayana-suktam.md`)
 - [x] दुर्गा सूक्तम् — महानारायण उपनिषद् (`durga-suktam.md`)
 
+### 🕉️ Upanishad (7 — मुख्य उपनिषद्)
+- [x] ईशावास्योपनिषद् (`isha-upanishad.md`)
+- [x] माण्डूक्योपनिषद् (`mandukya-upanishad.md`)
+- [x] केनोपनिषद् (`kena-upanishad.md`)
+- [x] कठोपनिषद् (`katha-upanishad.md`)
+- [x] प्रश्नोपनिषद् (`prashna-upanishad.md`)
+- [x] मुण्डकोपनिषद् (`mundaka-upanishad.md`)
+- [x] तैत्तिरीयोपनिषद् (`taittiriya-upanishad.md`)
+
 ### 📖 Purana / Itihasa (1)
 - [x] श्री सुन्दरकाण्ड — श्रीरामचरितमानस (`sundarkand.md`)
 
@@ -105,15 +114,15 @@ This document tracks all planned sacred texts, scriptures, and stotras for Gyank
 
 ---
 
-## 📌 Phase 4: Principal Upanishads (Mukhya Upanishads) (P1 — Philosophical Classics)
+## 📌 Phase 4: Principal Upanishads (Mukhya Upanishads) (P1 — Philosophical Classics) [COMPLETED]
 
-- [ ] **ईशावास्योपनिषद् (Isha Upanishad)** — शुक्ल यजुर्वेद, १८ मन्त्र (*ईशा वास्यमिदं सर्वं...*)
-- [ ] **माण्डूक्योपनिषद् (Mandukya Upanishad)** — अथर्ववेद, १२ गद्य मन्त्र (ॐ एवं तुरीय चेतना)
-- [ ] **केनोपनिषद् (Kena Upanishad)** — सामवेद (*केनेषितं पतति प्रेषितं मनः...*)
-- [ ] **कठोपनिषद् (Katha Upanishad)** — कृष्ण यजुर्वेद (नचिकेता एवं यमराज संवाद)
-- [ ] **प्रश्नोपनिषद् (Prashna Upanishad)** — अथर्ववेद, ६ ऋषियों के ६ प्रश्न
-- [ ] **मुण्डकोपनिषद् (Mundaka Upanishad)** — अथर्ववेद (*सत्यमेव जयते नानृतम्...*)
-- [ ] **तैत्तिरीयोपनिषद् (Taittiriya Upanishad)** — शीक्षावल्ली, ब्रह्मानन्दवल्ली, भृगुवल्ली
+- [x] **ईशावास्योपनिषद् (Isha Upanishad)** — शुक्ल यजुर्वेद, १८ मन्त्र (*ईशा वास्यमिदं सर्वं...*) (`isha-upanishad.md`)
+- [x] **माण्डूक्योपनिषद् (Mandukya Upanishad)** — अथर्ववेद, १२ गद्य मन्त्र (ॐ एवं तुरीय चेतना) (`mandukya-upanishad.md`)
+- [x] **केनोपनिषद् (Kena Upanishad)** — सामवेद (*केनेषितं पतति प्रेषितं मनः...*) (`kena-upanishad.md`)
+- [x] **कठोपनिषद् (Katha Upanishad)** — कृष्ण यजुर्वेद (नचिकेता एवं यमराज संवाद) (`katha-upanishad.md`)
+- [x] **प्रश्नोपनिषद् (Prashna Upanishad)** — अथर्ववेद, ६ ऋषियों के ६ प्रश्न (`prashna-upanishad.md`)
+- [x] **मुण्डकोपनिषद् (Mundaka Upanishad)** — अथर्ववेद (*सत्यमेव जयते नानृतम्...*) (`mundaka-upanishad.md`)
+- [x] **तैत्तिरीयोपनिषद् (Taittiriya Upanishad)** — शीक्षावल्ली, ब्रह्मानन्दवल्ली, भृगुवल्ली (`taittiriya-upanishad.md`)
 
 ---
 

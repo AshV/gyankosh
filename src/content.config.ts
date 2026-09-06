@@ -1,7 +1,7 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
-const CATEGORIES = ['Veda', 'Gita', 'Chalisa', 'Stotra', 'Purana', 'Other'] as const;
+const CATEGORIES = ['Veda', 'Upanishad', 'Gita', 'Chalisa', 'Stotra', 'Purana', 'Other'] as const;
 
 const librarySchema = z.object({
   title: z.string(),
