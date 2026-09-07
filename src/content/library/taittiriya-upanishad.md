@@ -8,6 +8,7 @@ coverColor: "hsl(40, 85%, 40%)"
 coverImage: "/covers/upanishad.jpg"
 tags: ["उपनिषद्", "वेद", "कृष्ण-यजुर्वेद", "तैत्तिरीयोपनिषद्", "सत्यं-वद", "पञ्चकोश", "ब्रह्मानन्द", "भृगुवल्ली", "आनन्दमय"]
 showNumbering: true
+weight: 550
 ---
 
 [Instruction]

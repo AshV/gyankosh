@@ -9,6 +9,7 @@ coverColor: "hsl(35, 85%, 40%)"
 coverImage: "/covers/bhagavad-gita.jpg"
 tags: ["श्रीकृष्ण", "अर्जुन", "गीता", "ज्ञानकर्मसंन्यासयोग", "अवतार", "ज्ञानयज्ञ", "श्रद्धा"]
 showNumbering: true
+weight: 330
 ---
 
 [Instruction]

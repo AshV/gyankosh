@@ -7,6 +7,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BookCard from '../../components/BookCard.astro';
+import { sortTexts } from '../../utils/sorting';
 
 function tagToSlug(tag: string): string {
   return tag.toLowerCase().replace(/\s+/g, '-');
@@ -49,7 +50,7 @@ export async function getStaticPaths() {
 
     return {
       params: { tag: slug },
-      props: { tagName: originalTag, texts },
+      props: { tagName: originalTag, texts: sortTexts(texts) },
     };
   });
 }

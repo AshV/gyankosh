@@ -9,6 +9,7 @@ coverColor: "hsl(28, 85%, 45%)"
 coverImage: "/covers/bhagavad-gita.jpg"
 tags: ["श्रीकृष्ण", "अर्जुन", "गीता", "श्रद्धात्रयविभागयोग", "त्रिविध-श्रद्धा", "आहार", "तप", "यज्ञ", "ॐ-तत्-सत्"]
 showNumbering: true
+weight: 460
 ---
 
 [Instruction]

@@ -9,6 +9,7 @@ coverColor: "hsl(280, 75%, 35%)"
 coverImage: "/covers/bhagavad-gita.jpg"
 tags: ["श्रीकृष्ण", "अर्जुन", "गीता", "राजविद्याराजगुह्ययोग", "योगक्षेम", "पत्रं-पुष्पं", "अनन्य-भक्ति"]
 showNumbering: true
+weight: 380
 ---
 
 [Instruction]

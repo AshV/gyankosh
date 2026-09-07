@@ -9,6 +9,7 @@ coverColor: "hsl(45, 80%, 38%)"
 coverImage: "/covers/bhagavad-gita.jpg"
 tags: ["श्रीकृष्ण", "अर्जुन", "गीता", "कर्मसंन्यासयोग", "समदर्शिता", "ब्रह्मनिर्वाण", "अनासक्ति"]
 showNumbering: true
+weight: 340
 ---
 
 [Instruction]

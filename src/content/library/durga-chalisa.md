@@ -8,6 +8,7 @@ coverColor: "hsl(350, 75%, 45%)"
 coverImage: "/covers/durga-chalisa.jpg"
 tags: ["दुर्गा", "शक्ति", "अम्बे", "चालीसा"]
 showNumbering: false
+weight: 80
 ---
 
 [Instruction]

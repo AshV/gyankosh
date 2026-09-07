@@ -8,6 +8,7 @@ coverColor: "hsl(42, 95%, 45%)"
 coverImage: "/covers/kanakadhara-stotram.jpg"
 tags: ["स्तोत्र", "लक्ष्मी", "शङ्कराचार्य", "कनकधारा", "सुवर्ण-वृष्टि", "धनदा"]
 showNumbering: true
+weight: 150
 ---
 
 [Instruction]

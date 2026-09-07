@@ -8,6 +8,7 @@ coverColor: "hsl(190, 80%, 35%)"
 coverImage: "/covers/upanishad.jpg"
 tags: ["उपनिषद्", "वेद", "सामवेद", "केनोपनिषद्", "ब्रह्मविद्या", "यक्ष-आख्यान", "उमा-हैमवती"]
 showNumbering: true
+weight: 510
 ---
 
 [Instruction]

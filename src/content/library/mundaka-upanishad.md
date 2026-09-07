@@ -8,6 +8,7 @@ coverColor: "hsl(35, 90%, 38%)"
 coverImage: "/covers/upanishad.jpg"
 tags: ["उपनिषद्", "वेद", "अथर्ववेद", "मुण्डकोपनिषद्", "सत्यमेव-जयते", "परा-अपरा-विद्या", "द्वा-सुपर्णा", "प्रणव-धनुष"]
 showNumbering: true
+weight: 530
 ---
 
 [Instruction]

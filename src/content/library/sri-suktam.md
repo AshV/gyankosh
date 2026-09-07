@@ -8,6 +8,7 @@ coverColor: "hsl(45, 90%, 45%)"
 coverImage: "/covers/sri-suktam.jpg"
 tags: ["वेद", "ऋग्वेद", "लक्ष्मी", "श्री-सूक्त", "वैदिक-ऋचा", "समृद्धि"]
 showNumbering: true
+weight: 280
 ---
 
 [Instruction]

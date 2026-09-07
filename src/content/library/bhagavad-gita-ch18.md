@@ -9,6 +9,7 @@ coverColor: "hsl(40, 90%, 45%)"
 coverImage: "/covers/bhagavad-gita.jpg"
 tags: ["श्रीकृष्ण", "अर्जुन", "गीता", "मोक्षसंन्यासयोग", "संन्यास", "त्याग", "कर्मयोग", "शरणागति", "सर्वधर्मान्परित्यज्य"]
 showNumbering: true
+weight: 470
 ---
 
 [Instruction]

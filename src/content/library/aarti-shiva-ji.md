@@ -8,6 +8,7 @@ coverColor: "hsl(190, 80%, 35%)"
 coverImage: "/covers/aarti-shiva-ji.jpg"
 tags: ["आरती", "शिव", "महादेव", "भोलेनाथ", "शिव-ओंकारा", "भक्ति"]
 showNumbering: false
+weight: 190
 ---
 
 [Instruction]

@@ -8,6 +8,7 @@ coverColor: "hsl(15, 85%, 45%)"
 coverImage: "/covers/bajrang-baan.jpg"
 tags: ["हनुमान", "बजरंग बाण", "तुलसीदास", "स्तोत्र", "रक्षा", "अवधी"]
 showNumbering: true
+weight: 50
 ---
 
 [Instruction]

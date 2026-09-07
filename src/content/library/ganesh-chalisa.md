@@ -8,6 +8,7 @@ coverColor: "hsl(35, 90%, 45%)"
 coverImage: "/covers/ganesh-chalisa.jpg"
 tags: ["गणेश", "गणपति", "विघ्नहर्ता", "चालीसा"]
 showNumbering: false
+weight: 120
 ---
 
 [Instruction]

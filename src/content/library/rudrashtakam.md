@@ -8,6 +8,7 @@ coverColor: "hsl(210, 70%, 38%)"
 coverImage: "/covers/rudrashtakam.jpg"
 tags: ["स्तोत्र", "अष्टक", "शिव", "रुद्राष्टक", "तुलसीदास", "रामचरितमानस"]
 showNumbering: true
+weight: 170
 ---
 
 [Instruction]

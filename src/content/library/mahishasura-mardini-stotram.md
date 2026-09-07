@@ -8,6 +8,7 @@ coverColor: "hsl(345, 80%, 35%)"
 coverImage: "/covers/mahishasura-mardini-stotram.jpg"
 tags: ["दुर्गा", "महिषासुर मर्दिनी", "अयि गिरिनन्दिनि", "शंकराचार्य", "स्तोत्र", "देवी", "नवरात्रि"]
 showNumbering: true
+weight: 140
 ---
 
 [Instruction]

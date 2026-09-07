@@ -8,6 +8,7 @@ coverColor: "hsl(215, 80%, 40%)"
 coverImage: "/covers/purusha-suktam.jpg"
 tags: ["वेद", "ऋग्वेद", "पुरुष-सूक्त", "विराट्-पुरुष", "नारायण", "सृष्टि"]
 showNumbering: true
+weight: 290
 ---
 
 [Instruction]

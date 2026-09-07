@@ -8,16 +8,9 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import BookCard from "../components/BookCard.astro";
 import { CATEGORIES } from "../content.config";
+import { sortTexts } from "../utils/sorting";
 
-const allTexts = (await getCollection("library")).sort((a, b) => {
-  if (a.data.category === b.data.category) {
-    if (a.data.chapter != null && b.data.chapter != null) {
-      return a.data.chapter - b.data.chapter;
-    }
-    return a.data.title.localeCompare(b.data.title);
-  }
-  return a.data.category.localeCompare(b.data.category);
-});
+const allTexts = sortTexts(await getCollection("library"));
 
 const totalTexts = allTexts.length;
 

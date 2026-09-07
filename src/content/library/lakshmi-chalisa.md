@@ -8,6 +8,7 @@ coverColor: "hsl(45, 90%, 45%)"
 coverImage: "/covers/lakshmi-chalisa.jpg"
 tags: ["लक्ष्मी", "महालक्ष्मी", "समृद्धि", "चालीसा"]
 showNumbering: false
+weight: 160
 ---
 
 [Instruction]

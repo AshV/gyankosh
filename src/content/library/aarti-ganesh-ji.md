@@ -8,6 +8,7 @@ coverColor: "hsl(28, 90%, 42%)"
 coverImage: "/covers/aarti-ganesh-ji.jpg"
 tags: ["आरती", "गणेश", "विघ्नहर्ता", "गणपति", "प्रथम-पूज्य", "भक्ति"]
 showNumbering: false
+weight: 110
 ---
 
 [Instruction]

@@ -9,6 +9,7 @@ coverColor: "hsl(175, 75%, 35%)"
 coverImage: "/covers/bhagavad-gita.jpg"
 tags: ["श्रीकृष्ण", "अर्जुन", "गीता", "ध्यानयोग", "आत्मसंयम", "मन-निग्रह", "अभ्यास-वैराग्य"]
 showNumbering: true
+weight: 350
 ---
 
 [Instruction]

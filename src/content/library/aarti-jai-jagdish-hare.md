@@ -8,6 +8,7 @@ coverColor: "hsl(45, 90%, 38%)"
 coverImage: "/covers/aarti-jai-jagdish-hare.jpg"
 tags: ["आरती", "विष्णु", "जगदीश-हरे", "नारायण", "दैनिक-प्रार्थना", "भक्ति"]
 showNumbering: false
+weight: 40
 ---
 
 [Instruction]

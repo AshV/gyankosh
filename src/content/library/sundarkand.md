@@ -8,6 +8,7 @@ coverColor: "hsl(18, 90%, 42%)"
 coverImage: "/covers/sundarkand.jpg"
 tags: ["सुन्दरकाण्ड", "रामचरितमानस", "हनुमान", "तुलसीदास", "रामायण", "अवधी", "भक्ति"]
 showNumbering: true
+weight: 20
 ---
 
 [Instruction]

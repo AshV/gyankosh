@@ -8,6 +8,7 @@ coverColor: "hsl(215, 85%, 35%)"
 coverImage: "/covers/aarti-kunjbihari-ki.jpg"
 tags: ["आरती", "श्रीकृष्ण", "कुंजबिहारी", "वृन्दावन", "गिरिधर", "भक्ति"]
 showNumbering: false
+weight: 210
 ---
 
 [Instruction]

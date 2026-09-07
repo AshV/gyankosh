@@ -8,6 +8,7 @@ coverColor: "hsl(350, 85%, 40%)"
 coverImage: "/covers/aarti-durga-mata.jpg"
 tags: ["आरती", "दुर्गा", "अम्बे-गौरी", "नवरात्रि", "भवानी", "शक्ति", "भक्ति"]
 showNumbering: false
+weight: 200
 ---
 
 [Instruction]

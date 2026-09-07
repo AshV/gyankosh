@@ -8,6 +8,7 @@ coverColor: "hsl(0, 75%, 35%)"
 coverImage: "/covers/bhairav-chalisa.jpg"
 tags: ["भैरव", "काल भैरव", "बटुक भैरव", "चालीसा"]
 showNumbering: false
+weight: 690
 ---
 
 [Instruction]

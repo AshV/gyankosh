@@ -8,6 +8,7 @@ coverColor: "hsl(28, 85%, 40%)"
 coverImage: "/covers/chanakya-niti.jpg"
 tags: ["नीति", "चाणक्य", "सुभाषित", "धर्म", "सदाचार", "विद्या", "ज्ञान"]
 showNumbering: true
+weight: 560
 ---
 
 [Instruction]

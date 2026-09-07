@@ -6,9 +6,10 @@
 import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
 import type { APIContext } from 'astro';
+import { sortTexts } from '../utils/sorting';
 
 export async function GET(context: APIContext) {
-  const allTexts = await getCollection('library');
+  const allTexts = sortTexts(await getCollection('library'));
 
   return rss({
     title: 'ज्ञानकोश — सनातन धर्मग्रंथ संग्रह',

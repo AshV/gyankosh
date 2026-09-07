@@ -8,6 +8,7 @@ coverColor: "hsl(220, 85%, 35%)"
 coverImage: "/covers/narayana-suktam.jpg"
 tags: ["वेद", "यजुर्वेद", "नारायण-सूक्त", "नारायण", "हृदय-कमल", "ब्रह्म"]
 showNumbering: true
+weight: 590
 ---
 
 [Instruction]

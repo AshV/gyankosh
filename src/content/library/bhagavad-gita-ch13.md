@@ -9,6 +9,7 @@ coverColor: "hsl(160, 70%, 35%)"
 coverImage: "/covers/bhagavad-gita.jpg"
 tags: ["श्रीकृष्ण", "अर्जुन", "गीता", "क्षेत्रक्षेत्रज्ञविभागयोग", "क्षेत्रज्ञ", "आत्मज्ञान", "परमेश्वर"]
 showNumbering: true
+weight: 420
 ---
 
 [Instruction]

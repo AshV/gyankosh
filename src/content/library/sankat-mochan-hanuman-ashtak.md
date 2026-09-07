@@ -8,6 +8,7 @@ coverColor: "hsl(25, 90%, 45%)"
 coverImage: "/covers/sankat-mochan-hanuman-ashtak.jpg"
 tags: ["हनुमान", "संकट मोचन", "अष्टक", "तुलसीदास", "स्तोत्र", "अवधी"]
 showNumbering: true
+weight: 60
 ---
 
 [Instruction]

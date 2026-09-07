@@ -8,6 +8,7 @@ category: "Veda"
 coverColor: "hsl(340, 70%, 40%)"
 coverImage: "/covers/rigveda-mandala1.jpg"
 tags: ["ऋग्वेद", "अग्नि", "सूक्त", "वेद", "संस्कृत"]
+weight: 600
 ---
 
 [Instruction]

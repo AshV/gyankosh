@@ -9,6 +9,7 @@ coverColor: "hsl(215, 75%, 35%)"
 coverImage: "/covers/bhagavad-gita.jpg"
 tags: ["श्रीकृष्ण", "अर्जुन", "गीता", "सांख्ययोग", "कर्मयोग", "स्थितप्रज्ञ", "अमर-आत्मा"]
 showNumbering: true
+weight: 310
 ---
 
 [Instruction]

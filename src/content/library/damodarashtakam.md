@@ -8,6 +8,7 @@ coverColor: "hsl(32, 90%, 38%)"
 coverImage: "/covers/damodarashtakam.jpg"
 tags: ["स्तोत्र", "दामोदर", "श्रीकृष्ण", "कार्तिक-मास", "पद्म-पुराण", "भक्ति", "अष्टक"]
 showNumbering: true
+weight: 270
 ---
 
 [Instruction]

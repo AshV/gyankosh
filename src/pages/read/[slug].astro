@@ -8,6 +8,7 @@
 import { getCollection } from 'astro:content';
 import { parseIndicMarkdown } from '../../utils/indicParser';
 import ReaderLayout from '../../layouts/ReaderLayout.astro';
+import { sortTexts } from '../../utils/sorting';
 
 const categoryMeta: Record<string, { nameHindi: string }> = {
   Veda:      { nameHindi: 'वेद' },
@@ -21,7 +22,7 @@ const categoryMeta: Record<string, { nameHindi: string }> = {
 };
 
 export async function getStaticPaths() {
-  const allTexts = await getCollection('library');
+  const allTexts = sortTexts(await getCollection('library'));
   return allTexts.map(entry => ({
     params: { slug: entry.id },
     props: {

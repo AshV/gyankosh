@@ -8,6 +8,7 @@ coverColor: "hsl(190, 60%, 45%)"
 coverImage: "/covers/saraswati-chalisa.jpg"
 tags: ["सरस्वती", "विद्या", "ज्ञान", "चालीसा"]
 showNumbering: false
+weight: 640
 ---
 
 [Instruction]

@@ -9,6 +9,7 @@ coverColor: "hsl(200, 75%, 35%)"
 coverImage: "/covers/bhagavad-gita.jpg"
 tags: ["श्रीकृष्ण", "अर्जुन", "गीता", "ज्ञानविज्ञानयोग", "प्रकृति", "माया", "भक्त", "वासुदेव"]
 showNumbering: true
+weight: 360
 ---
 
 [Instruction]

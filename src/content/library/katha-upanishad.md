@@ -8,6 +8,7 @@ coverColor: "hsl(25, 85%, 38%)"
 coverImage: "/covers/upanishad.jpg"
 tags: ["उपनिषद्", "वेद", "कृष्ण-यजुर्वेद", "कठोपनिषद्", "नचिकेता", "यमराज", "श्रेयस-प्रेयस", "रथ-रूपक", "आत्मज्ञान"]
 showNumbering: true
+weight: 500
 ---
 
 [Instruction]

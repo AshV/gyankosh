@@ -8,6 +8,7 @@ coverColor: "hsl(270, 75%, 38%)"
 coverImage: "/covers/upanishad.jpg"
 tags: ["उपनिषद्", "वेद", "अथर्ववेद", "माण्डूक्य", "ओम्", "तुरीय", "चेतना", "अद्वैत"]
 showNumbering: true
+weight: 520
 ---
 
 [Instruction]

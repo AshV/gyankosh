@@ -8,6 +8,7 @@ coverColor: "hsl(48, 85%, 45%)"
 coverImage: "/covers/gayatri-chalisa.jpg"
 tags: ["गायत्री", "वेदमाता", "सविता", "चालीसा"]
 showNumbering: false
+weight: 670
 ---
 
 [Instruction]

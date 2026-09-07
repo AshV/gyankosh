@@ -8,6 +8,7 @@ coverColor: "hsl(200, 75%, 36%)"
 coverImage: "/covers/shiva-mahimna-stotram.jpg"
 tags: ["स्तोत्र", "शिव", "पुष्पदन्त", "महिम्न", "भोलेनाथ", "कैलाश"]
 showNumbering: true
+weight: 240
 ---
 
 [Instruction]

@@ -9,6 +9,7 @@ coverColor: "hsl(35, 80%, 42%)"
 coverImage: "/covers/bhagavad-gita.jpg"
 tags: ["श्रीकृष्ण", "अर्जुन", "गीता", "पुरुषोत्तमयोग", "पुरुषोत्तम", "अश्वत्थ", "क्षर-अक्षर", "आत्मज्ञान"]
 showNumbering: true
+weight: 440
 ---
 
 [Instruction]

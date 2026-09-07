@@ -8,6 +8,7 @@ coverColor: "hsl(0, 0%, 20%)"
 coverImage: "/covers/kala-bhairava-ashtakam.jpg"
 tags: ["भैरव", "काल भैरव", "शिव", "शंकराचार्य", "काशी", "स्तोत्र", "संस्कृत"]
 showNumbering: true
+weight: 230
 ---
 
 [Instruction]

@@ -9,6 +9,7 @@ coverColor: "hsl(215, 80%, 40%)"
 coverImage: "/covers/bhagavad-gita.jpg"
 tags: ["श्रीकृष्ण", "अर्जुन", "गीता", "विभूतियोग", "दिव्य-विभूतियां", "अहमात्मा", "जपयज्ञ"]
 showNumbering: true
+weight: 390
 ---
 
 [Instruction]

@@ -8,6 +8,7 @@ coverColor: "hsl(30, 80%, 42%)"
 coverImage: "/covers/navagraha-stotram.jpg"
 tags: ["स्तोत्र", "नवग्रह", "सूर्य", "शनि", "वेदव्यास", "ग्रह-शान्ति"]
 showNumbering: true
+weight: 620
 ---
 
 [Instruction]

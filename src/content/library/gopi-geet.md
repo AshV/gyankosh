@@ -8,6 +8,7 @@ coverColor: "hsl(215, 85%, 35%)"
 coverImage: "/covers/gopi-geet.jpg"
 tags: ["पुराण", "भागवत", "गोपी-गीत", "श्रीकृष्ण", "रासलीला", "वृन्दावन", "भक्ति"]
 showNumbering: true
+weight: 260
 ---
 
 [Instruction]

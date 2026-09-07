@@ -8,6 +8,7 @@ coverColor: "hsl(210, 80%, 35%)"
 coverImage: "/covers/vidura-niti.jpg"
 tags: ["महाभारत", "विदुर", "नीति", "धृतराष्ट्र", "उद्योगपर्व", "सदाचार", "राजधर्म"]
 showNumbering: true
+weight: 570
 ---
 
 [Instruction]

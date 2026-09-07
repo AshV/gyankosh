@@ -8,6 +8,7 @@ coverColor: "hsl(18, 90%, 48%)"
 coverImage: "/covers/surya-chalisa.jpg"
 tags: ["सूर्य", "आदित्य", "भास्कर", "चालीसा"]
 showNumbering: false
+weight: 680
 ---
 
 [Instruction]

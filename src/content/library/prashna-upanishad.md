@@ -8,6 +8,7 @@ coverColor: "hsl(160, 75%, 34%)"
 coverImage: "/covers/upanishad.jpg"
 tags: ["उपनिषद्", "वेद", "अथर्ववेद", "प्रश्नोपनिषद्", "पिप्पलाद", "प्राण-विद्या", "षोडशकल-पुरुष", "ओंकार"]
 showNumbering: true
+weight: 540
 ---
 
 [Instruction]

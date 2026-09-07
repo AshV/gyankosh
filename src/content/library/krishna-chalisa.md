@@ -8,6 +8,7 @@ coverColor: "hsl(215, 75%, 45%)"
 coverImage: "/covers/krishna-chalisa.jpg"
 tags: ["कृष्ण", "श्याम", "गोविन्द", "चालीसा"]
 showNumbering: false
+weight: 650
 ---
 
 [Instruction]

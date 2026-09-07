@@ -8,6 +8,7 @@ coverColor: "hsl(190, 80%, 35%)"
 coverImage: "/covers/madhurashtakam.jpg"
 tags: ["कृष्ण", "मधुराष्टकम्", "वल्लभाचार्य", "स्तोत्र", "भक्ति", "संस्कृत", "कान्हा"]
 showNumbering: true
+weight: 180
 ---
 
 [Instruction]

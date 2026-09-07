@@ -9,6 +9,7 @@ coverColor: "hsl(215, 80%, 35%)"
 coverImage: "/covers/vishnu-sahasranama.jpg"
 tags: ["विष्णु", "सहस्रनाम", "महाभारत", "भीष्म", "स्तोत्र", "हरि"]
 showNumbering: true
+weight: 100
 ---
 
 [Instruction]

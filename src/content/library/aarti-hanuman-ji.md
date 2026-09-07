@@ -8,6 +8,7 @@ coverColor: "hsl(18, 90%, 42%)"
 coverImage: "/covers/aarti-hanuman-ji.jpg"
 tags: ["आरती", "हनुमान", "रामभक्त", "संकटमोचन", "बजरंगबली", "भक्ति"]
 showNumbering: false
+weight: 130
 ---
 
 [Instruction]

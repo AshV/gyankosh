@@ -9,6 +9,7 @@ coverColor: "hsl(260, 65%, 35%)"
 coverImage: "/covers/bhagavad-gita.jpg"
 tags: ["श्रीकृष्ण", "अर्जुन", "गीता", "अक्षरब्रह्मयोग", "ॐकार", "प्राणप्रयाण", "परम-धाम"]
 showNumbering: true
+weight: 370
 ---
 
 [Instruction]

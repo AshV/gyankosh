@@ -8,6 +8,7 @@ coverColor: "hsl(350, 85%, 40%)"
 coverImage: "/covers/durga-saptashati.jpg"
 tags: ["स्तोत्र", "दुर्गा-सप्तशती", "देवी-कवच", "अर्गला-स्तोत्र", "कीलक", "मार्कण्डेय-पुराण", "नवरात्रि"]
 showNumbering: true
+weight: 220
 ---
 
 [Instruction]

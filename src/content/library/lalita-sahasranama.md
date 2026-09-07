@@ -8,6 +8,7 @@ coverColor: "hsl(340, 85%, 40%)"
 coverImage: "/covers/lalita-sahasranama.jpg"
 tags: ["स्तोत्र", "ललिता", "सहस्रनाम", "त्रिपुरसुन्दरी", "श्रीविद्या", "देवी"]
 showNumbering: true
+weight: 250
 ---
 
 [Instruction]

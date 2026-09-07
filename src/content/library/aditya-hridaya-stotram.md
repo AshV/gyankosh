@@ -8,6 +8,7 @@ coverColor: "hsl(30, 95%, 45%)"
 coverImage: "/covers/aditya-hridaya-stotram.jpg"
 tags: ["सूर्य", "आदित्य", "रामायण", "अगस्त्य", "स्तोत्र", "संस्कृत", "सूर्य देव"]
 showNumbering: true
+weight: 90
 ---
 
 [Instruction]

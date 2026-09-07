@@ -9,6 +9,7 @@ coverColor: "hsl(145, 65%, 34%)"
 coverImage: "/covers/bhagavad-gita.jpg"
 tags: ["श्रीकृष्ण", "अर्जुन", "गीता", "गुणत्रयविभागयोग", "त्रिगुण", "गुणातीत", "मोक्ष"]
 showNumbering: true
+weight: 430
 ---
 
 [Instruction]

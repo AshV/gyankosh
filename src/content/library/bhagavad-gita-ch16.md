@@ -9,6 +9,7 @@ coverColor: "hsl(10, 75%, 42%)"
 coverImage: "/covers/bhagavad-gita.jpg"
 tags: ["श्रीकृष्ण", "अर्जुन", "गीता", "दैवासुरसम्पद्विभागयोग", "दैवी-सम्पद्", "आसुरी-सम्पद्", "सदाचार", "शास्त्र-प्रमाण"]
 showNumbering: true
+weight: 450
 ---
 
 [Instruction]

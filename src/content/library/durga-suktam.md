@@ -8,6 +8,7 @@ coverColor: "hsl(350, 80%, 42%)"
 coverImage: "/covers/durga-suktam.jpg"
 tags: ["वेद", "दुर्गा-सूक्त", "दुर्गा", "अग्नि", "महानारायण-उपनिषद्", "रक्षा"]
 showNumbering: true
+weight: 580
 ---
 
 [Instruction]

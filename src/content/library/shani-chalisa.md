@@ -8,6 +8,7 @@ coverColor: "hsl(220, 45%, 25%)"
 coverImage: "/covers/shani-chalisa.jpg"
 tags: ["शनि", "शनि देव", "साढ़े साती", "चालीसा"]
 showNumbering: false
+weight: 630
 ---
 
 [Instruction]

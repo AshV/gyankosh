@@ -8,6 +8,7 @@ coverColor: "hsl(280, 80%, 38%)"
 coverImage: "/covers/ashtavakra-gita.jpg"
 tags: ["गीता", "अष्टावक्र", "राजा-जनक", "अद्वैत", "आत्मज्ञान", "मुक्ति", "वेदान्त"]
 showNumbering: true
+weight: 480
 ---
 
 [Instruction]

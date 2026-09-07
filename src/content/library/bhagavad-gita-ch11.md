@@ -9,6 +9,7 @@ coverColor: "hsl(285, 80%, 35%)"
 coverImage: "/covers/bhagavad-gita.jpg"
 tags: ["श्रीकृष्ण", "अर्जुन", "गीता", "विश्वरूपदर्शन", "विराटरूप", "कालस्वरूप", "दिव्यचक्षु"]
 showNumbering: true
+weight: 400
 ---
 
 [Instruction]
