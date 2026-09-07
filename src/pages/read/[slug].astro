@@ -52,24 +52,44 @@ const coverImageUrl = data.coverImage
 const catKey = data.category;
 const catNameHindi = categoryMeta[catKey]?.nameHindi ?? catKey;
 
+// ── SEO Title & High-Intent Meta Description ────────────────
+const seoTitle = `${data.title} — शुद्ध पाठ एवं प्रामाणिक हिन्दी अर्थ`;
+const seoDescription = data.context
+  ? `${data.description} ${data.context} सम्पूर्ण पाठ एवं प्रामाणिक हिन्दी अर्थ सहित।`
+  : `${data.description} सम्पूर्ण पाठ, शुद्ध उच्चारण एवं प्रामाणिक हिन्दी भावार्थ सहित।`;
+
+const languages = data.language?.toLowerCase().includes('sanskrit')
+  ? ['sa', 'hi']
+  : [data.language || 'hi'];
+
 // ── JSON-LD Schema (Book) — enriched ─────────────────────────
 const jsonLdBook: Record<string, unknown> = {
   '@context': 'https://schema.org',
   '@type': 'Book',
   'name': data.title,
+  'headline': seoTitle,
   'description': data.description,
-  'inLanguage': data.language,
+  'inLanguage': languages,
   'genre': data.category,
   'url': canonicalUrl,
   'image': coverImageUrl,
   'isAccessibleForFree': true,
   'license': 'https://creativecommons.org/licenses/by-sa/4.0/',
+  'isPartOf': {
+    '@type': 'WebSite',
+    'name': 'ज्ञानकोश',
+    'url': 'https://www.ashishvishwakarma.com/gyankosh',
+  },
   'publisher': {
     '@type': 'Organization',
     'name': 'ज्ञानकोश',
     'url': 'https://www.ashishvishwakarma.com/gyankosh',
   },
 };
+
+if (data.context) {
+  jsonLdBook['abstract'] = data.context;
+}
 
 if (data.author) {
   jsonLdBook['author'] = {
@@ -108,21 +128,27 @@ const jsonLdBreadcrumb = {
   ],
 };
 
-// ── Keywords from tags ───────────────────────────────────────
+// ── Keywords from tags & high-intent terms ───────────────────
 const keywords = [
   data.title,
+  `${data.title} पाठ`,
+  `${data.title} अर्थ सहित`,
+  `${data.title} भावार्थ`,
   catNameHindi,
   data.category,
   ...(data.tags ?? []),
   'सनातन धर्म',
   'हिन्दू धर्मग्रंथ',
+  'संस्कृत श्लोक',
+  'शुद्ध उच्चारण',
 ];
 if (data.author) keywords.push(data.author);
 ---
 
 <ReaderLayout
   title={data.title}
-  description={data.description}
+  seoTitle={seoTitle}
+  description={seoDescription}
   canonical={canonicalUrl}
   author={data.author}
   language={data.language}
@@ -135,6 +161,7 @@ if (data.author) keywords.push(data.author);
   jsonLd={[jsonLdBook, jsonLdBreadcrumb]}
   showNumbering={data.showNumbering}
   tags={data.tags}
+  context={data.context}
 >
   <!--
     The parsed HTML is injected here via set:html.

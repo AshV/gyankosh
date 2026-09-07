@@ -46,6 +46,7 @@ const ogType = type === 'book' ? 'book' : (type === 'article' ? 'article' : 'web
 const jsonLdArray = jsonLd
   ? Array.isArray(jsonLd) ? jsonLd : [jsonLd]
   : [];
+const isSanskrit = language && language.toLowerCase().includes('sanskrit');
 ---
 
 <!-- Primary Meta Tags -->
@@ -64,6 +65,7 @@ const jsonLdArray = jsonLd
 
 <!-- Language Alternates -->
 <link rel="alternate" hreflang="hi" href={canonical} />
+{isSanskrit && <link rel="alternate" hreflang="sa" href={canonical} />}
 <link rel="alternate" hreflang="x-default" href={canonical} />
 
 <!-- Keywords (from content tags) -->

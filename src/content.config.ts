@@ -14,6 +14,7 @@ const librarySchema = z.object({
   coverImage: z.string().optional(),
   tags: z.array(z.string()).default([]),
   showNumbering: z.boolean().default(true),
+  context: z.string().optional(),
 });
 
 export const collections = {

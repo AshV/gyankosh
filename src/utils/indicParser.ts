@@ -115,6 +115,7 @@ function renderBlock(
     const hindiNum = toHindiNumerals(state.verseCounter);
     const label = `${state.verseCounter}`;
     const padasHtml = renderVerseLines(lines);
+    const blockLang = (tag === 'Shloka' || tag === 'Mantra') ? 'sa' : 'hi';
 
     return `<div
   class="verse-block ${cssClass}"
@@ -122,6 +123,7 @@ function renderBlock(
   data-block-type="${tag.toLowerCase()}"
   data-verse-num="${label}"
   id="${verseId}"
+  lang="${blockLang}"
 >
   <span class="verse-num" aria-label="Verse ${label}">॥ ${hindiNum} ॥</span>
   <div class="verse-body">${padasHtml}</div>
@@ -141,6 +143,7 @@ function renderBlock(
   data-block-type="name"
   data-name-num="${state.nameCounter}"
   id="${nameId}"
+  lang="sa"
 >
   <span class="verse-num name-num" aria-label="Name ${state.nameCounter}">॥ ${hindiNum} ॥</span>
   <div class="verse-body">${padasHtml}</div>
@@ -151,7 +154,7 @@ function renderBlock(
   if (tag === 'Translation' || tag === 'Bhavarth') {
     const html = lines.map(l => renderInline(l)).join(' ');
     const prefix = tag === 'Bhavarth' ? 'भावार्थ :' : 'अर्थ :';
-    return `<div class="translation-block ${cssClass}" data-block-type="${tag.toLowerCase()}">
+    return `<div class="translation-block ${cssClass}" data-block-type="${tag.toLowerCase()}" lang="hi">
   <span class="translation-prefix">${prefix}</span>
   <span class="translation-text">${html}</span>
 </div>`;
@@ -160,7 +163,7 @@ function renderBlock(
   // [Speaker] / [Uvacha] — Sacred speaker tag
   if (tag === 'Speaker' || tag === 'Uvacha') {
     const cleanText = lines.join(' ').replace(/^॥\s*|\s*॥$/g, '').trim();
-    return `<div class="speaker-block ${cssClass}" data-block-type="${tag.toLowerCase()}">
+    return `<div class="speaker-block ${cssClass}" data-block-type="${tag.toLowerCase()}" lang="sa">
   <span class="speaker-title">॥ ${renderInline(cleanText)} ॥</span>
 </div>`;
   }
@@ -168,14 +171,14 @@ function renderBlock(
   // [Instruction] / [Viniyoga] — sacred invocation / chapter header
   if (tag === 'Instruction' || tag === 'Viniyoga') {
     const html = lines.map(l => renderInline(l)).join('<br>');
-    return `<div class="instruction-block ${cssClass}" data-block-type="${tag.toLowerCase()}">
+    return `<div class="instruction-block ${cssClass}" data-block-type="${tag.toLowerCase()}" lang="sa">
   <div class="instruction-content">${html}</div>
 </div>`;
   }
 
   // Fallback
   const html = lines.map(l => renderInline(l)).join('<br>');
-  return `<p class="block--plain">${html}</p>`;
+  return `<p class="block--plain" lang="hi">${html}</p>`;
 }
 
 // ─── Main export ──────────────────────────────────────────────────────────

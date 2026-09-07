@@ -76,6 +76,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             <li><a href={`${base}/category/stotra`} style="font-family:var(--font-devanagari);font-size:1rem;font-weight:600;color:var(--color-accent);">स्तोत्र</a></li>
             <li><a href={`${base}/category/aarti`} style="font-family:var(--font-devanagari);font-size:1rem;font-weight:600;color:var(--color-accent);">आरती</a></li>
             <li><a href={`${base}/category/purana`} style="font-family:var(--font-devanagari);font-size:1rem;font-weight:600;color:var(--color-accent);">पुराण</a></li>
+            <li><a href={`${base}/parichay`} style="font-family:var(--font-devanagari);font-size:1rem;font-weight:600;color:var(--color-accent);">परिचय</a></li>
           </ul>
         </nav>
       </div>
@@ -92,7 +93,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       style="padding:2.5rem 1rem;text-align:center;font-family:var(--font-devanagari);font-size:0.9rem;color:var(--color-text-muted);border-top:2px solid var(--color-border);margin-top:3rem;background:var(--color-bg-elevated);"
     >
       <p style="color:var(--color-accent);font-weight:700;margin-bottom:0.25rem;">॥ श्रीहरिः ॥</p>
-      <p>ज्ञानकोश — सनातन वैदिक एवं पौराणिक धर्मग्रंथों का डिजिटल संग्रह</p>
+      <p style="margin-bottom:0.5rem;">ज्ञानकोश — सनातन वैदिक एवं पौराणिक धर्मग्रंथों का डिजिटल संग्रह</p>
+      <p style="font-size:0.85rem;">
+        <a href={`${base}/parichay`} style="color:var(--color-accent);text-decoration:none;font-weight:600;">परिचय एवं सम्पादकीय प्रामाणिकता</a>
+        <span aria-hidden="true" style="margin: 0 0.5rem; opacity: 0.5;">•</span>
+        <span>सार्वजनिक कार्यक्षेत्र (Public Domain)</span>
+      </p>
     </footer>
   </body>
 </html>

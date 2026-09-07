@@ -29,10 +29,13 @@ export interface Props {
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
   showNumbering?: boolean;
   tags?: string[];
+  context?: string;
+  seoTitle?: string;
 }
 
 const {
   title,
+  seoTitle,
   description,
   canonical = Astro.url.href,
   author,
@@ -46,6 +49,7 @@ const {
   jsonLd,
   showNumbering = true,
   tags = [],
+  context,
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -85,7 +89,7 @@ const categoryHindiMap: Record<string, string> = {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <SEO
-      title={title}
+      title={seoTitle || title}
       description={description}
       canonical={canonical}
       author={author}
@@ -153,6 +157,24 @@ const categoryHindiMap: Record<string, string> = {
               <path d="M12 18.1v3.5M10.2 21.6h3.6" />
             </svg>
           </button>
+
+          <!-- Spiritual Context Info Button (ग्रंथ परिचय) -->
+          {context && (
+            <button
+              id="reader-info-btn"
+              class="icon-btn"
+              aria-label="ग्रंथ परिचय एवं सन्दर्भ"
+              title="ग्रंथ परिचय एवं सन्दर्भ"
+              aria-haspopup="dialog"
+              aria-expanded="false"
+            >
+              <svg class="icon-info" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="16" x2="12" y2="12" />
+                <line x1="12" y1="8" x2="12.01" y2="8" />
+              </svg>
+            </button>
+          )}
 
           <!-- Save Button (सहेजें) -->
           <button
@@ -249,6 +271,12 @@ const categoryHindiMap: Record<string, string> = {
               </div>
             )}
 
+            {context && (
+              <div class="cover-context-box">
+                <p class="cover-context-text">{context}</p>
+              </div>
+            )}
+
             <button 
               id="btn-aarambh" 
               class="btn-aarambh" 
@@ -282,11 +310,41 @@ const categoryHindiMap: Record<string, string> = {
         </div>
 
         <!-- Raw source content (parsed at build time) -->
-        <article class="reader-content reader-raw-source" id="reader-raw-source" data-slug={slug}>
-          <h1 class="sr-only">{title}</h1>
+        <article class="reader-content reader-raw-source" id="reader-raw-source" data-slug={slug} itemscope itemtype="https://schema.org/CreativeWork">
+          <header class="sr-only">
+            <h1 itemprop="name">{title}</h1>
+            {author && <p itemprop="author">{author}</p>}
+            {context && <p itemprop="abstract">{context}</p>}
+          </header>
           <slot />
         </article>
       </main>
+
+      <!-- Spiritual / Historical Context Popover Modal -->
+      {context && (
+        <div id="reader-info-modal" class="reader-info-modal" role="dialog" aria-modal="true" aria-labelledby="modal-info-title" style="display:none;">
+          <div class="reader-info-backdrop" id="reader-info-backdrop"></div>
+          <div class="reader-info-dialog">
+            <div class="reader-info-header">
+              <h2 id="modal-info-title" class="reader-info-title">॥ पावन परिचय एवं सन्दर्भ ॥</h2>
+              <button id="reader-info-close" class="icon-btn" aria-label="परिचय बन्द करें" title="बन्द करें">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            </div>
+            <div class="reader-info-body">
+              <h3 class="reader-info-book-title">{title}</h3>
+              {author && <p class="reader-info-author">रचयिता / ऋषि: <strong>{author}</strong></p>}
+              <p class="reader-info-context">{context}</p>
+              <div class="reader-info-tradition-note">
+                <span>पारम्परिक सनातन पाठ • सार्वजनिक कार्यक्षेत्र (Public Domain)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <!-- Bottom Bar (Navigation with Restart, Up/Down Arrows, and Font Controls) -->
       <footer class="reader-bottombar" role="navigation" aria-label="पठन नियंत्रण">
@@ -1148,9 +1206,10 @@ const categoryHindiMap: Record<string, string> = {
       readerShareBtn?.addEventListener('click', async (e) => {
         e.stopPropagation();
         const shareUrl = window.location.href;
+        const formattedShareMessage = `॥ ${bookTitle} ॥\nज्ञानकोश पर पढ़िए सम्पूर्ण शुद्ध पाठ एवं प्रामाणिक भावार्थ:\n${shareUrl}`;
         const shareData = {
           title: `${bookTitle} — ज्ञानकोश`,
-          text: `पढ़िए ${bookTitle} — ज्ञानकोश सनातन वैदिक एवं पौराणिक धर्मग्रंथ संग्रह पर:`,
+          text: `॥ ${bookTitle} ॥ — ज्ञानकोश पर पढ़िए सम्पूर्ण शुद्ध पाठ एवं प्रामाणिक भावार्थ:`,
           url: shareUrl,
         };
         if (navigator.share) {
@@ -1162,10 +1221,49 @@ const categoryHindiMap: Record<string, string> = {
           }
         }
         try {
-          await navigator.clipboard.writeText(shareUrl);
-          showGyankoshToast('🔗 लिंक कॉपी किया गया!');
+          await navigator.clipboard.writeText(formattedShareMessage);
+          showGyankoshToast('🔗 पावन निमन्त्रण लिंक कॉपी किया गया!');
         } catch {
           window.prompt('ग्रंथ लिंक कॉपी करें:', shareUrl);
+        }
+      });
+
+      /* ── Info Modal Functionality (Spiritual / Historical Context) ── */
+      const readerInfoBtn = document.getElementById('reader-info-btn');
+      const readerInfoModal = document.getElementById('reader-info-modal');
+      const readerInfoClose = document.getElementById('reader-info-close');
+      const readerInfoBackdrop = document.getElementById('reader-info-backdrop');
+
+      function openInfoModal() {
+        if (!readerInfoModal) return;
+        readerInfoModal.style.display = 'flex';
+        readerInfoBtn?.setAttribute('aria-expanded', 'true');
+      }
+
+      function closeInfoModal() {
+        if (!readerInfoModal) return;
+        readerInfoModal.style.display = 'none';
+        readerInfoBtn?.setAttribute('aria-expanded', 'false');
+      }
+
+      readerInfoBtn?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openInfoModal();
+      });
+
+      readerInfoClose?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeInfoModal();
+      });
+
+      readerInfoBackdrop?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeInfoModal();
+      });
+
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && readerInfoModal && readerInfoModal.style.display === 'flex') {
+          closeInfoModal();
         }
       });
     </script>

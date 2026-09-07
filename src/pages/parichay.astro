@@ -1,0 +1,277 @@
+---
+/**
+ * src/pages/parichay.astro
+ * Gyankosh Mission, Provenance & Editorial Authenticity (E-E-A-T)
+ * 100% Hindi / Devanagari interface matching the warm paper aesthetic.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const canonicalUrl = 'https://www.ashishvishwakarma.com/gyankosh/parichay';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  'name': 'ज्ञानकोश परिचय एवं सम्पादकीय प्रामाणिकता',
+  'description': 'ज्ञानकोश का पावन ध्येय, सनातन वैदिक एवं पौराणिक धर्मग्रंथों की प्रामाणिकता, पाठ-शुद्धिकरण एवं सम्पादकीय नीति।',
+  'url': canonicalUrl,
+  'inLanguage': 'hi',
+  'mainEntity': {
+    '@type': 'Organization',
+    'name': 'ज्ञानकोश',
+    'url': 'https://www.ashishvishwakarma.com/gyankosh',
+    'description': 'सनातन वैदिक एवं पौराणिक धर्मग्रंथों का प्रामाणिक, भव्य एवं आधुनिक डिजिटल ई-रीडर पुस्तकालय।',
+    'founder': {
+      '@type': 'Person',
+      'name': 'आशीष विश्वकर्मा (Ashish Vishwakarma)',
+      'url': 'https://www.ashishvishwakarma.com',
+    },
+  },
+};
+---
+
+<BaseLayout
+  title="परिचय एवं सम्पादकीय प्रामाणिकता — ज्ञानकोश"
+  description="ज्ञानकोश का पावन ध्येय, सनातन वैदिक एवं पौराणिक धर्मग्रंथों की प्रामाणिकता, पाठ-शुद्धिकरण एवं सम्पादकीय नीति।"
+  canonical={canonicalUrl}
+  jsonLd={jsonLd}
+>
+  <article class="parichay-page" aria-labelledby="parichay-heading">
+    <div class="container parichay-container">
+      
+      <!-- Sacred Header -->
+      <header class="parichay-header">
+        <div class="parichay-invocation">॥ श्रीहरिः ॥</div>
+        <h1 id="parichay-heading" class="parichay-title">ज्ञानकोश — परिचय एवं प्रामाणिकता</h1>
+        <p class="parichay-subtitle">सनातन धर्मग्रंथों का पावन, विशुद्ध एवं विज्ञापन-मुक्त डिजिटल ई-रीडर</p>
+      </header>
+
+      <!-- Section 1: Mission & Vision -->
+      <section class="parichay-card" aria-labelledby="sec-mission">
+        <div class="card-icon" aria-hidden="true">🪔</div>
+        <h2 id="sec-mission" class="card-title">॥ पावन ध्येय एवं संकल्प ॥</h2>
+        <p class="card-text">
+          <strong>ज्ञानकोश (Gyankosh)</strong> सनातन वैदिक ऋचाओं, उपनिषदों, गीता, स्तोत्रों, चालीसाओं एवं पौराणिक आख्यानों का एक निष्काम, भव्य एवं आधुनिक डिजिटल संग्रह है।
+        </p>
+        <p class="card-text">
+          हमारा मूल संकल्प सनातन साहित्य के पाठन को <strong>पूर्णतः एकाग्र, शान्त एवं विज्ञापन-मुक्त (100% Distraction-Free &amp; Ad-Free)</strong> रखना है। आज की आपाधापी में जब धर्मग्रंथों के वेब पृष्ठ विज्ञापनों और अनर्गल पॉपअप्स से घिरे होते हैं, ज्ञानकोश एक पारम्परिक <strong>पौथी पुस्तक</strong> की पवित्रता और सजीव पन्ना-पलट अनुभव प्रदान करता है।
+        </p>
+      </section>
+
+      <!-- Section 2: Textual Authenticity & Public Domain Tradition -->
+      <section class="parichay-card" aria-labelledby="sec-authenticity">
+        <div class="card-icon" aria-hidden="true">📜</div>
+        <h2 id="sec-authenticity" class="card-title">॥ ग्रंथ प्रामाणिकता एवं आर्ष परम्परा ॥</h2>
+        <p class="card-text">
+          ज्ञानकोश में संकलित समस्त मूल संस्कृत श्लोक, मन्त्र, दोहे एवं चौपाइयां <strong>सार्वजनिक कार्यक्षेत्र (Public Domain)</strong> एवं प्राचीन आर्ष परम्परा (ऋषि-मुनियों द्वारा प्रदत्त सनातन धरोहर) पर आधारित हैं।
+        </p>
+        <p class="card-text">
+          हम किसी भी व्यावसायिक या प्रकाशकीय कॉपीराइट का अतिक्रमण नहीं करते। हमारे द्वारा प्रस्तुत पाठ पारम्परिक जनसामान्य पाठ, आर्ष संहिताओं एवं सनातन परम्परा में सदियों से प्रचलित नित्य-पाठ की पद्धतियों के अनुरूप हैं। प्रत्येक ग्रंथ के साथ रचयिता/ऋषि तथा उसकी आध्यात्मिक पृष्ठभूमि का परिचय दिया गया है।
+        </p>
+      </section>
+
+      <!-- Section 3: Editorial Care & Typography -->
+      <section class="parichay-card" aria-labelledby="sec-editorial">
+        <div class="card-icon" aria-hidden="true">✍️</div>
+        <h2 id="sec-editorial" class="card-title">॥ शुद्धिकरण एवं सम्पादकीय प्रक्रिया ॥</h2>
+        <p class="card-text">
+          संस्कृत एवं अवधी भाषा के धर्मग्रंथों में मात्रा, अनुस्वार, विसर्ग एवं संयुक्ताक्षरों की सूक्ष्मता अत्यंत महत्वपूर्ण है। ज्ञानकोश पर प्रत्येक ग्रंथ निम्नलिखित चरणों से होकर प्रकाशित होता है:
+        </p>
+        <ul class="parichay-list">
+          <li><strong>पद-विच्छेद एवं छन्द संरेखण:</strong> श्लोकों के चरणों (पदों) को स्पष्ट और लयबद्ध रूप में संजोया जाता है ताकि पाठ करते समय सांस और यति स्वाभाविक रहे।</li>
+          <li><strong>लिपि शुद्धता:</strong> देवनागरी संयुक्ताक्षरों और हलन्त चिह्नों की प्रामाणिकता की नियमित समीक्षा की जाती है।</li>
+          <li><strong>पाठ मोड (Chanting Mode):</strong> साधकों एवं नित्य पाठ करने वालों की सुविधा हेतु बिना अर्थ केवल मूल श्लोकों के वाचन का विशेष विकल्प।</li>
+          <li><strong>डिजिटल सुलभता:</strong> सभी ग्रंथ स्क्रीन रीडर एवं सर्च इंजनों हेतु सिमेंटिक रूप से अनुकूलित हैं।</li>
+        </ul>
+      </section>
+
+      <!-- Section 4: Stewardship & Editorial Identity -->
+      <section class="parichay-card" aria-labelledby="sec-stewardship">
+        <div class="card-icon" aria-hidden="true">🕉️</div>
+        <h2 id="sec-stewardship" class="card-title">॥ संरक्षक एवं तकनीकी सम्पादन ॥</h2>
+        <p class="card-text">
+          ज्ञानकोश की संकल्पना, वास्तुकला एवं तकनीकी सम्पादन <strong><a href="https://www.ashishvishwakarma.com" target="_blank" rel="noopener" class="author-link">आशीष विश्वकर्मा (Ashish Vishwakarma)</a></strong> द्वारा सनातन धर्म के प्रचार-प्रसार एवं डिजिटल संरक्षण के उद्देश्य से किया गया है।
+        </p>
+        <p class="card-text">
+          यह किसी व्यावसायिक लाभ के उद्देश्य से नहीं, अपितु भारतीय ज्ञान-परम्परा के प्रति अनन्य श्रद्धा एवं निष्ठा से संचालित एक अविरल सेवा है।
+        </p>
+      </section>
+
+      <!-- Section 5: Corrections & Community Feedback -->
+      <section class="parichay-card" aria-labelledby="sec-feedback">
+        <div class="card-icon" aria-hidden="true">🙏</div>
+        <h2 id="sec-feedback" class="card-title">॥ त्रुटि परिमार्जन एवं सहभागिता ॥</h2>
+        <p class="card-text">
+          हम मानवीय त्रुटियों के प्रति पूर्णतः सजग हैं। यदि आपको किसी श्लोक, मन्त्र अथवा भावार्थ में मात्रा, वर्तनी या पाठ-भेद की कोई त्रुटि दृष्टिगोचर हो, तो कृपया हमें अवश्य सूचित करें ताकि हम तुरंत उसका परिमार्जन कर सकें।
+        </p>
+        <div class="feedback-action-box">
+          <a href="https://github.com/AshV/gyankosh/issues" target="_blank" rel="noopener" class="btn-feedback">
+            <span>📝</span> त्रुटि सूचित करें (GitHub)
+          </a>
+          <a href={`${base}/`} class="btn-back-home">
+            <span>📖</span> पुस्तकालय मुख्य सूची
+          </a>
+        </div>
+      </section>
+
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .parichay-page {
+    padding: 2rem 1rem 4rem;
+    font-family: var(--font-devanagari);
+  }
+
+  .parichay-container {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .parichay-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid var(--color-border);
+  }
+
+  .parichay-invocation {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.05em;
+  }
+
+  .parichay-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--color-accent);
+    margin: 0 0 0.5rem;
+    line-height: 1.3;
+  }
+
+  .parichay-subtitle {
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  .parichay-card {
+    background: var(--color-bg-card);
+    background-image: 
+      radial-gradient(ellipse at 50% 10%, rgba(255, 252, 245, 0.98), rgba(248, 241, 226, 0.98)),
+      linear-gradient(to bottom, rgba(0,0,0,0.02) 0%, transparent 10%);
+    border: 2px solid var(--color-border);
+    border-radius: 8px;
+    padding: 1.75rem 1.75rem;
+    margin-bottom: 2rem;
+    box-shadow: 
+      0 4px 15px rgba(60, 35, 15, 0.08),
+      0 1px 3px rgba(60, 35, 15, 0.05);
+    position: relative;
+  }
+
+  .card-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .card-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    margin: 0 0 1rem;
+  }
+
+  .card-text {
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: var(--color-ink);
+    margin: 0 0 1rem;
+  }
+
+  .card-text:last-child {
+    margin-bottom: 0;
+  }
+
+  .parichay-list {
+    margin: 0 0 1rem 1.25rem;
+    padding: 0;
+    font-size: 1.02rem;
+    line-height: 1.8;
+    color: var(--color-ink);
+  }
+
+  .parichay-list li {
+    margin-bottom: 0.6rem;
+  }
+
+  .author-link {
+    color: var(--color-accent);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .author-link:hover {
+    color: var(--color-gold);
+  }
+
+  .feedback-action-box {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-feedback, .btn-back-home {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    font-family: var(--font-devanagari);
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .btn-feedback {
+    background: var(--color-accent);
+    color: #ffffff;
+  }
+
+  .btn-feedback:hover {
+    background: color-mix(in hsl, var(--color-accent), black 15%);
+    transform: translateY(-1px);
+  }
+
+  .btn-back-home {
+    background: transparent;
+    color: var(--color-accent);
+    border: 2px solid var(--color-accent);
+  }
+
+  .btn-back-home:hover {
+    background: rgba(142, 27, 20, 0.08);
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 640px) {
+    .parichay-title {
+      font-size: 1.6rem;
+    }
+    .parichay-card {
+      padding: 1.25rem 1.1rem;
+    }
+    .card-title {
+      font-size: 1.15rem;
+    }
+    .card-text, .parichay-list {
+      font-size: 0.98rem;
+    }
+  }
+</style>

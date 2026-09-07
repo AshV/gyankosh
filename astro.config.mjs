@@ -26,6 +26,11 @@ export default defineConfig({
           item.changefreq = 'weekly';
           item.priority = 0.8;
         }
+        // Parichay (About & Authority) page
+        else if (item.url.includes('/parichay')) {
+          item.changefreq = 'monthly';
+          item.priority = 0.9;
+        }
         // Category pages
         else if (item.url.includes('/category/')) {
           item.changefreq = 'weekly';

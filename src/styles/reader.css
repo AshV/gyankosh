@@ -1032,3 +1032,110 @@ body.chanting-mode .verse-translation {
   }
 }
 
+/* ─── Spiritual & Historical Context (Aarambh Cover) ──────── */
+.cover-context-box {
+  margin: 0.85rem 0 0.4rem;
+  padding: 0.65rem 0.9rem;
+  background: rgba(142, 27, 20, 0.04);
+  border: 1px solid rgba(142, 27, 20, 0.15);
+  border-radius: 6px;
+  max-width: 360px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.cover-context-text {
+  font-family: var(--font-devanagari);
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  margin: 0;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* ─── Spiritual Context Popover Modal ─────────────────────── */
+.reader-info-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.reader-info-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(35, 20, 10, 0.55);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+.reader-info-dialog {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  background: var(--color-bg-card);
+  background-image: radial-gradient(ellipse at 50% 15%, rgba(255, 252, 245, 0.98), rgba(248, 241, 226, 0.98));
+  border: 3px double var(--color-border);
+  border-radius: 8px;
+  box-shadow: 0 16px 45px rgba(50, 25, 10, 0.35);
+  padding: 1.5rem;
+  box-sizing: border-box;
+  font-family: var(--font-devanagari);
+  z-index: 1;
+  animation: modalFadeIn 0.25s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: scale(0.96) translateY(8px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.reader-info-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.reader-info-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  margin: 0;
+}
+
+.reader-info-book-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-ink);
+  margin: 0 0 0.4rem;
+}
+
+.reader-info-author {
+  font-size: 0.92rem;
+  color: var(--color-text-muted);
+  margin: 0 0 0.85rem;
+}
+
+.reader-info-context {
+  font-size: 0.98rem;
+  line-height: 1.75;
+  color: var(--color-ink);
+  margin: 0 0 1.25rem;
+}
+
+.reader-info-tradition-note {
+  font-size: 0.8rem;
+  color: var(--color-text-faint);
+  text-align: center;
+  border-top: 1px dashed var(--color-border);
+  padding-top: 0.75rem;
+}
+
