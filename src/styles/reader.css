@@ -812,12 +812,13 @@ body.chanting-mode .verse-translation {
   z-index: 100;
   background: radial-gradient(ellipse at 50% 20%, #fef8ee 0%, #f4e8d0 60%, #e2ceaa 100%);
   display: flex;
-  align-items: center;
   justify-content: center;
-  padding: 1rem;
+  align-items: flex-start;
+  padding: 1rem 1rem 1.75rem;
   box-sizing: border-box;
   transition: opacity 0.4s ease, transform 0.45s ease, visibility 0.4s ease;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   cursor: pointer;
 }
 
@@ -829,6 +830,7 @@ body.chanting-mode .verse-translation {
 }
 
 .cover-card {
+  margin: auto;
   width: 100%;
   max-width: 420px;
   background: var(--color-bg-card);
@@ -1029,6 +1031,93 @@ body.chanting-mode .verse-translation {
 
   .flip-floating-nav {
     display: none; /* Rely on bottom bar and tap zones on mobile */
+  }
+
+  /* Cover Screen Mobile Optimization — ensures no cropping of cover art */
+  .reader-cover-screen {
+    padding: 0.5rem 0.5rem 1.5rem;
+  }
+
+  .cover-card {
+    padding: 0.85rem 0.75rem 1.15rem;
+    max-width: 360px;
+  }
+
+  .cover-invocation {
+    font-size: 0.85rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .cover-art-frame {
+    max-width: 155px;
+    max-height: 24vh;
+    margin-bottom: 0.45rem;
+  }
+
+  .cover-title {
+    font-size: 1.18rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .cover-author {
+    font-size: 0.82rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .cover-category-badge {
+    margin-bottom: 0.3rem;
+    font-size: 0.7rem;
+    padding: 0.1rem 0.5rem;
+  }
+
+  .cover-tags {
+    margin-bottom: 0.45rem;
+    gap: 0.25rem;
+  }
+
+  .cover-tags .tag-chip {
+    font-size: 0.68rem;
+    padding: 0.1rem 0.45rem;
+  }
+
+  .cover-context-box {
+    margin: 0.35rem 0 0.45rem;
+    padding: 0.4rem 0.65rem;
+    max-width: 100%;
+  }
+
+  .cover-context-text {
+    font-size: 0.78rem;
+    line-height: 1.45;
+  }
+
+  .btn-aarambh {
+    padding: 0.5rem 1.25rem;
+    font-size: 0.98rem;
+    width: 80%;
+    max-width: 200px;
+  }
+}
+
+/* Also handle short height viewports (landscape phones, small screens) */
+@media (max-height: 740px) {
+  .cover-art-frame {
+    max-width: 140px;
+    max-height: 22vh;
+    margin-bottom: 0.4rem;
+  }
+
+  .cover-card {
+    padding: 0.75rem 0.75rem 1rem;
+  }
+
+  .cover-invocation {
+    margin-bottom: 0.25rem;
+  }
+
+  .cover-context-box {
+    margin: 0.3rem 0 0.35rem;
+    padding: 0.35rem 0.6rem;
   }
 }
 
