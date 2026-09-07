@@ -436,6 +436,11 @@ const categoryHindiMap: Record<string, string> = {
         catch { return {}; }
       }
 
+      function isCoverScreenActive() {
+        const cs = document.getElementById('reader-cover-screen');
+        return !!(cs && !cs.classList.contains('cover-dismissed') && cs.style.display !== 'none');
+      }
+
       /* ── Gyankosh Vertical Pothi Page Flip Engine ── */
       class GyankoshReader {
         constructor() {
@@ -788,6 +793,7 @@ const categoryHindiMap: Record<string, string> = {
 
           // On small screens, touching anywhere on the reading viewport enters fullscreen if not already active
           const enterFullscreenOnTouch = (e) => {
+            if (isCoverScreenActive()) return;
             if (isSmallScreen() && !isFullscreenActive()) {
               if (!e.target.closest('button, a, input, select')) {
                 enterFullscreen();
@@ -799,14 +805,17 @@ const categoryHindiMap: Record<string, string> = {
 
           // Tap Zones (Top/Left = Prev, Bottom/Right = Next)
           document.getElementById('tap-prev')?.addEventListener('click', (e) => {
+            if (isCoverScreenActive()) return;
             e.stopPropagation();
             this.prevPage();
           });
           document.getElementById('tap-next')?.addEventListener('click', (e) => {
+            if (isCoverScreenActive()) return;
             e.stopPropagation();
             this.nextPage();
           });
           document.getElementById('tap-center')?.addEventListener('click', (e) => {
+            if (isCoverScreenActive()) return;
             e.stopPropagation();
             this.nextPage();
           });
@@ -818,7 +827,7 @@ const categoryHindiMap: Record<string, string> = {
           let touchProgress = 0;
 
           this.viewport?.addEventListener('touchstart', (e) => {
-            if (this.isFlipping) return;
+            if (isCoverScreenActive() || this.isFlipping) return;
             touchStartY = e.touches[0].clientY;
             touchStartX = e.touches[0].clientX;
             isTouchDragging = true;
@@ -826,7 +835,7 @@ const categoryHindiMap: Record<string, string> = {
           }, { passive: true });
 
           this.viewport?.addEventListener('touchmove', (e) => {
-            if (!isTouchDragging || this.isFlipping) return;
+            if (isCoverScreenActive() || !isTouchDragging || this.isFlipping) return;
             const currentY = e.touches[0].clientY;
             const currentX = e.touches[0].clientX;
             const diffY = touchStartY - currentY;
@@ -840,6 +849,10 @@ const categoryHindiMap: Record<string, string> = {
           }, { passive: true });
 
           this.viewport?.addEventListener('touchend', (e) => {
+            if (isCoverScreenActive()) {
+              isTouchDragging = false;
+              return;
+            }
             if (!isTouchDragging) return;
             isTouchDragging = false;
 
@@ -867,11 +880,13 @@ const categoryHindiMap: Record<string, string> = {
             this.cancelInteractiveCurl();
           }, { passive: true });
 
-          // Mouse Wheel / Trackpad Scroll with Live Dynamic Paper Curl
+          // Mouse Wheel / Trackpad Scroll with Live Dynamic Paper Curl (Active ONLY after opening text)
           let wheelProgress = 0;
           let wheelResetTimer = null;
 
           this.viewport?.addEventListener('wheel', (e) => {
+            if (isCoverScreenActive()) return;
+
             e.preventDefault();
             if (this.isFlipping) return;
 
@@ -905,8 +920,9 @@ const categoryHindiMap: Record<string, string> = {
             }
           }, { passive: false });
 
-          // Keyboard
+          // Keyboard navigation (Active ONLY after opening text)
           document.addEventListener('keydown', (e) => {
+            if (isCoverScreenActive()) return;
             if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === 'j') {
               e.preventDefault();
               this.nextPage();
