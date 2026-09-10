@@ -72,6 +72,10 @@ const THEOLOGICAL_ALIASES: Record<string, string[]> = {
   'surya': ['sun', 'aditya', 'bhaskar', 'सूर्य', 'आदित्य'],
   'shani': ['shanidev', 'sadesati', 'शनि', 'शनिदेव'],
 
+  // Vishwakarma
+  'vishwakarma': ['vishvakarma', 'shri vishwakarma', 'shri-vishwakarma', 'विश्वकर्मा', 'श्री विश्वकर्मा'],
+  'shri-vishwakarma': ['vishwakarma', 'shri vishwakarma', 'विश्वकर्मा', 'श्री विश्वकर्मा'],
+
   // Sages
   'tulsidas': ['tulsi', 'goswami', 'तुलसीदास'],
   'vedvyas': ['vyas', 'वेदव्यास'],

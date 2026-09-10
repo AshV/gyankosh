@@ -61,6 +61,8 @@ const CURATED_TAG_SLUGS: Record<string, string> = {
   'भागीरथी': 'bhagirathi',
   'पतित-पावनी': 'patit-pavani',
   'विश्वकर्मा': 'vishwakarma',
+  'श्री विश्वकर्मा': 'shri-vishwakarma',
+  'श्री-विश्वकर्मा': 'shri-vishwakarma',
   'ललिता': 'lalita',
   'त्रिपुरसुन्दरी': 'tripurasundari',
   'श्रीविद्या': 'shrividya',

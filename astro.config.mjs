@@ -9,6 +9,7 @@ export default defineConfig({
   base: '/gyankosh',
 
   output: 'static',
+  compressHTML: true,
 
   integrations: [
     sitemap({

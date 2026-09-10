@@ -3,44 +3,16 @@
  * src/components/SearchModal.astro
  * Site-wide Quick Search Modal for Gyankosh.
  *
+ * Fetches search-catalog.json on demand (cached), eliminating 19+ MB of redundant
+ * inline catalog data across static HTML pages.
+ *
  * Supports Dual-Script Search:
  * - English queries: "hanuman", "gita", "geeta", "shiv", "rudrashtakam"
  * - Hindi queries: "हनुमान", "गीता", "शिव", "चालीसा"
  *
  * All UI labels, hints, and placeholders are in authentic Hindi.
  */
-import { getCollection } from 'astro:content';
-import { sortTexts, getTextWeight } from '../utils/sorting';
-import { deriveSearchKeywords, type SearchCatalogItem } from '../utils/search';
-
-const allTexts = sortTexts(await getCollection('library'));
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-
-const CATEGORY_ICONS: Record<string, string> = {
-  Veda: '🔥 वेद',
-  Upanishad: '🕉️ उपनिषद्',
-  Gita: '🎵 गीता',
-  Chalisa: '🪔 चालीसा',
-  Stotra: '🌸 स्तोत्र',
-  Aarti: '🪔 आरती',
-  Purana: '📖 पुराण',
-  Other: '📜 अन्य',
-};
-
-// Pre-compute lightweight catalog payload for client-side search (~18KB)
-const catalog: SearchCatalogItem[] = allTexts.map((text) => ({
-  slug: text.id.replace(/\.md$/, ''),
-  title: text.data.title,
-  author: text.data.author || '',
-  category: text.data.category,
-  categoryHindi: CATEGORY_ICONS[text.data.category] || text.data.category,
-  description: text.data.description || '',
-  tags: text.data.tags || [],
-  coverColor: text.data.coverColor,
-  coverImage: text.data.coverImage,
-  keywords: deriveSearchKeywords(text),
-  weight: getTextWeight(text),
-}));
 ---
 
 <dialog id="gyankosh-search-dialog" class="gyankosh-search-dialog" aria-label="ग्रंथ खोज संवाद">
@@ -82,7 +54,7 @@ const catalog: SearchCatalogItem[] = allTexts.map((text) => ({
     <!-- Quick Stats Bar -->
     <div class="search-stats-bar">
       <span id="search-stats-text" class="search-stats-text">
-        शीर्ष धर्मग्रंथ ({allTexts.length})
+        शीर्ष धर्मग्रंथ
       </span>
       <span class="search-hint-script">हिन्दी एवं English दोनों में खोजें</span>
     </div>
@@ -117,9 +89,6 @@ const catalog: SearchCatalogItem[] = allTexts.map((text) => ({
   </div>
 </dialog>
 
-<!-- Client Catalog Data -->
-<script is:inline id="gyankosh-catalog-data" type="application/json" set:html={JSON.stringify(catalog)} />
-
 <script>
   import { normalizeSearchText, scoreSearchItem, type SearchCatalogItem } from '../utils/search';
 
@@ -135,14 +104,37 @@ const catalog: SearchCatalogItem[] = allTexts.map((text) => ({
   }
 
   let catalog: SearchCatalogItem[] = [];
-  try {
-    const dataEl = document.getElementById('gyankosh-catalog-data');
-    if (dataEl && dataEl.textContent) {
-      catalog = JSON.parse(dataEl.textContent);
-    }
-  } catch (err) {
-    console.error('Failed to load catalog data:', err);
+  let catalogLoadingPromise: Promise<SearchCatalogItem[]> | null = null;
+
+  function fetchCatalog(): Promise<SearchCatalogItem[]> {
+    if (catalog.length > 0) return Promise.resolve(catalog);
+    if (catalogLoadingPromise) return catalogLoadingPromise;
+
+    catalogLoadingPromise = fetch(`${base}/search-catalog.json`)
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
+      .then((data: SearchCatalogItem[]) => {
+        catalog = data;
+        return data;
+      })
+      .catch((err) => {
+        console.error('Failed to load search catalog:', err);
+        return [];
+      });
+
+    return catalogLoadingPromise;
   }
+
+  // Preload catalog when user hovers or focuses the header search button
+  document.addEventListener('DOMContentLoaded', () => {
+    const trigger = document.getElementById('header-search-trigger');
+    if (trigger) {
+      trigger.addEventListener('mouseenter', () => fetchCatalog(), { once: true });
+      trigger.addEventListener('focus', () => fetchCatalog(), { once: true });
+    }
+  });
 
   const dialog = document.getElementById('gyankosh-search-dialog') as HTMLDialogElement | null;
   const searchInput = document.getElementById('global-search-input') as HTMLInputElement | null;
@@ -155,7 +147,7 @@ const catalog: SearchCatalogItem[] = allTexts.map((text) => ({
   let selectedIndex = -1;
   let currentResults: SearchCatalogItem[] = [];
 
-  function openSearchModal(initialQuery = '') {
+  async function openSearchModal(initialQuery = '') {
     if (!dialog) return;
     if (typeof dialog.showModal === 'function') {
       dialog.showModal();
@@ -171,11 +163,15 @@ const catalog: SearchCatalogItem[] = allTexts.map((text) => ({
       setTimeout(() => {
         searchInput.focus();
         searchInput.select();
-        performSearch(searchInput.value);
       }, 50);
-    } else {
-      performSearch('');
     }
+
+    if (catalog.length === 0) {
+      if (statsText) statsText.textContent = 'सूची लोड हो रही है...';
+      await fetchCatalog();
+    }
+
+    performSearch(searchInput?.value || '');
   }
 
   function closeSearchModal() {
@@ -287,7 +283,10 @@ const catalog: SearchCatalogItem[] = allTexts.map((text) => ({
     activeItem.scrollIntoView({ block: 'nearest' });
   }
 
-  function performSearch(rawQuery: string) {
+  async function performSearch(rawQuery: string) {
+    if (catalog.length === 0) {
+      await fetchCatalog();
+    }
     const query = rawQuery.trim();
     if (!query) {
       renderResults(catalog, '');

@@ -19,29 +19,23 @@ export async function getStaticPaths() {
   const allTexts = await getCollection('library');
 
   // Collect all unique tags mapped to their English slug and associated texts
-  const tagMap = new Map<string, typeof allTexts>();
+  const tagMap = new Map<string, { originalTag: string; texts: typeof allTexts }>();
 
   for (const text of allTexts) {
     for (const tag of text.data.tags ?? []) {
       const slug = tagToSlug(tag);
       if (!slug) continue;
       if (!tagMap.has(slug)) {
-        tagMap.set(slug, []);
+        tagMap.set(slug, { originalTag: tag, texts: [] });
       }
-      // Avoid duplicates (same text appearing twice under same tag slug)
-      const existing = tagMap.get(slug)!;
-      if (!existing.some(t => t.id === text.id)) {
-        existing.push(text);
+      const entry = tagMap.get(slug)!;
+      if (!entry.texts.some(t => t.id === text.id)) {
+        entry.texts.push(text);
       }
     }
   }
 
-  return Array.from(tagMap.entries()).map(([slug, texts]) => {
-    // Use the original-case Hindi version of the first occurrence as the display name
-    const originalTag = allTexts
-      .flatMap(t => t.data.tags ?? [])
-      .find(t => tagToSlug(t) === slug) || slug;
-
+  return Array.from(tagMap.entries()).map(([slug, { originalTag, texts }]) => {
     return {
       params: { tag: slug },
       props: { tagName: originalTag, tagSlug: slug, texts: sortTexts(texts) },
