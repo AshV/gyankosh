@@ -4,9 +4,9 @@ This document tracks all planned sacred texts, scriptures, and stotras for Gyank
 
 ---
 
-## ✅ Completed in Phases 1, 2, 3, 4 & 5 (69 Texts Total)
+## ✅ Completed in Phases 1, 2, 3, 4, 5 & 6 (74 Texts Total)
 
-### 🪔 चालीसा (12)
+### 🪔 चालीसा (13)
 - [x] श्री हनुमान चालीसा (`hanuman-chalisa.md`)
 - [x] श्री शिव चालीसा (`shiva-chalisa.md`)
 - [x] श्री दुर्गा चालीसा (`durga-chalisa.md`)
@@ -19,8 +19,9 @@ This document tracks all planned sacred texts, scriptures, and stotras for Gyank
 - [x] श्री राम चालीसा (`ram-chalisa.md`)
 - [x] श्री गायत्री चालीसा (`gayatri-chalisa.md`)
 - [x] श्री भैरव चालीसा (`bhairav-chalisa.md`)
+- [x] श्री विश्वकर्मा चालीसा (`vishwakarma-chalisa.md`)
 
-### 🌸 स्तोत्र, अष्टक एवं सहस्रनाम (16)
+### 🌸 स्तोत्र, अष्टक एवं सहस्रनाम (17)
 - [x] श्री विष्णु सहस्रनाम स्तोत्रम् (`vishnu-sahasranama.md`)
 - [x] श्री ललिता सहस्रनाम स्तोत्रम् (`lalita-sahasranama.md`)
 - [x] शिवमहिम्नः स्तोत्रम् (`shiva-mahimna-stotram.md`)
@@ -37,6 +38,7 @@ This document tracks all planned sacred texts, scriptures, and stotras for Gyank
 - [x] गंगा स्तोत्रम् (`ganga-stotram.md`)
 - [x] दुर्गा सप्तशती मुख्य स्तोत्र — कवच, अर्गला, कीलक (`durga-saptashati-traya.md`)
 - [x] दामोदराष्टकम् (`damodarashtakam.md`)
+- [x] श्री विश्वकर्मा स्तोत्रम् एवं अष्टकम् (`vishwakarma-stotram.md`)
 
 ### 🎵 गीता (19 — सम्पूर्ण भगवद्गीता एवं अष्टावक्र गीता)
 - [x] श्रीमद्भगवद्गीता — अध्याय १: अर्जुनविषादयोग (`bhagavad-gita-ch1.md`)
@@ -59,12 +61,13 @@ This document tracks all planned sacred texts, scriptures, and stotras for Gyank
 - [x] श्रीमद्भगवद्गीता — अध्याय १८: मोक्षसंन्यासयोग (`bhagavad-gita-ch18.md`)
 - [x] अष्टावक्र गीता — महर्षि अष्टावक्र एवं जनक संवाद (`ashtavakra-gita.md`)
 
-### 🔥 वेद (5)
+### 🔥 वेद (6)
 - [x] ऋग्वेद — मण्डल १, सूक्त १ (`rigveda-mandala1.md`)
 - [x] श्री सूक्तम् — ऋग्वेद खिलभाग (`sri-suktam.md`)
 - [x] पुरुष सूक्तम् — ऋग्वेद १०.९० (`purusha-suktam.md`)
 - [x] नारायण सूक्तम् — यजुर्वेद तैत्तिरीय आरण्यक (`narayana-suktam.md`)
 - [x] दुर्गा सूक्तम् — महानारायण उपनिषद् (`durga-suktam.md`)
+- [x] विश्वकर्मा सूक्तम् — ऋग्वेद १०.८१ एवं १०.८२ (`vishwakarma-suktam.md`)
 
 ### 🕉️ उपनिषद् (7 — मुख्य उपनिषद्)
 - [x] ईशावास्योपनिषद् (`isha-upanishad.md`)
@@ -75,19 +78,33 @@ This document tracks all planned sacred texts, scriptures, and stotras for Gyank
 - [x] मुण्डकोपनिषद् (`mundaka-upanishad.md`)
 - [x] तैत्तिरीयोपनिषद् (`taittiriya-upanishad.md`)
 
-### 🪔 आरती (6 — नित्य दैनिक आरतियाँ)
+### 🪔 आरती (7 — नित्य दैनिक आरतियाँ)
 - [x] आरती कुंजबिहारी की (`aarti-kunjbihari-ki.md`)
 - [x] आरती ॐ जय जगदीश हरे (`aarti-jai-jagdish-hare.md`)
 - [x] आरती हनुमान लला की (`aarti-hanuman-ji.md`)
 - [x] आरती जय शिव ओंकारा (`aarti-shiva-ji.md`)
 - [x] आरती जय अम्बे गौरी (`aarti-durga-mata.md`)
 - [x] आरती जय गणेश देवा (`aarti-ganesh-ji.md`)
+- [x] आरती श्री विश्वकर्मा जी की (`vishwakarma-aarti.md`)
+
+### 📖 पुराण (1)
+- [x] श्री विश्वकर्मा पुराण — माहात्म्य एवं पंचऋषि कथा (`vishwakarma-puran.md`)
 
 ### 📜 अन्य (4 — नीति एवं पौराणिक संग्रह)
 - [x] चाणक्य नीति (`chanakya-niti.md`)
 - [x] विदुर नीति (`vidura-niti.md`)
 - [x] गोपी गीत — श्रीमद्भागवत महापुराण (`gopi-geet.md`)
 - [x] श्री सुन्दरकाण्ड — श्रीरामचरितमानस (`sundarkand.md`)
+
+---
+
+## 📌 Phase 6: Lord Vishwakarma Sacred Collection (श्री विश्वकर्मा पञ्चरत्न संग्रह) [COMPLETED]
+
+- [x] **श्री विश्वकर्मा चालीसा (Shri Vishwakarma Chalisa)** — शिल्प, तकनीकी कौशल, निर्माण एवं वास्तु समृद्धि हेतु ४० पावन चौपाइयां व दोहे (`vishwakarma-chalisa.md`)
+- [x] **आरती श्री विश्वकर्मा जी की (Shri Vishwakarma Aarti)** — 'ॐ जय श्री विश्वकर्मा, प्रभु जय श्री विश्वकर्मा...' सम्पूर्ण पद्य मय हिन्दी भावार्थ (`vishwakarma-aarti.md`)
+- [x] **विश्वकर्मा सूक्तम् (Vishwakarma Suktam)** — ऋग्वेद मण्डल १०, सूक्त ८१ एवं ८२, १४ मन्त्र मय अन्वय एवं वैदिक हिन्दी अर्थ (`vishwakarma-suktam.md`)
+- [x] **श्री विश्वकर्मा स्तोत्रम् एवं अष्टकम् (Shri Vishwakarma Stotram & Ashtakam)** — ध्यान, ८ श्लोक अष्टकम् एवं फलश्रुति मय हिन्दी अनुवाद (`vishwakarma-stotram.md`)
+- [x] **श्री विश्वकर्मा पुराण (Shri Vishwakarma Purana)** — स्कन्द पुराण नागर खण्ड एवं उपपुराण अन्तर्गत आदि प्राकट्य, पंचऋषि (मनु, मय, त्वष्टा, शिल्पी, दैवज्ञ) उत्पत्ति, सूर्य-तेज कर्तन एवं जगन्नाथ दारुब्रह्म कथा (`vishwakarma-puran.md`)
 
 ---
 
