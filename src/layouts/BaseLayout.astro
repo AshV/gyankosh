@@ -103,6 +103,17 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <div class="header-right-actions" style="display:flex; align-items:center; gap:0.75rem;">
           <button
             type="button"
+            id="header-pwa-install-btn"
+            class="header-install-btn"
+            style="display:none;"
+            aria-label="ज्ञानकोश ऐप इंस्टॉल करें"
+            title="ज्ञानकोश ऐप इंस्टॉल करें"
+          >
+            <span class="install-btn-icon" aria-hidden="true">📲</span>
+            <span class="install-btn-text">ऐप इंस्टॉल करें</span>
+          </button>
+          <button
+            type="button"
             id="header-search-trigger"
             class="header-search-btn"
             aria-label="ग्रंथ खोजें (Ctrl+K)"
@@ -132,11 +143,91 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <a href={`${base}/parichay`} style="color:var(--color-accent);text-decoration:none;font-weight:600;">परिचय एवं सम्पादकीय प्रामाणिकता</a>
         <span aria-hidden="true" style="margin: 0 0.5rem; opacity: 0.5;">•</span>
         <span>सार्वजनिक कार्यक्षेत्र (Public Domain)</span>
+        <span id="footer-install-separator" aria-hidden="true" style="display:none; margin: 0 0.5rem; opacity: 0.5;">•</span>
+        <button
+          type="button"
+          id="footer-pwa-install-btn"
+          class="footer-install-btn"
+          style="display:none; background:none; border:none; color:var(--color-accent); font-family:var(--font-devanagari); font-size:0.85rem; font-weight:600; cursor:pointer; padding:0; text-decoration:underline;"
+        >
+          📲 ऐप इंस्टॉल करें
+        </button>
       </p>
     </footer>
 
     <!-- Site-wide Quick Search Modal -->
     <SearchModal />
+
+    <!-- Floating PWA Install Banner -->
+    <aside id="pwa-install-banner" class="pwa-install-banner" aria-label="ज्ञानकोश ऐप इंस्टॉल करें" style="display:none;">
+      <div class="pwa-banner-inner">
+        <div class="pwa-banner-logo-wrap">
+          <img
+            src={`${base}/logo.png`}
+            alt="ज्ञानकोश"
+            width="44"
+            height="44"
+            class="pwa-banner-logo"
+            loading="lazy"
+          />
+        </div>
+        <div class="pwa-banner-content">
+          <div class="pwa-banner-title">ज्ञानकोश ऐप इंस्टॉल करें</div>
+          <div class="pwa-banner-desc">ऑफ़लाइन स्वाध्याय, तीव्र गति एवं पूर्ण स्क्रीन अनुभव के लिए</div>
+        </div>
+        <div class="pwa-banner-actions">
+          <button type="button" id="pwa-banner-install-btn" class="pwa-btn-primary">
+            📲 इंस्टॉल करें
+          </button>
+          <button
+            type="button"
+            id="pwa-banner-close-btn"
+            class="pwa-btn-dismiss"
+            aria-label="सूचना बंद करें"
+            title="बाद में"
+          >
+            ✕
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- iOS Safari Installation Guide Modal -->
+    <dialog id="pwa-ios-modal" class="pwa-ios-modal" aria-labelledby="pwa-ios-title">
+      <div class="pwa-ios-content">
+        <div class="pwa-ios-header">
+          <div class="pwa-ios-header-left">
+            <img src={`${base}/logo.png`} alt="" width="36" height="36" class="pwa-ios-logo" />
+            <h3 id="pwa-ios-title" class="pwa-ios-title">ज्ञानकोश को होम स्क्रीन पर जोड़ें</h3>
+          </div>
+          <button type="button" id="pwa-ios-close-btn" class="pwa-ios-close" aria-label="बंद करें">✕</button>
+        </div>
+        <p class="pwa-ios-intro">Safari ब्राउज़र में ज्ञानकोश को मोबाइल ऐप की तरह प्रयोग करने के सरल चरण:</p>
+        <ol class="pwa-ios-steps">
+          <li>
+            <span class="step-num">१</span>
+            <div class="step-desc">
+              सफ़ारी के नीचे दिए गए <strong>शेयर बटन</strong> (<span class="ios-icon" aria-label="शेयर">⎋</span> Share) पर टैप करें।
+            </div>
+          </li>
+          <li>
+            <span class="step-num">२</span>
+            <div class="step-desc">
+              मेनू में नीचे स्क्रॉल करके <strong>'होम स्क्रीन में जोड़ें'</strong> (<span class="ios-icon" aria-label="जोड़ें">⊞</span> Add to Home Screen) चुनें।
+            </div>
+          </li>
+          <li>
+            <span class="step-num">३</span>
+            <div class="step-desc">
+              ऊपर दाईं ओर <strong>'जोड़ें'</strong> (Add) दबाएं। ज्ञानकोश का दिव्य प्रतीक आपकी स्क्रीन पर स्थापित हो जाएगा।
+            </div>
+          </li>
+        </ol>
+        <div class="pwa-ios-footer">
+          <button type="button" id="pwa-ios-done-btn" class="pwa-btn-primary" style="width:100%;">समझ गया</button>
+        </div>
+      </div>
+    </dialog>
 
     <script is:inline define:vars={{ base }}>
       document.getElementById('header-search-trigger')?.addEventListener('click', () => {
@@ -153,6 +244,125 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             });
         });
       }
+
+      // PWA Installation Handling
+      (function initPWA() {
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches ||
+                             window.navigator.standalone === true;
+        if (isStandalone) return;
+
+        const isIOS = /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase()) && !window.MSStream;
+
+        let deferredPrompt = null;
+        const headerBtn = document.getElementById('header-pwa-install-btn');
+        const footerBtn = document.getElementById('footer-pwa-install-btn');
+        const footerSep = document.getElementById('footer-install-separator');
+        const banner = document.getElementById('pwa-install-banner');
+        const bannerInstallBtn = document.getElementById('pwa-banner-install-btn');
+        const bannerCloseBtn = document.getElementById('pwa-banner-close-btn');
+        const iosModal = document.getElementById('pwa-ios-modal');
+        const iosCloseBtn = document.getElementById('pwa-ios-close-btn');
+        const iosDoneBtn = document.getElementById('pwa-ios-done-btn');
+
+        function openIOSModal() {
+          if (iosModal && typeof iosModal.showModal === 'function') {
+            iosModal.showModal();
+          }
+        }
+
+        function closeIOSModal() {
+          if (iosModal && typeof iosModal.close === 'function') {
+            iosModal.close();
+          }
+        }
+
+        iosCloseBtn?.addEventListener('click', closeIOSModal);
+        iosDoneBtn?.addEventListener('click', closeIOSModal);
+        iosModal?.addEventListener('click', (e) => {
+          if (e.target === iosModal) closeIOSModal();
+        });
+
+        function showInstallUI() {
+          if (headerBtn) headerBtn.style.display = 'inline-flex';
+          if (footerBtn) footerBtn.style.display = 'inline';
+          if (footerSep) footerSep.style.display = 'inline';
+
+          // Show floating banner if not dismissed in last 7 days
+          const dismissedAt = localStorage.getItem('gyankosh_pwa_dismissed');
+          const now = Date.now();
+          const sevenDays = 7 * 24 * 60 * 60 * 1000;
+          if (!dismissedAt || (now - Number(dismissedAt)) > sevenDays) {
+            setTimeout(() => {
+              if (banner) {
+                banner.style.display = 'block';
+                banner.offsetHeight; // trigger reflow
+                banner.classList.add('is-visible');
+              }
+            }, 1800);
+          }
+        }
+
+        function hideInstallUI() {
+          if (headerBtn) headerBtn.style.display = 'none';
+          if (footerBtn) footerBtn.style.display = 'none';
+          if (footerSep) footerSep.style.display = 'none';
+          if (banner) {
+            banner.classList.remove('is-visible');
+            setTimeout(() => { banner.style.display = 'none'; }, 400);
+          }
+        }
+
+        async function handleInstallTrigger() {
+          if (deferredPrompt) {
+            deferredPrompt.prompt();
+            try {
+              const choice = await deferredPrompt.userChoice;
+              if (choice && choice.outcome === 'accepted') {
+                hideInstallUI();
+              }
+            } catch (err) {
+              console.warn('[PWA] Prompt error:', err);
+            }
+            deferredPrompt = null;
+          } else if (isIOS) {
+            openIOSModal();
+          } else {
+            // For desktop/browsers where prompt is available via browser menu
+            openIOSModal();
+          }
+        }
+
+        headerBtn?.addEventListener('click', handleInstallTrigger);
+        bannerInstallBtn?.addEventListener('click', handleInstallTrigger);
+        footerBtn?.addEventListener('click', (e) => {
+          e.preventDefault();
+          handleInstallTrigger();
+        });
+
+        bannerCloseBtn?.addEventListener('click', () => {
+          localStorage.setItem('gyankosh_pwa_dismissed', String(Date.now()));
+          if (banner) {
+            banner.classList.remove('is-visible');
+            setTimeout(() => { banner.style.display = 'none'; }, 400);
+          }
+        });
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+          e.preventDefault();
+          deferredPrompt = e;
+          showInstallUI();
+        });
+
+        window.addEventListener('appinstalled', () => {
+          hideInstallUI();
+          deferredPrompt = null;
+          console.log('[Gyankosh PWA] App installed successfully');
+        });
+
+        if (isIOS) {
+          showInstallUI();
+        }
+      })();
     </script>
   </body>
 </html>
