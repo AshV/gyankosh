@@ -3,7 +3,7 @@
  * Provides offline reading capabilities and fast cached assets.
  */
 
-const CACHE_NAME = 'gyankosh-v1';
+const CACHE_NAME = 'gyankosh-v2';
 const BASE = '/gyankosh';
 
 // Core assets to pre-cache on install
