@@ -1,0 +1,70 @@
+{
+  "id": "/gyankosh/",
+  "name": "ज्ञानकोश — सनातन धर्मग्रंथ डिजिटल संग्रह",
+  "short_name": "ज्ञानकोश",
+  "description": "सनातन वैदिक एवं पौराणिक धर्मग्रंथों का डिजिटल संग्रह — वेद, उपनिषद्, गीता, चालीसा, स्तोत्र व आरतियाँ।",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#fcf8ee",
+  "theme_color": "#8e1b14",
+  "lang": "hi",
+  "dir": "ltr",
+  "categories": ["books", "education", "lifestyle"],
+  "icons": [
+    {
+      "src": "pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "pwa-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "श्रीमद्भगवद्गीता",
+      "short_name": "गीता",
+      "description": "सम्पूर्ण १८ अध्याय श्लोक एवं अर्थ सहित",
+      "url": "./category/gita",
+      "icons": [{ "src": "pwa-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "चालीसा संग्रह",
+      "short_name": "चालीसा",
+      "description": "हनुमान, शिव, दुर्गा व अन्य चालीसा",
+      "url": "./category/chalisa",
+      "icons": [{ "src": "pwa-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "स्तोत्र संग्रह",
+      "short_name": "स्तोत्र",
+      "description": "वैदिक एवं पौराणिक स्तोत्र",
+      "url": "./category/stotra",
+      "icons": [{ "src": "pwa-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "आरती संग्रह",
+      "short_name": "आरती",
+      "description": "प्रमुख देवी-देवताओं की आरतियाँ",
+      "url": "./category/aarti",
+      "icons": [{ "src": "pwa-192x192.png", "sizes": "192x192" }]
+    }
+  ]
+}

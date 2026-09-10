@@ -82,7 +82,22 @@ const categoryHindiMap: Record<string, string> = {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#8e1b14" id="theme-color-meta" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="ज्ञानकोश" />
+    <meta name="application-name" content="ज्ञानकोश" />
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href={`${base}/manifest.webmanifest`} />
+
+    <!-- Favicons & Touch Icons -->
     <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+    <link rel="icon" type="image/png" sizes="32x32" href={`${base}/favicon-32x32.png`} />
+    <link rel="icon" type="image/png" sizes="16x16" href={`${base}/favicon-16x16.png`} />
+    <link rel="shortcut icon" href={`${base}/favicon.ico`} />
+    <link rel="apple-touch-icon" sizes="180x180" href={`${base}/apple-touch-icon.png`} />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
@@ -415,7 +430,7 @@ const categoryHindiMap: Record<string, string> = {
          Client-Side 3D Pothi Page-Flip Engine
          ══════════════════════════════════════════════════════ -->
 
-    <script define:vars={{ slug, bookTitle: title, defaultShowNumbering: showNumbering }}>
+    <script define:vars={{ slug, bookTitle: title, defaultShowNumbering: showNumbering, base }}>
       const ROOT = document.documentElement;
       const PREF_KEY = 'gyankosh_prefs';
       const PROGRESS_KEY = `gyankosh_progress_${slug}`;
@@ -1280,6 +1295,17 @@ const categoryHindiMap: Record<string, string> = {
           closeInfoModal();
         }
       });
+
+      // PWA Service Worker Registration
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker
+            .register(`${base}/sw.js`, { scope: `${base}/` })
+            .catch((err) => {
+              console.warn('[Gyankosh PWA] Service Worker registration failed:', err);
+            });
+        });
+      }
     </script>
   </body>
 </html>

@@ -187,6 +187,20 @@ a:hover { opacity: 0.8; }
   box-shadow: 0 2px 4px rgba(0,0,0,0.15);
 }
 
+.site-logo .site-logo-img {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-sm);
+  object-fit: contain;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.18);
+  transition: transform 0.2s ease;
+  display: block;
+}
+
+.site-logo:hover .site-logo-img {
+  transform: scale(1.05);
+}
+
 /* ─── Catalog Hero (Traditional Header) ──────────────────── */
 .catalog-hero {
   text-align: center;
