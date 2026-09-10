@@ -8,6 +8,10 @@
  * 3. Title: alphabetical Hindi/Devanagari collation
  */
 
+import weightsRegistry from '../data/weights.json';
+
+const weightsMap = weightsRegistry.weights as Record<string, number>;
+
 export interface SortableText {
   id?: string;
   data: {
@@ -23,6 +27,17 @@ export interface SortOptions {
   groupByCategory?: boolean;
 }
 
+/**
+ * Resolves the weight for a text:
+ * 1. Checks weights registry (src/data/weights.json) by slug/id
+ * 2. Falls back to frontmatter weight (if any)
+ * 3. Defaults to 1000
+ */
+export function getTextWeight(text: SortableText): number {
+  const slug = text.id ? text.id.replace(/\.md$/, '') : '';
+  return weightsMap[slug] ?? text.data.weight ?? 1000;
+}
+
 export function sortTexts<T extends SortableText>(texts: T[], options: SortOptions = {}): T[] {
   return [...texts].sort((a, b) => {
     // Optional grouping by category first
@@ -31,8 +46,8 @@ export function sortTexts<T extends SortableText>(texts: T[], options: SortOptio
     }
 
     // 1. Weight-wise sort (lower weight = higher priority / shown first, default 1000)
-    const weightA = a.data.weight ?? 1000;
-    const weightB = b.data.weight ?? 1000;
+    const weightA = getTextWeight(a);
+    const weightB = getTextWeight(b);
     if (weightA !== weightB) {
       return weightA - weightB;
     }

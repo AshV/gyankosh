@@ -15,7 +15,7 @@ const librarySchema = z.object({
   tags: z.array(z.string()).default([]),
   showNumbering: z.boolean().default(true),
   context: z.string().optional(),
-  weight: z.number().default(1000),
+  weight: z.number().optional(),
 });
 
 export const collections = {

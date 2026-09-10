@@ -2,6 +2,8 @@
 
 This document tracks all planned sacred texts, scriptures, and stotras for Gyankosh, organized by category, priority, and SEO/devotional impact.
 
+> ⚖️ **Weight Registry**: For the complete list of text sorting weights and the next available weight (**`750`**), see [`WEIGHTS.md`](file:///a:/GitHub/Gyankosh/WEIGHTS.md) or run `npm run weights`.
+
 ---
 
 ## ✅ Completed in Phases 1, 2, 3, 4, 5 & 6 (74 Texts Total)
