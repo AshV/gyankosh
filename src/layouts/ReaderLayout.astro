@@ -13,6 +13,7 @@
 import '../styles/global.css';
 import '../styles/reader.css';
 import SEO from '../components/SEO.astro';
+import { tagToSlug } from '../utils/tags';
 
 export interface Props {
   title: string;
@@ -62,9 +63,6 @@ const ogImage = image || (coverImage
   ? (coverImage.startsWith('http') ? coverImage : `https://www.ashishvishwakarma.com${base}${coverImage.startsWith('/') ? '' : '/'}${coverImage}`)
   : `https://www.ashishvishwakarma.com${base}/covers/${slug}.jpg`);
 
-function tagToSlug(tag: string): string {
-  return tag.toLowerCase().replace(/\s+/g, '-');
-}
 
 const categoryHindiMap: Record<string, string> = {
   Veda: '🔥 वेद',

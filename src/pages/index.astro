@@ -9,6 +9,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import BookCard from "../components/BookCard.astro";
 import { CATEGORIES } from "../content.config";
 import { sortTexts } from "../utils/sorting";
+import { tagToSlug } from "../utils/tags";
+import { deriveSearchKeywords } from "../utils/search";
 
 const allTexts = sortTexts(await getCollection("library"));
 
@@ -77,9 +79,6 @@ const categoryCounts = CATEGORIES.reduce(
   {} as Record<string, number>,
 );
 
-function tagToSlug(tag: string): string {
-  return tag.toLowerCase().replace(/\s+/g, '-');
-}
 
 // Collect unique tags with counts
 const tagCounts = new Map<string, { name: string; count: number }>();
@@ -185,16 +184,34 @@ const jsonLd = {
       </h2>
     </div>
 
-    <!-- Category Filter Controls -->
+    <!-- Catalog Search & Category Filter Controls -->
     <section
       class="search-filter-section"
-      aria-label="ग्रंथ श्रेणी छाननी"
-      style="display: none; padding: var(--space-md) var(--space-lg);"
+      aria-label="ग्रंथ खोज एवं श्रेणी छाननी"
     >
-      <div
-        class="filter-container"
-        style="justify-content: center; margin: 0 auto;"
-      >
+      <div class="search-box-wrapper">
+        <span class="search-box-icon" aria-hidden="true">🔍</span>
+        <input
+          type="search"
+          id="catalog-search-input"
+          class="catalog-search-input"
+          placeholder="ग्रंथ, देवता या विषय खोजें... (उदा. हनुमान, Gita, शिव)"
+          autocomplete="off"
+          spellcheck="false"
+          aria-label="ग्रंथ खोजें"
+        />
+        <button
+          type="button"
+          id="catalog-search-clear"
+          class="search-clear-btn"
+          aria-label="खोज साफ़ करें"
+          style="display: none;"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="filter-container">
         <span class="filter-label">श्रेणी:</span>
         <button
           class="filter-pill active"
@@ -228,15 +245,15 @@ const jsonLd = {
     </section>
 
     <!-- Library Shelf Header -->
-    <div class="results-bar" style="display: none;">
+    <div class="results-bar" id="catalog-results-bar">
       <div class="results-count-wrapper">
         <span>उपलब्ध ग्रंथ: </span>
         <span id="results-count" class="results-count"
           >{toHindiDigits(totalTexts)}</span
         >
       </div>
-      <div style="font-size: 0.85rem; color: var(--color-text-faint);">
-        अवर्गीकृत सम्पूर्ण सूची
+      <div id="results-subtext" style="font-size: 0.85rem; color: var(--color-text-faint);">
+        सम्पूर्ण संग्रह
       </div>
     </div>
 
@@ -248,29 +265,47 @@ const jsonLd = {
       aria-label="सनातन धर्मग्रंथ सूची"
     >
       {
-        allTexts.map((text) => (
-          <div
-            role="listitem"
-            class="book-card-wrapper"
-            data-slug={text.id}
-            data-title={text.data.title}
-            data-author={text.data.author || ""}
-            data-description={text.data.description}
-            data-category={text.data.category}
-          >
-            <BookCard
-              slug={text.id}
-              title={text.data.title}
-              author={text.data.author}
-              description={text.data.description}
-              category={text.data.category}
-              language={text.data.language}
-              coverColor={text.data.coverColor}
-              coverImage={text.data.coverImage}
-            />
-          </div>
-        ))
+        allTexts.map((text) => {
+          const keywords = deriveSearchKeywords(text).join(' ');
+          const tagsStr = (text.data.tags || []).join(' ');
+          return (
+            <div
+              role="listitem"
+              class="book-card-wrapper"
+              data-slug={text.id.replace(/\.md$/, '')}
+              data-title={text.data.title}
+              data-author={text.data.author || ""}
+              data-description={text.data.description}
+              data-category={text.data.category}
+              data-tags={tagsStr}
+              data-keywords={keywords}
+            >
+              <BookCard
+                slug={text.id}
+                title={text.data.title}
+                author={text.data.author}
+                description={text.data.description}
+                category={text.data.category}
+                language={text.data.language}
+                coverColor={text.data.coverColor}
+                coverImage={text.data.coverImage}
+              />
+            </div>
+          );
+        })
       }
+    </div>
+
+    <!-- Empty State -->
+    <div id="catalog-empty-state" class="catalog-empty-state" style="display: none;">
+      <div class="empty-icon" aria-hidden="true">🪷</div>
+      <h3 class="empty-title">कोई ग्रंथ नहीं मिला</h3>
+      <p id="catalog-empty-desc" class="empty-desc">
+        कृपया अन्य शब्द, देवता का नाम या English में खोज कर देखें।
+      </p>
+      <button type="button" id="catalog-reset-btn" class="catalog-reset-btn">
+        सभी ग्रंथ देखें
+      </button>
     </div>
 
     <!-- Tag Cloud Section (विषय टैग) -->
@@ -359,14 +394,23 @@ const jsonLd = {
     refreshGyankoshSavedShelf();
   });
 
+  import { normalizeSearchText } from "../utils/search";
+
   document.addEventListener("DOMContentLoaded", () => {
     refreshGyankoshSavedShelf();
 
+    const searchInput = document.getElementById("catalog-search-input") as HTMLInputElement | null;
+    const searchClearBtn = document.getElementById("catalog-search-clear");
     const filterPills = document.querySelectorAll(".filter-pill");
     const bookWrappers = document.querySelectorAll(
       ".book-card-wrapper",
     ) as NodeListOf<HTMLElement>;
     const resultsCount = document.getElementById("results-count");
+    const resultsSubtext = document.getElementById("results-subtext");
+    const emptyState = document.getElementById("catalog-empty-state");
+    const emptyDesc = document.getElementById("catalog-empty-desc");
+    const resetBtn = document.getElementById("catalog-reset-btn");
+    const bookGrid = document.getElementById("book-grid");
 
     if (!bookWrappers.length || !resultsCount) return;
 
@@ -394,6 +438,14 @@ const jsonLd = {
     });
 
     function filterLibrary() {
+      const rawQuery = (searchInput?.value || "").trim();
+      const normQuery = normalizeSearchText(rawQuery);
+      const queryTokens = normQuery.split(" ").filter(Boolean);
+
+      if (searchClearBtn) {
+        searchClearBtn.style.display = rawQuery ? "block" : "none";
+      }
+
       let visibleCount = 0;
 
       bookWrappers.forEach((wrapper) => {
@@ -401,7 +453,29 @@ const jsonLd = {
         const matchesCategory =
           activeCategory === "all" || category === activeCategory;
 
-        if (matchesCategory) {
+        if (!matchesCategory) {
+          wrapper.classList.add("hidden");
+          return;
+        }
+
+        if (!rawQuery) {
+          wrapper.classList.remove("hidden");
+          visibleCount++;
+          return;
+        }
+
+        const title = normalizeSearchText(wrapper.dataset.title || "");
+        const slug = normalizeSearchText((wrapper.dataset.slug || "").replace(/-/g, " "));
+        const author = normalizeSearchText(wrapper.dataset.author || "");
+        const cat = normalizeSearchText(wrapper.dataset.category || "");
+        const tags = normalizeSearchText(wrapper.dataset.tags || "");
+        const keywords = normalizeSearchText(wrapper.dataset.keywords || "");
+
+        const combined = `${title} ${slug} ${author} ${cat} ${tags} ${keywords}`;
+
+        const matchesText = queryTokens.every((token) => combined.includes(token));
+
+        if (matchesText) {
           wrapper.classList.remove("hidden");
           visibleCount++;
         } else {
@@ -411,6 +485,75 @@ const jsonLd = {
 
       // Update count text
       resultsCount.textContent = toHindiDigits(visibleCount);
+
+      // Handle Empty State
+      if (visibleCount === 0) {
+        if (emptyState) emptyState.style.display = "block";
+        if (bookGrid) bookGrid.style.display = "none";
+        if (emptyDesc) {
+          emptyDesc.textContent = `‘${rawQuery}’ के लिए कोई ग्रंथ नहीं मिला। कृपया अन्य शब्द, देवता का नाम या English में खोज कर देखें।`;
+        }
+        if (resultsSubtext) resultsSubtext.textContent = "कोई परिणाम नहीं";
+      } else {
+        if (emptyState) emptyState.style.display = "none";
+        if (bookGrid) bookGrid.style.display = "grid";
+        if (resultsSubtext) {
+          resultsSubtext.textContent = rawQuery ? "खोज परिणाम" : "सम्पूर्ण संग्रह";
+        }
+      }
+    }
+
+    // Live search input handler with URL sync
+    if (searchInput) {
+      searchInput.addEventListener("input", () => {
+        filterLibrary();
+        const val = searchInput.value.trim();
+        const url = new URL(window.location.href);
+        if (val) {
+          url.searchParams.set("q", val);
+        } else {
+          url.searchParams.delete("q");
+        }
+        window.history.replaceState({}, "", url.toString());
+      });
+    }
+
+    // Clear Button Handler
+    if (searchClearBtn) {
+      searchClearBtn.addEventListener("click", () => {
+        if (searchInput) {
+          searchInput.value = "";
+          searchInput.focus();
+          filterLibrary();
+          const url = new URL(window.location.href);
+          url.searchParams.delete("q");
+          window.history.replaceState({}, "", url.toString());
+        }
+      });
+    }
+
+    // Reset Button Handler
+    if (resetBtn) {
+      resetBtn.addEventListener("click", () => {
+        if (searchInput) searchInput.value = "";
+        activeCategory = "all";
+        filterPills.forEach((p) => {
+          const isAll = p.getAttribute("data-category") === "all";
+          p.classList.toggle("active", isAll);
+          p.setAttribute("aria-pressed", isAll ? "true" : "false");
+        });
+        filterLibrary();
+        const url = new URL(window.location.href);
+        url.searchParams.delete("q");
+        window.history.replaceState({}, "", url.toString());
+      });
+    }
+
+    // Check URL query on initial load (?q=...)
+    const initialQ = new URLSearchParams(window.location.search).get("q");
+    if (initialQ && searchInput) {
+      searchInput.value = initialQ;
+      filterLibrary();
     }
 
     // Category Pill Events

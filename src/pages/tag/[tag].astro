@@ -8,10 +8,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BookCard from '../../components/BookCard.astro';
 import { sortTexts } from '../../utils/sorting';
-
-function tagToSlug(tag: string): string {
-  return tag.toLowerCase().replace(/\s+/g, '-');
-}
+import { tagToSlug } from '../../utils/tags';
 
 function toHindiDigits(num: number): string {
   const digits = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
@@ -21,16 +18,13 @@ function toHindiDigits(num: number): string {
 export async function getStaticPaths() {
   const allTexts = await getCollection('library');
 
-  function _tagToSlug(tag: string): string {
-    return tag.toLowerCase().replace(/\s+/g, '-');
-  }
-
-  // Collect all unique tags and their associated texts
+  // Collect all unique tags mapped to their English slug and associated texts
   const tagMap = new Map<string, typeof allTexts>();
 
   for (const text of allTexts) {
     for (const tag of text.data.tags ?? []) {
-      const slug = _tagToSlug(tag);
+      const slug = tagToSlug(tag);
+      if (!slug) continue;
       if (!tagMap.has(slug)) {
         tagMap.set(slug, []);
       }
@@ -43,23 +37,23 @@ export async function getStaticPaths() {
   }
 
   return Array.from(tagMap.entries()).map(([slug, texts]) => {
-    // Use the original-case version of the first occurrence as the display name
+    // Use the original-case Hindi version of the first occurrence as the display name
     const originalTag = allTexts
       .flatMap(t => t.data.tags ?? [])
-      .find(t => _tagToSlug(t) === slug) || slug;
+      .find(t => tagToSlug(t) === slug) || slug;
 
     return {
       params: { tag: slug },
-      props: { tagName: originalTag, texts: sortTexts(texts) },
+      props: { tagName: originalTag, tagSlug: slug, texts: sortTexts(texts) },
     };
   });
 }
 
-const { tagName, texts } = Astro.props;
+const { tagName, tagSlug, texts } = Astro.props;
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
-const canonicalUrl = `https://www.ashishvishwakarma.com/gyankosh/tag/${tagToSlug(tagName)}`;
+const canonicalUrl = `https://www.ashishvishwakarma.com/gyankosh/tag/${tagSlug || tagToSlug(tagName)}`;
 const tagCover = texts[0]?.data?.coverImage
   ? (texts[0].data.coverImage.startsWith('http') ? texts[0].data.coverImage : `https://www.ashishvishwakarma.com/gyankosh${texts[0].data.coverImage.startsWith('/') ? '' : '/'}${texts[0].data.coverImage}`)
   : 'https://www.ashishvishwakarma.com/gyankosh/og-default.jpg';
