@@ -1,19 +1,7 @@
 {
-  "quotaResetUtc": "2026-09-10T23:05:12Z",
+  "status": "completed",
+  "completedAt": "2026-09-11T10:16:10+05:30",
   "aspectRatio": "1:1",
   "style": "Classical North Indian Devotional / Geeta Press Gorakhpur lithograph oil painting style",
-  "remaining": [
-    {
-      "id": "vishwakarma-chalisa",
-      "targetFile": "public/covers/vishwakarma-chalisa.jpg",
-      "title": "श्री विश्वकर्मा चालीसा",
-      "prompt": "A classical North Indian devotional oil painting for Sri Vishwakarma Chalisa. Lord Vishwakarma is portrayed as a loving, wise elderly divine craftsman (an old sage-like deity with a radiant serene smile, long flowing white beard and mustache, majestic golden mukut crown, golden ornaments, wearing yellow dhoti and saffron shawl). Seated gracefully on an ornate golden throne with a radiant divine sunburst halo behind his head. In his four divine hands he holds a golden hammer, a measuring cord, a sacred craft manuscript book, and his front right hand raised in divine blessing and protection (abhaya mudra). At his feet, an offering of fresh orange marigold flowers, sacred tulsi, and traditional artisan instruments (anvil, compass, chisel, gears, and blueprint) sanctified with red vermillion marks. A loyal decorated white elephant rests by his side. Revered Geeta Press Gorakhpur devotional calendar art style with warm glowing light, framed by an ornate classical Indian golden arch. Featuring ornate golden Devanagari lettering at the top: 'श्री विश्वकर्मा चालीसा'."
-    },
-    {
-      "id": "vishwakarma-aarti",
-      "targetFile": "public/covers/vishwakarma-aarti.jpg",
-      "title": "आरती श्री विश्वकर्मा जी की",
-      "prompt": "A classical North Indian devotional oil painting depicting the grand evening Aarti celebration of Lord Vishwakarma. The central deity Lord Vishwakarma is portrayed as a venerable, radiant wise elderly divine patriarch with a flowing snow-white beard and mustache, ornate tall golden crown, gentle compassionate eyes, seated on a raised golden lotus simhasana. Around him, glowing multi-tiered brass oil lamps (aarti thali with camphor flame and sacred deepams) illuminate the temple pavilion with warm golden light. Fragrant garlands of orange marigolds, holy basil, and incense smoke swirl through the sanctum. Devoted worshippers in traditional Indian attire reverently offer prayers with brass bells. A decorated white elephant stands gracefully beside the sanctum. Revered Geeta Press Gorakhpur devotional calendar art style with rich vermillion, saffron, and gold tones, bordered by an intricate Indian temple arch. Featuring ornate golden Devanagari lettering at the top: 'आरती श्री विश्वकर्मा जी की'."
-    }
-  ]
+  "remaining": []
 }
