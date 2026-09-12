@@ -5,7 +5,7 @@ description: "सनातन धर्म के कोटि-कोटि घ�
 language: "Hindi"
 category: "Aarti"
 coverColor: "hsl(45, 90%, 38%)"
-coverImage: "/covers/aarti-jai-jagdish-hare.jpg"
+coverImage: "/covers/aarti-jai-jagdish-hare.webp"
 tags: ["आरती", "विष्णु", "जगदीश-हरे", "नारायण", "दैनिक-प्रार्थना", "भक्ति"]
 showNumbering: false
 context: "पण्डित श्रद्धाराम फिल्लौरी द्वारा रचित यह मंगल आरती भारतवर्ष एवं विश्वभर के हिन्दू परिवारों में नित्य सन्ध्या एवं उत्सवों पर गाई जाने वाली सार्वभौमिक देव-स्तुति है। इसमें समस्त दुःखों के निवारण एवं प्रभु-शरण का आर्त भाव है।"

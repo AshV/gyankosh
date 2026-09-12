@@ -6,7 +6,7 @@ chapter: 3
 language: "Sanskrit"
 category: "Gita"
 coverColor: "hsl(25, 80%, 40%)"
-coverImage: "/covers/bhagavad-gita.jpg"
+coverImage: "/covers/bhagavad-gita.webp"
 tags: ["श्रीकृष्ण", "अर्जुन", "गीता", "कर्मयोग", "निष्काम-कर्म", "यज्ञ", "स्वधर्म"]
 showNumbering: true
 context: "इस अध्याय में भगवान श्रीकृष्ण ने निष्काम कर्मयोग की गहन व्याख्या की है। उन्होंने बताया कि प्रकृति के चक्र में लोकसंग्रह और यज्ञ-भावना से किए गए कर्म ही मोक्षप्रद हैं, तथा कामना और क्रोध ही मनुष्य के प्रधान आत्म-शत्रु हैं।"

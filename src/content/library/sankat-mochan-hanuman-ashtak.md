@@ -5,7 +5,7 @@ description: "गोस्वामी तुलसीदास कृत सं
 language: "Hindi/Awadhi"
 category: "Stotra"
 coverColor: "hsl(25, 90%, 45%)"
-coverImage: "/covers/sankat-mochan-hanuman-ashtak.jpg"
+coverImage: "/covers/sankat-mochan-hanuman-ashtak.webp"
 tags: ["हनुमान", "संकट मोचन", "अष्टक", "तुलसीदास", "स्तोत्र", "अवधी"]
 showNumbering: true
 context: "गोस्वामी तुलसीदास जी द्वारा रचित यह मत्तगयन्द सवैया छन्द का अष्टक हनुमान जी के संकटमोचन स्वरूप का आह्वान करता है। इसमें सुग्रीव-उद्धार, लक्ष्मण-प्राणरक्षा एवं सीता-सुधि जैसे संकट-हरण प्रसंगों का स्मरण है।"

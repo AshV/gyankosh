@@ -5,7 +5,7 @@ description: "भगवान श्री विश्वकर्मा की
 language: "Hindi/Awadhi"
 category: "Chalisa"
 coverColor: "hsl(28, 90%, 45%)"
-coverImage: "/covers/vishwakarma-chalisa.jpg"
+coverImage: "/covers/vishwakarma-chalisa.webp"
 tags: ["श्री विश्वकर्मा", "चालीसा", "शिल्प", "स्थापत्य", "वास्तु", "भक्ति"]
 showNumbering: false
 context: "सकल सृष्टि के आदि वास्तुकार भगवान श्री विश्वकर्मा की कृपा, शिल्प-कौशल, यन्त्र-सिद्धि, तकनीकी बुद्धि, आजीविका वृद्धि एवं वास्तु दोष निवारण हेतु चालीस पावन चौपाइयों व दोहों से युक्त मंगलकारी स्तुति।"

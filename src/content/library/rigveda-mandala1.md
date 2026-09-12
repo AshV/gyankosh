@@ -6,7 +6,7 @@ chapter: 1
 language: "Vedic Sanskrit"
 category: "Veda"
 coverColor: "hsl(340, 70%, 40%)"
-coverImage: "/covers/rigveda-mandala1.jpg"
+coverImage: "/covers/rigveda-mandala1.webp"
 tags: ["ऋग्वेद", "अग्नि", "सूक्त", "वेद", "संस्कृत"]
 context: "मानव इतिहास के प्राचीनतम ग्रन्थ ऋग्वेद का यह प्रथम मण्डल एवं प्रथम सूक्त है। महर्षि विश्वामित्र के पुत्र मधुच्छन्दा द्वारा दृष्ट यह सूक्त अग्निमीळे पुरोहितं से आरम्भ होकर यज्ञीय चेतना, दिव्य प्रकाश एवं कल्याण की वैदिक प्रार्थना करता है।"
 ---

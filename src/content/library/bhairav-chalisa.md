@@ -5,7 +5,7 @@ description: "भगवान काल भैरव एवं बटुक भ�
 language: "Hindi/Awadhi"
 category: "Chalisa"
 coverColor: "hsl(0, 75%, 35%)"
-coverImage: "/covers/bhairav-chalisa.jpg"
+coverImage: "/covers/bhairav-chalisa.webp"
 tags: ["भैरव", "काल भैरव", "बटुक भैरव", "चालीसा"]
 showNumbering: false
 context: "भगवान शिव के रौद्र एवं रक्षाकारी स्वरूप कालभैरव की यह चालीसा भय, व्याधि, शत्रु-बाधा एवं तान्त्रिक उपद्रवों के शमन हेतु पठनीय है। इसमें काशी के कोतवाल भैरवनाथ के अस्त्र, वाहन एवं शक्ति का गुणगान है।"

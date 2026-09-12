@@ -5,7 +5,7 @@ description: "महानारायण उपनिषद् एवं ऋग
 language: "Vedic Sanskrit"
 category: "Veda"
 coverColor: "hsl(350, 80%, 42%)"
-coverImage: "/covers/durga-suktam.jpg"
+coverImage: "/covers/durga-suktam.webp"
 tags: ["वेद", "दुर्गा-सूक्त", "दुर्गा", "अग्नि", "महानारायण-उपनिषद्", "रक्षा"]
 showNumbering: true
 context: "कृष्ण यजुर्वेद के तैत्तिरीय आरण्यक के महानारायणोपनिषद् का यह सूक्त अग्नि-स्वरूपा भगवती दुर्गा की प्रार्थना है। इसमें भवसागर के संकटनाशक, पापनाशक तथा ज्योतिर्मय शक्ति के रूप में देवी के मन्त्रों का गान है।"

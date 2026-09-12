@@ -5,7 +5,7 @@ description: "भगवान श्रीकृष्ण की महिमा
 language: "Hindi/Awadhi"
 category: "Chalisa"
 coverColor: "hsl(215, 75%, 45%)"
-coverImage: "/covers/krishna-chalisa.jpg"
+coverImage: "/covers/krishna-chalisa.webp"
 tags: ["कृष्ण", "श्याम", "गोविन्द", "चालीसा"]
 showNumbering: false
 context: "आनन्दकन्द भगवान श्रीकृष्ण की बाल-लीलाओं, माखन-चोरी, गोवर्धन-धारण, कालिया-दमन एवं गीता के उपदेशों का भावपूर्ण स्मरण कराने वाली यह चालीसा प्रेम-भक्ति एवं आनन्द की प्राप्ति का सहज माध्यम है।"

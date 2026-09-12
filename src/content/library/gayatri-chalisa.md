@@ -5,7 +5,7 @@ description: "वेदमाता माँ गायत्री की म�
 language: "Hindi/Awadhi"
 category: "Chalisa"
 coverColor: "hsl(48, 85%, 45%)"
-coverImage: "/covers/gayatri-chalisa.jpg"
+coverImage: "/covers/gayatri-chalisa.webp"
 tags: ["गायत्री", "वेदमाता", "सविता", "चालीसा"]
 showNumbering: false
 context: "समस्त वेदों की जननी वेदमाता भगवती गायत्री के पावन चौबीस अक्षरों के सार को व्यक्त करने वाली यह चालीसा साधकों में सद्बुद्धि, आत्म-तेज और आध्यात्मिक ऊर्जा का संचार करती है।"

@@ -5,7 +5,7 @@ description: "जगद्गुरु आदिशङ्कराचार्�
 language: "Sanskrit"
 category: "Stotra"
 coverColor: "hsl(190, 75%, 40%)"
-coverImage: "/covers/ganga-stotram.jpg"
+coverImage: "/covers/ganga-stotram.webp"
 tags: ["स्तोत्र", "गंगा", "शङ्कराचार्य", "पतित-पावनी", "भागीरथी", "मोक्ष"]
 showNumbering: true
 context: "जगद्गुरु आदि शंकराचार्य विरचित यह स्तोत्र पतित-पावनी, भागीरथी माँ गंगा की स्तुति में है। इसके पाठ से पाप-ताप का शमन, मन की निर्मलता तथा मोक्ष-दायिनी गंगा की अनुकम्पा प्राप्त होती है।"

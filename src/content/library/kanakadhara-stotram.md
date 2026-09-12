@@ -5,7 +5,7 @@ description: "जगद्गुरु आदिशङ्कराचार्�
 language: "Sanskrit"
 category: "Stotra"
 coverColor: "hsl(42, 95%, 45%)"
-coverImage: "/covers/kanakadhara-stotram.jpg"
+coverImage: "/covers/kanakadhara-stotram.webp"
 tags: ["स्तोत्र", "लक्ष्मी", "शङ्कराचार्य", "कनकधारा", "सुवर्ण-वृष्टि", "धनदा"]
 showNumbering: true
 context: "जगद्गुरु आदि शंकराचार्य द्वारा एक निर्धन ब्राह्मणी के घर स्वर्ण-आँवलों की वर्षा कराने हेतु साक्षात् माँ महालक्ष्मी के स्तवन में रचित यह कनकधारा स्तोत्र दारिद्र्य-निवारण, सौन्दर्य एवं ऐश्वर्य-प्राप्ति की अनुपम निधि है।"

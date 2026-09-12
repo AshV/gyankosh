@@ -6,7 +6,7 @@ chapter: 1
 language: "Sanskrit"
 category: "Stotra"
 coverColor: "hsl(215, 80%, 35%)"
-coverImage: "/covers/vishnu-sahasranama.jpg"
+coverImage: "/covers/vishnu-sahasranama.webp"
 tags: ["विष्णु", "सहस्रनाम", "महाभारत", "भीष्म", "स्तोत्र", "हरि"]
 showNumbering: true
 context: "महाभारत के अनुशासन पर्व में शरशय्या पर लेटे पितामह भीष्म द्वारा युधिष्ठिर को उपदेशित भगवान विष्णु के एक सहस्र (१०००) पावन नामों का यह स्तोत्र सनातन धर्म के सर्वोत्कृष्ट एवं परम फलदायी स्तोत्रों का मुकुटमणि है।"

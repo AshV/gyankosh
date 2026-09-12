@@ -5,7 +5,7 @@ description: "सामवेदीय केनोपनिषद् — 'क�
 language: "Vedic Sanskrit"
 category: "Upanishad"
 coverColor: "hsl(190, 80%, 35%)"
-coverImage: "/covers/upanishad.jpg"
+coverImage: "/covers/upanishad.webp"
 tags: ["उपनिषद्", "वेद", "सामवेद", "केनोपनिषद्", "ब्रह्मविद्या", "यक्ष-आख्यान", "उमा-हैमवती"]
 showNumbering: true
 context: "सामवेद के तलवकार ब्राह्मण का यह उपनिषद् केनेषितं पतति प्रेषितं मनः जैसे गूढ़ प्रश्न से आरम्भ होता है। इसमें यक्षोपाख्यान द्वारा इन्द्रियों से परे साक्षात् परब्रह्म की सत्ता का उद्घाटन है।"

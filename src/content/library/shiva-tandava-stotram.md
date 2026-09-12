@@ -5,7 +5,7 @@ description: "लङ्काधिपति रावण द्वारा व
 language: "Sanskrit"
 category: "Stotra"
 coverColor: "hsl(210, 60%, 28%)"
-coverImage: "/covers/shiva-tandava-stotram.jpg"
+coverImage: "/covers/shiva-tandava-stotram.webp"
 tags: ["शिव", "ताण्डव", "स्तोत्र", "रावण", "भोलेनाथ", "संस्कृत", "महादेव"]
 showNumbering: true
 context: "लङ्काधिपति रावण द्वारा भगवान शिव के ताण्डव नृत्य एवं दिव्य स्वरूप की स्तुति में रचित यह परम ओजस्वी स्तोत्र संस्कृत साहित्य का अद्वितीय रत्न है। यह पञ्चचामर छन्द की द्रुत लय, अनुप्रास एवं अनन्य शिव-भक्ति से परिपूर्ण है।"

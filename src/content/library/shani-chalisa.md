@@ -5,7 +5,7 @@ description: "भगवान शनि देव की महिमा मे�
 language: "Hindi/Awadhi"
 category: "Chalisa"
 coverColor: "hsl(220, 45%, 25%)"
-coverImage: "/covers/shani-chalisa.jpg"
+coverImage: "/covers/shani-chalisa.webp"
 tags: ["शनि", "शनि देव", "साढ़े साती", "चालीसा"]
 showNumbering: false
 context: "कर्मफलदाता भगवान सूर्य-पुत्र शनिदेव की कृपा-प्राप्ति, साढ़ेसाती, ढैय्या एवं कष्ट-निवारण हेतु शनिवार को श्रद्धापूर्वक पठनीय पावन स्तुति। इसमें शनिदेव के न्यायप्रिय, दण्डधर एवं भक्तवत्सल रूप की वन्दना है।"

@@ -5,7 +5,7 @@ description: "भगवान सूर्य नारायण की मह�
 language: "Hindi/Awadhi"
 category: "Chalisa"
 coverColor: "hsl(18, 90%, 48%)"
-coverImage: "/covers/surya-chalisa.jpg"
+coverImage: "/covers/surya-chalisa.webp"
 tags: ["सूर्य", "आदित्य", "भास्कर", "चालीसा"]
 showNumbering: false
 context: "प्रत्यक्ष देवता भुवन-भास्कर भगवान सूर्य नारायण की वन्दना में रचित यह चालीसा आरोग्य, तेज, यश और दीर्घायु प्रदान करने वाली है। इसमें सप्तरथ-सवार, दिनकर-दिवाकर प्रभु के विश्व-पोषक स्वरूप की स्तुति है।"

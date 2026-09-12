@@ -5,7 +5,7 @@ description: "भगवान शिव की महिमा में चा�
 language: "Hindi/Awadhi"
 category: "Chalisa"
 coverColor: "hsl(205, 65%, 40%)"
-coverImage: "/covers/shiva-chalisa.jpg"
+coverImage: "/covers/shiva-chalisa.webp"
 tags: ["शिव", "भोलेनाथ", "चालीसा", "स्तोत्र"]
 showNumbering: false
 context: "भगवान शिव की अहैतुकी कृपा, दारिद्र्य-निवारण एवं मनोकामना सिद्धि हेतु रचित यह अत्यन्त लोकप्रिय स्तुति है। इसमें देवाधिदेव महादेव के पावन मस्तक पर गंगा, चन्द्रमा, नीलकण्ठ स्वरूप तथा त्रिपुरारी लीलाओं का भावपूर्ण गुणगान है।"

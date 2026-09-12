@@ -5,7 +5,7 @@ description: "देवशिल्पी भगवान विश्वकर�
 language: "Sanskrit"
 category: "Stotra"
 coverColor: "hsl(15, 85%, 42%)"
-coverImage: "/covers/vishwakarma-stotram.jpg"
+coverImage: "/covers/vishwakarma-stotram.webp"
 tags: ["श्री विश्वकर्मा", "स्तोत्र", "अष्टकम्", "संस्कृत", "शिल्पशास्त्र", "वास्तु"]
 showNumbering: true
 context: "शिल्पशास्त्र एवं पौराणिक परम्परा से प्राप्त यह पावन स्तोत्र एवं अष्टकम् समस्त ६४ कलाओं, स्थापत्य, यन्त्रविद्या, वास्तु-दोष निवारण तथा आजीविका-सिद्धि हेतु देवशिल्पी की आराधना का सिद्ध मन्त्रमय पाठ है।"

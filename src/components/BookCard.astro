@@ -53,10 +53,15 @@ const readUrl = `${base}/read/${slug}`;
 const categoryUrl = `${base}/category/${category.toLowerCase()}`;
 const resolvedCoverImage = coverImage
   ? (coverImage.startsWith('http') ? coverImage : `${base}${coverImage.startsWith('/') ? '' : '/'}${coverImage}`)
-  : `${base}/covers/${slug}.jpg`;
+  : `${base}/covers/${slug}.webp`;
+
 const resolvedWebpImage = resolvedCoverImage.endsWith('.jpg')
   ? resolvedCoverImage.replace(/\.jpg$/, '.webp')
-  : null;
+  : resolvedCoverImage;
+
+const resolvedJpgImage = resolvedCoverImage.endsWith('.webp')
+  ? resolvedCoverImage.replace(/\.webp$/, '.jpg')
+  : resolvedCoverImage;
 ---
 
 <div
@@ -69,11 +74,9 @@ const resolvedWebpImage = resolvedCoverImage.endsWith('.jpg')
   <div class="book-card-cover">
     <a href={readUrl} class="book-card-cover-link" aria-label={`पठन: ${title}`}>
       <picture class="book-card-cover-picture">
-        {resolvedWebpImage && (
-          <source srcset={resolvedWebpImage} type="image/webp" />
-        )}
+        <source srcset={resolvedWebpImage} type="image/webp" />
         <img 
-          src={resolvedCoverImage} 
+          src={resolvedJpgImage} 
           alt={`${title}${author ? ` — ${author}` : ''} पुस्तक आवरण`} 
           class="book-card-cover-img"
           loading="lazy"

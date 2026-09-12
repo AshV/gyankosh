@@ -5,7 +5,7 @@ description: "गोस्वामी तुलसीदास कृत श्
 language: "Hindi/Awadhi"
 category: "Stotra"
 coverColor: "hsl(15, 85%, 45%)"
-coverImage: "/covers/bajrang-baan.jpg"
+coverImage: "/covers/bajrang-baan.webp"
 tags: ["हनुमान", "बजरंग बाण", "तुलसीदास", "स्तोत्र", "रक्षा", "अवधी"]
 showNumbering: true
 context: "गोस्वामी तुलसीदास जी की परम्परा से प्राप्त यह मन्त्रमय स्तोत्र घोर संकट, अकाल मृत्यु-भय, प्रेत-बाधा एवं शत्रु-नाश हेतु अमोघ बाण के समान फलदायी माना जाता है। इसमें तांत्रिक बीजाक्षरों एवं श्रीराम की शपथ का प्रयोग हुआ है।"

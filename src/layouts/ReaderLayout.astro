@@ -57,13 +57,18 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const resolvedCoverImage = coverImage
   ? (coverImage.startsWith('http') ? coverImage : `${base}${coverImage.startsWith('/') ? '' : '/'}${coverImage}`)
-  : `${base}/covers/${slug}.jpg`;
+  : `${base}/covers/${slug}.webp`;
+
 const resolvedWebpImage = resolvedCoverImage.endsWith('.jpg')
   ? resolvedCoverImage.replace(/\.jpg$/, '.webp')
-  : null;
+  : resolvedCoverImage;
+
+const resolvedJpgImage = resolvedCoverImage.endsWith('.webp')
+  ? resolvedCoverImage.replace(/\.webp$/, '.jpg')
+  : resolvedCoverImage;
 
 const ogImage = image || (coverImage
-  ? (coverImage.startsWith('http') ? coverImage : `https://www.ashishvishwakarma.com${base}${coverImage.startsWith('/') ? '' : '/'}${coverImage}`)
+  ? (coverImage.startsWith('http') ? coverImage : `https://www.ashishvishwakarma.com${base}${coverImage.startsWith('/') ? '' : '/'}${coverImage}`.replace(/\.webp$/, '.jpg'))
   : `https://www.ashishvishwakarma.com${base}/covers/${slug}.jpg`);
 
 
@@ -255,11 +260,9 @@ const categoryHindiMap: Record<string, string> = {
             
             <div class="cover-art-frame">
               <picture>
-                {resolvedWebpImage && (
-                  <source srcset={resolvedWebpImage} type="image/webp" />
-                )}
+                <source srcset={resolvedWebpImage} type="image/webp" />
                 <img 
-                  src={resolvedCoverImage} 
+                  src={resolvedJpgImage} 
                   alt={title} 
                   class="cover-art-img"
                   loading="eager"

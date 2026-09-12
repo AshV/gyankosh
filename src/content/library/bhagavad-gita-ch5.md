@@ -6,7 +6,7 @@ chapter: 5
 language: "Sanskrit"
 category: "Gita"
 coverColor: "hsl(45, 80%, 38%)"
-coverImage: "/covers/bhagavad-gita.jpg"
+coverImage: "/covers/bhagavad-gita.webp"
 tags: ["श्रीकृष्ण", "अर्जुन", "गीता", "कर्मसंन्यासयोग", "समदर्शिता", "ब्रह्मनिर्वाण", "अनासक्ति"]
 showNumbering: true
 context: "अर्जुन के संन्यास और कर्मयोग के तुलनात्मक संशय पर श्रीकृष्ण स्पष्ट करते हैं कि कर्म-संन्यास की अपेक्षा कर्मयोग श्रेयस्कर है। मन और इन्द्रियों को वश में रखकर फल की अभिलाषा त्यागे बिना सच्चा संन्यास सिद्ध नहीं होता।"

@@ -5,7 +5,7 @@ description: "कृष्ण यजुर्वेद तैत्तिरी�
 language: "Vedic Sanskrit"
 category: "Veda"
 coverColor: "hsl(220, 85%, 35%)"
-coverImage: "/covers/narayana-suktam.jpg"
+coverImage: "/covers/narayana-suktam.webp"
 tags: ["वेद", "यजुर्वेद", "नारायण-सूक्त", "नारायण", "हृदय-कमल", "ब्रह्म"]
 showNumbering: true
 context: "यजुर्वेद के तैत्तिरीय आरण्यक का यह सूक्त सम्पूर्ण ब्रह्माण्ड में व्याप्त परम पुरुष नारायण के ध्यान, हृदय-कमल में स्थित उनकी सूक्ष्म ज्योति तथा सर्व-व्यापक ईश्वर के साक्षात्कार का आधारभूत वैदिक पाठ है।"

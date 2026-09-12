@@ -5,7 +5,7 @@ description: "देवाधिदेव महादेव भगवान श
 language: "Hindi"
 category: "Aarti"
 coverColor: "hsl(190, 80%, 35%)"
-coverImage: "/covers/aarti-shiva-ji.jpg"
+coverImage: "/covers/aarti-shiva-ji.webp"
 tags: ["आरती", "शिव", "महादेव", "भोलेनाथ", "शिव-ओंकारा", "भक्ति"]
 showNumbering: false
 context: "भगवान आशुतोष शिव-शंकर की यह पारम्परिक आरती शिव मन्दिरों एवं प्रदोष काल में नित्य गाई जाती है। इसमें ब्रह्मा, विष्णु और सदाशिव के एकात्म भाव, पञ्चानन रूप तथा गंगा-मस्तक त्रिशूलधारी महादेव की वन्दना है।"

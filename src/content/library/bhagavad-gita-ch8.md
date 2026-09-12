@@ -6,7 +6,7 @@ chapter: 8
 language: "Sanskrit"
 category: "Gita"
 coverColor: "hsl(260, 65%, 35%)"
-coverImage: "/covers/bhagavad-gita.jpg"
+coverImage: "/covers/bhagavad-gita.webp"
 tags: ["श्रीकृष्ण", "अर्जुन", "गीता", "अक्षरब्रह्मयोग", "ॐकार", "प्राणप्रयाण", "परम-धाम"]
 showNumbering: true
 context: "इस अध्याय में ब्रह्म, अध्यात्म, कर्म, अधिभूत, अधिदैव और अधियज्ञ के रहस्यों के साथ अन्तकाल में ॐकार एवं प्रभु के स्मरण से परम गति प्राप्त करने की योग-साधना तथा शुक्ल व कृष्ण गति का निरूपण किया गया है।"

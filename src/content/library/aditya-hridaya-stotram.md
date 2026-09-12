@@ -5,7 +5,7 @@ description: "श्रीमद्वाल्मीकिरामायण �
 language: "Sanskrit"
 category: "Stotra"
 coverColor: "hsl(30, 95%, 45%)"
-coverImage: "/covers/aditya-hridaya-stotram.jpg"
+coverImage: "/covers/aditya-hridaya-stotram.webp"
 tags: ["सूर्य", "आदित्य", "रामायण", "अगस्त्य", "स्तोत्र", "संस्कृत", "सूर्य देव"]
 showNumbering: true
 context: "वाल्मीकि रामायण के युद्धकाण्ड में महर्षि अगस्त्य द्वारा रणभूमि में क्लान्त भगवान श्रीराम को रावण-वध हेतु प्रदान किया गया यह परम प्राचीन मन्त्र-स्तोत्र है। यह सूर्यदेव की उपासना द्वारा आरोग्य, ओज एवं सर्व-विजय की अमोघ साधना है।"

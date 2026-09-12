@@ -5,7 +5,7 @@ description: "श्रीमद्वल्लभाचार्य विर�
 language: "Sanskrit"
 category: "Stotra"
 coverColor: "hsl(190, 80%, 35%)"
-coverImage: "/covers/madhurashtakam.jpg"
+coverImage: "/covers/madhurashtakam.webp"
 tags: ["कृष्ण", "मधुराष्टकम्", "वल्लभाचार्य", "स्तोत्र", "भक्ति", "संस्कृत", "कान्हा"]
 showNumbering: true
 context: "वल्लभाचार्य महाप्रभु द्वारा रचित यह अष्टक पुष्टि-मार्ग एवं वैष्णव भक्ति-साहित्य का मधुरतम रत्न है। इसमें भगवान श्रीकृष्ण के अधर, नयन, हँसी, चाल, वेश और लीलाओं के प्रत्येक अंग को मधुराधिपतेरखिलं मधुरम् घोषित किया गया है।"

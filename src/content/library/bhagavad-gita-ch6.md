@@ -6,7 +6,7 @@ chapter: 6
 language: "Sanskrit"
 category: "Gita"
 coverColor: "hsl(175, 75%, 35%)"
-coverImage: "/covers/bhagavad-gita.jpg"
+coverImage: "/covers/bhagavad-gita.webp"
 tags: ["श्रीकृष्ण", "अर्जुन", "गीता", "ध्यानयोग", "आत्मसंयम", "मन-निग्रह", "अभ्यास-वैराग्य"]
 showNumbering: true
 context: "इस अध्याय में मन के निग्रह, अष्टाङ्ग योग की साधना, ध्यान-विधि तथा समत्व बुद्धि का गहन विवेचन है। श्रीकृष्ण मन को अभ्यास और वैराग्य से वश में करने का मार्ग बताते हुए योगी को तपस्वी और ज्ञानी से भी श्रेष्ठ घोषित करते हैं।"

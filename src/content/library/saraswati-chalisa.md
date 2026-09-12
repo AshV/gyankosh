@@ -5,7 +5,7 @@ description: "माँ सरस्वती की महिमा में �
 language: "Hindi/Awadhi"
 category: "Chalisa"
 coverColor: "hsl(190, 60%, 45%)"
-coverImage: "/covers/saraswati-chalisa.jpg"
+coverImage: "/covers/saraswati-chalisa.webp"
 tags: ["सरस्वती", "विद्या", "ज्ञान", "चालीसा"]
 showNumbering: false
 context: "विद्या, बुद्धि, वाणी एवं संगीत की अधिष्ठात्री भगवती सरस्वती की वन्दना में रचित यह चालीसा विद्यार्थियों एवं साधकों हेतु परम कल्याणकारी है। इसमें वीणा-पुस्तक-धारिणी, हंस-वाहिनी माँ शारदा के वरदानी स्वरूप का स्तवन है।"

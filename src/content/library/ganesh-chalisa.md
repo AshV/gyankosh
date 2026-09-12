@@ -5,7 +5,7 @@ description: "भगवान श्री गणेश जी की महि�
 language: "Hindi/Awadhi"
 category: "Chalisa"
 coverColor: "hsl(35, 90%, 45%)"
-coverImage: "/covers/ganesh-chalisa.jpg"
+coverImage: "/covers/ganesh-chalisa.webp"
 tags: ["गणेश", "गणपति", "विघ्नहर्ता", "चालीसा"]
 showNumbering: false
 context: "प्रथम-पूज्य विघ्नहर्ता भगवान श्री गणेश जी की स्तुति में रचित यह चालीसा रिद्धि-सिद्धि की प्राप्ति और सकल अमंगलों के विनाश हेतु नित्य पठनीय है। इसमें गजानन के गजमुख, एकदन्त, मूषक-सवारी तथा परशु-पाश धारण का वर्णन है।"

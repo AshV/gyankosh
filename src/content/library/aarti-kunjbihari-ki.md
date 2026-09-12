@@ -5,7 +5,7 @@ description: "भगवान श्रीकृष्ण की जगत्प
 language: "Hindi"
 category: "Aarti"
 coverColor: "hsl(215, 85%, 35%)"
-coverImage: "/covers/aarti-kunjbihari-ki.jpg"
+coverImage: "/covers/aarti-kunjbihari-ki.webp"
 tags: ["आरती", "श्रीकृष्ण", "कुंजबिहारी", "वृन्दावन", "गिरिधर", "भक्ति"]
 showNumbering: false
 context: "ब्रज-संस्कृति एवं श्री बांकेबिहारी जी के मन्दिरों में गाई जाने वाली यह परम मधुर आरती भगवान श्रीकृष्ण और राधारानी के युगल प्रेम, बंसी-नाद तथा वनमाला से सुशोभित श्यामसुन्दर के नयनाभिराम रूप को समर्पित है।"

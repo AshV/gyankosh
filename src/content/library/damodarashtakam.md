@@ -5,7 +5,7 @@ description: "पद्मपुराणान्तर्गत श्री�
 language: "Sanskrit"
 category: "Stotra"
 coverColor: "hsl(32, 90%, 38%)"
-coverImage: "/covers/damodarashtakam.jpg"
+coverImage: "/covers/damodarashtakam.webp"
 tags: ["स्तोत्र", "दामोदर", "श्रीकृष्ण", "कार्तिक-मास", "पद्म-पुराण", "भक्ति", "अष्टक"]
 showNumbering: true
 context: "पद्म पुराण में महर्षि सत्यव्रत द्वारा उक्त यह अष्टक कार्तिक (दामोदर) मास में वैष्णव परम्परा में नित्य गाया जाता है। इसमें माता यशोदा द्वारा उखल से बांधे गए दामोदर श्रीकृष्ण की बाल-माधुरी एवं शरणागति का अनूठा गान है।"

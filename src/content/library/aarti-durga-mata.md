@@ -5,7 +5,7 @@ description: "भगवती आदिशक्ति माँ दुर्ग
 language: "Hindi"
 category: "Aarti"
 coverColor: "hsl(350, 85%, 40%)"
-coverImage: "/covers/aarti-durga-mata.jpg"
+coverImage: "/covers/aarti-durga-mata.webp"
 tags: ["आरती", "दुर्गा", "अम्बे-गौरी", "नवरात्रि", "भवानी", "शक्ति", "भक्ति"]
 showNumbering: false
 context: "भगवती दुर्गा भवानी की यह परम प्रसिद्ध आरती नवरात्रि एवं शुक्रवार के पूजन की मुख्य शोभा है। इसमें सिंह-वाहिनी, असुर-विनाशिनी, अष्टभुजा माँ जगदम्बा के दिव्य आयुधों और भक्त-वत्सल स्वरूप का भावपूर्ण स्तवन है।"

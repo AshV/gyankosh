@@ -5,7 +5,7 @@ description: "श्रीमज्जगद्गुरु आदिशङ्�
 language: "Sanskrit"
 category: "Stotra"
 coverColor: "hsl(0, 0%, 20%)"
-coverImage: "/covers/kala-bhairava-ashtakam.jpg"
+coverImage: "/covers/kala-bhairava-ashtakam.webp"
 tags: ["भैरव", "काल भैरव", "शिव", "शंकराचार्य", "काशी", "स्तोत्र", "संस्कृत"]
 showNumbering: true
 context: "जगद्गुरु आदि शंकराचार्य विरचित यह अष्टक काशी के अधिपति कालभैरव की महिमा में है। मत्तगयन्द व भुजङ्गप्रयात जैसी ओजस्वी लय में रचित यह स्तोत्र काल, भय, पाप एवं यम-दण्ड से मुक्ति का पावन साधन है।"

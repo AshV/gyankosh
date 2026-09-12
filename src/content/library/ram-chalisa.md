@@ -5,7 +5,7 @@ description: "मर्यादा पुरुषोत्तम भगवा�
 language: "Hindi/Awadhi"
 category: "Chalisa"
 coverColor: "hsl(28, 85%, 45%)"
-coverImage: "/covers/ram-chalisa.jpg"
+coverImage: "/covers/ram-chalisa.webp"
 tags: ["राम", "रघुपति", "सीताराम", "चालीसा"]
 showNumbering: false
 context: "मर्यादा पुरुषोत्तम प्रभु श्रीराम की पावन कीर्ति, शील, शौर्य और धर्म-रक्षा की गाथा का चालीस पदों में संकीर्तन। इसके नित्य पठन से मन में सत्य, निष्ठा और राम-कृपा का संचार होता है।"
