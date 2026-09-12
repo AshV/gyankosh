@@ -15,8 +15,11 @@
     "build": "astro build",
     "preview": "astro preview",
     "serve": "http-server dist -p 4321 -c-1 --cors -o",
+    "preview:serve": "node scripts/preview-server.mjs",
     "weights": "node scripts/list-weights.mjs",
     "weights:sync": "node scripts/list-weights.mjs --sync",
+    "fonts:download": "node scripts/download-fonts.mjs",
+    "covers:optimize": "node scripts/optimize-covers.mjs",
     "astro": "astro"
   },
   "dependencies": {

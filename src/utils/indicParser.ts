@@ -192,7 +192,8 @@ export function parseIndicMarkdown(body: string, options: IndicParserOptions = {
   };
   const htmlParts: string[] = [];
 
-  const rawBlocks = body.split(/\n\n+/).map(b => b.trim()).filter(Boolean);
+  const normalizedBody = body.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+  const rawBlocks = normalizedBody.split(/\n\s*\n+/).map(b => b.trim()).filter(Boolean);
 
   for (const rawBlock of rawBlocks) {
     const tagMatch = rawBlock.match(TAG_REGEX);

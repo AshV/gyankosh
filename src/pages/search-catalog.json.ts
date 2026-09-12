@@ -24,19 +24,22 @@ const CATEGORY_ICONS: Record<string, string> = {
 export const GET: APIRoute = async () => {
   const allTexts = sortTexts(await getCollection('library'));
 
-  const catalog: SearchCatalogItem[] = allTexts.map((text) => ({
-    slug: text.id.replace(/\.md$/, ''),
-    title: text.data.title,
-    author: text.data.author || '',
-    category: text.data.category,
-    categoryHindi: CATEGORY_ICONS[text.data.category] || text.data.category,
-    description: text.data.description || '',
-    tags: text.data.tags || [],
-    coverColor: text.data.coverColor,
-    coverImage: text.data.coverImage,
-    keywords: deriveSearchKeywords(text),
-    weight: getTextWeight(text),
-  }));
+  const catalog: SearchCatalogItem[] = allTexts.map((text) => {
+    const item: SearchCatalogItem = {
+      slug: text.id.replace(/\.md$/, ''),
+      title: text.data.title,
+      category: text.data.category,
+      categoryHindi: CATEGORY_ICONS[text.data.category] || text.data.category,
+      tags: text.data.tags || [],
+      keywords: deriveSearchKeywords(text),
+      weight: getTextWeight(text),
+    };
+
+    if (text.data.author) item.author = text.data.author;
+    if (text.data.description) item.description = text.data.description;
+
+    return item;
+  });
 
   return new Response(JSON.stringify(catalog), {
     status: 200,

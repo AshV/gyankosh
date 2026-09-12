@@ -1,9 +1,15 @@
 /**
- * Gyankosh PWA Service Worker
- * Provides offline reading capabilities and fast cached assets.
+ * Gyankosh PWA Service Worker (v4)
+ * Provides robust offline reading, partitioned caching, LRU eviction,
+ * and zero-network overhead for immutable Vite assets.
  */
 
-const CACHE_NAME = 'gyankosh-v3';
+const VERSION = 'v4';
+const CACHE_SHELL = `gyankosh-shell-${VERSION}`;
+const CACHE_CONTENT = `gyankosh-content-${VERSION}`;
+const CACHE_MEDIA = `gyankosh-media-${VERSION}`;
+
+const CURRENT_CACHES = [CACHE_SHELL, CACHE_CONTENT, CACHE_MEDIA];
 const BASE = '/gyankosh';
 
 // Core assets to pre-cache on install
@@ -20,12 +26,33 @@ const PRECACHE_ASSETS = [
   `${BASE}/pwa-maskable-512x512.png`
 ];
 
-// Install: Cache core application shell
+// Max items per dynamic cache (LRU/FIFO trim)
+const MAX_CONTENT_PAGES = 40;
+const MAX_MEDIA_ITEMS = 60;
+
+/**
+ * Trim cache to keep storage bounded on mobile devices
+ */
+async function trimCache(cacheName, maxItems) {
+  try {
+    const cache = await caches.open(cacheName);
+    const keys = await cache.keys();
+    if (keys.length > maxItems) {
+      const deleteCount = keys.length - maxItems;
+      for (let i = 0; i < deleteCount; i++) {
+        await cache.delete(keys[i]);
+      }
+    }
+  } catch (err) {
+    console.warn(`[Gyankosh SW] Cache trimming failed for ${cacheName}:`, err);
+  }
+}
+
+// Install: Pre-cache core application shell
 self.addEventListener('install', (event) => {
   self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      // Use catch on each asset to avoid failing entire install if an optional asset is missing
+    caches.open(CACHE_SHELL).then((cache) => {
       return Promise.allSettled(
         PRECACHE_ASSETS.map((url) =>
           cache.add(url).catch((err) => {
@@ -43,8 +70,11 @@ self.addEventListener('activate', (event) => {
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames
-          .filter((name) => name.startsWith('gyankosh-') && name !== CACHE_NAME)
-          .map((name) => caches.delete(name))
+          .filter((name) => name.startsWith('gyankosh-') && !CURRENT_CACHES.includes(name))
+          .map((name) => {
+            console.log(`[Gyankosh SW] Purging obsolete cache: ${name}`);
+            return caches.delete(name);
+          })
       );
     }).then(() => self.clients.claim())
   );
@@ -55,31 +85,18 @@ self.addEventListener('fetch', (event) => {
   const req = event.request;
   const url = new URL(req.url);
 
-  // Only handle same-origin or fonts.googleapis / fonts.gstatic requests
+  // Only handle GET requests
   if (req.method !== 'GET') return;
 
-  // Static assets (CSS, JS, Fonts, Images, Icons) -> Cache-First with Network Revalidation
-  if (
-    url.pathname.match(/\.(css|js|woff2?|ttf|eot|png|jpg|jpeg|svg|webp|ico|webmanifest)$/) ||
-    url.hostname.includes('fonts.gstatic.com') ||
-    url.hostname.includes('fonts.googleapis.com')
-  ) {
+  // 1. Immutable Content-Hashed Chunks (_astro/*) -> Pure Cache-First (NO background revalidation)
+  if (url.pathname.includes('/_astro/')) {
     event.respondWith(
       caches.match(req).then((cached) => {
-        if (cached) {
-          // Revalidate in background
-          fetch(req).then((networkRes) => {
-            if (networkRes && networkRes.status === 200) {
-              const resClone = networkRes.clone();
-              caches.open(CACHE_NAME).then((cache) => cache.put(req, resClone));
-            }
-          }).catch(() => {});
-          return cached;
-        }
+        if (cached) return cached;
         return fetch(req).then((networkRes) => {
           if (networkRes && networkRes.status === 200) {
             const resClone = networkRes.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(req, resClone));
+            caches.open(CACHE_SHELL).then((cache) => cache.put(req, resClone));
           }
           return networkRes;
         });
@@ -88,14 +105,78 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // HTML Navigation (Scriptures, categories, tags, home) -> Network-First with Cache Fallback
+  // 2. Search Catalog -> Stale-While-Revalidate with active background update
+  if (url.pathname.endsWith('/search-catalog.json')) {
+    event.respondWith(
+      caches.match(req).then((cached) => {
+        const fetchPromise = fetch(req).then((networkRes) => {
+          if (networkRes && networkRes.status === 200) {
+            const resClone = networkRes.clone();
+            caches.open(CACHE_SHELL).then((cache) => cache.put(req, resClone));
+          }
+          return networkRes;
+        }).catch(() => null);
+
+        // Return cached version immediately if present, otherwise await network
+        return cached || fetchPromise;
+      })
+    );
+    return;
+  }
+
+  // 3. Book Covers & Media -> Cache-First with Background Revalidation & LRU Trimming
+  if (url.pathname.includes('/covers/') || url.pathname.match(/\.(png|jpg|jpeg|webp|svg|ico)$/)) {
+    event.respondWith(
+      caches.match(req).then((cached) => {
+        const fetchPromise = fetch(req).then((networkRes) => {
+          if (networkRes && networkRes.status === 200) {
+            const resClone = networkRes.clone();
+            caches.open(CACHE_MEDIA).then((cache) => {
+              cache.put(req, resClone);
+              trimCache(CACHE_MEDIA, MAX_MEDIA_ITEMS);
+            });
+          }
+          return networkRes;
+        }).catch(() => null);
+
+        return cached || fetchPromise;
+      })
+    );
+    return;
+  }
+
+  // 4. Local Fonts & Shell Assets (CSS, JS, Fonts, Manifest) -> Stale-While-Revalidate
+  if (
+    url.pathname.match(/\.(css|js|woff2?|ttf|eot|webmanifest)$/) ||
+    url.pathname.includes('/fonts/')
+  ) {
+    event.respondWith(
+      caches.match(req).then((cached) => {
+        const fetchPromise = fetch(req).then((networkRes) => {
+          if (networkRes && networkRes.status === 200) {
+            const resClone = networkRes.clone();
+            caches.open(CACHE_SHELL).then((cache) => cache.put(req, resClone));
+          }
+          return networkRes;
+        }).catch(() => null);
+
+        return cached || fetchPromise;
+      })
+    );
+    return;
+  }
+
+  // 5. HTML Navigation (Scriptures, categories, tags, home) -> Network-First with Offline Fallback
   if (req.mode === 'navigate' || req.headers.get('accept')?.includes('text/html')) {
     event.respondWith(
       fetch(req)
         .then((networkRes) => {
           if (networkRes && networkRes.status === 200) {
             const resClone = networkRes.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(req, resClone));
+            caches.open(CACHE_CONTENT).then((cache) => {
+              cache.put(req, resClone);
+              trimCache(CACHE_CONTENT, MAX_CONTENT_PAGES);
+            });
           }
           return networkRes;
         })
@@ -124,7 +205,7 @@ self.addEventListener('fetch', (event) => {
                 <meta name="viewport" content="width=device-width, initial-scale=1">
                 <title>ऑफलाइन — ज्ञानकोश</title>
                 <style>
-                  body { font-family: 'Rozha One', 'Yatra One', serif; background: #fcf8ee; color: #2c2523; text-align: center; padding: 3rem 1.5rem; }
+                  body { font-family: 'Rozha One', 'Martel', serif; background: #fcf8ee; color: #2c2523; text-align: center; padding: 3rem 1.5rem; }
                   .card { max-width: 500px; margin: 0 auto; background: #fffdfa; border: 2px solid #8e1b14; border-radius: 12px; padding: 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
                   h1 { color: #8e1b14; font-size: 1.8rem; margin-bottom: 1rem; }
                   p { font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem; }
@@ -149,7 +230,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Default fetch
+  // 6. Default Fallback
   event.respondWith(
     caches.match(req).then((cached) => cached || fetch(req))
   );

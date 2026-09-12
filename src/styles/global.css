@@ -3,8 +3,8 @@
    Authentic Sacred Hindu Paper Book Aesthetic
    ============================================================ */
 
-/* Classical Sanskrit & Hindi Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit:ital@0;1&family=Martel:wght@400;600;700;800&family=Rozha+One&family=Yantramanav:wght@400;500;700&family=Inter:wght@400;500;600&display=swap');
+/* 100% Self-Hosted Offline Classical Sanskrit & Hindi Fonts */
+@import './fonts.css';
 
 /* ─── Gyankosh Design Tokens (Single Sacred Paper Theme) ──── */
 :root {
@@ -299,6 +299,12 @@ a:hover { opacity: 0.8; }
   background: var(--color-bg-elevated);
   border-bottom: none;
   overflow: hidden;
+}
+
+.book-card-cover-picture {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 .book-card-cover-img {

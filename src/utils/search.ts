@@ -15,7 +15,7 @@ export interface SearchCatalogItem {
   author?: string;
   category: string;
   categoryHindi: string;
-  description: string;
+  description?: string;
   tags: string[];
   coverColor?: string;
   coverImage?: string;

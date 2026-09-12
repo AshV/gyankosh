@@ -58,6 +58,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const resolvedCoverImage = coverImage
   ? (coverImage.startsWith('http') ? coverImage : `${base}${coverImage.startsWith('/') ? '' : '/'}${coverImage}`)
   : `${base}/covers/${slug}.jpg`;
+const resolvedWebpImage = resolvedCoverImage.endsWith('.jpg')
+  ? resolvedCoverImage.replace(/\.jpg$/, '.webp')
+  : null;
 
 const ogImage = image || (coverImage
   ? (coverImage.startsWith('http') ? coverImage : `https://www.ashishvishwakarma.com${base}${coverImage.startsWith('/') ? '' : '/'}${coverImage}`)
@@ -251,13 +254,21 @@ const categoryHindiMap: Record<string, string> = {
             <div class="cover-invocation">॥ श्रीहरिः ॥</div>
             
             <div class="cover-art-frame">
-              <img 
-                src={resolvedCoverImage} 
-                alt={title} 
-                class="cover-art-img"
-                loading="eager"
-                onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='flex';"
-              />
+              <picture>
+                {resolvedWebpImage && (
+                  <source srcset={resolvedWebpImage} type="image/webp" />
+                )}
+                <img 
+                  src={resolvedCoverImage} 
+                  alt={title} 
+                  class="cover-art-img"
+                  loading="eager"
+                  decoding="async"
+                  width="240"
+                  height="340"
+                  onerror="this.closest('picture')?.style.setProperty('display', 'none'); const fb = this.closest('.cover-art-frame')?.querySelector('.cover-art-fallback'); if (fb) fb.style.display = 'flex';"
+                />
+              </picture>
               <div class="cover-art-fallback" style={`background: linear-gradient(135deg, ${coverColor}, color-mix(in hsl, ${coverColor}, black 35%)); display:none;`}>
                 <span class="cover-fallback-char">{title.charAt(0)}</span>
               </div>

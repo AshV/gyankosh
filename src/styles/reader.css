@@ -901,6 +901,12 @@ body.chanting-mode .verse-translation {
   background: #ecdcb9;
 }
 
+.cover-art-frame picture {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
 .cover-art-img {
   width: 100%;
   height: 100%;

@@ -54,6 +54,9 @@ const categoryUrl = `${base}/category/${category.toLowerCase()}`;
 const resolvedCoverImage = coverImage
   ? (coverImage.startsWith('http') ? coverImage : `${base}${coverImage.startsWith('/') ? '' : '/'}${coverImage}`)
   : `${base}/covers/${slug}.jpg`;
+const resolvedWebpImage = resolvedCoverImage.endsWith('.jpg')
+  ? resolvedCoverImage.replace(/\.jpg$/, '.webp')
+  : null;
 ---
 
 <div
@@ -65,13 +68,21 @@ const resolvedCoverImage = coverImage
   <!-- Generated / Album Cover Art (100% Unobstructed) -->
   <div class="book-card-cover">
     <a href={readUrl} class="book-card-cover-link" aria-label={`पठन: ${title}`}>
-      <img 
-        src={resolvedCoverImage} 
-        alt={`${title}${author ? ` — ${author}` : ''} पुस्तक आवरण`} 
-        class="book-card-cover-img"
-        loading="lazy"
-        onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='flex';"
-      />
+      <picture class="book-card-cover-picture">
+        {resolvedWebpImage && (
+          <source srcset={resolvedWebpImage} type="image/webp" />
+        )}
+        <img 
+          src={resolvedCoverImage} 
+          alt={`${title}${author ? ` — ${author}` : ''} पुस्तक आवरण`} 
+          class="book-card-cover-img"
+          loading="lazy"
+          decoding="async"
+          width="240"
+          height="340"
+          onerror="this.style.display='none'; const pat = this.closest('.book-card-cover-link')?.querySelector('.book-card-cover-pattern'); if (pat) pat.style.display = 'flex';"
+        />
+      </picture>
       <div 
         class="book-card-cover-pattern" 
         style={`background: linear-gradient(135deg, ${coverColor}, color-mix(in hsl, ${coverColor}, black 35%));`}
