@@ -94,10 +94,38 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             <li><a href={`${base}/category/stotra`} style="font-family:var(--font-devanagari);font-size:1rem;font-weight:600;color:var(--color-accent);">स्तोत्र</a></li>
             <li><a href={`${base}/category/aarti`} style="font-family:var(--font-devanagari);font-size:1rem;font-weight:600;color:var(--color-accent);">आरती</a></li>
             <li><a href={`${base}/category/purana`} style="font-family:var(--font-devanagari);font-size:1rem;font-weight:600;color:var(--color-accent);">पुराण</a></li>
-            <li><a href={`${base}/parichay`} style="font-family:var(--font-devanagari);font-size:1rem;font-weight:600;color:var(--color-accent);">परिचय</a></li>
           </ul>
         </nav>
-        <div class="header-right-actions" style="display:flex; align-items:center; gap:0.75rem;">
+        <div class="header-right-actions" style="display:flex; align-items:center; gap:0.55rem;">
+          <!-- Parichay Quick Link (Always accessible on mobile & desktop) -->
+          <a
+            href={`${base}/parichay`}
+            class="header-action-btn header-parichay-btn"
+            aria-label="ज्ञानकोश परिचय एवं सम्पादकीय"
+            title="ज्ञानकोश परिचय"
+          >
+            <span class="action-btn-icon" aria-hidden="true">📖</span>
+            <span class="action-btn-text">परिचय</span>
+          </a>
+
+          <!-- Share App Button -->
+          <button
+            type="button"
+            id="header-share-app-btn"
+            class="header-action-btn header-share-btn"
+            aria-label="ज्ञानकोश ऐप साझा करें"
+            title="ज्ञानकोश ऐप साझा करें"
+          >
+            <svg class="header-share-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="18" cy="5" r="3"/>
+              <circle cx="6" cy="12" r="3"/>
+              <circle cx="18" cy="19" r="3"/>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+            </svg>
+            <span class="action-btn-text">साझा करें</span>
+          </button>
+
           <button
             type="button"
             id="header-pwa-install-btn"
@@ -109,6 +137,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             <span class="install-btn-icon" aria-hidden="true">📲</span>
             <span class="install-btn-text">ऐप इंस्टॉल करें</span>
           </button>
+
           <button
             type="button"
             id="header-search-trigger"
@@ -227,8 +256,66 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     </dialog>
 
     <script is:inline define:vars={{ base }}>
+      // Global Toast Notification Helper
+      window.showGyankoshToast = function(message, icon = '✓') {
+        let toast = document.getElementById('gyankosh-toast');
+        if (!toast) {
+          toast = document.createElement('div');
+          toast.id = 'gyankosh-toast';
+          toast.className = 'gyankosh-toast';
+          document.body.appendChild(toast);
+        }
+        toast.innerHTML = `<span class="toast-icon">${icon}</span> <span>${message}</span>`;
+        toast.classList.add('show');
+        clearTimeout(window.__gyankoshToastTimer);
+        window.__gyankoshToastTimer = setTimeout(() => {
+          toast?.classList.remove('show');
+        }, 2800);
+      };
+
+      // Header Search Button Trigger
       document.getElementById('header-search-trigger')?.addEventListener('click', () => {
         window.dispatchEvent(new CustomEvent('gyankosh:open-search'));
+      });
+
+      // Header Share App Button
+      document.getElementById('header-share-app-btn')?.addEventListener('click', async () => {
+        const canonicalUrl = 'https://www.ashishvishwakarma.com/gyankosh/';
+        const shareData = {
+          title: 'ज्ञानकोश — सनातन वैदिक एवं पौराणिक धर्मग्रंथ',
+          text: 'सनातन वैदिक एवं पौराणिक धर्मग्रंथों का पावन डिजिटल संग्रह — शुद्ध पाठ एवं प्रामाणिक हिन्दी अर्थ सहित।',
+          url: canonicalUrl,
+        };
+
+        let copied = false;
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(canonicalUrl);
+            copied = true;
+          }
+        } catch {
+          // Clipboard write might fail in some security contexts, proceed to share
+        }
+
+        if (navigator.share) {
+          try {
+            await navigator.share(shareData);
+            return;
+          } catch (err) {
+            if (err && err.name === 'AbortError') {
+              if (copied) {
+                window.showGyankoshToast('॥ ज्ञानकोश लिंक कॉपी किया गया ॥', '🔗');
+              }
+              return;
+            }
+          }
+        }
+
+        if (copied) {
+          window.showGyankoshToast('॥ ज्ञानकोश लिंक कॉपी किया गया ॥', '🔗');
+        } else {
+          window.showGyankoshToast(canonicalUrl, '🔗');
+        }
       });
 
       // PWA Service Worker Registration

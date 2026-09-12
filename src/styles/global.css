@@ -837,6 +837,112 @@ a:hover { opacity: 0.8; }
   border: 1px solid var(--color-border-subtle);
 }
 
+/* ─── Header Quick Action Buttons (Parichay & Share) ─────── */
+.header-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border-subtle);
+  color: var(--color-text-muted);
+  padding: 0.35rem 0.65rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-devanagari);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  box-shadow: 0 1px 3px rgba(70, 50, 30, 0.04);
+  line-height: 1;
+}
+
+.header-action-btn:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  background: var(--color-accent-soft);
+  transform: translateY(-1px);
+}
+
+.header-action-btn:active {
+  transform: scale(0.96);
+}
+
+.header-action-btn .header-share-icon {
+  flex-shrink: 0;
+  color: inherit;
+}
+
+.header-action-btn .action-btn-icon {
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+/* ─── Floating Navigation Dock (Scroll to Tags & Top) ─────── */
+.floating-scroll-dock {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 999;
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255, 253, 247, 0.94);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  padding: 0.25rem 0.4rem;
+  box-shadow: 0 4px 18px rgba(142, 27, 20, 0.18), 0 2px 6px rgba(0, 0, 0, 0.08);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(16px);
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+}
+
+.floating-scroll-dock.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.scroll-dock-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: transparent;
+  border: none;
+  color: var(--color-accent);
+  padding: 0.35rem 0.65rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-devanagari);
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.scroll-dock-btn:hover {
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  transform: scale(1.04);
+}
+
+.scroll-dock-btn:active {
+  transform: scale(0.95);
+}
+
+.scroll-dock-btn .dock-icon {
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.dock-separator {
+  width: 1px;
+  height: 18px;
+  background: var(--color-border-subtle);
+  margin: 0 0.1rem;
+}
+
 
 /* ─── Gyankosh Quick Search Modal Dialog ─────────────────── */
 .gyankosh-search-dialog {
@@ -1160,6 +1266,24 @@ body.modal-open {
 @media (max-width: 640px) {
   .header-search-btn .search-btn-kbd {
     display: none;
+  }
+  .header-action-btn .action-btn-text {
+    display: none;
+  }
+  .header-action-btn {
+    padding: 0.38rem 0.52rem;
+    min-width: 34px;
+    justify-content: center;
+  }
+  .floating-scroll-dock {
+    bottom: 1.1rem;
+    right: 0.85rem;
+    padding: 0.2rem 0.35rem;
+    box-shadow: 0 4px 16px rgba(142, 27, 20, 0.22), 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  .scroll-dock-btn {
+    padding: 0.32rem 0.5rem;
+    font-size: 0.82rem;
   }
   .result-item-right .result-tag-chip {
     display: none;

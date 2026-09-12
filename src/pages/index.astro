@@ -156,6 +156,19 @@ const jsonLd = {
               ),
           )
         }
+        {
+          sortedTags.length > 0 && (
+            <a
+              href="#tag-section"
+              class="category-bubble bubble--tags"
+              title="विषय टैग देखें"
+            >
+              <span class="bubble-icon" aria-hidden="true">🪷</span>
+              <span class="bubble-label">विषय टैग</span>
+              <span class="bubble-count">{toHindiDigits(sortedTags.length)}</span>
+            </a>
+          )
+        }
       </nav>
     </div>
   </section>
@@ -229,7 +242,7 @@ const jsonLd = {
 
     <!-- Tag Cloud Section (विषय टैग) -->
     {sortedTags.length > 0 && (
-      <section class="tag-section" aria-label="विषय टैग">
+      <section id="tag-section" class="tag-section" aria-label="विषय टैग">
         <h2 class="tag-section-title">
           <span aria-hidden="true">🪷</span> विषय (Tags)
         </h2>
@@ -243,6 +256,33 @@ const jsonLd = {
         </div>
       </section>
     )}
+
+    <!-- Floating Navigation Pill (Scroll to Tags & Top) -->
+    <aside id="floating-scroll-dock" class="floating-scroll-dock" aria-label="त्वरित नेविगेशन">
+      <button
+        type="button"
+        id="btn-scroll-tags"
+        class="scroll-dock-btn"
+        aria-label="विषय टैग पर जाएं"
+        title="विषय टैग पर जाएं"
+      >
+        <span class="dock-icon" aria-hidden="true">🪷</span>
+        <span class="dock-label" id="dock-tags-label">टैग्स</span>
+      </button>
+
+      <div class="dock-separator" aria-hidden="true"></div>
+
+      <button
+        type="button"
+        id="btn-scroll-top"
+        class="scroll-dock-btn"
+        aria-label="पृष्ठ के शीर्ष पर जाएं"
+        title="शीर्ष पर जाएं"
+      >
+        <span class="dock-icon" aria-hidden="true">↑</span>
+        <span class="dock-label">शीर्ष</span>
+      </button>
+    </aside>
   </div>
 </BaseLayout>
 
@@ -347,6 +387,63 @@ const jsonLd = {
       window.dispatchEvent(
         new CustomEvent("gyankosh:open-search", { detail: { query: initialQ } })
       );
+    }
+
+    // Floating Navigation Dock (Scroll to Tags & Top)
+    const dock = document.getElementById("floating-scroll-dock");
+    const btnScrollTags = document.getElementById("btn-scroll-tags");
+    const btnScrollTop = document.getElementById("btn-scroll-top");
+    const dockTagsLabel = document.getElementById("dock-tags-label");
+    const tagSection = document.getElementById("tag-section");
+    const bookGrid = document.getElementById("book-grid");
+
+    if (dock && btnScrollTags && btnScrollTop) {
+      let isNearTags = false;
+
+      window.addEventListener(
+        "scroll",
+        () => {
+          const scrollY = window.scrollY || window.pageYOffset;
+          if (scrollY > 380) {
+            dock.classList.add("is-visible");
+          } else {
+            dock.classList.remove("is-visible");
+          }
+
+          if (tagSection) {
+            const rect = tagSection.getBoundingClientRect();
+            const inView = rect.top <= window.innerHeight * 0.65;
+            if (inView !== isNearTags) {
+              isNearTags = inView;
+              const iconEl = btnScrollTags.querySelector(".dock-icon");
+              if (isNearTags) {
+                if (iconEl) iconEl.textContent = "📚";
+                if (dockTagsLabel) dockTagsLabel.textContent = "ग्रंथ";
+                btnScrollTags.setAttribute("title", "धर्मग्रंथ सूची पर जाएं");
+                btnScrollTags.setAttribute("aria-label", "धर्मग्रंथ सूची पर जाएं");
+              } else {
+                if (iconEl) iconEl.textContent = "🪷";
+                if (dockTagsLabel) dockTagsLabel.textContent = "टैग्स";
+                btnScrollTags.setAttribute("title", "विषय टैग पर जाएं");
+                btnScrollTags.setAttribute("aria-label", "विषय टैग पर जाएं");
+              }
+            }
+          }
+        },
+        { passive: true }
+      );
+
+      btnScrollTags.addEventListener("click", () => {
+        if (isNearTags && bookGrid) {
+          bookGrid.scrollIntoView({ behavior: "smooth" });
+        } else if (tagSection) {
+          tagSection.scrollIntoView({ behavior: "smooth" });
+        }
+      });
+
+      btnScrollTop.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
     }
   });
 </script>
