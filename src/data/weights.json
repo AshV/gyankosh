@@ -1,7 +1,7 @@
 {
   "_description": "Gyankosh Master Weight Registry (Single Source of Truth). Lower number = higher priority.",
-  "highestWeight": 780,
-  "nextRecommendedWeight": 790,
+  "highestWeight": 850,
+  "nextRecommendedWeight": 860,
   "weights": {
     "hanuman-chalisa": 10,
     "sundarkand": 20,
@@ -80,6 +80,13 @@
     "ramashtakam": 750,
     "ram-raksha-stotram": 760,
     "shri-ramachandra-kripalu": 770,
-    "kamtanath-stuti-aarti": 780
+    "kamtanath-stuti": 780,
+    "kamtanath-aarti": 790,
+    "ram-janma-stuti": 800,
+    "janaki-stuti": 810,
+    "mandakini-stotram": 820,
+    "ramcharitmanas-chitrakoot-prasang": 830,
+    "vinaya-patrika-chitrakoot": 840,
+    "hanuman-bahuk": 850
   }
 }

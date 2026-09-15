@@ -11,9 +11,9 @@
 | Metric | Value |
 | :--- | :--- |
 | **Source of Truth** | [`src/data/weights.json`](file:///a:/GitHub/Gyankosh/src/data/weights.json) |
-| **Total Sacred Texts** | `78` |
-| **Highest Weight Allocated** | `780` |
-| **Next Recommended Weight** | **`790`** (increment by 10) |
+| **Total Sacred Texts** | `85` |
+| **Highest Weight Allocated** | `850` |
+| **Next Recommended Weight** | **`860`** (increment by 10) |
 | **Default Fallback Weight** | `1000` |
 
 ---
@@ -116,7 +116,14 @@ Gyankosh assigns weights in blocks of 10 to allow future insertions without renu
 | **750** | Stotra | श्रीरामाष्टकम् | `ramashtakam` |
 | **760** | Stotra | श्रीरामरक्षास्तोत्रम् | `ram-raksha-stotram` |
 | **770** | Stotra | श्रीरामचन्द्र कृपालु भजु मन | `shri-ramachandra-kripalu` |
-| **780** | Aarti | श्री कामतानाथ स्तुति एवं आरती | `kamtanath-stuti-aarti` |
+| **780** | Stotra | श्री कामतानाथ स्तुति | `kamtanath-stuti` |
+| **790** | Aarti | आरती श्री कामदनाथ जी की | `kamtanath-aarti` |
+| **800** | Stotra | श्री राम प्राकट्य वंदना (भए प्रगट कृपाला) | `ram-janma-stuti` |
+| **810** | Stotra | श्री जानकी स्तुति एवं जानकीनाथ भजन | `janaki-stuti` |
+| **820** | Stotra | श्री मन्दाकिनी (पयस्विनी) स्तोत्रम् | `mandakini-stotram` |
+| **830** | Purana | श्रीरामचरितमानस — चित्रकूट प्रसंग एवं भरत-मिलाप | `ramcharitmanas-chitrakoot-prasang` |
+| **840** | Stotra | विनयपत्रिका — चित्रकूट महिमा एवं राम-निवेदन | `vinaya-patrika-chitrakoot` |
+| **850** | Stotra | श्री हनुमान बाहुक | `hanuman-bahuk` |
 
 ---
 *Last updated: Sep 15, 2026*
