@@ -13,6 +13,7 @@ export default defineConfig({
 
   integrations: [
     sitemap({
+      filter: (page) => !page.includes('/404') && !page.endsWith('.json'),
       changefreq: 'weekly',
       lastmod: new Date(),
       priority: 0.7,

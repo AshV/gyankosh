@@ -1,4 +1,96 @@
+# ==============================================================================
+# Gyankosh (ज्ञानकोश) — Robots Configuration
+# https://www.ashishvishwakarma.com/gyankosh/
+#
+# Strategy:
+# 1. Full Access: Organic Search Engines (SEO) & Live AI Search/Citations (GEO).
+# 2. Blocked: Bulk offline AI model training scrapers & commercial harvest bots.
+# 3. Restricted: Non-content internal files (search catalog JSON, service worker,
+#    and tracking query parameters) to prevent SERP pollution.
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. Traditional Search Engines (SEO)
+# Full access to index content and render assets for Core Web Vitals.
+# ------------------------------------------------------------------------------
+User-agent: Googlebot
+User-agent: Googlebot-Image
+User-agent: Bingbot
+User-agent: DuckDuckBot
+User-agent: Applebot
+User-agent: YandexBot
+User-agent: Slurp
+Allow: /
+Allow: /gyankosh/
+Allow: /gyankosh/_astro/
+Allow: /_astro/
+Allow: /gyankosh/covers/
+Allow: /covers/
+Allow: /gyankosh/fonts/
+Allow: /fonts/
+Disallow: /gyankosh/search-catalog.json
+Disallow: /search-catalog.json
+Disallow: /gyankosh/sw.js
+Disallow: /sw.js
+Disallow: /gyankosh/*?*
+Disallow: /*?*
+
+# ------------------------------------------------------------------------------
+# 2. Generative Engine Optimization (GEO) — Real-Time AI Search & Citations
+# Allows live AI answer engines (Perplexity, ChatGPT Search, Claude Search)
+# to discover, quote, and cite Gyankosh texts as authoritative sources.
+# ------------------------------------------------------------------------------
+User-agent: PerplexityBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: Claude-SearchBot
+Allow: /
+Allow: /gyankosh/
+Allow: /gyankosh/_astro/
+Allow: /_astro/
+Allow: /gyankosh/covers/
+Allow: /covers/
+Allow: /gyankosh/fonts/
+Allow: /fonts/
+Disallow: /gyankosh/search-catalog.json
+Disallow: /search-catalog.json
+Disallow: /gyankosh/sw.js
+Disallow: /sw.js
+Disallow: /gyankosh/*?*
+Disallow: /*?*
+
+# ------------------------------------------------------------------------------
+# 3. Bulk AI Model Training Scrapers & Aggressive Harvest Bots (Disallowed)
+# Prevents unauthorized bulk offline dataset harvesting.
+# ------------------------------------------------------------------------------
+User-agent: GPTBot
+User-agent: CCBot
+User-agent: ClaudeBot
+User-agent: anthropic-ai
+User-agent: Bytespider
+User-agent: Diffbot
+User-agent: FacebookBot
+User-agent: Meta-ExternalAgent
+User-agent: Amazonbot
+User-agent: cohere-ai
+User-agent: Omgilibot
+User-agent: ImagesiftBot
+Disallow: /
+
+# ------------------------------------------------------------------------------
+# 4. Default Directives for All Other Crawlers
+# ------------------------------------------------------------------------------
 User-agent: *
 Allow: /
+Allow: /gyankosh/
+Disallow: /gyankosh/search-catalog.json
+Disallow: /search-catalog.json
+Disallow: /gyankosh/sw.js
+Disallow: /sw.js
+Disallow: /gyankosh/*?*
+Disallow: /*?*
 
+# ------------------------------------------------------------------------------
+# Sitemap
+# ------------------------------------------------------------------------------
 Sitemap: https://www.ashishvishwakarma.com/gyankosh/sitemap-index.xml
