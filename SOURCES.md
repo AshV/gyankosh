@@ -1,6 +1,6 @@
 # 📚 Gyankosh Text Sources & Provenance Registry
 
-This registry documents the authoritative editions, manuscripts, and primary digital/traditional sources used for all **85 texts** in the Gyankosh library to ensure 100% authenticity, verified verse counts, and zero truncation.
+This registry documents the authoritative editions, manuscripts, and primary digital/traditional sources used for all **86 texts** in the Gyankosh library to ensure 100% authenticity, verified verse counts, and zero truncation.
 
 ---
 
@@ -101,6 +101,15 @@ This registry documents the authoritative editions, manuscripts, and primary dig
   - [Sanskrit Documents — Ramashtakam by Vyasa](https://sanskritdocuments.org/doc_raama/ramashtakamvyasa.html)
   - [Internet Archive — Stotra Ratnavali (Gita Press Code 134 Scan)](https://archive.org/details/StotraRatnavaliGitaPress)
 - **Traditional Publication**: पद्म पुराण एवं गीता प्रेस *स्तोत्र-रत्नावली* (पुस्तक कोड: **134**, पृ. 131)
+
+### 1.12 श्रीरामसहस्रनामस्तोत्रम् (Shri Rama Sahasranama Stotram)
+- **Slug**: `ram-sahasranama` | **Category**: `Stotra` | **Verses**: 144 (पूर्वपीठिका: श्लोक २८–३०, ध्यान: श्लोक ३१–३८, मूल सहस्रनाम: श्लोक ३९–१६३ [१००० नाम], फलश्रुति: श्लोक १६४–१७१ + १ मङ्गल श्लोक + पुष्पिका)
+- **Author**: श्रीमदानन्दरामायण (भगवान शिव द्वारा माता पार्वती को उपदेश) / महर्षि वाल्मीकि
+- **Primary Digital Sources**:
+  - [Sanskrit Documents — Shri Rama Sahasranama Stotram (Ananda Ramayana)](https://sanskritdocuments.org/doc_raama/rama1000Ananda.html)
+  - [Internet Archive — Ananda Ramayana (Sanskrit with Hindi Tika Scan)](https://archive.org/details/ananda-ramayana-gita-press)
+  - [Stotram.co.in — श्री राम सहस्रनाम स्तोत्रम् (आनन्दरामायण)](https://stotranidhi.com/hi/sri-rama-sahasranama-stotram-in-hindi/)
+- **Traditional Publication**: *श्रीमदानन्दरामायणम्*, राज्यकाण्ड (पूर्वार्ध, प्रथम सर्ग — 'श्रीरामसहस्रनामकथनं नाम प्रथमः सर्गः') एवं पं. कन्हैयालाल जोशी सम्पादित चौखम्बा संस्कृत प्रतिष्ठान संस्करण
 
 ---
 
