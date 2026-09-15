@@ -11,9 +11,9 @@
 | Metric | Value |
 | :--- | :--- |
 | **Source of Truth** | [`src/data/weights.json`](file:///a:/GitHub/Gyankosh/src/data/weights.json) |
-| **Total Sacred Texts** | `75` |
-| **Highest Weight Allocated** | `750` |
-| **Next Recommended Weight** | **`760`** (increment by 10) |
+| **Total Sacred Texts** | `78` |
+| **Highest Weight Allocated** | `780` |
+| **Next Recommended Weight** | **`790`** (increment by 10) |
 | **Default Fallback Weight** | `1000` |
 
 ---
@@ -114,6 +114,9 @@ Gyankosh assigns weights in blocks of 10 to allow future insertions without renu
 | **730** | Stotra | श्री विश्वकर्मा स्तोत्रम् एवं अष्टकम् | `vishwakarma-stotram` |
 | **740** | Purana | श्री विश्वकर्मा पुराण — माहात्म्य एवं पंचऋषि कथा | `vishwakarma-puran` |
 | **750** | Stotra | श्रीरामाष्टकम् | `ramashtakam` |
+| **760** | Stotra | श्रीरामरक्षास्तोत्रम् | `ram-raksha-stotram` |
+| **770** | Stotra | श्रीरामचन्द्र कृपालु भजु मन | `shri-ramachandra-kripalu` |
+| **780** | Aarti | श्री कामतानाथ स्तुति एवं आरती | `kamtanath-stuti-aarti` |
 
 ---
 *Last updated: Sep 15, 2026*
