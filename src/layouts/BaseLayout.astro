@@ -111,13 +111,13 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             <span class="action-btn-text">परिचय</span>
           </a>
 
-          <!-- Share App Button -->
+          <!-- Share Page Button -->
           <button
             type="button"
             id="header-share-app-btn"
             class="header-action-btn header-share-btn"
-            aria-label="ज्ञानकोश ऐप साझा करें"
-            title="ज्ञानकोश ऐप साझा करें"
+            aria-label="यह पृष्ठ साझा करें"
+            title="साझा करें"
           >
             <svg class="header-share-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <circle cx="18" cy="5" r="3"/>
@@ -281,24 +281,19 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         window.dispatchEvent(new CustomEvent('gyankosh:open-search'));
       });
 
-      // Header Share App Button
+      // Header Share Page Button (Shares current page with title and description)
       document.getElementById('header-share-app-btn')?.addEventListener('click', async () => {
-        const canonicalUrl = 'https://www.ashishvishwakarma.com/gyankosh/';
-        const shareData = {
-          title: 'ज्ञानकोश — सनातन वैदिक एवं पौराणिक धर्मग्रंथ',
-          text: 'सनातन वैदिक एवं पौराणिक धर्मग्रंथों का पावन डिजिटल संग्रह — शुद्ध पाठ एवं प्रामाणिक हिन्दी अर्थ सहित।',
-          url: canonicalUrl,
-        };
+        const canonicalLink = document.querySelector("link[rel='canonical']");
+        const currentUrl = (canonicalLink && canonicalLink.href) ? canonicalLink.href : window.location.href;
+        const pageTitle = document.title || 'ज्ञानकोश — सनातन वैदिक एवं पौराणिक धर्मग्रंथ';
+        const metaDescEl = document.querySelector("meta[name='description']");
+        const pageDesc = metaDescEl?.getAttribute('content') || 'सनातन वैदिक एवं पौराणिक धर्मग्रंथों का पावन डिजिटल संग्रह — शुद्ध पाठ एवं प्रामाणिक हिन्दी अर्थ सहित।';
 
-        let copied = false;
-        try {
-          if (navigator.clipboard && navigator.clipboard.writeText) {
-            await navigator.clipboard.writeText(canonicalUrl);
-            copied = true;
-          }
-        } catch {
-          // Clipboard write might fail in some security contexts, proceed to share
-        }
+        const shareData = {
+          title: pageTitle,
+          text: pageDesc,
+          url: currentUrl,
+        };
 
         if (navigator.share) {
           try {
@@ -306,18 +301,23 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             return;
           } catch (err) {
             if (err && err.name === 'AbortError') {
-              if (copied) {
-                window.showGyankoshToast('॥ ज्ञानकोश लिंक कॉपी किया गया ॥', '🔗');
-              }
               return;
             }
           }
         }
 
+        let copied = false;
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(currentUrl);
+            copied = true;
+          }
+        } catch {}
+
         if (copied) {
-          window.showGyankoshToast('॥ ज्ञानकोश लिंक कॉपी किया गया ॥', '🔗');
+          window.showGyankoshToast('॥ पृष्ठ लिंक कॉपी किया गया ॥', '🔗');
         } else {
-          window.showGyankoshToast(canonicalUrl, '🔗');
+          window.prompt('पृष्ठ लिंक कॉपी करें:', currentUrl);
         }
       });
 
