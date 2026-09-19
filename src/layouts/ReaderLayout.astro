@@ -696,6 +696,10 @@ const categoryHindiMap: Record<string, string> = {
           if (newIndex < 0 || newIndex >= this.pages.length || this.isFlipping) return;
           if (newIndex === this.currentPageIndex) return;
 
+          if (typeof resetWakeLockActivityTimer === 'function') {
+            resetWakeLockActivityTimer();
+          }
+
           this.isFlipping = true;
 
           // Clear any inline drag transforms
@@ -1146,6 +1150,7 @@ const categoryHindiMap: Record<string, string> = {
         } else {
           gyankoshReaderInstance.buildPages();
         }
+        resetWakeLockActivityTimer();
       }
 
       // Pre-initialize reader engine on load so book pages are rendered immediately
@@ -1309,6 +1314,84 @@ const categoryHindiMap: Record<string, string> = {
           closeInfoModal();
         }
       });
+
+      /* ── Background Screen Wake Lock (पठन के दौरान स्क्रीन ऑन रखें) ── */
+      let screenWakeLock = null;
+      let wakeLockIdleTimer = null;
+      const WAKE_LOCK_IDLE_TIMEOUT_MS = 10 * 60 * 1000; // 10 minutes
+
+      async function requestScreenWakeLock() {
+        if (!('wakeLock' in navigator)) return;
+        if (isCoverScreenActive()) return;
+        if (document.visibilityState !== 'visible') return;
+
+        try {
+          if (!screenWakeLock || screenWakeLock.released) {
+            screenWakeLock = await navigator.wakeLock.request('screen');
+            screenWakeLock.addEventListener('release', () => {
+              screenWakeLock = null;
+            });
+          }
+        } catch (err) {
+          screenWakeLock = null;
+        }
+      }
+
+      async function releaseScreenWakeLock() {
+        if (screenWakeLock) {
+          try {
+            await screenWakeLock.release();
+          } catch (e) {}
+          screenWakeLock = null;
+        }
+      }
+
+      function resetWakeLockActivityTimer() {
+        clearTimeout(wakeLockIdleTimer);
+        if (!isCoverScreenActive() && document.visibilityState === 'visible') {
+          requestScreenWakeLock();
+        }
+        wakeLockIdleTimer = setTimeout(() => {
+          releaseScreenWakeLock();
+        }, WAKE_LOCK_IDLE_TIMEOUT_MS);
+      }
+
+      // Re-acquire lock when returning to the tab if reading
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+          if (!isCoverScreenActive()) {
+            resetWakeLockActivityTimer();
+          }
+        } else {
+          clearTimeout(wakeLockIdleTimer);
+          releaseScreenWakeLock();
+        }
+      });
+
+      // User activity events reset the 10-minute idle timer and keep screen awake
+      const readerActivityEvents = ['pointerdown', 'touchstart', 'keydown', 'wheel'];
+      readerActivityEvents.forEach((ev) => {
+        window.addEventListener(ev, () => {
+          if (!isCoverScreenActive()) {
+            resetWakeLockActivityTimer();
+          }
+        }, { passive: true });
+      });
+
+      // Clean release on page navigation or tab close
+      window.addEventListener('pagehide', () => {
+        clearTimeout(wakeLockIdleTimer);
+        releaseScreenWakeLock();
+      });
+      window.addEventListener('beforeunload', () => {
+        clearTimeout(wakeLockIdleTimer);
+        releaseScreenWakeLock();
+      });
+
+      // Initial check on load (if reader opened with cover already dismissed)
+      if (!isCoverScreenActive()) {
+        resetWakeLockActivityTimer();
+      }
 
       // PWA Service Worker Registration
       if ('serviceWorker' in navigator) {
