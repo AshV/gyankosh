@@ -642,6 +642,30 @@ a:hover { opacity: 0.8; }
     display: none !important;
   }
 
+  /* Compact padding for hero on mobile so catalog content fits higher up */
+  .catalog-hero {
+    padding: 1rem var(--space-sm) 0.75rem !important;
+  }
+
+  /* Hide duplicate Hindi title 'ज्ञानकोश' in hero on mobile (header already displays ज्ञानकोश) */
+  .catalog-hero h1 {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+
+  .sacred-hero-invocation {
+    font-size: 0.92rem !important;
+    padding: 0.15rem 0.75rem !important;
+    margin-bottom: 0.4rem !important;
+  }
+
   /* Hide the subtitle in hero and category header */
   .catalog-hero .hero-subtitle,
   .category-header .category-subtitle {
@@ -652,6 +676,15 @@ a:hover { opacity: 0.8; }
   .hero-category-bubbles,
   .category-bubbles-nav {
     display: flex !important;
+    margin-top: 0.4rem !important;
+    gap: 0.4rem 0.45rem !important;
+    padding: 0 !important;
+  }
+
+  .category-bubble {
+    padding: 0.32rem 0.68rem !important;
+    font-size: 0.88rem !important;
+    gap: 0.25rem !important;
   }
 }
 

@@ -149,9 +149,6 @@ const jsonLd = {
                   <span class="bubble-label">
                     {categoryMeta[cat]?.nameHindi || cat}
                   </span>
-                  <span class="bubble-count">
-                    {toHindiDigits(categoryCounts[cat])}
-                  </span>
                 </a>
               ),
           )
@@ -165,7 +162,6 @@ const jsonLd = {
             >
               <span class="bubble-icon" aria-hidden="true">🪷</span>
               <span class="bubble-label">विषय टैग</span>
-              <span class="bubble-count">{toHindiDigits(sortedTags.length)}</span>
             </a>
           )
         }
