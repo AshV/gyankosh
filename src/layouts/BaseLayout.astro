@@ -321,6 +321,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         }
       });
 
+      // Track last visited catalog/listing page for smart reader back navigation
+      try {
+        sessionStorage.setItem('gyankosh_last_catalog_url', window.location.href);
+      } catch {}
+
       // PWA Service Worker Registration
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {

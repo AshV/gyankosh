@@ -155,7 +155,7 @@ const categoryHindiMap: Record<string, string> = {
 
       <!-- Top Bar -->
       <header class="reader-topbar" role="banner">
-        <a href={`${base}/`} class="back-link" aria-label="मुख्य सूची पर वापस जाएं">
+        <a href={category ? `${base}/category/${category.toLowerCase()}` : `${base}/`} class="back-link" id="reader-back-btn" aria-label="वापस जाएं" title="वापस जाएं">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
             <path d="M19 12H5M12 5l-7 7 7 7"/>
           </svg>
@@ -1391,6 +1391,57 @@ const categoryHindiMap: Record<string, string> = {
       // Initial check on load (if reader opened with cover already dismissed)
       if (!isCoverScreenActive()) {
         resetWakeLockActivityTimer();
+      }
+
+      /* ── Smart Back Navigation (वापस जाएं) ── */
+      const readerBackBtn = document.getElementById('reader-back-btn');
+      if (readerBackBtn) {
+        // Pre-update fallback href if internal referrer is available
+        const referrer = document.referrer;
+        let isInternalReferrer = false;
+        try {
+          if (referrer && referrer.startsWith(window.location.origin)) {
+            const refUrl = new URL(referrer);
+            if (refUrl.pathname !== window.location.pathname) {
+              isInternalReferrer = true;
+              readerBackBtn.setAttribute('href', referrer);
+            }
+          }
+        } catch {}
+
+        if (!isInternalReferrer) {
+          try {
+            const lastCatalog = sessionStorage.getItem('gyankosh_last_catalog_url');
+            if (lastCatalog && !lastCatalog.includes('/read/' + slug)) {
+              readerBackBtn.setAttribute('href', lastCatalog);
+            }
+          } catch {}
+        }
+
+        readerBackBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (isFullscreenActive()) {
+            exitFullscreen();
+          }
+
+          // If came from an internal page (category, tag, or home), navigate back in browser history
+          if (isInternalReferrer && window.history.length > 1) {
+            window.history.back();
+            return;
+          }
+
+          // Otherwise, navigate to last saved catalog/tag page or fallback
+          try {
+            const lastCatalogUrl = sessionStorage.getItem('gyankosh_last_catalog_url');
+            if (lastCatalogUrl && !lastCatalogUrl.includes('/read/' + slug)) {
+              window.location.href = lastCatalogUrl;
+              return;
+            }
+          } catch {}
+
+          const destination = readerBackBtn.getAttribute('href') || `${base}/`;
+          window.location.href = destination;
+        });
       }
 
       // PWA Service Worker Registration
