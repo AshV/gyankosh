@@ -9,6 +9,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import BookCard from '../../components/BookCard.astro';
 import { sortTexts } from '../../utils/sorting';
 import { tagToSlug } from '../../utils/tags';
+import { getTagMetadata } from '../../data/tagMeta';
 
 function toHindiDigits(num: number): string {
   const digits = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
@@ -46,19 +47,42 @@ export async function getStaticPaths() {
 const { tagName, tagSlug, texts } = Astro.props;
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const meta = getTagMetadata(tagSlug || tagName);
 
 const canonicalUrl = `https://www.ashishvishwakarma.com/gyankosh/tag/${tagSlug || tagToSlug(tagName)}`;
-const tagCover = texts[0]?.data?.coverImage
-  ? (texts[0].data.coverImage.startsWith('http') ? texts[0].data.coverImage : `https://www.ashishvishwakarma.com/gyankosh${texts[0].data.coverImage.startsWith('/') ? '' : '/'}${texts[0].data.coverImage}`)
-  : 'https://www.ashishvishwakarma.com/gyankosh/og-default.jpg';
+
+// Resolve Cover Image for OpenGraph & Display
+// Priority: Custom Tag Cover -> First Book Cover -> Site Default
+const rawCover = meta.coverImage || texts[0]?.data?.coverImage || '/og-default.jpg';
+const displayCoverUrl = rawCover.startsWith('http')
+  ? rawCover
+  : `${base}${rawCover.startsWith('/') ? '' : '/'}${rawCover}`;
+const ogImageUrl = rawCover.startsWith('http')
+  ? rawCover
+  : `https://www.ashishvishwakarma.com${base}${rawCover.startsWith('/') ? '' : '/'}${rawCover}`;
+
+const pageTitle = `${tagName} — ज्ञानकोश`;
+const pageDescription = meta.description
+  || `'${tagName}' विषय से संबंधित ${toHindiDigits(texts.length)} पावन धर्मग्रंथ — ज्ञानकोश डिजिटल पुस्तकालय।`;
 
 const jsonLdCollection = {
   '@context': 'https://schema.org',
   '@type': 'CollectionPage',
-  'name': `${tagName} — ज्ञानकोश`,
-  'description': `'${tagName}' विषय से संबंधित पावन धर्मग्रंथ।`,
+  'name': pageTitle,
+  'description': pageDescription,
   'url': canonicalUrl,
+  'image': ogImageUrl,
   'inLanguage': 'hi',
+  'mainEntity': {
+    '@type': 'ItemList',
+    'numberOfItems': texts.length,
+    'itemListElement': texts.slice(0, 10).map((text, idx) => ({
+      '@type': 'ListItem',
+      'position': idx + 1,
+      'name': text.data.title,
+      'url': `https://www.ashishvishwakarma.com/gyankosh/library/${text.id}`,
+    })),
+  },
 };
 
 const jsonLdBreadcrumb = {
@@ -82,31 +106,63 @@ const jsonLdBreadcrumb = {
 ---
 
 <BaseLayout
-  title={`${tagName} — ज्ञानकोश`}
-  description={`'${tagName}' विषय से संबंधित ${toHindiDigits(texts.length)} पावन धर्मग्रंथ — ज्ञानकोश डिजिटल पुस्तकालय।`}
+  title={pageTitle}
+  description={pageDescription}
   canonical={canonicalUrl}
-  image={tagCover}
+  image={ogImageUrl}
   keywords={[tagName, 'सनातन धर्म', 'हिन्दू धर्मग्रंथ', 'ज्ञानकोश']}
   jsonLd={[jsonLdCollection, jsonLdBreadcrumb]}
 >
   <div class="container">
-    <!-- Breadcrumb -->
-    <div class="tag-page-header" aria-labelledby="tag-title">
+    <!-- Breadcrumb & Tag Header Banner -->
+    <header class="tag-page-header" aria-labelledby="tag-title">
       <nav aria-label="मार्गदर्शक">
-        <ol style="display:flex;gap:0.5rem;list-style:none;font-family:var(--font-devanagari);font-size:0.9rem;color:var(--color-text-muted);margin-bottom:1rem;">
-          <li><a href={`${base}/`} style="color:var(--color-accent);text-decoration:none;">मुख्य सूची</a></li>
+        <ol class="tag-breadcrumbs">
+          <li><a href={`${base}/`}>मुख्य सूची</a></li>
           <li aria-hidden="true">/</li>
-          <li aria-current="page" style="color:var(--color-ink);font-weight:700;">🪷 {tagName}</li>
+          <li><a href={`${base}/#tags-section`}>टैग</a></li>
+          <li aria-hidden="true">/</li>
+          <li aria-current="page"><span>{meta.icon || '🪷'}</span> {tagName}</li>
         </ol>
       </nav>
 
-      <h1 id="tag-title" style="font-family:var(--font-devanagari);">
-        <span aria-hidden="true">🪷</span> {tagName}
-      </h1>
-      <p style="font-family:var(--font-devanagari);font-size:0.9rem;color:var(--color-text-faint);margin-top:0.75rem;font-weight:600;">
-        {toHindiDigits(texts.length)} ग्रंथ उपलब्ध
-      </p>
-    </div>
+      <div class={`tag-header-card ${meta.coverImage ? 'has-cover' : 'no-cover'}`}>
+        {meta.coverImage && (
+          <div class="tag-cover-wrap">
+            <img
+              src={displayCoverUrl}
+              alt={`${tagName} आवरण`}
+              class="tag-cover-img"
+              width="140"
+              height="200"
+              loading="eager"
+            />
+          </div>
+        )}
+        <div class="tag-meta-content">
+          <div class="tag-title-row">
+            <h1 id="tag-title">
+              <span class="tag-icon" aria-hidden="true">{meta.icon || '🪷'}</span> {tagName}
+            </h1>
+            <span class="tag-count-pill">
+              {toHindiDigits(texts.length)} ग्रंथ उपलब्ध
+            </span>
+          </div>
+
+          {meta.description && (
+            <p class="tag-description">
+              {meta.description}
+            </p>
+          )}
+
+          {meta.context && (
+            <div class="tag-context-card">
+              <p class="tag-context-text">{meta.context}</p>
+            </div>
+          )}
+        </div>
+      </div>
+    </header>
 
     <!-- Texts Grid -->
     {texts.length > 0 ? (
@@ -127,7 +183,7 @@ const jsonLdBreadcrumb = {
         ))}
       </div>
     ) : (
-      <p style="font-family:var(--font-devanagari);color:var(--color-text-muted);padding:2rem 0;font-size:1.05rem;">
+      <p class="tag-empty-message">
         इस विषय में अभी कोई ग्रंथ उपलब्ध नहीं है।
       </p>
     )}
@@ -139,9 +195,169 @@ const jsonLdBreadcrumb = {
     padding: var(--space-xl) 0 var(--space-lg);
   }
 
-  .tag-page-header h1 {
-    font-size: 1.75rem;
+  .tag-breadcrumbs {
+    display: flex;
+    gap: 0.5rem;
+    list-style: none;
+    font-family: var(--font-devanagari);
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 0;
+  }
+
+  .tag-breadcrumbs a {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+
+  .tag-breadcrumbs a:hover {
+    text-decoration: underline;
+  }
+
+  .tag-header-card {
+    background: var(--color-bg-card, #fff9f0);
+    border: 1px solid var(--color-border, #e5d8c3);
+    border-radius: 14px;
+    padding: 1.5rem;
+    display: flex;
+    gap: 1.75rem;
+    align-items: flex-start;
+    box-shadow: 0 4px 14px rgba(100, 30, 22, 0.05);
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tag-header-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-accent, #8e1b14), #d97706, var(--color-accent, #8e1b14));
+  }
+
+  .tag-cover-wrap {
+    flex-shrink: 0;
+    width: 140px;
+    height: 200px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 2px solid rgba(217, 119, 6, 0.3);
+    background: var(--color-bg);
+  }
+
+  .tag-cover-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  .tag-header-card:hover .tag-cover-img {
+    transform: scale(1.02);
+  }
+
+  .tag-meta-content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .tag-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .tag-title-row h1 {
+    font-family: var(--font-devanagari);
+    font-size: 1.85rem;
     color: var(--color-accent);
     margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    line-height: 1.25;
+  }
+
+  .tag-icon {
+    display: inline-block;
+  }
+
+  .tag-count-pill {
+    font-family: var(--font-devanagari);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    background: rgba(142, 27, 20, 0.08);
+    border: 1px solid rgba(142, 27, 20, 0.18);
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .tag-description {
+    font-family: var(--font-devanagari);
+    font-size: 1.05rem;
+    color: var(--color-ink);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .tag-context-card {
+    background: var(--color-bg, #faf6ee);
+    border-left: 3.5px solid var(--color-accent, #8e1b14);
+    padding: 0.75rem 1rem;
+    border-radius: 0 8px 8px 0;
+    margin-top: 0.25rem;
+  }
+
+  .tag-context-text {
+    font-family: var(--font-devanagari);
+    font-size: 0.92rem;
+    color: var(--color-text-muted);
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  .tag-empty-message {
+    font-family: var(--font-devanagari);
+    color: var(--color-text-muted);
+    padding: 2rem 0;
+    font-size: 1.05rem;
+  }
+
+  @media (max-width: 640px) {
+    .tag-header-card {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 1.25rem 1rem;
+      gap: 1.25rem;
+    }
+
+    .tag-cover-wrap {
+      width: 120px;
+      height: 172px;
+    }
+
+    .tag-title-row {
+      justify-content: center;
+    }
+
+    .tag-context-card {
+      text-align: left;
+    }
   }
 </style>

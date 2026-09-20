@@ -37,9 +37,12 @@ const defaultOgImage = `https://www.ashishvishwakarma.com${base}/og-default.jpg`
 
 let resolvedImage = image || defaultOgImage;
 if (resolvedImage && !resolvedImage.startsWith('http://') && !resolvedImage.startsWith('https://')) {
-  resolvedImage = `https://www.ashishvishwakarma.com${resolvedImage.startsWith('/') ? '' : '/'}${resolvedImage}`;
+  const cleanPath = resolvedImage.startsWith('/') ? resolvedImage : `/${resolvedImage}`;
+  const pathWithBase = cleanPath.startsWith(base) ? cleanPath : `${base}${cleanPath}`;
+  resolvedImage = `https://www.ashishvishwakarma.com${pathWithBase}`;
 }
 
+const imageType = resolvedImage.endsWith('.png') ? 'image/png' : (resolvedImage.endsWith('.webp') ? 'image/webp' : 'image/jpeg');
 const ogType = type === 'book' ? 'book' : (type === 'article' ? 'article' : 'website');
 
 // Normalize jsonLd to an array for rendering
@@ -85,7 +88,7 @@ const isSanskrit = language && language.toLowerCase().includes('sanskrit');
 <meta property="og:url" content={canonical} />
 <meta property="og:image" content={resolvedImage} />
 <meta property="og:image:secure_url" content={resolvedImage} />
-<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:type" content={imageType} />
 <meta property="og:image:alt" content={title} />
 <meta property="og:locale" content="hi_IN" />
 {author && <meta property="book:author" content={author} />}
