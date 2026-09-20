@@ -126,7 +126,7 @@ const jsonLdBreadcrumb = {
         </ol>
       </nav>
 
-      <div class={`tag-header-card ${meta.coverImage ? 'has-cover' : 'no-cover'}`}>
+      <div class={`tag-header-content ${meta.coverImage ? 'has-cover' : 'no-cover'}`}>
         {meta.coverImage && (
           <div class="tag-cover-wrap">
             <img
@@ -156,9 +156,7 @@ const jsonLdBreadcrumb = {
           )}
 
           {meta.context && (
-            <div class="tag-context-card">
-              <p class="tag-context-text">{meta.context}</p>
-            </div>
+            <p class="tag-context-text">{meta.context}</p>
           )}
         </div>
       </div>
@@ -217,28 +215,11 @@ const jsonLdBreadcrumb = {
     text-decoration: underline;
   }
 
-  .tag-header-card {
-    background: var(--color-bg-card, #fff9f0);
-    border: 1px solid var(--color-border, #e5d8c3);
-    border-radius: 14px;
-    padding: 1.5rem;
+  .tag-header-content {
     display: flex;
     gap: 1.75rem;
     align-items: flex-start;
-    box-shadow: 0 4px 14px rgba(100, 30, 22, 0.05);
-    margin-bottom: 2rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .tag-header-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--color-accent, #8e1b14), #d97706, var(--color-accent, #8e1b14));
+    margin-bottom: 2.25rem;
   }
 
   .tag-cover-wrap {
@@ -247,8 +228,7 @@ const jsonLdBreadcrumb = {
     height: 200px;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1);
-    border: 2px solid rgba(217, 119, 6, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     background: var(--color-bg);
   }
 
@@ -260,7 +240,7 @@ const jsonLdBreadcrumb = {
     transition: transform 0.3s ease;
   }
 
-  .tag-header-card:hover .tag-cover-img {
+  .tag-cover-wrap:hover .tag-cover-img {
     transform: scale(1.02);
   }
 
@@ -315,17 +295,9 @@ const jsonLdBreadcrumb = {
     margin: 0;
   }
 
-  .tag-context-card {
-    background: var(--color-bg, #faf6ee);
-    border-left: 3.5px solid var(--color-accent, #8e1b14);
-    padding: 0.75rem 1rem;
-    border-radius: 0 8px 8px 0;
-    margin-top: 0.25rem;
-  }
-
   .tag-context-text {
     font-family: var(--font-devanagari);
-    font-size: 0.92rem;
+    font-size: 0.95rem;
     color: var(--color-text-muted);
     line-height: 1.65;
     margin: 0;
@@ -339,12 +311,12 @@ const jsonLdBreadcrumb = {
   }
 
   @media (max-width: 640px) {
-    .tag-header-card {
+    .tag-header-content {
       flex-direction: column;
       align-items: center;
       text-align: center;
-      padding: 1.25rem 1rem;
       gap: 1.25rem;
+      margin-bottom: 1.75rem;
     }
 
     .tag-cover-wrap {
@@ -354,10 +326,6 @@ const jsonLdBreadcrumb = {
 
     .tag-title-row {
       justify-content: center;
-    }
-
-    .tag-context-card {
-      text-align: left;
     }
   }
 </style>
