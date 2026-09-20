@@ -546,27 +546,140 @@ const categoryHindiMap: Record<string, string> = {
             (this.stage.clientWidth || window.innerWidth) + 'px; font-size:var(--reader-font-size); line-height:var(--reader-line-height);';
           document.body.appendChild(measureBox);
 
+          // Helpers for identifying semantic Indic blocks
+          const isTranslation = (el: Element | undefined) => {
+            if (!el) return false;
+            return el.classList.contains('translation-block') ||
+                   el.classList.contains('block--translation') ||
+                   el.classList.contains('block--bhavarth');
+          };
+
+          const isVerse = (el: Element | undefined) => {
+            if (!el) return false;
+            return el.classList.contains('verse-block');
+          };
+
+          const isSpeaker = (el: Element | undefined) => {
+            if (!el) return false;
+            return el.classList.contains('speaker-block');
+          };
+
+          const isInstruction = (el: Element | undefined) => {
+            if (!el) return false;
+            return el.classList.contains('instruction-block');
+          };
+
+          // Accurate height measurement for a group of nodes including inter-block spacing
+          const measureNodes = (nodes: Element[]) => {
+            const container = document.createElement('div');
+            container.style.cssText = 'display:flex; flex-direction:column;';
+            nodes.forEach(n => container.appendChild(n.cloneNode(true)));
+            measureBox.appendChild(container);
+            const h = container.offsetHeight + 8;
+            measureBox.removeChild(container);
+            return h;
+          };
+
           // Reserve space for compact sacred header (no page footer)
           const maxPageHeight = Math.max(260, this.stage.clientHeight - 30);
 
-          let currentPageNodes = [];
+          let currentPageNodes: HTMLElement[] = [];
           let currentHeight = 0;
 
-          childElements.forEach((node) => {
-            const clone = node.cloneNode(true);
-            measureBox.appendChild(clone);
-            const nodeHeight = clone.offsetHeight + 8;
-            measureBox.removeChild(clone);
+          for (let i = 0; i < childElements.length; i++) {
+            const node = childElements[i] as HTMLElement;
+
+            // 1. Check for Speaker + Verse (+ Translation) cohesive group
+            if (isSpeaker(node) && childElements[i + 1] && isVerse(childElements[i + 1])) {
+              const nextEl = childElements[i + 1] as HTMLElement;
+              const afterNext = childElements[i + 2] as HTMLElement | undefined;
+
+              // Check if followed by Translation as well (Speaker + Verse + Translation)
+              if (afterNext && isTranslation(afterNext)) {
+                const trioHeight = measureNodes([node, nextEl, afterNext]);
+                if (trioHeight <= maxPageHeight) {
+                  if (currentHeight + trioHeight <= maxPageHeight) {
+                    currentPageNodes.push(node.cloneNode(true) as HTMLElement, nextEl.cloneNode(true) as HTMLElement, afterNext.cloneNode(true) as HTMLElement);
+                    currentHeight += trioHeight;
+                    i += 2;
+                    continue;
+                  } else if (currentPageNodes.length > 0) {
+                    this.pages.push(currentPageNodes);
+                    currentPageNodes = [node.cloneNode(true) as HTMLElement, nextEl.cloneNode(true) as HTMLElement, afterNext.cloneNode(true) as HTMLElement];
+                    currentHeight = trioHeight;
+                    i += 2;
+                    continue;
+                  }
+                }
+              }
+
+              // Otherwise check Speaker + Verse pair
+              const pairHeight = measureNodes([node, nextEl]);
+              if (pairHeight <= maxPageHeight) {
+                if (currentHeight + pairHeight <= maxPageHeight) {
+                  currentPageNodes.push(node.cloneNode(true) as HTMLElement, nextEl.cloneNode(true) as HTMLElement);
+                  currentHeight += pairHeight;
+                  i += 1;
+                  continue;
+                } else if (currentPageNodes.length > 0) {
+                  this.pages.push(currentPageNodes);
+                  currentPageNodes = [node.cloneNode(true) as HTMLElement, nextEl.cloneNode(true) as HTMLElement];
+                  currentHeight = pairHeight;
+                  i += 1;
+                  continue;
+                }
+              }
+            }
+
+            // 2. Check for Verse + Translation cohesive pair
+            if (isVerse(node) && childElements[i + 1] && isTranslation(childElements[i + 1])) {
+              const nextEl = childElements[i + 1] as HTMLElement;
+              const pairHeight = measureNodes([node, nextEl]);
+
+              if (pairHeight <= maxPageHeight) {
+                if (currentHeight + pairHeight <= maxPageHeight) {
+                  // Both fit on current page
+                  currentPageNodes.push(node.cloneNode(true) as HTMLElement, nextEl.cloneNode(true) as HTMLElement);
+                  currentHeight += pairHeight;
+                  i += 1;
+                  continue;
+                } else if (currentPageNodes.length > 0) {
+                  // Don't split them! Start both together on a fresh page
+                  this.pages.push(currentPageNodes);
+                  currentPageNodes = [node.cloneNode(true) as HTMLElement, nextEl.cloneNode(true) as HTMLElement];
+                  currentHeight = pairHeight;
+                  i += 1;
+                  continue;
+                }
+              }
+            }
+
+            // 3. Check for Instruction header + immediate next element (avoid orphan section headers)
+            if (isInstruction(node) && childElements[i + 1]) {
+              const nextEl = childElements[i + 1] as HTMLElement;
+              const pairHeight = measureNodes([node, nextEl]);
+
+              if (pairHeight <= maxPageHeight && currentHeight + pairHeight > maxPageHeight && currentPageNodes.length > 0) {
+                // Header would be orphaned at the bottom of current page; move it to next page
+                this.pages.push(currentPageNodes);
+                currentPageNodes = [node.cloneNode(true) as HTMLElement];
+                currentHeight = measureNodes([node]);
+                continue;
+              }
+            }
+
+            // 4. Standard single node placement (single verse, standalone instruction, or large blocks)
+            const nodeHeight = measureNodes([node]);
 
             if (currentHeight + nodeHeight > maxPageHeight && currentPageNodes.length > 0) {
               this.pages.push(currentPageNodes);
-              currentPageNodes = [node.cloneNode(true)];
+              currentPageNodes = [node.cloneNode(true) as HTMLElement];
               currentHeight = nodeHeight;
             } else {
-              currentPageNodes.push(node.cloneNode(true));
+              currentPageNodes.push(node.cloneNode(true) as HTMLElement);
               currentHeight += nodeHeight;
             }
-          });
+          }
 
           if (currentPageNodes.length > 0) {
             this.pages.push(currentPageNodes);

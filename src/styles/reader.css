@@ -685,6 +685,8 @@ body.hide-numbering .verse-block {
   font-size: calc(var(--reader-font-size) * 0.9);
   line-height: 1.6;
   color: var(--color-text-muted);
+  break-inside: avoid;
+  page-break-inside: avoid;
 }
 
 .translation-prefix {
