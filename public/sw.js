@@ -4,7 +4,7 @@
  * and zero-network overhead for immutable Vite assets.
  */
 
-const VERSION = 'v4';
+const VERSION = 'v5';
 const CACHE_SHELL = `gyankosh-shell-${VERSION}`;
 const CACHE_CONTENT = `gyankosh-content-${VERSION}`;
 const CACHE_MEDIA = `gyankosh-media-${VERSION}`;

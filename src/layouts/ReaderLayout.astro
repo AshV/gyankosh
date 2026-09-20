@@ -547,30 +547,30 @@ const categoryHindiMap: Record<string, string> = {
           document.body.appendChild(measureBox);
 
           // Helpers for identifying semantic Indic blocks
-          const isTranslation = (el: Element | undefined) => {
+          const isTranslation = (el) => {
             if (!el) return false;
             return el.classList.contains('translation-block') ||
                    el.classList.contains('block--translation') ||
                    el.classList.contains('block--bhavarth');
           };
 
-          const isVerse = (el: Element | undefined) => {
+          const isVerse = (el) => {
             if (!el) return false;
             return el.classList.contains('verse-block');
           };
 
-          const isSpeaker = (el: Element | undefined) => {
+          const isSpeaker = (el) => {
             if (!el) return false;
             return el.classList.contains('speaker-block');
           };
 
-          const isInstruction = (el: Element | undefined) => {
+          const isInstruction = (el) => {
             if (!el) return false;
             return el.classList.contains('instruction-block');
           };
 
           // Accurate height measurement for a group of nodes including inter-block spacing
-          const measureNodes = (nodes: Element[]) => {
+          const measureNodes = (nodes) => {
             const container = document.createElement('div');
             container.style.cssText = 'display:flex; flex-direction:column;';
             nodes.forEach(n => container.appendChild(n.cloneNode(true)));
@@ -583,29 +583,29 @@ const categoryHindiMap: Record<string, string> = {
           // Reserve space for compact sacred header (no page footer)
           const maxPageHeight = Math.max(260, this.stage.clientHeight - 30);
 
-          let currentPageNodes: HTMLElement[] = [];
+          let currentPageNodes = [];
           let currentHeight = 0;
 
           for (let i = 0; i < childElements.length; i++) {
-            const node = childElements[i] as HTMLElement;
+            const node = childElements[i];
 
             // 1. Check for Speaker + Verse (+ Translation) cohesive group
             if (isSpeaker(node) && childElements[i + 1] && isVerse(childElements[i + 1])) {
-              const nextEl = childElements[i + 1] as HTMLElement;
-              const afterNext = childElements[i + 2] as HTMLElement | undefined;
+              const nextEl = childElements[i + 1];
+              const afterNext = childElements[i + 2];
 
               // Check if followed by Translation as well (Speaker + Verse + Translation)
               if (afterNext && isTranslation(afterNext)) {
                 const trioHeight = measureNodes([node, nextEl, afterNext]);
                 if (trioHeight <= maxPageHeight) {
                   if (currentHeight + trioHeight <= maxPageHeight) {
-                    currentPageNodes.push(node.cloneNode(true) as HTMLElement, nextEl.cloneNode(true) as HTMLElement, afterNext.cloneNode(true) as HTMLElement);
+                    currentPageNodes.push(node.cloneNode(true), nextEl.cloneNode(true), afterNext.cloneNode(true));
                     currentHeight += trioHeight;
                     i += 2;
                     continue;
                   } else if (currentPageNodes.length > 0) {
                     this.pages.push(currentPageNodes);
-                    currentPageNodes = [node.cloneNode(true) as HTMLElement, nextEl.cloneNode(true) as HTMLElement, afterNext.cloneNode(true) as HTMLElement];
+                    currentPageNodes = [node.cloneNode(true), nextEl.cloneNode(true), afterNext.cloneNode(true)];
                     currentHeight = trioHeight;
                     i += 2;
                     continue;
@@ -617,13 +617,13 @@ const categoryHindiMap: Record<string, string> = {
               const pairHeight = measureNodes([node, nextEl]);
               if (pairHeight <= maxPageHeight) {
                 if (currentHeight + pairHeight <= maxPageHeight) {
-                  currentPageNodes.push(node.cloneNode(true) as HTMLElement, nextEl.cloneNode(true) as HTMLElement);
+                  currentPageNodes.push(node.cloneNode(true), nextEl.cloneNode(true));
                   currentHeight += pairHeight;
                   i += 1;
                   continue;
                 } else if (currentPageNodes.length > 0) {
                   this.pages.push(currentPageNodes);
-                  currentPageNodes = [node.cloneNode(true) as HTMLElement, nextEl.cloneNode(true) as HTMLElement];
+                  currentPageNodes = [node.cloneNode(true), nextEl.cloneNode(true)];
                   currentHeight = pairHeight;
                   i += 1;
                   continue;
@@ -633,20 +633,20 @@ const categoryHindiMap: Record<string, string> = {
 
             // 2. Check for Verse + Translation cohesive pair
             if (isVerse(node) && childElements[i + 1] && isTranslation(childElements[i + 1])) {
-              const nextEl = childElements[i + 1] as HTMLElement;
+              const nextEl = childElements[i + 1];
               const pairHeight = measureNodes([node, nextEl]);
 
               if (pairHeight <= maxPageHeight) {
                 if (currentHeight + pairHeight <= maxPageHeight) {
                   // Both fit on current page
-                  currentPageNodes.push(node.cloneNode(true) as HTMLElement, nextEl.cloneNode(true) as HTMLElement);
+                  currentPageNodes.push(node.cloneNode(true), nextEl.cloneNode(true));
                   currentHeight += pairHeight;
                   i += 1;
                   continue;
                 } else if (currentPageNodes.length > 0) {
                   // Don't split them! Start both together on a fresh page
                   this.pages.push(currentPageNodes);
-                  currentPageNodes = [node.cloneNode(true) as HTMLElement, nextEl.cloneNode(true) as HTMLElement];
+                  currentPageNodes = [node.cloneNode(true), nextEl.cloneNode(true)];
                   currentHeight = pairHeight;
                   i += 1;
                   continue;
@@ -656,13 +656,13 @@ const categoryHindiMap: Record<string, string> = {
 
             // 3. Check for Instruction header + immediate next element (avoid orphan section headers)
             if (isInstruction(node) && childElements[i + 1]) {
-              const nextEl = childElements[i + 1] as HTMLElement;
+              const nextEl = childElements[i + 1];
               const pairHeight = measureNodes([node, nextEl]);
 
               if (pairHeight <= maxPageHeight && currentHeight + pairHeight > maxPageHeight && currentPageNodes.length > 0) {
                 // Header would be orphaned at the bottom of current page; move it to next page
                 this.pages.push(currentPageNodes);
-                currentPageNodes = [node.cloneNode(true) as HTMLElement];
+                currentPageNodes = [node.cloneNode(true)];
                 currentHeight = measureNodes([node]);
                 continue;
               }
@@ -673,10 +673,10 @@ const categoryHindiMap: Record<string, string> = {
 
             if (currentHeight + nodeHeight > maxPageHeight && currentPageNodes.length > 0) {
               this.pages.push(currentPageNodes);
-              currentPageNodes = [node.cloneNode(true) as HTMLElement];
+              currentPageNodes = [node.cloneNode(true)];
               currentHeight = nodeHeight;
             } else {
-              currentPageNodes.push(node.cloneNode(true) as HTMLElement);
+              currentPageNodes.push(node.cloneNode(true));
               currentHeight += nodeHeight;
             }
           }
