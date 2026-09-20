@@ -25,17 +25,11 @@ export async function getStaticPaths() {
   const allTexts = sortTexts(await getCollection('library'));
   return allTexts.map(entry => ({
     params: { slug: entry.id },
-    props: {
-      entry,
-      // Pass related texts from the same category (excluding self), max 4
-      relatedTexts: allTexts
-        .filter(t => t.data.category === entry.data.category && t.id !== entry.id)
-        .slice(0, 4),
-    },
+    props: { entry },
   }));
 }
 
-const { entry, relatedTexts } = Astro.props;
+const { entry } = Astro.props;
 const { data } = entry;
 
 // ── Build-time parsing ──────────────────────────────────────
@@ -171,79 +165,5 @@ if (data.author) keywords.push(data.author);
   -->
   <Fragment set:html={parsedHtml} />
 
-  <!-- Related Texts — Internal Linking for SEO -->
-  {relatedTexts.length > 0 && (
-    <nav class="related-texts" aria-label="इस श्रेणी के अन्य ग्रंथ">
-      <h2 class="related-heading">इस श्रेणी के अन्य ग्रंथ</h2>
-      <ul class="related-list">
-        {relatedTexts.map((rt: any) => (
-          <li>
-            <a href={`${base}/read/${rt.id}`} class="related-link">
-              <span class="related-title">{rt.data.title}</span>
-              {rt.data.author && <span class="related-author">{rt.data.author}</span>}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </nav>
-  )}
 </ReaderLayout>
 
-<style>
-  /* Related Texts Section — matches sacred paper aesthetic */
-  .related-texts {
-    margin-top: 3rem;
-    padding: 2rem 1.5rem;
-    border-top: 2px solid var(--color-border);
-    background: var(--color-bg-elevated);
-    border-radius: 8px;
-    font-family: var(--font-devanagari);
-  }
-
-  .related-heading {
-    font-family: var(--font-devanagari);
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: var(--color-accent);
-    margin-bottom: 1rem;
-    text-align: center;
-  }
-
-  .related-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 0.75rem;
-  }
-
-  .related-link {
-    display: flex;
-    flex-direction: column;
-    padding: 0.85rem 1rem;
-    background: var(--color-bg-card);
-    border: 1px solid var(--color-border-subtle);
-    border-radius: 6px;
-    text-decoration: none;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  }
-
-  .related-link:hover {
-    border-color: var(--color-accent);
-    box-shadow: 0 2px 8px rgba(142, 27, 20, 0.1);
-  }
-
-  .related-title {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--color-ink);
-    line-height: 1.4;
-  }
-
-  .related-author {
-    font-size: 0.85rem;
-    color: var(--color-text-muted);
-    margin-top: 0.25rem;
-  }
-</style>
