@@ -163,22 +163,6 @@ const categoryHindiMap: Record<string, string> = {
         </a>
 
         <div class="topbar-actions">
-          <!-- Chanting / Recitation Mode Button (पाठ मोड) with Prayer Beads Icon Only -->
-          <button
-            id="chanting-toggle"
-            class="icon-btn topbar-btn--chanting"
-            aria-label="पाठ मोड (केवल मूल श्लोक)"
-            title="पाठ मोड — केवल मूल श्लोक (अर्थ छिपाएं)"
-            aria-pressed="false"
-          >
-            <!-- Sacred Prayer Beads / Japa Mala Icon -->
-            <svg class="icon-prayer-beads" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <circle cx="12" cy="9" r="6.5" stroke-dasharray="2.5 2.5" stroke-width="2.2" />
-              <circle cx="12" cy="16.5" r="1.6" fill="currentColor" />
-              <path d="M12 18.1v3.5M10.2 21.6h3.6" />
-            </svg>
-          </button>
-
           <!-- Spiritual Context Info Button (ग्रंथ परिचय) -->
           {context && (
             <button
@@ -223,6 +207,22 @@ const categoryHindiMap: Record<string, string> = {
               <circle cx="18" cy="19" r="3"/>
               <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
               <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+            </svg>
+          </button>
+
+          <!-- Chanting / Recitation Mode Button (पाठ मोड) with Prayer Beads Icon Only -->
+          <button
+            id="chanting-toggle"
+            class="icon-btn topbar-btn--chanting"
+            aria-label="पाठ मोड (केवल मूल श्लोक)"
+            title="पाठ मोड — केवल मूल श्लोक (अर्थ छिपाएं)"
+            aria-pressed="false"
+          >
+            <!-- Sacred Prayer Beads / Japa Mala Icon -->
+            <svg class="icon-prayer-beads" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="9" r="6.5" stroke-dasharray="2.5 2.5" stroke-width="2.2" />
+              <circle cx="12" cy="16.5" r="1.6" fill="currentColor" />
+              <path d="M12 18.1v3.5M10.2 21.6h3.6" />
             </svg>
           </button>
 
