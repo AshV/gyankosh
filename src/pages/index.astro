@@ -7,6 +7,7 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import BookCard from "../components/BookCard.astro";
+import FestiveBanner from "../components/FestiveBanner.astro";
 import { CATEGORIES } from "../content.config";
 import { sortTexts } from "../utils/sorting";
 import { tagToSlug } from "../utils/tags";
@@ -171,6 +172,9 @@ const jsonLd = {
 
   <!-- Main Unified Library Shelf Container -->
   <div class="container">
+    <!-- Auspicious Day & Festive Greeting Banner -->
+    <FestiveBanner allTexts={allTexts} />
+
     <!-- Saved Texts Shelf (Always on top when items are saved) -->
     <section id="saved-shelf" class="saved-shelf catalog-section" style="display: none; padding-top: 0; padding-bottom: 2rem;" aria-label="सहेजे गए ग्रंथ">
       <div class="saved-shelf-header">

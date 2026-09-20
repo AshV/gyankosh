@@ -1,0 +1,498 @@
+---
+/**
+ * src/components/FestiveBanner.astro
+ * Auspicious Day & Hindu Festival Greeting Banner with Suggested Reads.
+ *
+ * Displays personalized festive wishes (शुभकामनाएं) and recommended sacred texts
+ * for major annual Hindu festivals and daily sacred deity days (सोमवार, मंगलवार, आदि).
+ */
+import { ANNUAL_FESTIVALS, WEEKLY_DEITIES, type FestivalInfo, type WeeklyDeityInfo } from '../data/festivals';
+
+export interface Props {
+  allTexts: any[];
+}
+
+const { allTexts } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Helper to resolve book objects from slugs
+function resolveSuggestedTexts(slugs: string[]) {
+  return slugs
+    .map(slug => allTexts.find(t => t.id === slug))
+    .filter(Boolean)
+    .slice(0, 4); // Max 4 top recommendations per occasion
+}
+
+// Category meta for badge icons
+const categoryIcons: Record<string, string> = {
+  Veda: '🔥',
+  Upanishad: '🕉️',
+  Gita: '🎵',
+  Chalisa: '🪔',
+  Stotra: '🌸',
+  Aarti: '🪔',
+  Purana: '📖',
+  Other: '📜',
+};
+---
+
+<aside id="festive-banner" class="festive-banner" aria-label="पर्व एवं पावन दिवस शुभकामना" style="display: none;">
+  <div class="festive-container">
+    <!-- ─── Annual Major Festivals ─────────────────────────────────── -->
+    {ANNUAL_FESTIVALS.map((fest: FestivalInfo) => {
+      const suggested = resolveSuggestedTexts(fest.suggestedSlugs);
+      return (
+        <div
+          class="festive-card"
+          data-type="annual"
+          data-festival-id={fest.id}
+          data-start-date={fest.startDate}
+          data-end-date={fest.endDate}
+          style="display: none;"
+        >
+          <div class="festive-card-header">
+            <div class="festive-badge-group">
+              <span class="festive-icon" aria-hidden="true">{fest.icon}</span>
+              <span class="festive-occasion-label">{fest.name}</span>
+              {fest.subtitle && <span class="festive-subtitle-pill">{fest.subtitle}</span>}
+            </div>
+            <button
+              type="button"
+              class="festive-dismiss-btn"
+              aria-label="शुभकामना संदेश बन्द करें"
+              title="बन्द करें"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+
+          <div class="festive-body">
+            <p class="festive-greeting-text">{fest.greeting}</p>
+          </div>
+
+          {suggested.length > 0 && (
+            <div class="festive-suggested-wrap">
+              <div class="festive-suggested-label">
+                <span aria-hidden="true">📖</span>
+                <span>इस पावन अवसर पर अनुशंसित पाठ:</span>
+              </div>
+              <div class="festive-books-grid" role="list">
+                {suggested.map((book: any) => {
+                  const readUrl = `${base}/read/${book.id}`;
+                  const coverImage = book.data.coverImage
+                    ? (book.data.coverImage.startsWith('http') ? book.data.coverImage : `${base}${book.data.coverImage.startsWith('/') ? '' : '/'}${book.data.coverImage}`)
+                    : `${base}/covers/${book.id}.webp`;
+                  const webpCover = coverImage.endsWith('.jpg') ? coverImage.replace(/\.jpg$/, '.webp') : coverImage;
+                  const jpgCover = coverImage.endsWith('.webp') ? coverImage.replace(/\.webp$/, '.jpg') : coverImage;
+                  const catIcon = categoryIcons[book.data.category] || '📜';
+
+                  return (
+                    <a href={readUrl} class="festive-book-chip" role="listitem">
+                      <div class="festive-chip-thumb">
+                        <picture>
+                          <source srcset={webpCover} type="image/webp" />
+                          <img
+                            src={jpgCover}
+                            alt={book.data.title}
+                            class="festive-chip-img"
+                            loading="lazy"
+                            width="48"
+                            height="68"
+                            onerror="this.style.display='none'; const fb = this.parentElement?.nextElementSibling; if (fb) fb.style.display='flex';"
+                          />
+                        </picture>
+                        <div class="festive-chip-fallback" style={`background: ${book.data.coverColor || 'hsl(22, 70%, 45%)'}; display: none;`}>
+                          <span>{catIcon}</span>
+                        </div>
+                      </div>
+                      <div class="festive-chip-meta">
+                        <span class="festive-chip-title">{book.data.title}</span>
+                        {book.data.author && <span class="festive-chip-author">{book.data.author}</span>}
+                        <span class="festive-chip-cta">पाठ करें →</span>
+                      </div>
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    })}
+
+    <!-- ─── Weekly Sacred Deities (Nitya Aaradhana) ────────────────── -->
+    {Object.values(WEEKLY_DEITIES).map((day: WeeklyDeityInfo) => {
+      const suggested = resolveSuggestedTexts(day.suggestedSlugs);
+      return (
+        <div
+          class="festive-card"
+          data-type="weekly"
+          data-weekly-day={day.dayOfWeek}
+          style="display: none;"
+        >
+          <div class="festive-card-header">
+            <div class="festive-badge-group">
+              <span class="festive-icon" aria-hidden="true">{day.icon}</span>
+              <span class="festive-occasion-label">{day.name}</span>
+              <span class="festive-subtitle-pill">{day.deity}</span>
+            </div>
+            <button
+              type="button"
+              class="festive-dismiss-btn"
+              aria-label="शुभकामना संदेश बन्द करें"
+              title="बन्द करें"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+
+          <div class="festive-body">
+            <p class="festive-greeting-text">{day.greeting}</p>
+          </div>
+
+          {suggested.length > 0 && (
+            <div class="festive-suggested-wrap">
+              <div class="festive-suggested-label">
+                <span aria-hidden="true">🪔</span>
+                <span>आज का पावन स्वाध्याय एवं आराधना:</span>
+              </div>
+              <div class="festive-books-grid" role="list">
+                {suggested.map((book: any) => {
+                  const readUrl = `${base}/read/${book.id}`;
+                  const coverImage = book.data.coverImage
+                    ? (book.data.coverImage.startsWith('http') ? book.data.coverImage : `${base}${book.data.coverImage.startsWith('/') ? '' : '/'}${book.data.coverImage}`)
+                    : `${base}/covers/${book.id}.webp`;
+                  const webpCover = coverImage.endsWith('.jpg') ? coverImage.replace(/\.jpg$/, '.webp') : coverImage;
+                  const jpgCover = coverImage.endsWith('.webp') ? coverImage.replace(/\.webp$/, '.jpg') : coverImage;
+                  const catIcon = categoryIcons[book.data.category] || '📜';
+
+                  return (
+                    <a href={readUrl} class="festive-book-chip" role="listitem">
+                      <div class="festive-chip-thumb">
+                        <picture>
+                          <source srcset={webpCover} type="image/webp" />
+                          <img
+                            src={jpgCover}
+                            alt={book.data.title}
+                            class="festive-chip-img"
+                            loading="lazy"
+                            width="48"
+                            height="68"
+                            onerror="this.style.display='none'; const fb = this.parentElement?.nextElementSibling; if (fb) fb.style.display='flex';"
+                          />
+                        </picture>
+                        <div class="festive-chip-fallback" style={`background: ${book.data.coverColor || 'hsl(22, 70%, 45%)'}; display: none;`}>
+                          <span>{catIcon}</span>
+                        </div>
+                      </div>
+                      <div class="festive-chip-meta">
+                        <span class="festive-chip-title">{book.data.title}</span>
+                        {book.data.author && <span class="festive-chip-author">{book.data.author}</span>}
+                        <span class="festive-chip-cta">पाठ करें →</span>
+                      </div>
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    })}
+  </div>
+</aside>
+
+<script is:inline>
+  (() => {
+    const banner = document.getElementById('festive-banner');
+    if (!banner) return;
+
+    // Get client local date in YYYY-MM-DD
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const todayStr = `${year}-${month}-${day}`;
+    const dayOfWeek = now.getDay(); // 0 = Sunday, 1 = Monday, ...
+
+    // Check if dismissed for today's session
+    const dismissKey = `gyankosh_festive_dismissed_${todayStr}`;
+    if (sessionStorage.getItem(dismissKey) === 'true') {
+      return;
+    }
+
+    // 1. Check for matching Annual Festival
+    const annualCards = banner.querySelectorAll('.festive-card[data-type="annual"]');
+    let matchedCard = null;
+
+    for (const card of annualCards) {
+      const start = card.getAttribute('data-start-date');
+      const end = card.getAttribute('data-end-date');
+      if (start && end && todayStr >= start && todayStr <= end) {
+        matchedCard = card;
+        break;
+      }
+    }
+
+    // 2. If no annual festival matches, match Weekly Deity
+    if (!matchedCard) {
+      matchedCard = banner.querySelector(`.festive-card[data-type="weekly"][data-weekly-day="${dayOfWeek}"]`);
+    }
+
+    if (matchedCard) {
+      matchedCard.style.display = 'block';
+      banner.style.display = 'block';
+
+      // Setup dismiss handler
+      const dismissBtn = matchedCard.querySelector('.festive-dismiss-btn');
+      if (dismissBtn) {
+        dismissBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          banner.classList.add('is-dismissing');
+          setTimeout(() => {
+            banner.style.display = 'none';
+            sessionStorage.setItem(dismissKey, 'true');
+          }, 300);
+        });
+      }
+    }
+  })();
+</script>
+
+<style>
+  .festive-banner {
+    margin: 0 0 2rem 0;
+    transition: opacity 0.3s ease, transform 0.3s ease, max-height 0.3s ease;
+  }
+
+  .festive-banner.is-dismissing {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  .festive-container {
+    width: 100%;
+  }
+
+  .festive-card {
+    background: linear-gradient(135deg, rgba(255, 248, 235, 0.95), rgba(254, 243, 220, 0.85));
+    border: 1px solid var(--color-border, #e5d8c3);
+    border-left: 4px solid var(--color-accent, #8e1b14);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    box-shadow: 0 4px 16px rgba(100, 30, 22, 0.06);
+    position: relative;
+    overflow: hidden;
+  }
+
+  :global(.theme-dark) .festive-card {
+    background: linear-gradient(135deg, rgba(38, 28, 20, 0.95), rgba(48, 33, 24, 0.85));
+    border-color: rgba(180, 83, 9, 0.3);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  }
+
+  .festive-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .festive-badge-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .festive-icon {
+    font-size: 1.35rem;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .festive-occasion-label {
+    font-family: var(--font-devanagari);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--color-accent, #8e1b14);
+    letter-spacing: 0.01em;
+  }
+
+  .festive-subtitle-pill {
+    font-family: var(--font-devanagari);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    background: rgba(142, 27, 20, 0.08);
+    padding: 0.15rem 0.55rem;
+    border-radius: 999px;
+    border: 1px solid rgba(142, 27, 20, 0.15);
+  }
+
+  .festive-dismiss-btn {
+    background: transparent;
+    border: none;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    padding: 0.35rem;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .festive-dismiss-btn:hover {
+    background: rgba(142, 27, 20, 0.1);
+    color: var(--color-accent);
+  }
+
+  .festive-body {
+    margin-bottom: 1rem;
+  }
+
+  .festive-greeting-text {
+    font-family: var(--font-devanagari);
+    font-size: 1.02rem;
+    color: var(--color-ink);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .festive-suggested-wrap {
+    border-top: 1px dashed var(--color-border-subtle, rgba(229, 216, 195, 0.8));
+    padding-top: 0.85rem;
+    margin-top: 0.5rem;
+  }
+
+  .festive-suggested-label {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-devanagari);
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    margin-bottom: 0.65rem;
+  }
+
+  .festive-books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.75rem;
+  }
+
+  .festive-book-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0.65rem;
+    background: var(--color-bg-card, #fff9f0);
+    border: 1px solid var(--color-border-subtle, #e5d8c3);
+    border-radius: 8px;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+
+  .festive-book-chip:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(142, 27, 20, 0.12);
+    border-color: var(--color-accent);
+  }
+
+  .festive-chip-thumb {
+    width: 42px;
+    height: 60px;
+    border-radius: 4px;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: var(--color-bg);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .festive-chip-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .festive-chip-fallback {
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: #fff;
+  }
+
+  .festive-chip-meta {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .festive-chip-title {
+    font-family: var(--font-devanagari);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--color-ink);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.3;
+  }
+
+  .festive-chip-author {
+    font-family: var(--font-devanagari);
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .festive-chip-cta {
+    font-family: var(--font-devanagari);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    margin-top: 0.15rem;
+  }
+
+  @media (max-width: 640px) {
+    .festive-card {
+      padding: 1rem;
+    }
+
+    .festive-occasion-label {
+      font-size: 1.08rem;
+    }
+
+    .festive-greeting-text {
+      font-size: 0.95rem;
+    }
+
+    .festive-books-grid {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+
+    .festive-book-chip {
+      padding: 0.45rem 0.55rem;
+    }
+  }
+</style>
