@@ -509,6 +509,93 @@ html.is-fullscreen .reader-viewport,
   }
 }
 
+/* ─── Lite / High-Performance Mode (पुराने एवं कमज़ोर फोन हेतु द्रुत 2D मोड) ─── */
+html.reader-lite-mode .reader-viewport {
+  perspective: none !important;
+  -webkit-perspective: none !important;
+}
+
+html.reader-lite-mode .reader-stage {
+  transform-style: flat !important;
+  -webkit-transform-style: flat !important;
+}
+
+html.reader-lite-mode .reader-stage::before,
+html.reader-lite-mode .reader-stage::after {
+  box-shadow: 0 4px 10px rgba(50, 30, 15, 0.1) !important;
+}
+
+html.reader-lite-mode .reader-page {
+  box-shadow: 0 3px 10px rgba(50, 30, 15, 0.1) !important;
+  background-image: none !important;
+  background-color: var(--color-bg-card) !important;
+}
+
+html.reader-lite-mode .reader-page::after {
+  display: none !important;
+}
+
+/* Snappy 2D Animations for Lite Mode (0.22s, low CPU/GPU overhead) */
+html.reader-lite-mode .reader-page.flip-turn-forward-exit {
+  animation: litePageForwardExit 0.22s ease-out forwards !important;
+}
+
+html.reader-lite-mode .reader-page.flip-turn-forward-enter {
+  animation: litePageForwardEnter 0.22s ease-out forwards !important;
+}
+
+html.reader-lite-mode .reader-page.flip-turn-backward-enter {
+  animation: litePageBackwardEnter 0.22s ease-out forwards !important;
+}
+
+html.reader-lite-mode .reader-page.flip-turn-backward-exit {
+  animation: litePageBackwardExit 0.22s ease-out forwards !important;
+}
+
+@keyframes litePageForwardExit {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-28px);
+    opacity: 0;
+  }
+}
+
+@keyframes litePageForwardEnter {
+  0% {
+    transform: translateY(28px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes litePageBackwardEnter {
+  0% {
+    transform: translateY(-28px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes litePageBackwardExit {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(28px);
+    opacity: 0;
+  }
+}
+
 /* Page Number in traditional pothi footer */
 .page-footer-bar {
   margin-top: auto;
@@ -1236,6 +1323,59 @@ body.chanting-mode .verse-translation {
   line-height: 1.75;
   color: var(--color-ink);
   margin: 0 0 1.25rem;
+}
+
+/* Animation Mode Setting in Info Modal */
+.reader-info-setting-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  padding: 0.75rem;
+  background: rgba(140, 40, 0, 0.04);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 6px;
+}
+
+.setting-row-label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.anim-toggle-group {
+  display: flex;
+  gap: 0.35rem;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 3px;
+  border-radius: 6px;
+}
+
+.anim-opt-btn {
+  flex: 1;
+  padding: 0.35rem 0.5rem;
+  font-family: var(--font-devanagari);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+  text-align: center;
+}
+
+.anim-opt-btn:hover {
+  color: var(--color-ink);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.anim-opt-btn.active {
+  color: #fff;
+  background: var(--color-accent);
+  font-weight: 600;
+  box-shadow: 0 1px 4px rgba(140, 40, 0, 0.25);
 }
 
 .reader-info-tradition-note {
