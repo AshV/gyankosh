@@ -1030,6 +1030,19 @@ body.chanting-mode .verse-translation {
     padding-left: 2.1rem;
   }
 
+  /* Mobile safeguard: allow verses to wrap cleanly without going off-screen */
+  .verse-line {
+    flex-wrap: wrap;
+    max-width: 100%;
+  }
+
+  .pada {
+    white-space: normal;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+    max-width: 100%;
+  }
+
   html.hide-numbering .verse-block,
   body.hide-numbering .verse-block {
     padding-left: 0.35rem;
