@@ -407,8 +407,8 @@ const categoryHindiMap: Record<string, string> = {
               <span class="setting-row-label">पठन शैली:</span>
               <div class="anim-toggle-group" id="reading-mode-toggle-group" role="radiogroup" aria-label="पठन शैली चुनें">
                 <button type="button" class="anim-opt-btn" data-mode="scroll" title="सामान्य स्क्रोल — सभी उपकरणों पर सहज">स्क्रोल</button>
-                <button type="button" class="anim-opt-btn" data-mode="3d" title="पूर्ण 3D पोथी पन्ना पलट">3D पोथी</button>
-                <button type="button" class="anim-opt-btn" data-mode="lite" title="द्रुत 2D पन्ना पलट">पोथी Lite</button>
+                <button type="button" class="anim-opt-btn" data-mode="3d" title="पूर्ण 3D पन्ना पलट">3D पन्ना</button>
+                <button type="button" class="anim-opt-btn" data-mode="lite" title="द्रुत 2D पन्ना पलट">द्रुत Lite</button>
               </div>
             </div>
 
@@ -1917,10 +1917,10 @@ const categoryHindiMap: Record<string, string> = {
           ROOT.classList.remove('reader-scroll-mode');
           if (mode === 'lite') {
             ROOT.classList.add('reader-lite-mode');
-            showGyankoshToast('⚡ द्रुत पोथी Lite मोड सक्रिय');
+            showGyankoshToast('⚡ द्रुत Lite मोड सक्रिय');
           } else {
             ROOT.classList.remove('reader-lite-mode');
-            showGyankoshToast('✨ 3D पोथी पन्ना पलट सक्रिय');
+            showGyankoshToast('✨ 3D पन्ना पलट सक्रिय');
           }
           // Destroy scroll engine; start flip engine
           gyankoshScrollInstance = null;
