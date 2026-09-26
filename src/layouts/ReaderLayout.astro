@@ -143,29 +143,36 @@ const categoryHindiMap: Record<string, string> = {
           document.documentElement.classList.remove('chanting-mode');
         }
 
-        // Conditional device capability detection for animations (3D vs Lite)
-        var animPref = prefs.animationMode || 'auto'; // 'auto' | '3d' | 'lite'
-        var isLite = false;
-        if (animPref === 'lite') {
-          isLite = true;
-        } else if (animPref === '3d') {
-          isLite = false;
-        } else {
-          // Automatic detection based on device hardware and preferences
-          var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-          var isSaveData = navigator.connection && navigator.connection.saveData === true;
-          var isLowMemory = typeof navigator.deviceMemory === 'number' && navigator.deviceMemory <= 3;
-          var isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent || '');
-          var isLowCpu = typeof navigator.hardwareConcurrency === 'number' && isMobile && navigator.hardwareConcurrency <= 4;
-
-          if (prefersReducedMotion || isSaveData || isLowMemory || isLowCpu) {
-            isLite = true;
-          }
-        }
-        if (isLite) {
-          document.documentElement.classList.add('reader-lite-mode');
-        } else {
+        // Reading Mode: 'scroll' (default) | '3d' | 'lite'
+        var readingMode = prefs.readingMode || 'scroll';
+        if (readingMode === 'scroll') {
+          document.documentElement.classList.add('reader-scroll-mode');
           document.documentElement.classList.remove('reader-lite-mode');
+        } else {
+          document.documentElement.classList.remove('reader-scroll-mode');
+          // Conditional device capability detection for animations (3D vs Lite)
+          var animPref = readingMode; // '3d' | 'lite'
+          var isLite = false;
+          if (animPref === 'lite') {
+            isLite = true;
+          } else if (animPref === '3d') {
+            isLite = false;
+          } else {
+            // Automatic detection based on device hardware and preferences
+            var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            var isSaveData = navigator.connection && navigator.connection.saveData === true;
+            var isLowMemory = typeof navigator.deviceMemory === 'number' && navigator.deviceMemory <= 3;
+            var isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent || '');
+            var isLowCpu = typeof navigator.hardwareConcurrency === 'number' && isMobile && navigator.hardwareConcurrency <= 4;
+            if (prefersReducedMotion || isSaveData || isLowMemory || isLowCpu) {
+              isLite = true;
+            }
+          }
+          if (isLite) {
+            document.documentElement.classList.add('reader-lite-mode');
+          } else {
+            document.documentElement.classList.remove('reader-lite-mode');
+          }
         }
       })();
     </script>
@@ -188,23 +195,28 @@ const categoryHindiMap: Record<string, string> = {
         </a>
 
         <div class="topbar-actions">
-          <!-- Spiritual Context Info Button (ग्रंथ परिचय) -->
-          {context && (
-            <button
-              id="reader-info-btn"
-              class="icon-btn"
-              aria-label="ग्रंथ परिचय एवं सन्दर्भ"
-              title="ग्रंथ परिचय एवं सन्दर्भ"
-              aria-haspopup="dialog"
-              aria-expanded="false"
-            >
+          <!-- Spiritual Context Info / Settings Button (ग्रंथ परिचय एवं पठन शैली) -->
+          <button
+            id="reader-info-btn"
+            class="icon-btn"
+            aria-label={context ? 'ग्रंथ परिचय एवं सन्दर्भ' : 'पठन शैली सेटिंग'}
+            title={context ? 'ग्रंथ परिचय एवं सन्दर्भ' : 'पठन शैली सेटिंग'}
+            aria-haspopup="dialog"
+            aria-expanded="false"
+          >
+            {context ? (
               <svg class="icon-info" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <circle cx="12" cy="12" r="10" />
                 <line x1="12" y1="16" x2="12" y2="12" />
                 <line x1="12" y1="8" x2="12.01" y2="8" />
               </svg>
-            </button>
-          )}
+            ) : (
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/>
+              </svg>
+            )}
+          </button>
 
           <!-- Save Button (सहेजें) -->
           <button
@@ -372,42 +384,40 @@ const categoryHindiMap: Record<string, string> = {
         </article>
       </main>
 
-      <!-- Spiritual / Historical Context Popover Modal -->
-      {context && (
-        <div id="reader-info-modal" class="reader-info-modal" role="dialog" aria-modal="true" aria-labelledby="modal-info-title" style="display:none;">
-          <div class="reader-info-backdrop" id="reader-info-backdrop"></div>
-          <div class="reader-info-dialog">
-            <div class="reader-info-header">
-              <h2 id="modal-info-title" class="reader-info-title">॥ पावन परिचय एवं सन्दर्भ ॥</h2>
-              <button id="reader-info-close" class="icon-btn" aria-label="परिचय बन्द करें" title="बन्द करें">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <line x1="18" y1="6" x2="6" y2="18"></line>
-                  <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-              </button>
+      <!-- Spiritual / Historical Context Popover Modal / Settings Modal -->
+      <div id="reader-info-modal" class="reader-info-modal" role="dialog" aria-modal="true" aria-labelledby="modal-info-title" style="display:none;">
+        <div class="reader-info-backdrop" id="reader-info-backdrop"></div>
+        <div class="reader-info-dialog">
+          <div class="reader-info-header">
+            <h2 id="modal-info-title" class="reader-info-title">{context ? '॥ पावन परिचय एवं सन्दर्भ ॥' : '॥ पठन शैली सेटिंग ॥'}</h2>
+            <button id="reader-info-close" class="icon-btn" aria-label="बन्द करें" title="बन्द करें">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+          <div class="reader-info-body">
+            <h3 class="reader-info-book-title">{title}</h3>
+            {author && <p class="reader-info-author">रचयिता / ऋषि: <strong>{author}</strong></p>}
+            {context && <p class="reader-info-context">{context}</p>}
+
+            <!-- Reading Mode Setting (पठन शैली) -->
+            <div class="reader-info-setting-row">
+              <span class="setting-row-label">पठन शैली:</span>
+              <div class="anim-toggle-group" id="reading-mode-toggle-group" role="radiogroup" aria-label="पठन शैली चुनें">
+                <button type="button" class="anim-opt-btn" data-mode="scroll" title="सामान्य स्क्रोल — सभी उपकरणों पर सहज">स्क्रोल</button>
+                <button type="button" class="anim-opt-btn" data-mode="3d" title="पूर्ण 3D पोथी पन्ना पलट">3D पोथी</button>
+                <button type="button" class="anim-opt-btn" data-mode="lite" title="द्रुत 2D पन्ना पलट">पोथी Lite</button>
+              </div>
             </div>
-            <div class="reader-info-body">
-              <h3 class="reader-info-book-title">{title}</h3>
-              {author && <p class="reader-info-author">रचयिता / ऋषि: <strong>{author}</strong></p>}
-              <p class="reader-info-context">{context}</p>
 
-              <!-- Performance / Animation Mode Setting -->
-              <div class="reader-info-setting-row">
-                <span class="setting-row-label">पन्ना पलट एनीमेशन:</span>
-                <div class="anim-toggle-group" id="anim-toggle-group" role="radiogroup" aria-label="पन्ना पलट एनीमेशन शैली">
-                  <button type="button" class="anim-opt-btn" data-mode="auto" title="उपकरण क्षमता अनुसार स्वतः चुनें">स्वतः (Auto)</button>
-                  <button type="button" class="anim-opt-btn" data-mode="3d" title="पूर्ण 3D पोथी प्रभाव">3D पोथी</button>
-                  <button type="button" class="anim-opt-btn" data-mode="lite" title="द्रुत एवं हल्का 2D मोड">द्रुत (Lite)</button>
-                </div>
-              </div>
-
-              <div class="reader-info-tradition-note">
-                <span>पारम्परिक सनातन पाठ • सार्वजनिक कार्यक्षेत्र (Public Domain)</span>
-              </div>
+            <div class="reader-info-tradition-note">
+              <span>पारम्परिक सनातन पाठ • सार्वजनिक कार्यक्षेत्र (Public Domain)</span>
             </div>
           </div>
         </div>
-      )}
+      </div>
 
       <!-- Bottom Bar (Navigation with Restart, Up/Down Arrows, and Font Controls) -->
       <footer class="reader-bottombar" role="navigation" aria-label="पठन नियंत्रण">
@@ -502,6 +512,10 @@ const categoryHindiMap: Record<string, string> = {
       function isCoverScreenActive() {
         const cs = document.getElementById('reader-cover-screen');
         return !!(cs && !cs.classList.contains('cover-dismissed') && cs.style.display !== 'none');
+      }
+
+      function isScrollMode() {
+        return ROOT.classList.contains('reader-scroll-mode');
       }
 
       function isLiteMode() {
@@ -1178,6 +1192,301 @@ const categoryHindiMap: Record<string, string> = {
 
       let gyankoshReaderInstance = null;
 
+      /* ── Gyankosh Scroll Reader Engine (स्क्रोल पठन) ── */
+      class GyankoshScrollReader {
+        constructor() {
+          this.stage = document.getElementById('reader-stage');
+          this.rawSource = document.getElementById('reader-raw-source');
+          this.viewport = document.getElementById('reader-viewport');
+          this.pageInfo = document.getElementById('page-info');
+          this.progressBar = document.getElementById('reading-progress');
+          this.sectionAnchors = [];
+          this.currentSectionIndex = 0;
+          this._scrollRafId = null;
+          this._scrollSaveTimer = null;
+
+          this.init();
+        }
+
+        init() {
+          this.buildScrollView();
+          this.setupScrollEvents();
+          this.restoreScrollPosition();
+        }
+
+        buildScrollView() {
+          if (!this.rawSource || !this.stage) return;
+          this.stage.innerHTML = '';
+          this.sectionAnchors = [];
+
+          const isChanting = ROOT.classList.contains('chanting-mode') || document.body.classList.contains('chanting-mode');
+
+          const childElements = Array.from(this.rawSource.children).filter(
+            el => !el.classList.contains('sr-only') &&
+              (!isChanting || (!el.classList.contains('translation-block') &&
+                !el.classList.contains('block--translation') &&
+                !el.classList.contains('block--bhavarth')))
+          );
+
+          if (childElements.length === 0) return;
+
+          // Evaluate verse stacking (same as flip engine)
+          const stageWidth = this.stage.clientWidth || window.innerWidth;
+          const isMobile = window.innerWidth <= 640;
+          const horizontalOffset = isMobile ? 35 : 55;
+          const availableTextWidth = Math.max(120, stageWidth - horizontalOffset);
+
+          childElements.forEach((node) => {
+            if (node.classList.contains('verse-block')) {
+              const lines = node.querySelectorAll('.verse-line');
+              let verseNeedsStacking = false;
+              lines.forEach((line) => {
+                const padas = line.querySelectorAll('.pada');
+                if (padas.length > 1) {
+                  const clone = line.cloneNode(true);
+                  clone.style.cssText = 'position:absolute; visibility:hidden; display:inline-flex; flex-wrap:nowrap; width:max-content; column-gap:0.35em; font-family:var(--reader-font-family); font-size:var(--reader-font-size); line-height:var(--reader-line-height);';
+                  document.body.appendChild(clone);
+                  const neededWidth = clone.offsetWidth;
+                  document.body.removeChild(clone);
+                  if (neededWidth > availableTextWidth) {
+                    verseNeedsStacking = true;
+                  }
+                }
+              });
+              if (verseNeedsStacking) {
+                node.classList.add('verse--stacked');
+              } else {
+                node.classList.remove('verse--stacked');
+              }
+            }
+          });
+
+          // Wrap everything in a single page div (scroll is continuous)
+          const pageDiv = document.createElement('div');
+          pageDiv.className = 'reader-page active-page';
+          pageDiv.setAttribute('role', 'main');
+          pageDiv.setAttribute('aria-label', `${bookTitle} — संपूर्ण पाठ`);
+
+          // Running header
+          const pageHeader = document.createElement('div');
+          pageHeader.className = 'page-header-invocation';
+          pageHeader.innerHTML = `‥ ${bookTitle} ‥`;
+          pageDiv.appendChild(pageHeader);
+
+          const contentWrap = document.createElement('div');
+          contentWrap.className = 'reader-content';
+          contentWrap.style.padding = '0';
+          contentWrap.style.margin = '0 auto';
+
+          // Insert anchors before each "section start" (speaker, instruction, or first verse of a group)
+          childElements.forEach((node, i) => {
+            const isSection = node.classList.contains('speaker-block') ||
+              node.classList.contains('instruction-block') ||
+              (node.classList.contains('verse-block') && (i === 0 ||
+                (!childElements[i - 1]?.classList.contains('verse-block') &&
+                  !childElements[i - 1]?.classList.contains('translation-block'))));
+
+            if (isSection) {
+              const anchor = document.createElement('span');
+              anchor.className = 'scroll-section-anchor';
+              anchor.setAttribute('data-section-index', this.sectionAnchors.length);
+              anchor.id = `scroll-section-${this.sectionAnchors.length}`;
+              contentWrap.appendChild(anchor);
+              this.sectionAnchors.push(anchor);
+            }
+            contentWrap.appendChild(node.cloneNode(true));
+          });
+
+          pageDiv.appendChild(contentWrap);
+          this.stage.appendChild(pageDiv);
+          this.updateScrollUI();
+        }
+
+        setupScrollEvents() {
+          if (!this.viewport) return;
+
+          this.viewport.addEventListener('scroll', () => {
+            if (this._scrollRafId) return;
+            this._scrollRafId = requestAnimationFrame(() => {
+              this._scrollRafId = null;
+              this.onScroll();
+            });
+          }, { passive: true });
+
+          // Navigation buttons scroll to next/prev section
+          document.getElementById('btn-page-up')?.addEventListener('click', () => this.scrollToPrevSection());
+          document.getElementById('btn-page-down')?.addEventListener('click', () => this.scrollToNextSection());
+          document.getElementById('btn-bottom-prev')?.addEventListener('click', () => this.scrollToPrevSection());
+          document.getElementById('btn-bottom-next')?.addEventListener('click', () => this.scrollToNextSection());
+          document.getElementById('btn-restart')?.addEventListener('click', () => this.scrollToTop());
+
+          // Keyboard navigation
+          document.addEventListener('keydown', (e) => {
+            if (isCoverScreenActive()) return;
+            if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === 'j') {
+              e.preventDefault();
+              this.scrollToNextSection();
+            } else if (e.key === 'ArrowUp' || e.key === 'PageUp' || e.key === 'k') {
+              e.preventDefault();
+              this.scrollToPrevSection();
+            } else if (e.key === ' ' && !e.target.matches('input, select, textarea')) {
+              e.preventDefault();
+              if (e.shiftKey) this.scrollToPrevSection();
+              else this.scrollToNextSection();
+            }
+          });
+
+          // Rebuild on resize
+          let resizeTimeout = null;
+          window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+              this.buildScrollView();
+            }, 200);
+          });
+        }
+
+        onScroll() {
+          const vp = this.viewport;
+          if (!vp) return;
+          const scrollTop = vp.scrollTop;
+          const scrollHeight = vp.scrollHeight - vp.clientHeight;
+          const pct = scrollHeight > 0 ? Math.round((scrollTop / scrollHeight) * 100) : 0;
+
+          if (this.progressBar) {
+            this.progressBar.style.width = pct + '%';
+            this.progressBar.setAttribute('aria-valuenow', pct);
+          }
+
+          if (this.pageInfo) {
+            this.pageInfo.textContent = `${toHindiDigits(pct)}%`;
+          }
+
+          // Update current section index
+          if (this.sectionAnchors.length > 0) {
+            let active = 0;
+            for (let i = 0; i < this.sectionAnchors.length; i++) {
+              const top = this.sectionAnchors[i].getBoundingClientRect().top;
+              if (top <= (vp.getBoundingClientRect().top + 80)) {
+                active = i;
+              }
+            }
+            this.currentSectionIndex = active;
+          }
+
+          this.updateNavBtns(pct);
+
+          // Debounce save
+          clearTimeout(this._scrollSaveTimer);
+          this._scrollSaveTimer = setTimeout(() => this.saveScrollPosition(pct), 400);
+
+          if (typeof resetWakeLockActivityTimer === 'function') {
+            resetWakeLockActivityTimer();
+          }
+        }
+
+        updateScrollUI() {
+          if (this.pageInfo) this.pageInfo.textContent = `${toHindiDigits(0)}%`;
+          if (this.progressBar) {
+            this.progressBar.style.width = '0%';
+            this.progressBar.setAttribute('aria-valuenow', 0);
+          }
+          this.updateNavBtns(0);
+        }
+
+        updateNavBtns(pct) {
+          const atTop = pct <= 0;
+          const atBottom = pct >= 99;
+          ['btn-page-up', 'btn-bottom-prev', 'btn-restart'].forEach(id => {
+            const btn = document.getElementById(id);
+            if (btn) btn.disabled = atTop;
+          });
+          ['btn-page-down', 'btn-bottom-next'].forEach(id => {
+            const btn = document.getElementById(id);
+            if (btn) btn.disabled = atBottom;
+          });
+        }
+
+        scrollToNextSection() {
+          if (!this.viewport) return;
+          if (this.sectionAnchors.length > 0) {
+            const nextIdx = Math.min(this.currentSectionIndex + 1, this.sectionAnchors.length - 1);
+            if (nextIdx !== this.currentSectionIndex) {
+              const anchor = this.sectionAnchors[nextIdx];
+              const anchorTop = anchor.getBoundingClientRect().top;
+              const vpTop = this.viewport.getBoundingClientRect().top;
+              this.viewport.scrollBy({ top: anchorTop - vpTop - 12, behavior: 'smooth' });
+              this.currentSectionIndex = nextIdx;
+              return;
+            }
+          }
+          // Fallback: scroll by viewport height
+          this.viewport.scrollBy({ top: this.viewport.clientHeight * 0.85, behavior: 'smooth' });
+        }
+
+        scrollToPrevSection() {
+          if (!this.viewport) return;
+          if (this.sectionAnchors.length > 0) {
+            const prevIdx = Math.max(this.currentSectionIndex - 1, 0);
+            if (prevIdx !== this.currentSectionIndex || this.currentSectionIndex > 0) {
+              const anchor = this.sectionAnchors[prevIdx];
+              const anchorTop = anchor.getBoundingClientRect().top;
+              const vpTop = this.viewport.getBoundingClientRect().top;
+              this.viewport.scrollBy({ top: anchorTop - vpTop - 12, behavior: 'smooth' });
+              this.currentSectionIndex = prevIdx;
+              return;
+            }
+          }
+          // Fallback: scroll up by viewport height
+          this.viewport.scrollBy({ top: -(this.viewport.clientHeight * 0.85), behavior: 'smooth' });
+        }
+
+        scrollToTop() {
+          this.viewport?.scrollTo({ top: 0, behavior: 'smooth' });
+          this.currentSectionIndex = 0;
+        }
+
+        saveScrollPosition(pct) {
+          try {
+            localStorage.setItem(PROGRESS_KEY, JSON.stringify({
+              scrollPercent: pct,
+              isCompleted: pct >= 99,
+              ts: Date.now()
+            }));
+          } catch {}
+        }
+
+        restoreScrollPosition() {
+          try {
+            const saved = JSON.parse(localStorage.getItem(PROGRESS_KEY) || '{}');
+            if (saved && typeof saved.scrollPercent === 'number' && saved.scrollPercent > 0 && !saved.isCompleted) {
+              const vp = this.viewport;
+              if (!vp) return;
+              requestAnimationFrame(() => {
+                const scrollHeight = vp.scrollHeight - vp.clientHeight;
+                vp.scrollTop = Math.round((saved.scrollPercent / 100) * scrollHeight);
+              });
+            }
+          } catch {}
+        }
+
+        // Called when chanting mode or font changes — rebuild and restore section
+        rebuild() {
+          const prevSection = this.currentSectionIndex;
+          this.buildScrollView();
+          requestAnimationFrame(() => {
+            if (this.sectionAnchors[prevSection]) {
+              const anchor = this.sectionAnchors[prevSection];
+              const anchorTop = anchor.getBoundingClientRect().top;
+              const vpTop = this.viewport?.getBoundingClientRect().top || 0;
+              this.viewport?.scrollBy({ top: anchorTop - vpTop - 12, behavior: 'instant' });
+            }
+          });
+        }
+      }
+
+      let gyankoshScrollInstance = null;
+
       /* ── Fullscreen Controls ── */
       function isFullscreenActive() {
         return !!(
@@ -1288,7 +1597,9 @@ const categoryHindiMap: Record<string, string> = {
           localStorage.setItem(PREF_KEY, JSON.stringify({ ...prefs, chanting: nextChanting }));
         } catch {}
         updateChantingUI(nextChanting);
-        if (gyankoshReaderInstance) {
+        if (isScrollMode()) {
+          gyankoshScrollInstance?.rebuild();
+        } else if (gyankoshReaderInstance) {
           const prevPageIndex = gyankoshReaderInstance.currentPageIndex;
           gyankoshReaderInstance.buildPages();
           gyankoshReaderInstance.currentPageIndex = Math.min(prevPageIndex, gyankoshReaderInstance.pages.length - 1);
@@ -1308,7 +1619,11 @@ const categoryHindiMap: Record<string, string> = {
           const prefs = loadPrefs();
           localStorage.setItem(PREF_KEY, JSON.stringify({ ...prefs, fontSize: next }));
         } catch {}
-        gyankoshReaderInstance?.buildPages();
+        if (isScrollMode()) {
+          gyankoshScrollInstance?.rebuild();
+        } else {
+          gyankoshReaderInstance?.buildPages();
+        }
       }
 
       document.getElementById('font-decrease')?.addEventListener('click', (e) => {
@@ -1337,18 +1652,32 @@ const categoryHindiMap: Record<string, string> = {
         if (isSmallScreen() && !isFullscreenActive()) {
           enterFullscreen();
         }
-        if (!gyankoshReaderInstance) {
-          gyankoshReaderInstance = new GyankoshReader();
+        if (isScrollMode()) {
+          if (!gyankoshScrollInstance) {
+            gyankoshScrollInstance = new GyankoshScrollReader();
+          } else {
+            gyankoshScrollInstance.rebuild();
+          }
         } else {
-          gyankoshReaderInstance.buildPages();
+          if (!gyankoshReaderInstance) {
+            gyankoshReaderInstance = new GyankoshReader();
+          } else {
+            gyankoshReaderInstance.buildPages();
+          }
         }
         resetWakeLockActivityTimer();
       }
 
       // Pre-initialize reader engine on load so book pages are rendered immediately
       function initReaderEngine() {
-        if (!gyankoshReaderInstance) {
-          gyankoshReaderInstance = new GyankoshReader();
+        if (isScrollMode()) {
+          if (!gyankoshScrollInstance) {
+            gyankoshScrollInstance = new GyankoshScrollReader();
+          }
+        } else {
+          if (!gyankoshReaderInstance) {
+            gyankoshReaderInstance = new GyankoshReader();
+          }
         }
       }
 
@@ -1507,12 +1836,13 @@ const categoryHindiMap: Record<string, string> = {
         }
       });
 
-      /* ── Animation Mode Preference Handler ── */
-      const animToggleGroup = document.getElementById('anim-toggle-group');
-      function syncAnimToggleUI() {
+      /* ── Reading Mode Preference Handler (पठन शैली: स्क्रोल / 3D पोथी / Lite) ── */
+      const readingModeToggleGroup = document.getElementById('reading-mode-toggle-group');
+
+      function syncReadingModeUI() {
         const prefs = loadPrefs();
-        const currentMode = prefs.animationMode || 'auto';
-        const buttons = animToggleGroup?.querySelectorAll('.anim-opt-btn');
+        const currentMode = prefs.readingMode || 'scroll';
+        const buttons = readingModeToggleGroup?.querySelectorAll('.anim-opt-btn');
         buttons?.forEach(btn => {
           const mode = btn.getAttribute('data-mode');
           if (mode === currentMode) {
@@ -1525,36 +1855,48 @@ const categoryHindiMap: Record<string, string> = {
         });
       }
 
-      animToggleGroup?.addEventListener('click', (e) => {
+      readingModeToggleGroup?.addEventListener('click', (e) => {
         const target = e.target.closest('.anim-opt-btn');
         if (!target) return;
-        const mode = target.getAttribute('data-mode');
+        const mode = target.getAttribute('data-mode'); // 'scroll' | '3d' | 'lite'
         const prefs = loadPrefs();
-        prefs.animationMode = mode;
+        prefs.readingMode = mode;
         try {
           localStorage.setItem(PREF_KEY, JSON.stringify(prefs));
         } catch {}
 
-        let activeLite = false;
-        if (mode === 'lite') {
-          activeLite = true;
-        } else if (mode === '3d') {
-          activeLite = false;
-        } else {
-          activeLite = evaluateDeviceCapability();
-        }
-
-        if (activeLite) {
-          ROOT.classList.add('reader-lite-mode');
-          showGyankoshToast('⚡ द्रुत एनीमेशन मोड सक्रिय (Lite Mode)');
-        } else {
+        // Apply mode classes
+        if (mode === 'scroll') {
+          ROOT.classList.add('reader-scroll-mode');
           ROOT.classList.remove('reader-lite-mode');
-          showGyankoshToast('✨ 3D पोथी एनीमेशन मोड सक्रिय');
+          showGyankoshToast('↓ स्क्रोल पठन मोड सक्रिय');
+          // Destroy flip engine; start scroll engine
+          gyankoshReaderInstance = null;
+          gyankoshScrollInstance = null;
+          setTimeout(() => {
+            gyankoshScrollInstance = new GyankoshScrollReader();
+          }, 50);
+        } else {
+          ROOT.classList.remove('reader-scroll-mode');
+          if (mode === 'lite') {
+            ROOT.classList.add('reader-lite-mode');
+            showGyankoshToast('⚡ द्रुत पोथी Lite मोड सक्रिय');
+          } else {
+            ROOT.classList.remove('reader-lite-mode');
+            showGyankoshToast('✨ 3D पोथी पन्ना पलट सक्रिय');
+          }
+          // Destroy scroll engine; start flip engine
+          gyankoshScrollInstance = null;
+          gyankoshReaderInstance = null;
+          setTimeout(() => {
+            gyankoshReaderInstance = new GyankoshReader();
+          }, 50);
         }
-        syncAnimToggleUI();
+        syncReadingModeUI();
+        closeInfoModal();
       });
 
-      syncAnimToggleUI();
+      syncReadingModeUI();
 
       /* ── Background Screen Wake Lock (पठन के दौरान स्क्रीन ऑन रखें) ── */
       let screenWakeLock = null;

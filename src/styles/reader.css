@@ -200,6 +200,104 @@ html.is-fullscreen .reader-viewport,
   }
 }
 
+/* ─── Scroll Mode Viewport (स्क्रोल पठन मोड) ─────────────── */
+html.reader-scroll-mode .reader-viewport {
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  perspective: none;
+  scroll-behavior: smooth;
+  /* Custom scrollbar matching sacred aesthetic */
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+
+html.reader-scroll-mode .reader-viewport::-webkit-scrollbar {
+  width: 5px;
+}
+
+html.reader-scroll-mode .reader-viewport::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+html.reader-scroll-mode .reader-viewport::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 99px;
+}
+
+/* In scroll mode, the stage becomes a single long scroll container */
+html.reader-scroll-mode .reader-stage {
+  position: relative;
+  width: 100%;
+  height: auto;
+  min-height: 100%;
+  max-width: 82ch;
+  margin: 0 auto;
+  transform-style: flat;
+  padding: 0 0 3rem;
+  box-sizing: border-box;
+}
+
+/* Hide the 3D stacked-paper pseudo-elements in scroll mode */
+html.reader-scroll-mode .reader-stage::before,
+html.reader-scroll-mode .reader-stage::after {
+  display: none;
+}
+
+/* The single scroll-mode page is a long sacred manuscript roll */
+html.reader-scroll-mode .reader-page {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  min-height: auto;
+  opacity: 1;
+  pointer-events: auto;
+  transform: none !important;
+  animation: none !important;
+  box-shadow:
+    0 8px 30px rgba(50, 30, 15, 0.18),
+    0 2px 6px rgba(50, 30, 15, 0.07),
+    inset 0 0 45px rgba(210, 190, 155, 0.2);
+  border-radius: 4px;
+  overflow: visible;
+  /* Elegant fade-in when scroll mode activates */
+  will-change: auto;
+  contain: none;
+  padding: 1rem 1.25rem 1.5rem;
+}
+
+html.reader-scroll-mode .reader-page.active-page {
+  z-index: 1;
+}
+
+/* Keep verse sections visually separated with gentle dividers */
+html.reader-scroll-mode .reader-content > * + * {
+  border-top: none;
+}
+
+/* Section anchors for prev/next verse navigation */
+.scroll-section-anchor {
+  display: block;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+/* Hide floating nav and tap zones in scroll mode */
+html.reader-scroll-mode .flip-floating-nav,
+html.reader-scroll-mode .tap-zone {
+  display: none;
+}
+
+/* Scroll progress in bottom bar shows % instead of page X/Y */
+html.reader-scroll-mode .reader-page-info {
+  font-size: 0.88rem;
+  min-width: 52px;
+}
+
 /* Book Folio Stage (With realistic stacked paper block depth) */
 .reader-stage {
   position: relative;
@@ -1325,12 +1423,12 @@ body.chanting-mode .verse-translation {
   margin: 0 0 1.25rem;
 }
 
-/* Animation Mode Setting in Info Modal */
+/* Reading Mode + Animation Mode Settings in Info Modal */
 .reader-info-setting-row {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  margin: 1rem 0;
+  margin: 0.75rem 0;
   padding: 0.75rem;
   background: rgba(140, 40, 0, 0.04);
   border: 1px solid var(--color-border-subtle);
@@ -1376,6 +1474,11 @@ body.chanting-mode .verse-translation {
   background: var(--color-accent);
   font-weight: 600;
   box-shadow: 0 1px 4px rgba(140, 40, 0, 0.25);
+}
+
+/* Hide flip-only animation setting row when in scroll mode */
+html.reader-scroll-mode .reader-info-setting-row--flipanim {
+  display: none;
 }
 
 .reader-info-tradition-note {
