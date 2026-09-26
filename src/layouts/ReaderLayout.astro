@@ -500,6 +500,9 @@ const categoryHindiMap: Record<string, string> = {
       }
 
       function toHindiDigits(num) {
+        if (typeof num === 'number' && !Number.isInteger(num)) {
+          num = Math.round(num);
+        }
         const digits = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
         return num.toString().split('').map(d => digits[parseInt(d, 10)] || d).join('');
       }
@@ -1476,7 +1479,8 @@ const categoryHindiMap: Record<string, string> = {
         restoreScrollPosition() {
           try {
             const saved = JSON.parse(localStorage.getItem(PROGRESS_KEY) || '{}');
-            const pct = typeof saved.scrollPercent === 'number' ? saved.scrollPercent : (typeof saved.percent === 'number' ? saved.percent : null);
+            const rawPct = typeof saved.scrollPercent === 'number' ? saved.scrollPercent : (typeof saved.percent === 'number' ? saved.percent : null);
+            const pct = rawPct !== null ? Math.round(rawPct) : null;
             if (pct !== null && pct > 0 && !saved.isCompleted) {
               const vp = this.viewport;
               if (!vp) return;
@@ -1686,12 +1690,14 @@ const categoryHindiMap: Record<string, string> = {
         if (isScrollMode()) {
           if (!gyankoshScrollInstance) {
             gyankoshScrollInstance = new GyankoshScrollReader();
+          } else {
+            gyankoshScrollInstance.rebuild();
           }
           // Restore scroll position AFTER the cover dismiss animation finishes
           // so the viewport has real scrollHeight dimensions (not 0).
           setTimeout(() => {
             gyankoshScrollInstance?.restoreScrollPosition();
-          }, 500);
+          }, 460);
         } else {
           if (!gyankoshReaderInstance) {
             gyankoshReaderInstance = new GyankoshReader();
@@ -1702,8 +1708,11 @@ const categoryHindiMap: Record<string, string> = {
         resetWakeLockActivityTimer();
       }
 
-      // Pre-initialize reader engine on load so book pages are rendered immediately
+      // Pre-initialize reader engine only if cover screen is not active
       function initReaderEngine() {
+        if (isCoverScreenActive()) {
+          return;
+        }
         if (isScrollMode()) {
           if (!gyankoshScrollInstance) {
             gyankoshScrollInstance = new GyankoshScrollReader();
@@ -1731,12 +1740,6 @@ const categoryHindiMap: Record<string, string> = {
         e.preventDefault();
         e.stopPropagation();
         startReading();
-      });
-
-      coverScreen?.addEventListener('click', (e) => {
-        if (!e.target.closest('a')) {
-          startReading();
-        }
       });
 
       /* ── Toast Notification Helper ── */
@@ -1908,8 +1911,8 @@ const categoryHindiMap: Record<string, string> = {
           gyankoshReaderInstance = null;
           gyankoshScrollInstance = null;
           setTimeout(() => {
-            gyankoshScrollInstance = new GyankoshScrollReader();
             if (!isCoverScreenActive()) {
+              gyankoshScrollInstance = new GyankoshScrollReader();
               gyankoshScrollInstance.restoreScrollPosition();
             }
           }, 50);
@@ -1926,7 +1929,9 @@ const categoryHindiMap: Record<string, string> = {
           gyankoshScrollInstance = null;
           gyankoshReaderInstance = null;
           setTimeout(() => {
-            gyankoshReaderInstance = new GyankoshReader();
+            if (!isCoverScreenActive()) {
+              gyankoshReaderInstance = new GyankoshReader();
+            }
           }, 50);
         }
         syncReadingModeUI();

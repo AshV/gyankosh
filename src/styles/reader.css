@@ -936,7 +936,19 @@ body.chanting-mode .verse-translation {
   box-shadow: 0 -1px 4px rgba(142, 27, 20, 0.08);
 }
 
-/* Hide footer navigation on cover art page */
+/* ─── Cover Screen Inactive View State ─── */
+/* When cover screen is active: prevent viewport from scrolling and hide stage & controls */
+.reader-shell.has-cover-screen .reader-viewport,
+.has-cover-screen .reader-viewport {
+  overflow: hidden !important;
+}
+
+.reader-shell.has-cover-screen .reader-stage,
+.has-cover-screen .reader-stage,
+.reader-shell.has-cover-screen .flip-floating-nav,
+.has-cover-screen .flip-floating-nav,
+.reader-shell.has-cover-screen .tap-zone,
+.has-cover-screen .tap-zone,
 .reader-shell.has-cover-screen .reader-bottombar,
 .has-cover-screen .reader-bottombar {
   display: none !important;
@@ -1015,7 +1027,7 @@ body.chanting-mode .verse-translation {
   transition: opacity 0.4s ease, transform 0.45s ease, visibility 0.4s ease;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  cursor: pointer;
+  overscroll-behavior: contain;
 }
 
 .reader-cover-screen.cover-dismissed {
