@@ -938,8 +938,7 @@ body.chanting-mode .verse-translation {
 
 /* Hide footer navigation on cover art page */
 .reader-shell.has-cover-screen .reader-bottombar,
-.has-cover-screen .reader-bottombar,
-.reader-shell:has(.reader-cover-screen:not(.cover-dismissed):not([style*="display: none"])) .reader-bottombar {
+.has-cover-screen .reader-bottombar {
   display: none !important;
 }
 

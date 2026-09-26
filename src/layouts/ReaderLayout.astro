@@ -956,11 +956,12 @@ const categoryHindiMap: Record<string, string> = {
         savePosition() {
           const total = this.pages.length || 1;
           const isCompleted = (this.currentPageIndex >= total - 1);
-          const percent = ((this.currentPageIndex + 1) / total) * 100;
+          const percent = Math.round(((this.currentPageIndex + 1) / total) * 100);
           try {
             localStorage.setItem(PROGRESS_KEY, JSON.stringify({
               pageIndex: this.currentPageIndex,
               percent,
+              scrollPercent: percent,
               isCompleted,
               ts: Date.now()
             }));
@@ -971,9 +972,11 @@ const categoryHindiMap: Record<string, string> = {
           try {
             const saved = JSON.parse(localStorage.getItem(PROGRESS_KEY) || '{}');
             if (saved) {
-              const isAtEnd = saved.isCompleted || saved.percent >= 99.5 || (typeof saved.pageIndex === 'number' && saved.pageIndex >= this.pages.length - 1);
+              const isAtEnd = saved.isCompleted ||
+                (typeof saved.percent === 'number' && saved.percent >= 99.5) ||
+                (typeof saved.scrollPercent === 'number' && saved.scrollPercent >= 99.5) ||
+                (typeof saved.pageIndex === 'number' && saved.pageIndex >= this.pages.length - 1);
               if (isAtEnd) {
-                // Reader had reached the end in the previous session: reset progress for the new session
                 this.currentPageIndex = 0;
                 localStorage.removeItem(PROGRESS_KEY);
                 this.pageElements?.forEach((el, idx) => {
@@ -985,11 +988,13 @@ const categoryHindiMap: Record<string, string> = {
 
               if (typeof saved.pageIndex === 'number' && saved.pageIndex < this.pages.length) {
                 this.currentPageIndex = saved.pageIndex;
-                this.pageElements?.forEach((el, idx) => {
-                  el.className = 'reader-page' + (idx === this.currentPageIndex ? ' active-page' : '');
-                });
-                this.updateUI();
+              } else if (typeof saved.scrollPercent === 'number' && this.pages.length > 0) {
+                this.currentPageIndex = Math.min(Math.round((saved.scrollPercent / 100) * (this.pages.length - 1)), this.pages.length - 1);
               }
+              this.pageElements?.forEach((el, idx) => {
+                el.className = 'reader-page' + (idx === this.currentPageIndex ? ' active-page' : '');
+              });
+              this.updateUI();
             }
           } catch {}
         }
@@ -1211,7 +1216,10 @@ const categoryHindiMap: Record<string, string> = {
         init() {
           this.buildScrollView();
           this.setupScrollEvents();
-          this.restoreScrollPosition();
+          // If cover screen is already dismissed, restore immediately
+          if (!isCoverScreenActive()) {
+            this.restoreScrollPosition();
+          }
         }
 
         buildScrollView() {
@@ -1352,6 +1360,7 @@ const categoryHindiMap: Record<string, string> = {
           const scrollTop = vp.scrollTop;
           const scrollHeight = vp.scrollHeight - vp.clientHeight;
           const pct = scrollHeight > 0 ? Math.round((scrollTop / scrollHeight) * 100) : 0;
+          this._lastPct = pct;
 
           if (this.progressBar) {
             this.progressBar.style.width = pct + '%';
@@ -1450,21 +1459,40 @@ const categoryHindiMap: Record<string, string> = {
           try {
             localStorage.setItem(PROGRESS_KEY, JSON.stringify({
               scrollPercent: pct,
+              percent: pct,
               isCompleted: pct >= 99,
               ts: Date.now()
             }));
           } catch {}
         }
 
+        flushScrollPosition() {
+          if (typeof this._lastPct === 'number') {
+            clearTimeout(this._scrollSaveTimer);
+            this.saveScrollPosition(this._lastPct);
+          }
+        }
+
         restoreScrollPosition() {
           try {
             const saved = JSON.parse(localStorage.getItem(PROGRESS_KEY) || '{}');
-            if (saved && typeof saved.scrollPercent === 'number' && saved.scrollPercent > 0 && !saved.isCompleted) {
+            const pct = typeof saved.scrollPercent === 'number' ? saved.scrollPercent : (typeof saved.percent === 'number' ? saved.percent : null);
+            if (pct !== null && pct > 0 && !saved.isCompleted) {
               const vp = this.viewport;
               if (!vp) return;
               requestAnimationFrame(() => {
                 const scrollHeight = vp.scrollHeight - vp.clientHeight;
-                vp.scrollTop = Math.round((saved.scrollPercent / 100) * scrollHeight);
+                if (scrollHeight > 0) {
+                  vp.scrollTop = Math.round((pct / 100) * scrollHeight);
+                  if (this.progressBar) {
+                    this.progressBar.style.width = pct + '%';
+                    this.progressBar.setAttribute('aria-valuenow', pct);
+                  }
+                  if (this.pageInfo) {
+                    this.pageInfo.textContent = `${toHindiDigits(pct)}%`;
+                  }
+                  this.updateNavBtns(pct);
+                }
               });
             }
           } catch {}
@@ -1640,7 +1668,10 @@ const categoryHindiMap: Record<string, string> = {
       const coverScreen = document.getElementById('reader-cover-screen');
       const btnAarambh = document.getElementById('btn-aarambh');
 
+      let isStartingReading = false;
       function startReading() {
+        if (isStartingReading) return;
+        isStartingReading = true;
         document.querySelector('.reader-shell')?.classList.remove('has-cover-screen');
         document.body.classList.remove('has-cover-screen');
         if (coverScreen) {
@@ -1655,9 +1686,12 @@ const categoryHindiMap: Record<string, string> = {
         if (isScrollMode()) {
           if (!gyankoshScrollInstance) {
             gyankoshScrollInstance = new GyankoshScrollReader();
-          } else {
-            gyankoshScrollInstance.rebuild();
           }
+          // Restore scroll position AFTER the cover dismiss animation finishes
+          // so the viewport has real scrollHeight dimensions (not 0).
+          setTimeout(() => {
+            gyankoshScrollInstance?.restoreScrollPosition();
+          }, 500);
         } else {
           if (!gyankoshReaderInstance) {
             gyankoshReaderInstance = new GyankoshReader();
@@ -1875,6 +1909,9 @@ const categoryHindiMap: Record<string, string> = {
           gyankoshScrollInstance = null;
           setTimeout(() => {
             gyankoshScrollInstance = new GyankoshScrollReader();
+            if (!isCoverScreenActive()) {
+              gyankoshScrollInstance.restoreScrollPosition();
+            }
           }, 50);
         } else {
           ROOT.classList.remove('reader-scroll-mode');
@@ -1941,6 +1978,9 @@ const categoryHindiMap: Record<string, string> = {
 
       // Re-acquire lock when returning to the tab if reading
       document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'hidden') {
+          gyankoshScrollInstance?.flushScrollPosition();
+        }
         if (document.visibilityState === 'visible') {
           if (!isCoverScreenActive()) {
             resetWakeLockActivityTimer();
@@ -1963,10 +2003,12 @@ const categoryHindiMap: Record<string, string> = {
 
       // Clean release on page navigation or tab close
       window.addEventListener('pagehide', () => {
+        gyankoshScrollInstance?.flushScrollPosition();
         clearTimeout(wakeLockIdleTimer);
         releaseScreenWakeLock();
       });
       window.addEventListener('beforeunload', () => {
+        gyankoshScrollInstance?.flushScrollPosition();
         clearTimeout(wakeLockIdleTimer);
         releaseScreenWakeLock();
       });
@@ -2003,6 +2045,7 @@ const categoryHindiMap: Record<string, string> = {
 
         readerBackBtn.addEventListener('click', (e) => {
           e.preventDefault();
+          gyankoshScrollInstance?.flushScrollPosition();
           if (isFullscreenActive()) {
             exitFullscreen();
           }
