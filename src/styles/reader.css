@@ -298,6 +298,19 @@ html.reader-scroll-mode .reader-page-info {
   min-width: 52px;
 }
 
+/* ─── Raw Source Article (JS data source only — never visible) ─ */
+/* Content is cloned from here by the reader engines; display is handled by reader-stage */
+#reader-raw-source,
+.reader-raw-source {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
+
 /* Book Folio Stage (With realistic stacked paper block depth) */
 .reader-stage {
   position: relative;
