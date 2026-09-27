@@ -162,6 +162,34 @@ a:hover { opacity: 0.8; }
   padding-bottom: 0.75rem;
 }
 
+/* Win 3: Nav link styles extracted from BaseLayout inline attributes */
+.site-nav-list {
+  display: flex;
+  gap: 1.15rem;
+  list-style: none;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.site-nav-link {
+  font-family: var(--font-devanagari);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.site-nav-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.header-right-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
 .site-logo {
   font-family: var(--font-title);
   font-size: 1.6rem;

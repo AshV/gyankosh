@@ -38,10 +38,14 @@ const VERSE_BLOCKS: ReadonlySet<BlockType> = new Set([
 const TAG_REGEX = /^\[([A-Za-z]+)\]\s*/;
 
 // Hindi numerals for authentic Devanagari typography
-function toHindiNumerals(num: number): string {
+// Exported so other build-time modules share a single implementation
+export function toHindiDigits(num: number): string {
   const digits = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
   return num.toString().split('').map(d => digits[parseInt(d, 10)] || d).join('');
 }
+
+/** @internal alias used inside this file */
+const toHindiNumerals = toHindiDigits;
 
 // ─── Helper: escape HTML special chars ────────────────────────────────────
 function escHtml(text: string): string {

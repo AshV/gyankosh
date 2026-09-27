@@ -9,17 +9,9 @@ import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 import { sortTexts, getTextWeight } from '../utils/sorting';
 import { deriveSearchKeywords, type SearchCatalogItem } from '../utils/search';
+import { getCategoryLabel } from '../data/categoryMeta';
 
-const CATEGORY_ICONS: Record<string, string> = {
-  Veda: '🔥 वेद',
-  Upanishad: '🕉️ उपनिषद्',
-  Gita: '🎵 गीता',
-  Chalisa: '🪔 चालीसा',
-  Stotra: '🌸 स्तोत्र',
-  Aarti: '🪔 आरती',
-  Purana: '📖 पुराण',
-  Other: '📜 अन्य',
-};
+
 
 export const GET: APIRoute = async () => {
   const allTexts = sortTexts(await getCollection('library'));
@@ -29,7 +21,7 @@ export const GET: APIRoute = async () => {
       slug: text.id.replace(/\.md$/, ''),
       title: text.data.title,
       category: text.data.category,
-      categoryHindi: CATEGORY_ICONS[text.data.category] || text.data.category,
+      categoryHindi: getCategoryLabel(text.data.category),
       tags: text.data.tags || [],
       keywords: deriveSearchKeywords(text),
       weight: getTextWeight(text),

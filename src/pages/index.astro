@@ -11,69 +11,17 @@ import FestiveBanner from "../components/FestiveBanner.astro";
 import { CATEGORIES } from "../content.config";
 import { sortTexts } from "../utils/sorting";
 import { tagToSlug } from "../utils/tags";
+import { toHindiDigits } from "../utils/indicParser";
+import { CATEGORY_META } from "../data/categoryMeta";
 
 const allTexts = sortTexts(await getCollection("library"));
 
 const totalTexts = allTexts.length;
 
-function toHindiDigits(num: number): string {
-  const digits = ["०", "१", "२", "३", "४", "५", "६", "७", "८", "९"];
-  return num
-    .toString()
-    .split("")
-    .map((d) => digits[parseInt(d, 10)] || d)
-    .join("");
-}
-
-const categoryMeta: Record<
-  string,
-  { icon: string; nameHindi: string; description: string }
-> = {
-  Veda: {
-    icon: "🔥",
-    nameHindi: "वेद",
-    description: "सनातन वैदिक ऋचाएं एवं मन्त्र",
-  },
-  Upanishad: {
-    icon: "🕉️",
-    nameHindi: "उपनिषद्",
-    description: "वेदान्त दर्शन के आधारभूत पावन उपनिषद्",
-  },
-  Gita: {
-    icon: "🎵",
-    nameHindi: "गीता",
-    description: "भगवान श्रीकृष्ण का दिव्य उपदेश",
-  },
-  Chalisa: {
-    icon: "🪔",
-    nameHindi: "चालीसा",
-    description: "चालीस पदों वाले पावन स्तोत्र",
-  },
-  Purana: {
-    icon: "📖",
-    nameHindi: "पुराण",
-    description: "अठारह महापुराण एवं उपपुराण",
-  },
-  Stotra: {
-    icon: "🌸",
-    nameHindi: "स्तोत्र",
-    description: "देवी-देवताओं की पावन स्तुतियां",
-  },
-  Aarti: {
-    icon: "🪔",
-    nameHindi: "आरती",
-    description: "नित्य देव-आराधना एवं मंगल आरतियाँ",
-  },
-  Other: {
-    icon: "📜",
-    nameHindi: "अन्य",
-    description: "विशिष्ट धार्मिक एवं दार्शनिक ग्रन्थ",
-  },
-};
-
-const categoryCounts = CATEGORIES.reduce(
-  (acc, cat) => {
-    acc[cat] = allTexts.filter((t) => t.data.category === cat).length;
+// Win 10: Single-pass O(N) count instead of N × filter passes
+const categoryCounts = allTexts.reduce(
+  (acc, t) => {
+    acc[t.data.category] = (acc[t.data.category] || 0) + 1;
     return acc;
   },
   {} as Record<string, number>,
@@ -142,13 +90,13 @@ const jsonLd = {
                 <a
                   href={`${base}/category/${cat.toLowerCase()}`}
                   class="category-bubble"
-                  title={`${categoryMeta[cat]?.nameHindi || cat} श्रेणी देखें`}
+                  title={`${CATEGORY_META[cat]?.nameHindi || cat} श्रेणी देखें`}
                 >
                   <span class="bubble-icon" aria-hidden="true">
-                    {categoryMeta[cat]?.icon}
+                    {CATEGORY_META[cat]?.icon}
                   </span>
                   <span class="bubble-label">
-                    {categoryMeta[cat]?.nameHindi || cat}
+                    {CATEGORY_META[cat]?.nameHindi || cat}
                   </span>
                 </a>
               ),

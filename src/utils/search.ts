@@ -8,6 +8,7 @@
  */
 
 import { tagToSlug } from './tags';
+import { getCategoryHindi } from '../data/categoryMeta';
 
 export interface SearchCatalogItem {
   slug: string;
@@ -23,16 +24,6 @@ export interface SearchCatalogItem {
   weight: number;
 }
 
-const CATEGORY_HINDI_MAP: Record<string, string> = {
-  Veda: 'वेद',
-  Upanishad: 'उपनिषद्',
-  Gita: 'गीता',
-  Chalisa: 'चालीसा',
-  Stotra: 'स्तोत्र',
-  Aarti: 'आरती',
-  Purana: 'पुराण',
-  Other: 'अन्य',
-};
 
 // Common Phonetic & Theological Synonyms (English <-> Hindi <-> Alternate English)
 const THEOLOGICAL_ALIASES: Record<string, string[]> = {
@@ -137,7 +128,7 @@ export function deriveSearchKeywords(entry: {
   // 2. Category names in English & Hindi
   const cat = entry.data.category;
   keywords.add(cat.toLowerCase());
-  const catHindi = CATEGORY_HINDI_MAP[cat];
+  const catHindi = getCategoryHindi(cat);
   if (catHindi) keywords.add(catHindi);
 
   // 3. Author in Hindi and slugified

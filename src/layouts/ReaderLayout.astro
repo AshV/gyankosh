@@ -1631,7 +1631,9 @@ const categoryHindiMap: Record<string, string> = {
           this.stage.appendChild(pageDiv);
           this.updateScrollUI();
           this.setupEntryAnimations(contentWrap);
-          this.setupCompletionObserver(); // Fix 3: precision completion via IntersectionObserver
+          this.setupCompletionObserver();
+          // Win 5: Cache verse blocks after build — avoids querySelectorAll on every focus update
+          this._verseBlocks = Array.from(this.stage.querySelectorAll('.verse-block'));
           requestAnimationFrame(() => {
             this.updateVerseFocus();
           });
@@ -1881,12 +1883,19 @@ const categoryHindiMap: Record<string, string> = {
           });
         }
 
+        // Win 4: Cached pref — avoids JSON.parse(localStorage) on every scroll rAF
         isVerseFocusEnabled() {
+          // _verseFocusEnabled is set at init and toggled by setVerseFocus()
+          return this._verseFocusEnabled !== false;
+        }
+
+        // Call once at startup to hydrate the cache from localStorage
+        initVerseFocusCache() {
           try {
             const prefs = loadPrefs();
-            return prefs.verseFocus !== false;
+            this._verseFocusEnabled = prefs.verseFocus !== false;
           } catch {
-            return true;
+            this._verseFocusEnabled = true;
           }
         }
 
@@ -1906,7 +1915,10 @@ const categoryHindiMap: Record<string, string> = {
             if (cr.top <= targetY && cr.bottom >= targetY) return;
           }
 
-          const verses = this.stage?.querySelectorAll('.verse-block');
+          // Win 5: Use cached verse list; fall back to DOM query if cache is stale
+          const verses = this._verseBlocks?.length
+            ? this._verseBlocks
+            : Array.from(this.stage?.querySelectorAll('.verse-block') || []);
           if (!verses || verses.length === 0) return;
 
           let closestVerse = null;
@@ -2211,6 +2223,7 @@ const categoryHindiMap: Record<string, string> = {
         if (isScrollMode()) {
           if (!gyankoshScrollInstance) {
             gyankoshScrollInstance = new GyankoshScrollReader();
+            gyankoshScrollInstance.initVerseFocusCache(); // Win 4: hydrate pref cache
           } else {
             gyankoshScrollInstance.rebuild();
           }
@@ -2240,6 +2253,7 @@ const categoryHindiMap: Record<string, string> = {
         if (isScrollMode()) {
           if (!gyankoshScrollInstance) {
             gyankoshScrollInstance = new GyankoshScrollReader();
+            gyankoshScrollInstance.initVerseFocusCache(); // Win 4: hydrate pref cache
           }
         } else {
           if (!gyankoshReaderInstance) {
@@ -3277,6 +3291,10 @@ const categoryHindiMap: Record<string, string> = {
           prefs.verseFocus = enable;
           localStorage.setItem(PREF_KEY, JSON.stringify(prefs));
         } catch {}
+        // Win 4: Sync the cached flag so isVerseFocusEnabled() reflects the change instantly
+        if (gyankoshScrollInstance) {
+          gyankoshScrollInstance._verseFocusEnabled = enable;
+        }
         syncVerseFocusUI();
         if (isScrollMode() && gyankoshScrollInstance) {
           if (enable) {
