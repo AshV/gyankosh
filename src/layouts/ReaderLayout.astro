@@ -1599,6 +1599,13 @@ const categoryHindiMap: Record<string, string> = {
             contentWrap.appendChild(clone);
           });
 
+          // Fix 3: Sentinel element at end of content for precise completion detection
+          const endSentinel = document.createElement('div');
+          endSentinel.id = 'reader-end-sentinel';
+          endSentinel.setAttribute('aria-hidden', 'true');
+          endSentinel.style.cssText = 'height:1px;width:100%;pointer-events:none;';
+          contentWrap.appendChild(endSentinel);
+
           // Allow tapping directly on a verse to focus it or copy it
           contentWrap.addEventListener('click', (e) => {
             const copyBtn = e.target.closest('.verse-copy-btn');
@@ -1624,6 +1631,7 @@ const categoryHindiMap: Record<string, string> = {
           this.stage.appendChild(pageDiv);
           this.updateScrollUI();
           this.setupEntryAnimations(contentWrap);
+          this.setupCompletionObserver(); // Fix 3: precision completion via IntersectionObserver
           requestAnimationFrame(() => {
             this.updateVerseFocus();
           });
@@ -1699,16 +1707,23 @@ const categoryHindiMap: Record<string, string> = {
             if (track) track.setAttribute('aria-valuenow', pct);
           }
 
-          // Update current section index
+          // Fix 2: Gate section index scan — skip if scroll moved < 6px since last check
           if (this.sectionAnchors.length > 0) {
-            let active = 0;
-            for (let i = 0; i < this.sectionAnchors.length; i++) {
-              const top = this.sectionAnchors[i].getBoundingClientRect().top;
-              if (top <= (vp.getBoundingClientRect().top + 80)) {
-                active = i;
+            const scrollDelta = Math.abs(scrollTop - (this._lastSectionCheckScrollTop ?? -999));
+            if (scrollDelta >= 6) {
+              this._lastSectionCheckScrollTop = scrollTop;
+              const vpTop = vp.getBoundingClientRect().top;
+              let active = 0;
+              for (let i = 0; i < this.sectionAnchors.length; i++) {
+                const top = this.sectionAnchors[i].getBoundingClientRect().top;
+                if (top <= vpTop + 80) {
+                  active = i;
+                } else {
+                  break; // anchors are in DOM order — safe to break early
+                }
               }
+              this.currentSectionIndex = active;
             }
-            this.currentSectionIndex = active;
           }
 
           this.updateNavBtns(pct);
@@ -1717,24 +1732,7 @@ const categoryHindiMap: Record<string, string> = {
           // Debounce save
           clearTimeout(this._scrollSaveTimer);
           this._scrollSaveTimer = setTimeout(() => this.saveScrollPosition(pct), 400);
-
-          // Trigger completion screen when reaching end of text
-          if (pct >= 98 && !window.__gyankoshCompletionTriggered) {
-            window.__gyankoshCompletionTriggered = true;
-            setTimeout(() => {
-              // Re-verify position before showing (user may have scrolled back)
-              const vp = this.viewport;
-              if (vp) {
-                const sh = vp.scrollHeight - vp.clientHeight;
-                const curPct = sh > 0 ? Math.round((vp.scrollTop / sh) * 100) : 0;
-                if (curPct >= 95 && typeof showCompletionScreen === 'function') {
-                  showCompletionScreen();
-                } else {
-                  window.__gyankoshCompletionTriggered = false;
-                }
-              }
-            }, 1200);
-          }
+          // Note: completion screen is now handled by setupCompletionObserver() (IntersectionObserver on sentinel)
 
           if (typeof resetWakeLockActivityTimer === 'function') {
             resetWakeLockActivityTimer();
@@ -1809,6 +1807,8 @@ const categoryHindiMap: Record<string, string> = {
           window.__gyankoshCompletionTriggered = false;
           this.viewport?.scrollTo({ top: 0, behavior: 'smooth' });
           this.currentSectionIndex = 0;
+          // Re-arm the completion observer so it fires again on the next read-through
+          this.setupCompletionObserver();
         }
 
         saveScrollPosition(pct) {
@@ -1900,6 +1900,12 @@ const categoryHindiMap: Record<string, string> = {
           if (vpRect.height === 0) return;
           const targetY = vpRect.top + (vpRect.height * 0.35);
 
+          // Fix 1: Early-exit cache — skip full scan if current focused verse still covers target
+          if (this._currentFocusedVerse) {
+            const cr = this._currentFocusedVerse.getBoundingClientRect();
+            if (cr.top <= targetY && cr.bottom >= targetY) return;
+          }
+
           const verses = this.stage?.querySelectorAll('.verse-block');
           if (!verses || verses.length === 0) return;
 
@@ -1928,6 +1934,34 @@ const categoryHindiMap: Record<string, string> = {
             closestVerse.classList.add('verse-block--focused');
             this._currentFocusedVerse = closestVerse;
           }
+        }
+
+        // Fix 3: Precision completion screen via IntersectionObserver on sentinel element
+        setupCompletionObserver() {
+          // Tear down any existing observer first
+          if (this._endObserver) {
+            this._endObserver.disconnect();
+            this._endObserver = null;
+          }
+          if (typeof IntersectionObserver === 'undefined') return;
+          const sentinel = document.getElementById('reader-end-sentinel');
+          if (!sentinel) return;
+
+          this._endObserver = new IntersectionObserver((entries) => {
+            if (!entries[0].isIntersecting) return;
+            if (window.__gyankoshCompletionTriggered) return;
+            window.__gyankoshCompletionTriggered = true;
+            // Short intentional pause so user finishes reading the last line
+            setTimeout(() => {
+              if (typeof showCompletionScreen === 'function') {
+                showCompletionScreen();
+              }
+            }, 400);
+          }, {
+            root: this.viewport,
+            threshold: 0.5
+          });
+          this._endObserver.observe(sentinel);
         }
 
         clearVerseFocus() {
