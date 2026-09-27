@@ -77,29 +77,30 @@ const THEOLOGICAL_ALIASES: Record<string, string[]> = {
  * Normalizes text for resilient matching across spelling variations,
  * diacritics, and Indic marks.
  */
+const SEARCH_NORMALIZE_MAP: Record<string, string> = {
+  ee: 'i',
+  oo: 'u',
+  sh: 's',
+  ph: 'f',
+  w: 'v',
+  'क़': 'क',
+  'ख़': 'ख',
+  'ग़': 'ग',
+  'ज़': 'ज',
+  'ड़': 'ड',
+  'ढ़': 'ढ',
+  'फ़': 'फ',
+  'ँ': 'ं',
+};
+
+const SEARCH_NORMALIZE_REGEX = /(?:ee|oo|sh|ph|w|क़|ख़|ग़|ज़|ड़|ढ़|फ़|ँ|[-_.,॥।/\\()])/g;
+
 export function normalizeSearchText(text: string): string {
   if (!text) return '';
   return text
     .toLowerCase()
     .trim()
-    // Normalize Roman vowels/variations
-    .replace(/ee/g, 'i')
-    .replace(/oo/g, 'u')
-    .replace(/sh/g, 's')
-    .replace(/ph/g, 'f')
-    .replace(/w/g, 'v')
-    // Normalize Devanagari nuktas
-    .replace(/क़/g, 'क')
-    .replace(/ख़/g, 'ख')
-    .replace(/ग़/g, 'ग')
-    .replace(/ज़/g, 'ज')
-    .replace(/ड़/g, 'ड')
-    .replace(/ढ़/g, 'ढ')
-    .replace(/फ़/g, 'फ')
-    // Normalize Devanagari candrabindu to anusvara
-    .replace(/ँ/g, 'ं')
-    // Remove extra punctuation
-    .replace(/[-_.,॥।/\\()]/g, ' ')
+    .replace(SEARCH_NORMALIZE_REGEX, (m) => SEARCH_NORMALIZE_MAP[m] || ' ')
     .replace(/\s+/g, ' ');
 }
 

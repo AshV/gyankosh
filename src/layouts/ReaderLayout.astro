@@ -14,6 +14,7 @@ import '../styles/global.css';
 import '../styles/reader.css';
 import SEO from '../components/SEO.astro';
 import { tagToSlug } from '../utils/tags';
+import { getCategoryLabel } from '../data/categoryMeta';
 
 export interface Props {
   title: string;
@@ -70,18 +71,6 @@ const resolvedJpgImage = resolvedCoverImage.endsWith('.webp')
 const ogImage = image || (coverImage
   ? (coverImage.startsWith('http') ? coverImage : `https://www.ashishvishwakarma.com${base}${coverImage.startsWith('/') ? '' : '/'}${coverImage}`.replace(/\.webp$/, '.jpg'))
   : `https://www.ashishvishwakarma.com${base}/covers/${slug}.jpg`);
-
-
-const categoryHindiMap: Record<string, string> = {
-  Veda: '🔥 वेद',
-  Upanishad: '🕉️ उपनिषद्',
-  Gita: '🎵 गीता',
-  Chalisa: '🪔 चालीसा',
-  Stotra: '🌸 स्तोत्र',
-  Aarti: '🪔 आरती',
-  Purana: '📖 पुराण',
-  Other: '📜 अन्य',
-};
 ---
 
 <!doctype html>
@@ -374,9 +363,9 @@ const categoryHindiMap: Record<string, string> = {
                 href={`${base}/category/${category.toLowerCase()}`}
                 class="cover-category-badge"
                 style="text-decoration:none;"
-                title={`${categoryHindiMap[category] || category} संग्रह देखें`}
+                title={`${getCategoryLabel(category)} संग्रह देखें`}
               >
-                {categoryHindiMap[category] || category}
+                {getCategoryLabel(category)}
               </a>
             )}
 

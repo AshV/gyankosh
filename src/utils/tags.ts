@@ -195,11 +195,12 @@ export function tagToSlug(tag: string): string {
 
   // 3. Algorithmic Devanagari-to-Roman Transliteration
   let result = '';
-  const len = trimmed.length;
+  const chars = [...trimmed];
+  const len = chars.length;
 
   for (let i = 0; i < len; i++) {
-    const ch = trimmed[i];
-    const next = i + 1 < len ? trimmed[i + 1] : '';
+    const ch = chars[i];
+    const next = i + 1 < len ? chars[i + 1] : '';
 
     if (ch === '-' || ch === ' ' || ch === '_') {
       result += '-';
