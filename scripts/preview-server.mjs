@@ -40,6 +40,7 @@ const server = http.createServer((req, res) => {
     res.writeHead(200, {
       'Content-Type': MIME[ext] || 'application/octet-stream',
       'Access-Control-Allow-Origin': '*',
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
     });
     fs.createReadStream(filePath).pipe(res);
   } else {

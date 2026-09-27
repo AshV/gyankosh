@@ -143,6 +143,13 @@ const categoryHindiMap: Record<string, string> = {
           document.documentElement.classList.remove('chanting-mode');
         }
 
+        // Night / Dark Mode
+        if (prefs.nightMode) {
+          document.documentElement.classList.add('reader-night-mode');
+        } else {
+          document.documentElement.classList.remove('reader-night-mode');
+        }
+
         // Reading Mode: 'scroll' (default) | '3d' | 'lite'
         var readingMode = prefs.readingMode || 'scroll';
         if (readingMode === 'scroll') {
@@ -195,6 +202,52 @@ const categoryHindiMap: Record<string, string> = {
         </a>
 
         <div class="topbar-actions">
+          <!-- Table of Contents / विषय सूची Button -->
+          <button
+            id="reader-toc-btn"
+            class="icon-btn topbar-btn--toc"
+            aria-label="विषय सूची"
+            title="विषय सूची (पदों की सूची)"
+            aria-haspopup="dialog"
+            aria-expanded="false"
+          >
+            <!-- Sacred List / Index Icon -->
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="8" y1="6" x2="21" y2="6"></line>
+              <line x1="8" y1="12" x2="21" y2="12"></line>
+              <line x1="8" y1="18" x2="21" y2="18"></line>
+              <line x1="3" y1="6" x2="3.01" y2="6"></line>
+              <line x1="3" y1="12" x2="3.01" y2="12"></line>
+              <line x1="3" y1="18" x2="3.01" y2="18"></line>
+            </svg>
+          </button>
+
+          <!-- Night / Dark Mode Toggle (रात्रि मोड) -->
+          <button
+            id="night-mode-toggle"
+            class="icon-btn topbar-btn--night"
+            aria-label="रात्रि पठन मोड"
+            title="रात्रि मोड — नेत्र-सुखद गहरा काष्ठ"
+            aria-pressed="false"
+          >
+            <!-- Moon Icon (for entering night mode) -->
+            <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <!-- Sun Icon (for returning to day mode) -->
+            <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none;">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+          </button>
+
           <!-- Spiritual Context Info / Settings Button (ग्रंथ परिचय एवं पठन शैली) -->
           <button
             id="reader-info-btn"
@@ -341,6 +394,12 @@ const categoryHindiMap: Record<string, string> = {
               </div>
             )}
 
+            <!-- Phase 7: Reading Stats Badges (पठन सांख्यिकी) -->
+            <div class="cover-stats-row" id="cover-stats-row">
+              <span class="cover-stat-badge" id="cover-stat-time">⏱ गणना जारी...</span>
+              <span class="cover-stat-badge" id="cover-stat-count">📄 पद गणना...</span>
+            </div>
+
             <button 
               id="btn-aarambh" 
               class="btn-aarambh" 
@@ -350,6 +409,11 @@ const categoryHindiMap: Record<string, string> = {
               <span>📖</span>
               <span>आरम्भ करें</span>
             </button>
+
+            <div class="cover-resume-indicator" id="cover-resume-indicator" style="display:none;">
+              <span class="resume-progress-text" id="resume-progress-text"></span>
+              <button type="button" class="resume-fresh-start" id="btn-fresh-start">प्रारम्भ से पढ़ें</button>
+            </div>
           </div>
         </div>
 
@@ -384,6 +448,91 @@ const categoryHindiMap: Record<string, string> = {
         </article>
       </main>
 
+      <!-- Sacred Completion Screen (पाठ समापन) -->
+      <div class="reader-completion-screen" id="reader-completion-screen" role="region" aria-label="पाठ समापन" style="display:none;">
+        <div class="completion-petals" id="completion-petals" aria-hidden="true"></div>
+        <div class="completion-card">
+          <button id="btn-completion-close" class="completion-close-btn" type="button" aria-label="समापन पृष्ठ बन्द करें" title="बन्द करें">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+          <div class="completion-invocation">॥ इति श्री {title} समाप्तम् ॥</div>
+          <div class="completion-emoji">🙏</div>
+          <h2 class="completion-title">पाठ संपूर्ण हुआ</h2>
+          <p class="completion-subtitle">श्रद्धा एवं भक्ति से किया गया पाठ सदैव फलदायी होता है।</p>
+          <div class="completion-actions">
+            <button id="btn-completion-restart" class="completion-btn completion-btn--primary" type="button">
+              <span>🔄</span> <span>पुनः पढ़ें</span>
+            </button>
+            <a href={category ? `${base}/category/${category.toLowerCase()}` : `${base}/`} class="completion-btn completion-btn--secondary" id="btn-completion-browse">
+              <span>📚</span> <span>अन्य ग्रंथ पढ़ें</span>
+            </a>
+            <button id="btn-completion-share" class="completion-btn completion-btn--outline" type="button">
+              <span>🔗</span> <span>साझा करें</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Table of Contents Sliding Drawer (विषय सूची दराज) -->
+      <div id="reader-toc-drawer" class="reader-toc-drawer" role="dialog" aria-modal="true" aria-labelledby="toc-title" style="display:none;">
+        <div class="reader-toc-backdrop" id="reader-toc-backdrop"></div>
+        <aside class="reader-toc-panel" id="reader-toc-panel">
+          <div class="reader-toc-header">
+            <div class="reader-toc-title-group">
+              <h2 id="toc-title" class="reader-toc-title">॥ विषय सूची ॥</h2>
+              <span class="reader-toc-subtitle" id="reader-toc-subtitle">{title}</span>
+            </div>
+            <button id="reader-toc-close" class="reader-toc-close" aria-label="विषय सूची बन्द करें" title="बन्द करें">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Quick Search in TOC -->
+          <div class="reader-toc-search-wrap">
+            <div class="reader-toc-search-box">
+              <span class="toc-search-icon" aria-hidden="true">🔍</span>
+              <input
+                type="text"
+                id="reader-toc-search-input"
+                class="reader-toc-search-input"
+                placeholder="पद, संख्या या शब्द खोजें..."
+                aria-label="विषय सूची में खोजें"
+                autocomplete="off"
+              />
+              <button
+                type="button"
+                id="reader-toc-search-clear"
+                class="reader-toc-search-clear"
+                aria-label="खोज साफ़ करें"
+                style="display:none;"
+              >&times;</button>
+            </div>
+            <div class="reader-toc-stats" id="reader-toc-stats"></div>
+          </div>
+
+          <!-- TOC Items List -->
+          <nav class="reader-toc-list" id="reader-toc-list" role="navigation" aria-label="ग्रंथ पद सूची">
+            <!-- Dynamically populated by JavaScript -->
+          </nav>
+
+          <!-- Quick Navigation Footer -->
+          <div class="reader-toc-footer">
+            <button type="button" class="toc-quick-btn" id="toc-btn-goto-start">
+              <span>⏮</span> <span>प्रारम्भ</span>
+            </button>
+            <button type="button" class="toc-quick-btn" id="toc-btn-goto-end">
+              <span>⏭</span> <span>समापन</span>
+            </button>
+          </div>
+        </aside>
+      </div>
+
       <!-- Spiritual / Historical Context Popover Modal / Settings Modal -->
       <div id="reader-info-modal" class="reader-info-modal" role="dialog" aria-modal="true" aria-labelledby="modal-info-title" style="display:none;">
         <div class="reader-info-backdrop" id="reader-info-backdrop"></div>
@@ -412,6 +561,44 @@ const categoryHindiMap: Record<string, string> = {
               </div>
             </div>
 
+            <!-- Theme / Appearance Setting (थीम स्वरूप) -->
+            <div class="reader-info-setting-row">
+              <span class="setting-row-label">थीम स्वरूप:</span>
+              <div class="anim-toggle-group" id="theme-toggle-group" role="radiogroup" aria-label="थीम चुनें">
+                <button type="button" class="anim-opt-btn" data-theme="day" title="दिवस मोड — पावन ताम्रपत्र">☀️ दिवस</button>
+                <button type="button" class="anim-opt-btn" data-theme="night" title="रात्रि मोड — नेत्र-सुखद गहरा काष्ठ">🌙 रात्रि</button>
+              </div>
+            </div>
+
+            <!-- Auto-scroll Speed Setting (स्वचालित पठन गति) -->
+            <div class="reader-info-setting-row">
+              <span class="setting-row-label">स्वचालित गति:</span>
+              <div class="anim-toggle-group" id="autoscroll-speed-toggle-group" role="radiogroup" aria-label="स्वचालित गति चुनें">
+                <button type="button" class="anim-opt-btn active" data-speed="slow" title="धीमा (१x) — ध्यान एवं जप हेतु">धीमा (१x)</button>
+                <button type="button" class="anim-opt-btn" data-speed="medium" title="मध्यम (१.५x) — सामान्य लयबद्ध पठन">मध्यम (१.५x)</button>
+                <button type="button" class="anim-opt-btn" data-speed="fast" title="द्रुत (२x) — द्रुत पारायण">द्रुत (२x)</button>
+              </div>
+            </div>
+
+            <!-- Verse Focus Setting (श्लोक ध्यान केंद्र) -->
+            <div class="reader-info-setting-row">
+              <span class="setting-row-label">श्लोक ध्यान:</span>
+              <div class="anim-toggle-group" id="verse-focus-toggle-group" role="radiogroup" aria-label="श्लोक ध्यान केंद्र चुनें">
+                <button type="button" class="anim-opt-btn active" data-focus="on" title="श्लोक ध्यान केंद्र — पढ़ते समय वर्तमान श्लोक प्रकाशित रहेगा">सक्रिय</button>
+                <button type="button" class="anim-opt-btn" data-focus="off" title="सामान्य — बिना प्रकाश प्रभाव">सामान्य</button>
+              </div>
+            </div>
+
+            <!-- Line-Height Setting (पंक्ति अन्तर) -->
+            <div class="reader-info-setting-row">
+              <span class="setting-row-label">पंक्ति अन्तर:</span>
+              <div class="anim-toggle-group" id="line-height-toggle-group" role="radiogroup" aria-label="पंक्ति अन्तर चुनें">
+                <button type="button" class="anim-opt-btn active" data-lh="normal" title="सामान्य (१.९x) — मानक अन्तर">सामान्य</button>
+                <button type="button" class="anim-opt-btn" data-lh="relaxed" title="विस्तृत (२.३x) — खुला अन्तर">विस्तृत</button>
+                <button type="button" class="anim-opt-btn" data-lh="loose" title="अति-विस्तृत (२.७x) — स्पष्ट पठन">अति-विस्तृत</button>
+              </div>
+            </div>
+
             <div class="reader-info-tradition-note">
               <span>पारम्परिक सनातन पाठ • सार्वजनिक कार्यक्षेत्र (Public Domain)</span>
             </div>
@@ -436,6 +623,36 @@ const categoryHindiMap: Record<string, string> = {
             </svg>
           </button>
 
+          <!-- Auto-Scroll Play/Pause Button (स्वचालित पठन) -->
+          <button
+            id="btn-auto-scroll"
+            class="icon-btn icon-btn--autoscroll"
+            aria-label="स्वचालित पठन आरम्भ करें"
+            title="स्वचालित पठन (हाथ-मुक्त पाठ) — आरम्भ करें"
+            aria-pressed="false"
+            style="padding:0.4rem 0.65rem;"
+          >
+            <!-- Play Icon -->
+            <svg class="icon-play" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            <!-- Pause Icon -->
+            <svg class="icon-pause" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true" style="display:none;">
+              <rect x="6" y="4" width="4" height="16"></rect>
+              <rect x="14" y="4" width="4" height="16"></rect>
+            </svg>
+          </button>
+
+          <!-- Floating Speed Switcher Badge -->
+          <button
+            type="button"
+            id="autoscroll-floating-speed"
+            class="autoscroll-speed-badge"
+            style="display:none;"
+            aria-label="स्वचालित गति बदलें"
+            title="गति बदलें (क्लिक करें)"
+          >१x</button>
+
           <!-- Previous Page Button (Arrow Up) -->
           <button
             id="btn-bottom-prev"
@@ -448,8 +665,34 @@ const categoryHindiMap: Record<string, string> = {
           </button>
         </div>
 
-        <!-- Page Indicator (Clean numerals without 'पृष्ठ' label) -->
-        <span class="reader-page-info" id="page-info" aria-live="polite">१ / १</span>
+        <!-- Interactive Progress Scrubber / Slider (प्रगति स्लाइडर) -->
+        <div class="reader-scrubber-container" id="reader-scrubber-container">
+          <!-- Floating Tooltip showing Section & Percentage -->
+          <div class="reader-scrubber-tooltip" id="reader-scrubber-tooltip" style="display:none;" aria-hidden="true">
+            <span class="scrubber-tooltip-badge" id="scrubber-tooltip-badge"></span>
+            <span class="scrubber-tooltip-pct" id="scrubber-tooltip-pct"></span>
+          </div>
+
+          <!-- Draggable Track -->
+          <div
+            class="reader-scrubber-track"
+            id="reader-scrubber-track"
+            role="slider"
+            aria-label="पठन प्रगति स्लाइडर"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="0"
+            tabindex="0"
+          >
+            <div class="reader-scrubber-rail">
+              <div class="reader-scrubber-fill" id="reader-scrubber-fill"></div>
+              <div class="reader-scrubber-thumb" id="reader-scrubber-thumb"></div>
+            </div>
+          </div>
+
+          <!-- Percentage Indicator -->
+          <span class="reader-page-info" id="page-info" aria-live="polite">०%</span>
+        </div>
 
         <div class="bottombar-group bottombar-group--controls">
           <!-- Next Page Button (Arrow Down) -->
@@ -917,6 +1160,11 @@ const categoryHindiMap: Record<string, string> = {
             });
             this.isFlipping = false;
             this.savePosition();
+            // Trigger completion screen on last page after a brief reading pause
+            if (this.currentPageIndex >= this.pages.length - 1 && !window.__gyankoshCompletionTriggered) {
+              window.__gyankoshCompletionTriggered = true;
+              setTimeout(() => { if (typeof showCompletionScreen === 'function') showCompletionScreen(); }, 1800);
+            }
           }, flipDuration);
         }
 
@@ -940,6 +1188,15 @@ const categoryHindiMap: Record<string, string> = {
           if (this.progressBar) {
             this.progressBar.style.width = pct + '%';
             this.progressBar.setAttribute('aria-valuenow', pct);
+          }
+
+          if (!window.__isGyankoshScrubbing) {
+            const fill = document.getElementById('reader-scrubber-fill');
+            const thumb = document.getElementById('reader-scrubber-thumb');
+            const track = document.getElementById('reader-scrubber-track');
+            if (fill) fill.style.width = pct + '%';
+            if (thumb) thumb.style.left = pct + '%';
+            if (track) track.setAttribute('aria-valuenow', pct);
           }
 
           const btnUp = document.getElementById('btn-page-up');
@@ -1196,6 +1453,25 @@ const categoryHindiMap: Record<string, string> = {
             }, 200);
           });
         }
+
+        findPageForTocId(tocId) {
+          if (!this.pageElements || this.pageElements.length === 0) return -1;
+          for (let i = 0; i < this.pageElements.length; i++) {
+            const pageEl = this.pageElements[i];
+            if (pageEl.querySelector(`[data-toc-id="${tocId}"]`)) {
+              return i;
+            }
+          }
+          return -1;
+        }
+
+        getCurrentTocId() {
+          if (!this.pageElements || this.pageElements.length === 0) return null;
+          const pageEl = this.pageElements[this.currentPageIndex];
+          if (!pageEl) return null;
+          const firstTocEl = pageEl.querySelector('[data-toc-id]');
+          return firstTocEl ? firstTocEl.getAttribute('data-toc-id') : null;
+        }
       }
 
       let gyankoshReaderInstance = null;
@@ -1305,12 +1581,52 @@ const categoryHindiMap: Record<string, string> = {
               contentWrap.appendChild(anchor);
               this.sectionAnchors.push(anchor);
             }
-            contentWrap.appendChild(node.cloneNode(true));
+            const clone = node.cloneNode(true);
+            if (clone.classList.contains('verse-block')) {
+              const copyBtn = document.createElement('button');
+              copyBtn.type = 'button';
+              copyBtn.className = 'verse-copy-btn';
+              copyBtn.title = 'श्लोक कॉपी करें';
+              copyBtn.setAttribute('aria-label', 'श्लोक कॉपी करें');
+              copyBtn.innerHTML = `
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+              `;
+              clone.appendChild(copyBtn);
+            }
+            contentWrap.appendChild(clone);
+          });
+
+          // Allow tapping directly on a verse to focus it or copy it
+          contentWrap.addEventListener('click', (e) => {
+            const copyBtn = e.target.closest('.verse-copy-btn');
+            if (copyBtn) {
+              e.stopPropagation();
+              const verse = copyBtn.closest('.verse-block');
+              if (verse && typeof copyVerseText === 'function') {
+                copyVerseText(verse);
+              }
+              return;
+            }
+            const verse = e.target.closest('.verse-block');
+            if (verse && this.isVerseFocusEnabled()) {
+              if (this._currentFocusedVerse && this._currentFocusedVerse !== verse) {
+                this._currentFocusedVerse.classList.remove('verse-block--focused');
+              }
+              verse.classList.add('verse-block--focused');
+              this._currentFocusedVerse = verse;
+            }
           });
 
           pageDiv.appendChild(contentWrap);
           this.stage.appendChild(pageDiv);
           this.updateScrollUI();
+          this.setupEntryAnimations(contentWrap);
+          requestAnimationFrame(() => {
+            this.updateVerseFocus();
+          });
         }
 
         setupScrollEvents() {
@@ -1374,6 +1690,15 @@ const categoryHindiMap: Record<string, string> = {
             this.pageInfo.textContent = `${toHindiDigits(pct)}%`;
           }
 
+          if (!window.__isGyankoshScrubbing) {
+            const fill = document.getElementById('reader-scrubber-fill');
+            const thumb = document.getElementById('reader-scrubber-thumb');
+            const track = document.getElementById('reader-scrubber-track');
+            if (fill) fill.style.width = pct + '%';
+            if (thumb) thumb.style.left = pct + '%';
+            if (track) track.setAttribute('aria-valuenow', pct);
+          }
+
           // Update current section index
           if (this.sectionAnchors.length > 0) {
             let active = 0;
@@ -1387,10 +1712,29 @@ const categoryHindiMap: Record<string, string> = {
           }
 
           this.updateNavBtns(pct);
+          this.updateVerseFocus();
 
           // Debounce save
           clearTimeout(this._scrollSaveTimer);
           this._scrollSaveTimer = setTimeout(() => this.saveScrollPosition(pct), 400);
+
+          // Trigger completion screen when reaching end of text
+          if (pct >= 98 && !window.__gyankoshCompletionTriggered) {
+            window.__gyankoshCompletionTriggered = true;
+            setTimeout(() => {
+              // Re-verify position before showing (user may have scrolled back)
+              const vp = this.viewport;
+              if (vp) {
+                const sh = vp.scrollHeight - vp.clientHeight;
+                const curPct = sh > 0 ? Math.round((vp.scrollTop / sh) * 100) : 0;
+                if (curPct >= 95 && typeof showCompletionScreen === 'function') {
+                  showCompletionScreen();
+                } else {
+                  window.__gyankoshCompletionTriggered = false;
+                }
+              }
+            }, 1200);
+          }
 
           if (typeof resetWakeLockActivityTimer === 'function') {
             resetWakeLockActivityTimer();
@@ -1402,6 +1746,14 @@ const categoryHindiMap: Record<string, string> = {
           if (this.progressBar) {
             this.progressBar.style.width = '0%';
             this.progressBar.setAttribute('aria-valuenow', 0);
+          }
+          if (!window.__isGyankoshScrubbing) {
+            const fill = document.getElementById('reader-scrubber-fill');
+            const thumb = document.getElementById('reader-scrubber-thumb');
+            const track = document.getElementById('reader-scrubber-track');
+            if (fill) fill.style.width = '0%';
+            if (thumb) thumb.style.left = '0%';
+            if (track) track.setAttribute('aria-valuenow', 0);
           }
           this.updateNavBtns(0);
         }
@@ -1454,6 +1806,7 @@ const categoryHindiMap: Record<string, string> = {
         }
 
         scrollToTop() {
+          window.__gyankoshCompletionTriggered = false;
           this.viewport?.scrollTo({ top: 0, behavior: 'smooth' });
           this.currentSectionIndex = 0;
         }
@@ -1496,7 +1849,14 @@ const categoryHindiMap: Record<string, string> = {
                     this.pageInfo.textContent = `${toHindiDigits(pct)}%`;
                   }
                   this.updateNavBtns(pct);
+                  this.updateVerseFocus();
+                } else {
+                  this.updateVerseFocus();
                 }
+              });
+            } else {
+              requestAnimationFrame(() => {
+                this.updateVerseFocus();
               });
             }
           } catch {}
@@ -1504,6 +1864,11 @@ const categoryHindiMap: Record<string, string> = {
 
         // Called when chanting mode or font changes — rebuild and restore section
         rebuild() {
+          if (this._entryObserver) {
+            this._entryObserver.disconnect();
+            this._entryObserver = null;
+          }
+          this._currentFocusedVerse = null;
           const prevSection = this.currentSectionIndex;
           this.buildScrollView();
           requestAnimationFrame(() => {
@@ -1514,6 +1879,128 @@ const categoryHindiMap: Record<string, string> = {
               this.viewport?.scrollBy({ top: anchorTop - vpTop - 12, behavior: 'instant' });
             }
           });
+        }
+
+        isVerseFocusEnabled() {
+          try {
+            const prefs = loadPrefs();
+            return prefs.verseFocus !== false;
+          } catch {
+            return true;
+          }
+        }
+
+        updateVerseFocus() {
+          if (!this.viewport || !this.isVerseFocusEnabled()) {
+            this.clearVerseFocus();
+            return;
+          }
+          const vp = this.viewport;
+          const vpRect = vp.getBoundingClientRect();
+          if (vpRect.height === 0) return;
+          const targetY = vpRect.top + (vpRect.height * 0.35);
+
+          const verses = this.stage?.querySelectorAll('.verse-block');
+          if (!verses || verses.length === 0) return;
+
+          let closestVerse = null;
+          let minDistance = Infinity;
+
+          for (let i = 0; i < verses.length; i++) {
+            const v = verses[i];
+            const r = v.getBoundingClientRect();
+            if (r.top <= targetY && r.bottom >= targetY) {
+              closestVerse = v;
+              break;
+            }
+            const vCenter = (r.top + r.bottom) / 2;
+            const dist = Math.abs(vCenter - targetY);
+            if (dist < minDistance) {
+              minDistance = dist;
+              closestVerse = v;
+            }
+          }
+
+          if (closestVerse && closestVerse !== this._currentFocusedVerse) {
+            if (this._currentFocusedVerse) {
+              this._currentFocusedVerse.classList.remove('verse-block--focused');
+            }
+            closestVerse.classList.add('verse-block--focused');
+            this._currentFocusedVerse = closestVerse;
+          }
+        }
+
+        clearVerseFocus() {
+          if (this._currentFocusedVerse) {
+            this._currentFocusedVerse.classList.remove('verse-block--focused');
+            this._currentFocusedVerse = null;
+          }
+          const all = this.stage?.querySelectorAll('.verse-block--focused');
+          all?.forEach((el) => el.classList.remove('verse-block--focused'));
+        }
+
+        setupEntryAnimations(contentWrap) {
+          const wrap = contentWrap || this.stage?.querySelector('.reader-content');
+          if (!wrap) return;
+          if (typeof IntersectionObserver === 'undefined') return;
+          if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            return;
+          }
+
+          if (this._entryObserver) {
+            this._entryObserver.disconnect();
+            this._entryObserver = null;
+          }
+
+          const blocks = wrap.querySelectorAll('.verse-block, .speaker-block, .instruction-block, .translation-block');
+          if (!blocks || blocks.length === 0) return;
+
+          const vp = this.viewport;
+          const vpRect = vp ? vp.getBoundingClientRect() : null;
+          const cutoffY = vpRect && vpRect.height > 0 ? (vpRect.bottom + 80) : (window.innerHeight + 80);
+
+          const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('verse-revealed');
+                obs.unobserve(entry.target);
+              }
+            });
+          }, {
+            root: vp || null,
+            threshold: 0.05,
+            rootMargin: '0px 0px 80px 0px'
+          });
+
+          blocks.forEach(block => {
+            const r = block.getBoundingClientRect();
+            if (r.top < cutoffY) {
+              block.classList.add('verse-revealed');
+            } else {
+              block.classList.add('verse-reveal');
+              observer.observe(block);
+            }
+          });
+
+          this._entryObserver = observer;
+        }
+
+        getCurrentTocId() {
+          const vp = this.viewport;
+          if (!vp) return null;
+          const tocEls = this.stage?.querySelectorAll('[data-toc-id]');
+          if (!tocEls || tocEls.length === 0) return null;
+          const vpTop = vp.getBoundingClientRect().top;
+          let currentId = null;
+          for (let i = 0; i < tocEls.length; i++) {
+            const rect = tocEls[i].getBoundingClientRect();
+            if (rect.top <= vpTop + 100) {
+              currentId = tocEls[i].getAttribute('data-toc-id');
+            } else {
+              break;
+            }
+          }
+          return currentId || (tocEls[0] ? tocEls[0].getAttribute('data-toc-id') : null);
         }
       }
 
@@ -1673,7 +2160,7 @@ const categoryHindiMap: Record<string, string> = {
       const btnAarambh = document.getElementById('btn-aarambh');
 
       let isStartingReading = false;
-      function startReading() {
+      function startReading(skipRestore = false) {
         if (isStartingReading) return;
         isStartingReading = true;
         document.querySelector('.reader-shell')?.classList.remove('has-cover-screen');
@@ -1693,11 +2180,14 @@ const categoryHindiMap: Record<string, string> = {
           } else {
             gyankoshScrollInstance.rebuild();
           }
-          // Restore scroll position AFTER the cover dismiss animation finishes
-          // so the viewport has real scrollHeight dimensions (not 0).
-          setTimeout(() => {
-            gyankoshScrollInstance?.restoreScrollPosition();
-          }, 460);
+          const onCoverDismissed = () => {
+            if (!skipRestore) {
+              gyankoshScrollInstance?.restoreScrollPosition();
+            }
+            gyankoshScrollInstance?.setupEntryAnimations();
+            gyankoshScrollInstance?.updateVerseFocus();
+          };
+          setTimeout(onCoverDismissed, 460);
         } else {
           if (!gyankoshReaderInstance) {
             gyankoshReaderInstance = new GyankoshReader();
@@ -1724,10 +2214,15 @@ const categoryHindiMap: Record<string, string> = {
         }
       }
 
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initReaderEngine);
-      } else {
+      function setupReaderInit() {
+        initTableOfContents();
         initReaderEngine();
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', setupReaderInit);
+      } else {
+        setupReaderInit();
       }
 
       btnAarambh?.addEventListener('click', (e) => {
@@ -1739,6 +2234,42 @@ const categoryHindiMap: Record<string, string> = {
       btnAarambh?.addEventListener('touchend', (e) => {
         e.preventDefault();
         e.stopPropagation();
+        startReading();
+      });
+
+      /* ── Resume Indicator on Cover Screen (पिछली बार कितना पढ़ा) ── */
+      (function initResumeIndicator() {
+        try {
+          const saved = JSON.parse(localStorage.getItem(PROGRESS_KEY) || '{}');
+          const rawPct = typeof saved.scrollPercent === 'number' ? saved.scrollPercent :
+                         (typeof saved.percent === 'number' ? saved.percent : null);
+          const pct = rawPct !== null ? Math.round(rawPct) : null;
+
+          if (pct !== null && pct > 0 && pct < 99 && !saved.isCompleted) {
+            const indicator = document.getElementById('cover-resume-indicator');
+            const progressText = document.getElementById('resume-progress-text');
+            if (indicator) indicator.style.display = '';
+            if (progressText) progressText.textContent = 'पिछली बार: ' + toHindiDigits(pct) + '% पढ़ा';
+            if (btnAarambh) {
+              const textSpan = btnAarambh.querySelector('span:last-child');
+              if (textSpan) textSpan.textContent = 'आगे पढ़ें';
+            }
+          }
+        } catch {}
+      })();
+
+      const btnFreshStart = document.getElementById('btn-fresh-start');
+      btnFreshStart?.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        try { localStorage.removeItem(PROGRESS_KEY); } catch {}
+        // Reset button text
+        if (btnAarambh) {
+          const textSpan = btnAarambh.querySelector('span:last-child');
+          if (textSpan) textSpan.textContent = 'आरम्भ करें';
+        }
+        const indicator = document.getElementById('cover-resume-indicator');
+        if (indicator) indicator.style.display = 'none';
         startReading();
       });
 
@@ -1834,6 +2365,550 @@ const categoryHindiMap: Record<string, string> = {
         }
       });
 
+      /* ── Completion Screen (पाठ समापन पृष्ठ) ── */
+      let completionShown = false;
+
+      function showCompletionScreen() {
+        const screen = document.getElementById('reader-completion-screen');
+        if (completionShown || !screen) return;
+        completionShown = true;
+
+        // Generate falling flower petals 🌸
+        const petalsContainer = document.getElementById('completion-petals');
+        if (petalsContainer) {
+          petalsContainer.innerHTML = '';
+          const petalEmojis = ['🌸', '🪷', '🌺', '✿', '❀', '🏵️'];
+          for (let i = 0; i < 35; i++) {
+            const petal = document.createElement('span');
+            petal.className = 'falling-petal';
+            petal.textContent = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];
+            petal.style.left = (Math.random() * 100) + '%';
+            petal.style.animationDelay = (Math.random() * 4) + 's';
+            petal.style.animationDuration = (4 + Math.random() * 5) + 's';
+            petal.style.fontSize = (0.9 + Math.random() * 1.1) + 'rem';
+            petal.style.setProperty('--sway', (Math.random() * 50 - 25).toFixed(0));
+            petalsContainer.appendChild(petal);
+          }
+        }
+
+        screen.style.display = 'flex';
+        // Hide bottom bar during completion
+        const bottomBar = document.querySelector('.reader-bottombar');
+        if (bottomBar) bottomBar.style.display = 'none';
+        // Clear saved progress (next visit starts fresh)
+        try { localStorage.removeItem(PROGRESS_KEY); } catch {}
+      }
+
+      function hideCompletionScreen() {
+        const screen = document.getElementById('reader-completion-screen');
+        if (!screen) return;
+        completionShown = false;
+        window.__gyankoshCompletionTriggered = false;
+        screen.style.display = 'none';
+        const petalsContainer = document.getElementById('completion-petals');
+        if (petalsContainer) petalsContainer.innerHTML = '';
+        // Restore bottom bar
+        const bottomBar = document.querySelector('.reader-bottombar');
+        if (bottomBar) bottomBar.style.removeProperty('display');
+      }
+
+      // Close button on completion screen
+      document.getElementById('btn-completion-close')?.addEventListener('click', () => {
+        hideCompletionScreen();
+      });
+
+      // Restart button on completion screen
+      document.getElementById('btn-completion-restart')?.addEventListener('click', () => {
+        hideCompletionScreen();
+        if (isScrollMode() && gyankoshScrollInstance) {
+          gyankoshScrollInstance.scrollToTop();
+        } else if (gyankoshReaderInstance) {
+          gyankoshReaderInstance.flipToPage(0, 'prev');
+        }
+      });
+
+      // Share button on completion screen (with special "मैंने पाठ किया" message)
+      document.getElementById('btn-completion-share')?.addEventListener('click', async () => {
+        const shareUrl = window.location.href;
+        const shareData = {
+          title: bookTitle + ' — ज्ञानकोश',
+          text: '॥ ' + bookTitle + ' ॥ — मैंने ज्ञानकोश पर संपूर्ण पाठ किया! आप भी पढ़ें:',
+          url: shareUrl,
+        };
+        if (navigator.share) {
+          try { await navigator.share(shareData); return; } catch (err) { if (err.name === 'AbortError') return; }
+        }
+        try {
+          await navigator.clipboard.writeText(shareData.text + '\n' + shareUrl);
+          showGyankoshToast('🔗 पावन निमन्त्रण लिंक कॉपी किया गया!');
+        } catch {
+          window.prompt('ग्रंथ लिंक कॉपी करें:', shareUrl);
+        }
+      });
+
+      /* ── Table of Contents (विषय सूची) Functionality ── */
+      const readerTocBtn = document.getElementById('reader-toc-btn');
+      const readerTocDrawer = document.getElementById('reader-toc-drawer');
+      const readerTocClose = document.getElementById('reader-toc-close');
+      const readerTocBackdrop = document.getElementById('reader-toc-backdrop');
+      const rawSource = document.getElementById('reader-raw-source');
+      let tocItems = [];
+
+      function initTableOfContents() {
+        if (!rawSource) return;
+        tocItems = [];
+        const children = Array.from(rawSource.children).filter(
+          el => !el.classList.contains('sr-only') &&
+                !el.classList.contains('translation-block') &&
+                !el.classList.contains('block--translation') &&
+                !el.classList.contains('block--bhavarth')
+        );
+
+        let idx = 0;
+        const typeHindiMap = {
+          doha: 'दोहा',
+          chaupai: 'चौपाई',
+          shloka: 'श्लोक',
+          mantra: 'मन्त्र',
+          soratha: 'सोरठा',
+          name: 'नाम',
+          prose: 'गद्य',
+        };
+        const typeCounters = {};
+
+        children.forEach((node) => {
+          const isVerse = node.classList.contains('verse-block');
+          const isSpeaker = node.classList.contains('speaker-block');
+          const isInstruction = node.classList.contains('instruction-block');
+
+          if (!isVerse && !isSpeaker && !isInstruction) return;
+
+          const tocId = `toc-item-${idx++}`;
+          node.setAttribute('data-toc-id', tocId);
+
+          let badge = '';
+          let badgeClass = '';
+          let preview = '';
+          let fullText = node.textContent.trim().replace(/\s+/g, ' ');
+
+          if (isVerse) {
+            const blockType = (node.getAttribute('data-block-type') || 'verse').toLowerCase();
+            typeCounters[blockType] = (typeCounters[blockType] || 0) + 1;
+            const countForType = typeCounters[blockType];
+            const hindiType = typeHindiMap[blockType] || 'पद';
+            badge = `${hindiType} ${toHindiDigits(countForType)}`;
+            badgeClass = 'toc-item-badge--verse';
+
+            const firstLine = node.querySelector('.verse-line')?.textContent?.trim().replace(/\s+/g, ' ') ||
+                              node.querySelector('.pada')?.textContent?.trim().replace(/\s+/g, ' ') ||
+                              node.textContent.trim().replace(/\s+/g, ' ');
+            preview = firstLine;
+          } else if (isSpeaker) {
+            badge = 'वक्ता';
+            badgeClass = 'toc-item-badge--speaker';
+            const titleEl = node.querySelector('.speaker-title');
+            preview = titleEl ? titleEl.textContent.trim().replace(/^॥\s*|\s*॥$/g, '') : node.textContent.trim();
+          } else if (isInstruction) {
+            badge = 'निर्देश';
+            badgeClass = 'toc-item-badge--instruction';
+            preview = node.textContent.trim().replace(/\s+/g, ' ');
+            if (preview.length > 50) preview = preview.slice(0, 48) + '...';
+          }
+
+          tocItems.push({
+            tocId,
+            badge,
+            badgeClass,
+            preview,
+            fullText,
+          });
+        });
+
+        const statsEl = document.getElementById('reader-toc-stats');
+        if (statsEl) {
+          statsEl.textContent = `कुल ${toHindiDigits(tocItems.length)} पद`;
+        }
+
+        renderTocList(tocItems);
+      }
+
+      function renderTocList(items) {
+        const listEl = document.getElementById('reader-toc-list');
+        if (!listEl) return;
+        if (items.length === 0) {
+          listEl.innerHTML = '<div class="reader-toc-empty">🙏 कोई पद नहीं मिला</div>';
+          return;
+        }
+
+        const fragment = document.createDocumentFragment();
+        items.forEach((item) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'reader-toc-item';
+          btn.setAttribute('data-toc-id', item.tocId);
+          btn.innerHTML = `
+            <span class="toc-item-badge ${item.badgeClass}">${item.badge}</span>
+            <div class="toc-item-content">
+              <span class="toc-item-text">${item.preview}</span>
+            </div>
+          `;
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navigateToTocItem(item.tocId);
+          });
+          fragment.appendChild(btn);
+        });
+        listEl.innerHTML = '';
+        listEl.appendChild(fragment);
+      }
+
+      function openTocDrawer() {
+        if (!readerTocDrawer) return;
+        readerTocDrawer.style.display = 'flex';
+        readerTocBtn?.setAttribute('aria-expanded', 'true');
+
+        let currentTocId = null;
+        if (isScrollMode() && gyankoshScrollInstance) {
+          currentTocId = gyankoshScrollInstance.getCurrentTocId();
+        } else if (gyankoshReaderInstance) {
+          currentTocId = gyankoshReaderInstance.getCurrentTocId();
+        }
+
+        const listEl = document.getElementById('reader-toc-list');
+        if (listEl) {
+          listEl.querySelectorAll('.reader-toc-item').forEach(el => {
+            if (el.getAttribute('data-toc-id') === currentTocId) {
+              el.classList.add('is-current');
+              setTimeout(() => {
+                el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+              }, 120);
+            } else {
+              el.classList.remove('is-current');
+            }
+          });
+        }
+
+        const searchInput = document.getElementById('reader-toc-search-input');
+        if (searchInput) {
+          searchInput.value = '';
+          const clearBtn = document.getElementById('reader-toc-search-clear');
+          if (clearBtn) clearBtn.style.display = 'none';
+          renderTocList(tocItems);
+        }
+      }
+
+      function closeTocDrawer() {
+        if (!readerTocDrawer) return;
+        readerTocDrawer.style.display = 'none';
+        readerTocBtn?.setAttribute('aria-expanded', 'false');
+      }
+
+      function navigateToTocItem(tocId) {
+        closeTocDrawer();
+
+        if (isCoverScreenActive()) {
+          startReading(true);
+          setTimeout(() => performNavigation(tocId), 480);
+        } else {
+          performNavigation(tocId);
+        }
+      }
+
+      function performNavigation(tocId) {
+        if (isScrollMode() && gyankoshScrollInstance) {
+          const target = document.querySelector(`#reader-stage [data-toc-id="${tocId}"]`);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        } else if (gyankoshReaderInstance) {
+          const pageIdx = gyankoshReaderInstance.findPageForTocId(tocId);
+          if (pageIdx !== -1) {
+            const dir = pageIdx >= gyankoshReaderInstance.currentPageIndex ? 'next' : 'prev';
+            gyankoshReaderInstance.flipToPage(pageIdx, dir);
+          }
+        }
+      }
+
+      readerTocBtn?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openTocDrawer();
+      });
+
+      readerTocClose?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeTocDrawer();
+      });
+
+      readerTocBackdrop?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeTocDrawer();
+      });
+
+      // Search & Clear in TOC
+      const tocSearchInput = document.getElementById('reader-toc-search-input');
+      const tocClearBtn = document.getElementById('reader-toc-search-clear');
+
+      tocSearchInput?.addEventListener('input', (e) => {
+        const q = e.target.value.trim().toLowerCase();
+        if (tocClearBtn) tocClearBtn.style.display = q ? 'block' : 'none';
+        if (!q) {
+          renderTocList(tocItems);
+          const statsEl = document.getElementById('reader-toc-stats');
+          if (statsEl) statsEl.textContent = `कुल ${toHindiDigits(tocItems.length)} पद`;
+          return;
+        }
+
+        const filtered = tocItems.filter(item =>
+          item.badge.toLowerCase().includes(q) ||
+          item.preview.toLowerCase().includes(q) ||
+          item.fullText.toLowerCase().includes(q)
+        );
+
+        renderTocList(filtered);
+        const statsEl = document.getElementById('reader-toc-stats');
+        if (statsEl) {
+          statsEl.textContent = `${toHindiDigits(filtered.length)} पद मिले`;
+        }
+      });
+
+      tocClearBtn?.addEventListener('click', () => {
+        if (tocSearchInput) {
+          tocSearchInput.value = '';
+          tocSearchInput.focus();
+        }
+        if (tocClearBtn) tocClearBtn.style.display = 'none';
+        renderTocList(tocItems);
+        const statsEl = document.getElementById('reader-toc-stats');
+        if (statsEl) statsEl.textContent = `कुल ${toHindiDigits(tocItems.length)} पद`;
+      });
+
+      // Quick Start / End buttons
+      document.getElementById('toc-btn-goto-start')?.addEventListener('click', () => {
+        closeTocDrawer();
+        if (isCoverScreenActive()) startReading();
+        if (isScrollMode() && gyankoshScrollInstance) {
+          gyankoshScrollInstance.scrollToTop();
+        } else if (gyankoshReaderInstance) {
+          gyankoshReaderInstance.flipToPage(0, 'prev');
+        }
+      });
+
+      document.getElementById('toc-btn-goto-end')?.addEventListener('click', () => {
+        closeTocDrawer();
+        if (isCoverScreenActive()) startReading();
+        if (isScrollMode() && gyankoshScrollInstance) {
+          const vp = gyankoshScrollInstance.viewport;
+          if (vp) vp.scrollTo({ top: vp.scrollHeight, behavior: 'smooth' });
+        } else if (gyankoshReaderInstance) {
+          const lastIdx = gyankoshReaderInstance.pages.length - 1;
+          gyankoshReaderInstance.flipToPage(lastIdx, 'next');
+        }
+      });
+
+      /* ── Reading Progress Scrubber / Slider (प्रगति स्लाइडर) ── */
+      function initProgressScrubber() {
+        const container = document.getElementById('reader-scrubber-container');
+        const track = document.getElementById('reader-scrubber-track');
+        const rail = track?.querySelector('.reader-scrubber-rail');
+        const fill = document.getElementById('reader-scrubber-fill');
+        const thumb = document.getElementById('reader-scrubber-thumb');
+        const tooltip = document.getElementById('reader-scrubber-tooltip');
+        const tooltipBadge = document.getElementById('scrubber-tooltip-badge');
+        const tooltipPct = document.getElementById('scrubber-tooltip-pct');
+        const pageInfo = document.getElementById('page-info');
+
+        if (!track || !rail || !fill || !thumb) return;
+
+        let isDragging = false;
+
+        function findVerseAtPct(pct) {
+          if (!tocItems || tocItems.length === 0) {
+            return { badge: '', pct };
+          }
+          if (isScrollMode() && gyankoshScrollInstance?.viewport) {
+            const vp = gyankoshScrollInstance.viewport;
+            const scrollHeight = vp.scrollHeight - vp.clientHeight;
+            const targetTop = (pct / 100) * scrollHeight;
+            const renderedElements = document.querySelectorAll('#reader-stage [data-toc-id]');
+            let activeItem = tocItems[0];
+            for (let i = 0; i < renderedElements.length; i++) {
+              const el = renderedElements[i];
+              if (el.offsetTop <= targetTop + 80) {
+                const tocId = el.getAttribute('data-toc-id');
+                const match = tocItems.find(t => t.tocId === tocId);
+                if (match) activeItem = match;
+              }
+            }
+            return { badge: activeItem ? activeItem.badge : '', pct };
+          } else if (gyankoshReaderInstance) {
+            const total = gyankoshReaderInstance.pages.length;
+            const targetIdx = Math.min(total - 1, Math.round((pct / 100) * (total - 1)));
+            return { badge: `पृष्ठ ${toHindiDigits(targetIdx + 1)}`, pct };
+          }
+          return { badge: '', pct };
+        }
+
+        function updateScrubberVisuals(pct, showTip = true) {
+          const clamped = Math.max(0, Math.min(100, pct));
+          fill.style.width = clamped + '%';
+          thumb.style.left = clamped + '%';
+          track.setAttribute('aria-valuenow', Math.round(clamped));
+
+          if (isScrollMode() && pageInfo) {
+            pageInfo.textContent = `${toHindiDigits(Math.round(clamped))}%`;
+          }
+
+          if (showTip && tooltip && tooltipBadge && tooltipPct) {
+            const info = findVerseAtPct(clamped);
+            tooltipBadge.textContent = info.badge;
+            tooltipPct.textContent = `${toHindiDigits(Math.round(clamped))}%`;
+            tooltip.style.left = clamped + '%';
+            tooltip.style.display = 'flex';
+          }
+        }
+
+        function applyScrub(pct, smooth = false) {
+          const clamped = Math.max(0, Math.min(100, pct));
+          if (isScrollMode() && gyankoshScrollInstance?.viewport) {
+            const vp = gyankoshScrollInstance.viewport;
+            const scrollHeight = vp.scrollHeight - vp.clientHeight;
+            const targetTop = (clamped / 100) * scrollHeight;
+            if (smooth) {
+              vp.scrollTo({ top: targetTop, behavior: 'smooth' });
+            } else {
+              vp.scrollTop = targetTop;
+            }
+          } else if (gyankoshReaderInstance) {
+            const total = gyankoshReaderInstance.pages.length;
+            const targetIdx = Math.min(total - 1, Math.round((clamped / 100) * (total - 1)));
+            gyankoshReaderInstance.flipToPage(targetIdx);
+          }
+        }
+
+        function getPctFromEvent(e) {
+          const rect = rail.getBoundingClientRect();
+          const clientX = e.touches && e.touches.length > 0 ? e.touches[0].clientX : e.clientX;
+          const ratio = (clientX - rect.left) / rect.width;
+          return Math.max(0, Math.min(100, ratio * 100));
+        }
+
+        function onStart(e) {
+          if (isCoverScreenActive()) return;
+          isDragging = true;
+          window.__isGyankoshScrubbing = true;
+          track.classList.add('is-dragging');
+          const pct = getPctFromEvent(e);
+          updateScrubberVisuals(pct, true);
+          applyScrub(pct, false);
+        }
+
+        function onMove(e) {
+          if (!isDragging) return;
+          if (e.cancelable) e.preventDefault();
+          const pct = getPctFromEvent(e);
+          updateScrubberVisuals(pct, true);
+          applyScrub(pct, false);
+        }
+
+        function onEnd(e) {
+          if (!isDragging) return;
+          isDragging = false;
+          window.__isGyankoshScrubbing = false;
+          track.classList.remove('is-dragging');
+          if (tooltip) {
+            setTimeout(() => {
+              if (!isDragging) tooltip.style.display = 'none';
+            }, 800);
+          }
+        }
+
+        // Pointer / Touch / Mouse Listeners on Track
+        track.addEventListener('mousedown', (e) => {
+          onStart(e);
+          const handleMouseMove = (ev) => onMove(ev);
+          const handleMouseUp = (ev) => {
+            onEnd(ev);
+            window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('mouseup', handleMouseUp);
+          };
+          window.addEventListener('mousemove', handleMouseMove);
+          window.addEventListener('mouseup', handleMouseUp);
+        });
+
+        track.addEventListener('touchstart', (e) => {
+          onStart(e);
+        }, { passive: false });
+
+        window.addEventListener('touchmove', (e) => {
+          if (isDragging) onMove(e);
+        }, { passive: false });
+
+        window.addEventListener('touchend', (e) => {
+          if (isDragging) onEnd(e);
+        });
+
+        window.addEventListener('touchcancel', (e) => {
+          if (isDragging) onEnd(e);
+        });
+
+        // Hover tooltip on desktop
+        track.addEventListener('mouseenter', (e) => {
+          if (isCoverScreenActive() || isDragging) return;
+          const pct = getPctFromEvent(e);
+          const info = findVerseAtPct(pct);
+          if (tooltip && tooltipBadge && tooltipPct) {
+            tooltipBadge.textContent = info.badge;
+            tooltipPct.textContent = `${toHindiDigits(Math.round(pct))}%`;
+            tooltip.style.left = pct + '%';
+            tooltip.style.display = 'flex';
+          }
+        });
+
+        track.addEventListener('mousemove', (e) => {
+          if (isCoverScreenActive() || isDragging) return;
+          const pct = getPctFromEvent(e);
+          const info = findVerseAtPct(pct);
+          if (tooltip && tooltipBadge && tooltipPct) {
+            tooltipBadge.textContent = info.badge;
+            tooltipPct.textContent = `${toHindiDigits(Math.round(pct))}%`;
+            tooltip.style.left = pct + '%';
+          }
+        });
+
+        track.addEventListener('mouseleave', () => {
+          if (!isDragging && tooltip) {
+            tooltip.style.display = 'none';
+          }
+        });
+
+        // Keyboard navigation (Left / Right / Home / End)
+        track.addEventListener('keydown', (e) => {
+          if (isCoverScreenActive()) return;
+          let currentPct = parseFloat(track.getAttribute('aria-valuenow')) || 0;
+          if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+            e.preventDefault();
+            const next = Math.min(100, currentPct + 2.5);
+            updateScrubberVisuals(next, true);
+            applyScrub(next, true);
+          } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+            e.preventDefault();
+            const prev = Math.max(0, currentPct - 2.5);
+            updateScrubberVisuals(prev, true);
+            applyScrub(prev, true);
+          } else if (e.key === 'Home') {
+            e.preventDefault();
+            updateScrubberVisuals(0, true);
+            applyScrub(0, true);
+          } else if (e.key === 'End') {
+            e.preventDefault();
+            updateScrubberVisuals(100, true);
+            applyScrub(100, true);
+          }
+        });
+      }
+
+      initProgressScrubber();
+
       /* ── Info Modal Functionality (Spiritual / Historical Context) ── */
       const readerInfoBtn = document.getElementById('reader-info-btn');
       const readerInfoModal = document.getElementById('reader-info-modal');
@@ -1868,8 +2943,13 @@ const categoryHindiMap: Record<string, string> = {
       });
 
       window.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && readerInfoModal && readerInfoModal.style.display === 'flex') {
-          closeInfoModal();
+        if (e.key === 'Escape') {
+          if (readerInfoModal && readerInfoModal.style.display === 'flex') {
+            closeInfoModal();
+          }
+          if (readerTocDrawer && readerTocDrawer.style.display === 'flex') {
+            closeTocDrawer();
+          }
         }
       });
 
@@ -1939,6 +3019,391 @@ const categoryHindiMap: Record<string, string> = {
       });
 
       syncReadingModeUI();
+
+      /* ── Night / Dark Reading Mode (रात्रि पठन मोड) ── */
+      const nightModeToggle = document.getElementById('night-mode-toggle');
+      const themeToggleGroup = document.getElementById('theme-toggle-group');
+
+      function isNightMode() {
+        return ROOT.classList.contains('reader-night-mode');
+      }
+
+      function setNightMode(enable) {
+        ROOT.classList.toggle('reader-night-mode', enable);
+        document.body.classList.toggle('reader-night-mode', enable);
+
+        // Update topbar icons & aria
+        if (nightModeToggle) {
+          nightModeToggle.setAttribute('aria-pressed', enable ? 'true' : 'false');
+          nightModeToggle.title = enable ? 'दिवस मोड (ताम्रपत्र) पर लौटें' : 'रात्रि मोड — नेत्र-सुखद गहरा काष्ठ';
+          const moonIcon = nightModeToggle.querySelector('.icon-moon');
+          const sunIcon = nightModeToggle.querySelector('.icon-sun');
+          if (moonIcon) moonIcon.style.display = enable ? 'none' : 'inline-block';
+          if (sunIcon) sunIcon.style.display = enable ? 'inline-block' : 'none';
+        }
+
+        // Update settings modal theme buttons
+        const themeBtns = themeToggleGroup?.querySelectorAll('.anim-opt-btn');
+        themeBtns?.forEach((btn) => {
+          const theme = btn.getAttribute('data-theme');
+          const isActive = (enable && theme === 'night') || (!enable && theme === 'day');
+          btn.classList.toggle('active', isActive);
+          btn.setAttribute('aria-checked', isActive ? 'true' : 'false');
+        });
+
+        // Update meta theme-color
+        const themeColorMeta = document.getElementById('theme-color-meta');
+        if (themeColorMeta) {
+          themeColorMeta.setAttribute('content', enable ? '#151210' : '#8e1b14');
+        }
+
+        // Save preference
+        try {
+          const prefs = loadPrefs();
+          prefs.nightMode = enable;
+          localStorage.setItem(PREF_KEY, JSON.stringify(prefs));
+        } catch {}
+      }
+
+      function syncNightModeUI() {
+        const prefs = loadPrefs();
+        const enable = !!prefs.nightMode;
+        setNightMode(enable);
+      }
+
+      nightModeToggle?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const next = !isNightMode();
+        setNightMode(next);
+        showGyankoshToast(next ? '🌙 रात्रि पठन मोड सक्रिय' : '☀️ दिवस पठन मोड सक्रिय');
+      });
+
+      themeToggleGroup?.addEventListener('click', (e) => {
+        const btn = e.target.closest('.anim-opt-btn');
+        if (!btn) return;
+        const theme = btn.getAttribute('data-theme');
+        const enable = theme === 'night';
+        setNightMode(enable);
+        showGyankoshToast(enable ? '🌙 रात्रि पठन मोड सक्रिय' : '☀️ दिवस पठन मोड सक्रिय');
+        closeInfoModal();
+      });
+
+      syncNightModeUI();
+
+      /* ── Auto-Scroll Mode (स्वचालित पठन) ── */
+      let autoScrollActive = false;
+      let autoScrollRafId = null;
+      let autoScrollSpeed = 'slow'; // 'slow' (1x) | 'medium' (1.5x) | 'fast' (2x)
+      const autoScrollSpeedMap = { slow: 0.55, medium: 1.15, fast: 1.95 };
+      const autoScrollLabelMap = { slow: '१x', medium: '१.५x', fast: '२x' };
+
+      const btnAutoScroll = document.getElementById('btn-auto-scroll');
+      const floatingSpeedBadge = document.getElementById('autoscroll-floating-speed');
+      const speedToggleGroup = document.getElementById('autoscroll-speed-toggle-group');
+
+      function startAutoScroll() {
+        if (isCoverScreenActive()) startReading();
+        autoScrollActive = true;
+        updateAutoScrollUI(true);
+        requestScreenWakeLock();
+        showGyankoshToast(`▶ स्वचालित पठन सक्रिय (${autoScrollLabelMap[autoScrollSpeed] || '१x'} गति)`);
+
+        let lastTime = performance.now();
+        function step(now) {
+          if (!autoScrollActive) return;
+          const dt = Math.min(32, now - lastTime);
+          lastTime = now;
+
+          if (isScrollMode() && gyankoshScrollInstance?.viewport) {
+            const vp = gyankoshScrollInstance.viewport;
+            const pxPerSec = (autoScrollSpeedMap[autoScrollSpeed] || 0.55) * 60;
+            const delta = (pxPerSec * dt) / 1000;
+            vp.scrollTop += delta;
+
+            if (vp.scrollTop + vp.clientHeight >= vp.scrollHeight - 3) {
+              stopAutoScroll(false);
+              return;
+            }
+          }
+          autoScrollRafId = requestAnimationFrame(step);
+        }
+        autoScrollRafId = requestAnimationFrame(step);
+      }
+
+      function stopAutoScroll(notify = true) {
+        if (!autoScrollActive) return;
+        autoScrollActive = false;
+        if (autoScrollRafId) {
+          cancelAnimationFrame(autoScrollRafId);
+          autoScrollRafId = null;
+        }
+        updateAutoScrollUI(false);
+        if (notify) {
+          showGyankoshToast('⏸ स्वचालित पठन रोका गया');
+        }
+      }
+
+      function toggleAutoScroll() {
+        if (autoScrollActive) {
+          stopAutoScroll(true);
+        } else {
+          startAutoScroll();
+        }
+      }
+
+      function setAutoScrollSpeed(speed) {
+        autoScrollSpeed = speed;
+        try {
+          const prefs = loadPrefs();
+          prefs.autoScrollSpeed = speed;
+          localStorage.setItem(PREF_KEY, JSON.stringify(prefs));
+        } catch {}
+        syncAutoScrollSpeedUI();
+        if (autoScrollActive) {
+          showGyankoshToast(`गति: ${autoScrollLabelMap[speed] || '१x'}`);
+        }
+      }
+
+      function syncAutoScrollSpeedUI() {
+        const prefs = loadPrefs();
+        autoScrollSpeed = prefs.autoScrollSpeed || 'slow';
+        if (floatingSpeedBadge) {
+          floatingSpeedBadge.textContent = autoScrollLabelMap[autoScrollSpeed] || '१x';
+        }
+        const buttons = speedToggleGroup?.querySelectorAll('.anim-opt-btn');
+        buttons?.forEach(btn => {
+          const s = btn.getAttribute('data-speed');
+          const isActive = s === autoScrollSpeed;
+          btn.classList.toggle('active', isActive);
+          btn.setAttribute('aria-checked', isActive ? 'true' : 'false');
+        });
+      }
+
+      function updateAutoScrollUI(isActive) {
+        if (btnAutoScroll) {
+          btnAutoScroll.classList.toggle('active', isActive);
+          btnAutoScroll.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+          btnAutoScroll.title = isActive ? 'स्वचालित पठन रोकें' : 'स्वचालित पठन (हाथ-मुक्त पाठ) — आरम्भ करें';
+          const iconPlay = btnAutoScroll.querySelector('.icon-play');
+          const iconPause = btnAutoScroll.querySelector('.icon-pause');
+          if (iconPlay) iconPlay.style.display = isActive ? 'none' : 'inline-block';
+          if (iconPause) iconPause.style.display = isActive ? 'inline-block' : 'none';
+        }
+        if (floatingSpeedBadge) {
+          floatingSpeedBadge.style.display = isActive ? 'inline-flex' : 'none';
+        }
+      }
+
+      btnAutoScroll?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleAutoScroll();
+      });
+
+      floatingSpeedBadge?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const order = ['slow', 'medium', 'fast'];
+        const nextIdx = (order.indexOf(autoScrollSpeed) + 1) % order.length;
+        setAutoScrollSpeed(order[nextIdx]);
+      });
+
+      speedToggleGroup?.addEventListener('click', (e) => {
+        const btn = e.target.closest('.anim-opt-btn');
+        if (!btn) return;
+        const speed = btn.getAttribute('data-speed');
+        setAutoScrollSpeed(speed);
+      });
+
+      // Pause auto-scroll on manual touch or wheel gesture
+      const userScrollInterrupters = ['wheel', 'touchstart'];
+      userScrollInterrupters.forEach((ev) => {
+        window.addEventListener(ev, () => {
+          if (autoScrollActive && !window.__isGyankoshScrubbing) {
+            stopAutoScroll(false);
+          }
+        }, { passive: true });
+      });
+
+      // Keyboard shortcut: Shift+Space or 'p' to toggle auto-scroll
+      document.addEventListener('keydown', (e) => {
+        if (isCoverScreenActive() || e.target.matches('input, textarea, select')) return;
+        if ((e.key === 'p' || e.key === 'P') && !e.ctrlKey && !e.altKey && !e.metaKey) {
+          e.preventDefault();
+          toggleAutoScroll();
+        }
+      });
+
+      syncAutoScrollSpeedUI();
+
+      /* ── Verse Focus Setting (श्लोक ध्यान केंद्र) ── */
+      const verseFocusToggleGroup = document.getElementById('verse-focus-toggle-group');
+
+      function setVerseFocus(enable) {
+        try {
+          const prefs = loadPrefs();
+          prefs.verseFocus = enable;
+          localStorage.setItem(PREF_KEY, JSON.stringify(prefs));
+        } catch {}
+        syncVerseFocusUI();
+        if (isScrollMode() && gyankoshScrollInstance) {
+          if (enable) {
+            gyankoshScrollInstance.updateVerseFocus();
+          } else {
+            gyankoshScrollInstance.clearVerseFocus();
+          }
+        }
+        showGyankoshToast(enable ? '✨ श्लोक ध्यान केंद्र सक्रिय' : 'श्लोक ध्यान केंद्र सामान्य');
+      }
+
+      function syncVerseFocusUI() {
+        const prefs = loadPrefs();
+        const enable = prefs.verseFocus !== false;
+        const buttons = verseFocusToggleGroup?.querySelectorAll('.anim-opt-btn');
+        buttons?.forEach(btn => {
+          const mode = btn.getAttribute('data-focus');
+          const isActive = (enable && mode === 'on') || (!enable && mode === 'off');
+          btn.classList.toggle('active', isActive);
+          btn.setAttribute('aria-checked', isActive ? 'true' : 'false');
+        });
+      }
+
+      verseFocusToggleGroup?.addEventListener('click', (e) => {
+        const btn = e.target.closest('.anim-opt-btn');
+        if (!btn) return;
+        const mode = btn.getAttribute('data-focus');
+        setVerseFocus(mode === 'on');
+      });
+
+      syncVerseFocusUI();
+
+      /* ── Line-Height Setting (पंक्ति अन्तर) ── */
+      const lineHeightToggleGroup = document.getElementById('line-height-toggle-group');
+      const lineHeightMap = {
+        normal: '1.9',
+        relaxed: '2.3',
+        loose: '2.7'
+      };
+
+      function setLineHeight(level) {
+        const val = lineHeightMap[level] || '1.9';
+        ROOT.style.setProperty('--reader-line-height', val);
+        try {
+          const prefs = loadPrefs();
+          prefs.lineHeightLevel = level;
+          localStorage.setItem(PREF_KEY, JSON.stringify(prefs));
+        } catch {}
+        syncLineHeightUI();
+        if (isScrollMode() && gyankoshScrollInstance) {
+          gyankoshScrollInstance.updateVerseFocus();
+        }
+      }
+
+      function syncLineHeightUI() {
+        const prefs = loadPrefs();
+        const level = prefs.lineHeightLevel || 'normal';
+        const val = lineHeightMap[level] || '1.9';
+        ROOT.style.setProperty('--reader-line-height', val);
+
+        const buttons = lineHeightToggleGroup?.querySelectorAll('.anim-opt-btn');
+        buttons?.forEach((btn) => {
+          const l = btn.getAttribute('data-lh');
+          const isActive = l === level;
+          btn.classList.toggle('active', isActive);
+          btn.setAttribute('aria-checked', isActive ? 'true' : 'false');
+        });
+      }
+
+      lineHeightToggleGroup?.addEventListener('click', (e) => {
+        const btn = e.target.closest('.anim-opt-btn');
+        if (!btn) return;
+        const level = btn.getAttribute('data-lh');
+        setLineHeight(level);
+        showGyankoshToast(`पंक्ति अन्तर: ${btn.textContent.trim()}`);
+      });
+
+      syncLineHeightUI();
+
+      /* ── Copy Verse Action (श्लोक प्रतिलिपि) ── */
+      function copyVerseText(verseBlock) {
+        if (!verseBlock) return;
+        const lines = Array.from(verseBlock.querySelectorAll('.verse-line'));
+        let text = '';
+        if (lines.length > 0) {
+          text = lines.map(l => l.textContent.trim().replace(/\s+/g, ' ')).join('\n');
+        } else {
+          const clone = verseBlock.cloneNode(true);
+          clone.querySelectorAll('.verse-num, .verse-copy-btn').forEach(el => el.remove());
+          text = clone.textContent.trim().replace(/\s+/g, ' ');
+        }
+        if (!text) return;
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(() => {
+            showGyankoshToast('📋 श्लोक क्लिपबोर्ड में कॉपी किया गया');
+          }).catch(() => {
+            showGyankoshToast('📋 कॉपी करने में असमर्थ');
+          });
+        } else {
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          try {
+            document.execCommand('copy');
+            showGyankoshToast('📋 श्लोक क्लिपबोर्ड में कॉपी किया गया');
+          } catch {
+            showGyankoshToast('📋 कॉपी करने में असमर्थ');
+          }
+          document.body.removeChild(ta);
+        }
+      }
+
+      /* ── Cover Screen Reading Stats (पठन सांख्यिकी) ── */
+      function computeReadingStats() {
+        const rawSource = document.getElementById('reader-raw-source');
+        if (!rawSource) return;
+
+        const verses = rawSource.querySelectorAll('.verse-block');
+        const totalVerses = verses.length;
+
+        const typeCounters = {};
+        verses.forEach((v) => {
+          const t = (v.getAttribute('data-block-type') || 'verse').toLowerCase();
+          typeCounters[t] = (typeCounters[t] || 0) + 1;
+        });
+
+        // Compute words across rawSource
+        const fullText = rawSource.textContent || '';
+        const words = fullText.trim().split(/\s+/).filter(Boolean).length;
+        const estMinutes = Math.max(1, Math.round(words / 105));
+
+        const timeEl = document.getElementById('cover-stat-time');
+        const countEl = document.getElementById('cover-stat-count');
+
+        if (timeEl) {
+          timeEl.textContent = `⏱ ~${toHindiDigits(estMinutes)} मिनट पठन`;
+        }
+
+        if (countEl) {
+          const parts = [];
+          if (typeCounters.chaupai) parts.push(`${toHindiDigits(typeCounters.chaupai)} चौपाई`);
+          if (typeCounters.doha) parts.push(`${toHindiDigits(typeCounters.doha)} दोहा`);
+          if (typeCounters.shloka) parts.push(`${toHindiDigits(typeCounters.shloka)} श्लोक`);
+          if (typeCounters.mantra) parts.push(`${toHindiDigits(typeCounters.mantra)} मन्त्र`);
+          if (typeCounters.soratha) parts.push(`${toHindiDigits(typeCounters.soratha)} सोरठा`);
+
+          if (parts.length > 0) {
+            countEl.textContent = `📄 ${parts.join(', ')}`;
+          } else if (totalVerses > 0) {
+            countEl.textContent = `📄 ${toHindiDigits(totalVerses)} पद`;
+          } else {
+            countEl.style.display = 'none';
+          }
+        }
+      }
+
+      computeReadingStats();
 
       /* ── Background Screen Wake Lock (पठन के दौरान स्क्रीन ऑन रखें) ── */
       let screenWakeLock = null;
