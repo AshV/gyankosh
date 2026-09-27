@@ -1548,7 +1548,7 @@ const base = config.base || shell?.dataset.base || '';
         setupReaderInit();
       }
 
-      /* ── Sacred Temple Chime (घण्टा नाद) Synthesis via Web Audio API ── */
+      /* ── Sacred Temple Bell (मंदिर की घण्टी) Synthesis via Web Audio API ── */
       let hasChimedOnAarambh = false;
       function playTempleChime() {
         if (hasChimedOnAarambh) return;
@@ -1564,48 +1564,62 @@ const base = config.base || shell?.dataset.base || '';
 
           const now = ctx.currentTime;
           const masterGain = ctx.createGain();
-          masterGain.gain.setValueAtTime(0.28, now);
+          masterGain.gain.setValueAtTime(0.24, now);
           masterGain.connect(ctx.destination);
 
-          // Warm Low-pass filter simulating bronze acoustic resonance
+          // Dynamic filter: bright bell shimmer initially, smoothly settling into pure tone
           const filter = ctx.createBiquadFilter();
           filter.type = 'lowpass';
-          filter.frequency.setValueAtTime(3200, now);
-          filter.frequency.exponentialRampToValueAtTime(700, now + 3.2);
+          filter.frequency.setValueAtTime(6500, now);
+          filter.frequency.exponentialRampToValueAtTime(1600, now + 2.8);
           filter.connect(masterGain);
 
-          // Soft felt mallet strike transient
+          // 1. Crisp brass clapper strike transient (टंकार / tankar)
           const strikeOsc = ctx.createOscillator();
           const strikeGain = ctx.createGain();
-          strikeOsc.type = 'sine';
-          strikeOsc.frequency.setValueAtTime(140, now);
-          strikeOsc.frequency.exponentialRampToValueAtTime(50, now + 0.08);
-          strikeGain.gain.setValueAtTime(0.18, now);
-          strikeGain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+          strikeOsc.type = 'triangle';
+          strikeOsc.frequency.setValueAtTime(2800, now);
+          strikeOsc.frequency.exponentialRampToValueAtTime(450, now + 0.04);
+          strikeGain.gain.setValueAtTime(0.25, now);
+          strikeGain.gain.exponentialRampToValueAtTime(0.001, now + 0.045);
           strikeOsc.connect(strikeGain);
-          strikeGain.connect(masterGain);
+          strikeGain.connect(filter);
           strikeOsc.start(now);
-          strikeOsc.stop(now + 0.09);
+          strikeOsc.stop(now + 0.05);
 
-          // Sacred bronze bell chime harmonics (f0 = 432 Hz)
-          const modes = [
-            { mult: 1.0,   gain: 0.42, decay: 3.8, detune: 0 },
-            { mult: 1.003, gain: 0.32, decay: 3.4, detune: 1.4 },
-            { mult: 1.50,  gain: 0.22, decay: 2.4, detune: -0.8 },
-            { mult: 2.01,  gain: 0.18, decay: 1.8, detune: 1.2 },
-            { mult: 2.76,  gain: 0.12, decay: 1.3, detune: -1.5 },
-            { mult: 4.12,  gain: 0.06, decay: 0.8, detune: 1.0 },
-            { mult: 5.43,  gain: 0.03, decay: 0.5, detune: 0 }
+          // 2. High metallic ping transient (sparkling strike)
+          const pingOsc = ctx.createOscillator();
+          const pingGain = ctx.createGain();
+          pingOsc.type = 'sine';
+          pingOsc.frequency.setValueAtTime(4800, now);
+          pingGain.gain.setValueAtTime(0.12, now);
+          pingGain.gain.exponentialRampToValueAtTime(0.0005, now + 0.06);
+          pingOsc.connect(pingGain);
+          pingGain.connect(filter);
+          pingOsc.start(now);
+          pingOsc.stop(now + 0.07);
+
+          // 3. Brass Temple Bell Resonant Harmonics (f0 = 980 Hz — authentic temple ghanti pitch)
+          const f0 = 980;
+          const bellModes = [
+            { mult: 1.0,    gain: 0.45, decay: 3.2, detune: 0 },    // Pure bell fundamental
+            { mult: 1.002,  gain: 0.35, decay: 3.0, detune: 1.8 },  // Bell flutter / shimmer beating
+            { mult: 1.21,   gain: 0.28, decay: 2.2, detune: -1.0 }, // Tierce (minor 3rd harmonic)
+            { mult: 1.50,   gain: 0.20, decay: 1.8, detune: 1.5 },  // Quint (5th)
+            { mult: 2.00,   gain: 0.16, decay: 1.5, detune: 0 },    // Nominal octave
+            { mult: 2.76,   gain: 0.10, decay: 1.1, detune: -2.0 }, // Upper ring
+            { mult: 3.84,   gain: 0.06, decay: 0.8, detune: 1.0 },  // Silver sparkle
+            { mult: 5.18,   gain: 0.03, decay: 0.5, detune: 0 }     // Top bell shimmer
           ];
 
-          const f0 = 432;
-          modes.forEach((m) => {
+          bellModes.forEach((m) => {
             const osc = ctx.createOscillator();
             const g = ctx.createGain();
             osc.type = 'sine';
             osc.frequency.setValueAtTime(f0 * m.mult + m.detune, now);
             g.gain.setValueAtTime(0.0001, now);
-            g.gain.linearRampToValueAtTime(m.gain, now + 0.018);
+            // Crisp 6ms rise for clear bell attack
+            g.gain.linearRampToValueAtTime(m.gain, now + 0.006);
             g.gain.exponentialRampToValueAtTime(0.0001, now + m.decay);
             osc.connect(g);
             g.connect(filter);
@@ -1615,7 +1629,7 @@ const base = config.base || shell?.dataset.base || '';
 
           setTimeout(() => {
             try { ctx.close(); } catch {}
-          }, 4200);
+          }, 3600);
         } catch {}
       }
 
