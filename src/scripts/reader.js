@@ -1548,15 +1548,88 @@ const base = config.base || shell?.dataset.base || '';
         setupReaderInit();
       }
 
+      /* ── Sacred Temple Chime (घण्टा नाद) Synthesis via Web Audio API ── */
+      let hasChimedOnAarambh = false;
+      function playTempleChime() {
+        if (hasChimedOnAarambh) return;
+        hasChimedOnAarambh = true;
+
+        try {
+          const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+          if (!AudioContextClass) return;
+          const ctx = new AudioContextClass();
+          if (ctx.state === 'suspended') {
+            ctx.resume();
+          }
+
+          const now = ctx.currentTime;
+          const masterGain = ctx.createGain();
+          masterGain.gain.setValueAtTime(0.28, now);
+          masterGain.connect(ctx.destination);
+
+          // Warm Low-pass filter simulating bronze acoustic resonance
+          const filter = ctx.createBiquadFilter();
+          filter.type = 'lowpass';
+          filter.frequency.setValueAtTime(3200, now);
+          filter.frequency.exponentialRampToValueAtTime(700, now + 3.2);
+          filter.connect(masterGain);
+
+          // Soft felt mallet strike transient
+          const strikeOsc = ctx.createOscillator();
+          const strikeGain = ctx.createGain();
+          strikeOsc.type = 'sine';
+          strikeOsc.frequency.setValueAtTime(140, now);
+          strikeOsc.frequency.exponentialRampToValueAtTime(50, now + 0.08);
+          strikeGain.gain.setValueAtTime(0.18, now);
+          strikeGain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+          strikeOsc.connect(strikeGain);
+          strikeGain.connect(masterGain);
+          strikeOsc.start(now);
+          strikeOsc.stop(now + 0.09);
+
+          // Sacred bronze bell chime harmonics (f0 = 432 Hz)
+          const modes = [
+            { mult: 1.0,   gain: 0.42, decay: 3.8, detune: 0 },
+            { mult: 1.003, gain: 0.32, decay: 3.4, detune: 1.4 },
+            { mult: 1.50,  gain: 0.22, decay: 2.4, detune: -0.8 },
+            { mult: 2.01,  gain: 0.18, decay: 1.8, detune: 1.2 },
+            { mult: 2.76,  gain: 0.12, decay: 1.3, detune: -1.5 },
+            { mult: 4.12,  gain: 0.06, decay: 0.8, detune: 1.0 },
+            { mult: 5.43,  gain: 0.03, decay: 0.5, detune: 0 }
+          ];
+
+          const f0 = 432;
+          modes.forEach((m) => {
+            const osc = ctx.createOscillator();
+            const g = ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(f0 * m.mult + m.detune, now);
+            g.gain.setValueAtTime(0.0001, now);
+            g.gain.linearRampToValueAtTime(m.gain, now + 0.018);
+            g.gain.exponentialRampToValueAtTime(0.0001, now + m.decay);
+            osc.connect(g);
+            g.connect(filter);
+            osc.start(now);
+            osc.stop(now + m.decay + 0.1);
+          });
+
+          setTimeout(() => {
+            try { ctx.close(); } catch {}
+          }, 4200);
+        } catch {}
+      }
+
       btnAarambh?.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
+        playTempleChime();
         startReading();
       });
 
       btnAarambh?.addEventListener('touchend', (e) => {
         e.preventDefault();
         e.stopPropagation();
+        playTempleChime();
         startReading();
       });
 
