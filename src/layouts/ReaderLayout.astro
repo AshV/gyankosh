@@ -734,4 +734,44 @@ const ogImage = image || (coverImage
     </script>
     <script src="../scripts/reader.js"></script>
   </body>
+    <script is:inline>
+      document.addEventListener('DOMContentLoaded', () => {
+        const viewport = document.getElementById('reader-viewport');
+        const topbar = document.querySelector('.reader-topbar');
+        const bottombar = document.querySelector('.reader-bottombar');
+        
+        if (viewport && topbar && bottombar) {
+          let lastScrollY = viewport.scrollTop;
+          
+          viewport.addEventListener('scroll', () => {
+            if (!document.documentElement.classList.contains('reader-scroll-mode')) return;
+            
+            const currentScrollY = viewport.scrollTop;
+            if (currentScrollY > lastScrollY && currentScrollY > 60) {
+              // Scrolling down
+              topbar.style.transform = 'translateY(-100%)';
+              bottombar.style.transform = 'translateY(100%)';
+            } else {
+              // Scrolling up
+              topbar.style.transform = 'translateY(0)';
+              bottombar.style.transform = 'translateY(0)';
+            }
+            lastScrollY = currentScrollY;
+          });
+          
+          // Allow tapping center of viewport to toggle toolbars in both modes
+          viewport.addEventListener('click', (e) => {
+            // Only if clicked on an empty area, not on buttons or links
+            if (e.target.closest('button, a, .topbar-actions, .bottombar-actions')) return;
+            
+            // Toggle logic
+            const isHidden = topbar.style.transform === 'translateY(-100%)';
+            if (isHidden) {
+              topbar.style.transform = 'translateY(0)';
+              bottombar.style.transform = 'translateY(0)';
+            }
+          });
+        }
+      });
+    </script>
 </html>

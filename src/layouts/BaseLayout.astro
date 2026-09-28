@@ -57,6 +57,17 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <!-- RSS Feed Autodiscovery -->
     <link rel="alternate" type="application/rss+xml" title="ज्ञानकोश RSS" href={`${base}/rss.xml`} />
 
+    <!-- Restore theme preference immediately before paint -->
+    <script is:inline>
+      (function () {
+        var prefs = {};
+        try { prefs = JSON.parse(localStorage.getItem('gyankosh_prefs') || '{}'); } catch(e) {}
+        if (prefs.nightMode) {
+          document.documentElement.classList.add('reader-night-mode');
+        }
+      })();
+    </script>
+
 
     <!-- SEO Component -->
     <SEO
@@ -110,6 +121,18 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             <span class="action-btn-icon" aria-hidden="true">📖</span>
             <span class="action-btn-text">परिचय</span>
           </a>
+
+          <!-- Theme Toggle -->
+          <button
+            type="button"
+            id="global-theme-toggle"
+            class="header-action-btn"
+            aria-label="थीम बदलें"
+            title="दिवस/रात्रि मोड"
+          >
+            <span class="action-btn-icon" aria-hidden="true" id="global-theme-icon">🌙</span>
+            <span class="action-btn-text sr-only">थीम</span>
+          </button>
 
           <!-- Share Page Button -->
           <button
@@ -279,6 +302,28 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       // Header Search Button Trigger
       document.getElementById('header-search-trigger')?.addEventListener('click', () => {
         window.dispatchEvent(new CustomEvent('gyankosh:open-search'));
+      });
+
+      // Global Theme Toggle
+      const themeToggle = document.getElementById('global-theme-toggle');
+      const themeIcon = document.getElementById('global-theme-icon');
+      
+      function updateThemeIcon() {
+        if (themeIcon) {
+          const isNight = document.documentElement.classList.contains('reader-night-mode');
+          themeIcon.textContent = isNight ? '☀️' : '🌙';
+        }
+      }
+      updateThemeIcon();
+
+      themeToggle?.addEventListener('click', () => {
+        let prefs = {};
+        try { prefs = JSON.parse(localStorage.getItem('gyankosh_prefs') || '{}'); } catch(e) {}
+        
+        const isNight = document.documentElement.classList.toggle('reader-night-mode');
+        prefs.nightMode = isNight;
+        localStorage.setItem('gyankosh_prefs', JSON.stringify(prefs));
+        updateThemeIcon();
       });
 
       // Header Share Page Button (Shares current page with title and description)

@@ -78,6 +78,7 @@ html.is-fullscreen .reader-viewport,
   z-index: 50;
   gap: var(--space-sm);
   box-shadow: 0 1px 4px rgba(142, 27, 20, 0.08);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .reader-topbar .back-link {
@@ -1025,6 +1026,7 @@ body.chanting-mode .verse-translation {
   z-index: 50;
   gap: var(--space-xs);
   box-shadow: 0 -1px 4px rgba(142, 27, 20, 0.08);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ─── Cover Screen Inactive View State ─── */
@@ -2623,3 +2625,23 @@ html.reader-night-mode .autoscroll-speed-badge:hover {
   color: #fffdf7;
 }
 
+/* ─── Mobile UI Improvements (Header Actions & Touch Targets) ───────── */
+@media (max-width: 600px) {
+  /* Increase touch targets for icons on mobile */
+  .icon-btn {
+    min-width: 40px;
+    min-height: 40px;
+  }
+  
+  /* Hide less critical actions on mobile to prevent overcrowding */
+  #reader-share-btn,
+  #fullscreen-toggle,
+  #reader-save-btn {
+    display: none !important;
+  }
+  
+  /* Increase gap for better touch separation */
+  .reader-topbar .topbar-actions {
+    gap: 0.45rem;
+  }
+}
