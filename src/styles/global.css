@@ -404,16 +404,33 @@ a:hover { opacity: 0.8; }
   color: var(--color-accent);
 }
 
-/* ─── Scroll Reveal Anim ─────────────────────────────────── */
+/* ─── Book Card Grid Item & Performance Containment ──────── */
 .book-card-wrapper {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 1;
+  transform: none;
+  content-visibility: auto;
+  contain-intrinsic-size: 280px 360px;
 }
 
-.book-card-wrapper.visible {
+/* Progressive enhancement: gentle reveal only when JavaScript initializes and motion is allowed */
+html.has-js .book-card-wrapper.will-reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html.has-js .book-card-wrapper.will-reveal.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .book-card-wrapper,
+  html.has-js .book-card-wrapper.will-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
 }
 
 

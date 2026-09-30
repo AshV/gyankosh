@@ -89,40 +89,39 @@ const base = config.base || shell?.dataset.base || '';
 
           if (childElements.length === 0) return;
 
-          // Available width for verse text (accounting for compact page padding and verse margin)
-          const stageWidth = this.stage.clientWidth || window.innerWidth;
+          // Stacking optimization: Mobile stacks automatically via CSS media query (@media max-width: 640px)
+          // For desktop, measure using a single off-screen scratch element instead of thousands of body append/removes
           const isMobile = window.innerWidth <= 640;
-          const horizontalOffset = isMobile ? 35 : 55;
-          const availableTextWidth = Math.max(120, stageWidth - horizontalOffset);
+          if (!isMobile) {
+            const stageWidth = this.stage.clientWidth || window.innerWidth;
+            const availableTextWidth = Math.max(120, stageWidth - 55);
+            const scratch = document.createElement('div');
+            scratch.style.cssText = 'position:absolute; visibility:hidden; left:-9999px; top:-9999px; width:max-content; display:inline-flex; flex-wrap:nowrap; column-gap:0.35em; font-family:var(--reader-font-family); font-size:var(--reader-font-size); line-height:var(--reader-line-height);';
+            document.body.appendChild(scratch);
 
-          // Evaluate stacking strictly verse-by-verse
-          childElements.forEach((node) => {
-            if (node.classList.contains('verse-block')) {
-              const lines = node.querySelectorAll('.verse-line');
-              let verseNeedsStacking = false;
-
-              lines.forEach((line) => {
-                const padas = line.querySelectorAll('.pada');
-                if (padas.length > 1) {
-                  const clone = line.cloneNode(true);
-                  clone.style.cssText = 'position:absolute; visibility:hidden; display:inline-flex; flex-wrap:nowrap; width:max-content; column-gap:0.35em; font-family:var(--reader-font-family); font-size:var(--reader-font-size); line-height:var(--reader-line-height);';
-                  document.body.appendChild(clone);
-                  const neededWidth = clone.offsetWidth;
-                  document.body.removeChild(clone);
-
-                  if (neededWidth > availableTextWidth) {
-                    verseNeedsStacking = true;
+            childElements.forEach((node) => {
+              if (node.classList.contains('verse-block')) {
+                const lines = node.querySelectorAll('.verse-line');
+                let verseNeedsStacking = false;
+                for (let li = 0; li < lines.length; li++) {
+                  const line = lines[li];
+                  if (line.children.length > 1) {
+                    scratch.textContent = line.textContent;
+                    if (scratch.offsetWidth > availableTextWidth) {
+                      verseNeedsStacking = true;
+                      break;
+                    }
                   }
                 }
-              });
-
-              if (verseNeedsStacking) {
-                node.classList.add('verse--stacked');
-              } else {
-                node.classList.remove('verse--stacked');
+                if (verseNeedsStacking) {
+                  node.classList.add('verse--stacked');
+                } else {
+                  node.classList.remove('verse--stacked');
+                }
               }
-            }
-          });
+            });
+            document.body.removeChild(scratch);
+          }
 
           // Measurement box
           const measureBox = document.createElement('div');
@@ -792,36 +791,38 @@ const base = config.base || shell?.dataset.base || '';
 
           if (childElements.length === 0) return;
 
-          // Evaluate verse stacking (same as flip engine)
-          const stageWidth = this.stage.clientWidth || window.innerWidth;
+          // Stacking optimization: Mobile stacks automatically via CSS media query (@media max-width: 640px)
           const isMobile = window.innerWidth <= 640;
-          const horizontalOffset = isMobile ? 35 : 55;
-          const availableTextWidth = Math.max(120, stageWidth - horizontalOffset);
+          if (!isMobile) {
+            const stageWidth = this.stage.clientWidth || window.innerWidth;
+            const availableTextWidth = Math.max(120, stageWidth - 55);
+            const scratch = document.createElement('div');
+            scratch.style.cssText = 'position:absolute; visibility:hidden; left:-9999px; top:-9999px; width:max-content; display:inline-flex; flex-wrap:nowrap; column-gap:0.35em; font-family:var(--reader-font-family); font-size:var(--reader-font-size); line-height:var(--reader-line-height);';
+            document.body.appendChild(scratch);
 
-          childElements.forEach((node) => {
-            if (node.classList.contains('verse-block')) {
-              const lines = node.querySelectorAll('.verse-line');
-              let verseNeedsStacking = false;
-              lines.forEach((line) => {
-                const padas = line.querySelectorAll('.pada');
-                if (padas.length > 1) {
-                  const clone = line.cloneNode(true);
-                  clone.style.cssText = 'position:absolute; visibility:hidden; display:inline-flex; flex-wrap:nowrap; width:max-content; column-gap:0.35em; font-family:var(--reader-font-family); font-size:var(--reader-font-size); line-height:var(--reader-line-height);';
-                  document.body.appendChild(clone);
-                  const neededWidth = clone.offsetWidth;
-                  document.body.removeChild(clone);
-                  if (neededWidth > availableTextWidth) {
-                    verseNeedsStacking = true;
+            childElements.forEach((node) => {
+              if (node.classList.contains('verse-block')) {
+                const lines = node.querySelectorAll('.verse-line');
+                let verseNeedsStacking = false;
+                for (let li = 0; li < lines.length; li++) {
+                  const line = lines[li];
+                  if (line.children.length > 1) {
+                    scratch.textContent = line.textContent;
+                    if (scratch.offsetWidth > availableTextWidth) {
+                      verseNeedsStacking = true;
+                      break;
+                    }
                   }
                 }
-              });
-              if (verseNeedsStacking) {
-                node.classList.add('verse--stacked');
-              } else {
-                node.classList.remove('verse--stacked');
+                if (verseNeedsStacking) {
+                  node.classList.add('verse--stacked');
+                } else {
+                  node.classList.remove('verse--stacked');
+                }
               }
-            }
-          });
+            });
+            document.body.removeChild(scratch);
+          }
 
           // Wrap everything in a single page div (scroll is continuous)
           const pageDiv = document.createElement('div');
@@ -907,11 +908,9 @@ const base = config.base || shell?.dataset.base || '';
           this.updateScrollUI();
           this.setupEntryAnimations(contentWrap);
           this.setupCompletionObserver();
-          // Win 5: Cache verse blocks after build — avoids querySelectorAll on every focus update
+          // Cache verse blocks and initialize native focus observer
           this._verseBlocks = Array.from(this.stage.querySelectorAll('.verse-block'));
-          requestAnimationFrame(() => {
-            this.updateVerseFocus();
-          });
+          this.setupVerseFocusObserver();
         }
 
         setupScrollEvents() {
@@ -1004,7 +1003,6 @@ const base = config.base || shell?.dataset.base || '';
           }
 
           this.updateNavBtns(pct);
-          this.updateVerseFocus();
 
           // Debounce save
           clearTimeout(this._scrollSaveTimer);
@@ -1174,52 +1172,51 @@ const base = config.base || shell?.dataset.base || '';
           }
         }
 
-        updateVerseFocus() {
+        setupVerseFocusObserver() {
+          if (this._focusObserver) {
+            this._focusObserver.disconnect();
+            this._focusObserver = null;
+          }
           if (!this.viewport || !this.isVerseFocusEnabled()) {
             this.clearVerseFocus();
             return;
           }
-          const vp = this.viewport;
-          const vpRect = vp.getBoundingClientRect();
-          if (vpRect.height === 0) return;
-          const targetY = vpRect.top + (vpRect.height * 0.35);
 
-          // Fix 1: Early-exit cache — skip full scan if current focused verse still covers target
-          if (this._currentFocusedVerse) {
-            const cr = this._currentFocusedVerse.getBoundingClientRect();
-            if (cr.top <= targetY && cr.bottom >= targetY) return;
-          }
-
-          // Win 5: Use cached verse list; fall back to DOM query if cache is stale
           const verses = this._verseBlocks?.length
             ? this._verseBlocks
             : Array.from(this.stage?.querySelectorAll('.verse-block') || []);
           if (!verses || verses.length === 0) return;
 
-          let closestVerse = null;
-          let minDistance = Infinity;
+          this._focusObserver = new IntersectionObserver((entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                const target = entry.target;
+                if (this._currentFocusedVerse !== target) {
+                  if (this._currentFocusedVerse) {
+                    this._currentFocusedVerse.classList.remove('verse-block--focused');
+                  }
+                  target.classList.add('verse-block--focused');
+                  this._currentFocusedVerse = target;
+                }
+                break;
+              }
+            }
+          }, {
+            root: this.viewport,
+            rootMargin: '-25% 0px -65% 0px',
+            threshold: 0,
+          });
 
-          for (let i = 0; i < verses.length; i++) {
-            const v = verses[i];
-            const r = v.getBoundingClientRect();
-            if (r.top <= targetY && r.bottom >= targetY) {
-              closestVerse = v;
-              break;
-            }
-            const vCenter = (r.top + r.bottom) / 2;
-            const dist = Math.abs(vCenter - targetY);
-            if (dist < minDistance) {
-              minDistance = dist;
-              closestVerse = v;
-            }
+          verses.forEach(v => this._focusObserver.observe(v));
+        }
+
+        updateVerseFocus() {
+          if (!this.isVerseFocusEnabled()) {
+            this.clearVerseFocus();
+            return;
           }
-
-          if (closestVerse && closestVerse !== this._currentFocusedVerse) {
-            if (this._currentFocusedVerse) {
-              this._currentFocusedVerse.classList.remove('verse-block--focused');
-            }
-            closestVerse.classList.add('verse-block--focused');
-            this._currentFocusedVerse = closestVerse;
+          if (!this._focusObserver) {
+            this.setupVerseFocusObserver();
           }
         }
 
@@ -1276,9 +1273,11 @@ const base = config.base || shell?.dataset.base || '';
           const blocks = wrap.querySelectorAll('.verse-block, .speaker-block, .instruction-block, .translation-block');
           if (!blocks || blocks.length === 0) return;
 
-          const vp = this.viewport;
-          const vpRect = vp ? vp.getBoundingClientRect() : null;
-          const cutoffY = vpRect && vpRect.height > 0 ? (vpRect.bottom + 80) : (window.innerHeight + 80);
+          // If lite mode or low memory device, reveal all immediately with no animation overhead
+          if (isLiteMode() || evaluateDeviceCapability()) {
+            blocks.forEach(b => b.classList.add('verse-revealed'));
+            return;
+          }
 
           const observer = new IntersectionObserver((entries, obs) => {
             entries.forEach(entry => {
@@ -1288,14 +1287,14 @@ const base = config.base || shell?.dataset.base || '';
               }
             });
           }, {
-            root: vp || null,
+            root: this.viewport || null,
             threshold: 0.05,
             rootMargin: '0px 0px 80px 0px'
           });
 
-          blocks.forEach(block => {
-            const r = block.getBoundingClientRect();
-            if (r.top < cutoffY) {
+          // First 12 blocks reveal immediately on start; remaining blocks are observed without layout reflows
+          blocks.forEach((block, idx) => {
+            if (idx < 12) {
               block.classList.add('verse-revealed');
             } else {
               block.classList.add('verse-reveal');
@@ -1938,8 +1937,6 @@ const base = config.base || shell?.dataset.base || '';
         if (statsEl) {
           statsEl.textContent = `कुल ${toHindiDigits(tocItems.length)} पद`;
         }
-
-        renderTocList(tocItems);
       }
 
       function renderTocList(items) {
@@ -1972,8 +1969,14 @@ const base = config.base || shell?.dataset.base || '';
         listEl.appendChild(fragment);
       }
 
+      let tocRendered = false;
+
       function openTocDrawer() {
         if (!readerTocDrawer) return;
+        if (!tocRendered) {
+          renderTocList(tocItems);
+          tocRendered = true;
+        }
         readerTocDrawer.style.display = 'flex';
         readerTocBtn?.setAttribute('aria-expanded', 'true');
 
@@ -2787,10 +2790,18 @@ const base = config.base || shell?.dataset.base || '';
           typeCounters[t] = (typeCounters[t] || 0) + 1;
         });
 
-        // Compute words across rawSource
-        const fullText = rawSource.textContent || '';
-        const words = fullText.trim().split(/\s+/).filter(Boolean).length;
-        const estMinutes = Math.max(1, Math.round(words / 105));
+        // Fast zero-allocation word counter
+        let wordCount = 0;
+        let inWord = false;
+        for (let wi = 0; wi < fullText.length; wi++) {
+          const code = fullText.charCodeAt(wi);
+          if (code > 32) {
+            if (!inWord) { wordCount++; inWord = true; }
+          } else {
+            inWord = false;
+          }
+        }
+        const estMinutes = Math.max(1, Math.round(wordCount / 105));
 
         const timeEl = document.getElementById('cover-stat-time');
         const countEl = document.getElementById('cover-stat-count');

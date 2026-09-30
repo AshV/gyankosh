@@ -170,6 +170,7 @@ const jsonLd = {
           <div
             role="listitem"
             class="book-card-wrapper"
+            data-slug={text.id}
             data-category={text.data.category}
           >
             <BookCard
@@ -304,30 +305,40 @@ const jsonLd = {
   document.addEventListener("DOMContentLoaded", () => {
     refreshGyankoshSavedShelf();
 
+    document.documentElement.classList.add("has-js");
+
     const bookWrappers = document.querySelectorAll(
-      ".book-card-wrapper",
+      "#book-grid .book-card-wrapper",
     ) as NodeListOf<HTMLElement>;
 
-    // Scroll reveal animation using IntersectionObserver
-    const revealObserver = new IntersectionObserver(
-      (entries, observer) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      {
-        root: null,
-        rootMargin: "0px 0px -50px 0px",
-        threshold: 0.1,
-      },
-    );
+    const prefersReducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    bookWrappers.forEach((wrapper) => {
-      revealObserver.observe(wrapper);
-    });
+    // Only apply progressive reveal if motion is enabled
+    if (!prefersReducedMotion && bookWrappers.length > 0) {
+      const revealObserver = new IntersectionObserver(
+        (entries, observer) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          root: null,
+          rootMargin: "0px 0px 80px 0px",
+          threshold: 0.05,
+        },
+      );
+
+      // Keep first 12 cards visible immediately; gently reveal subsequent cards
+      bookWrappers.forEach((wrapper, index) => {
+        if (index >= 12) {
+          wrapper.classList.add("will-reveal");
+          revealObserver.observe(wrapper);
+        }
+      });
+    }
 
     // Check URL query on initial load (?q=...) and open header search modal
     const initialQ = new URLSearchParams(window.location.search).get("q");

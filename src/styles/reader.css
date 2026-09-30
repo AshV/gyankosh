@@ -784,6 +784,22 @@ html.reader-lite-mode .reader-page.flip-turn-backward-exit {
   row-gap: 0.2rem;
 }
 
+@media (max-width: 640px) {
+  .verse-block .verse-line {
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: 0.2rem;
+  }
+}
+
+/* Native Virtualization for Continuous Scroll Reader on Long Scriptures */
+.reader-scroll-mode .verse-block,
+.reader-scroll-mode .translation-block,
+.reader-scroll-mode .instruction-block {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 90px;
+}
+
 /* Verse Blocks */
 .verse-block {
   position: relative;
@@ -831,7 +847,6 @@ html.reader-lite-mode .reader-page.flip-turn-backward-exit {
   opacity: 0.2;
   transform: translateY(12px);
   transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
 }
 
 .verse-reveal.verse-revealed {

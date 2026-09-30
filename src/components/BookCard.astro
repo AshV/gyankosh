@@ -301,24 +301,34 @@ const resolvedJpgImage = resolvedCoverImage.endsWith('.webp')
     });
   }
 
-  // Populate reading progress badges from localStorage (runs client-side)
+  // Populate reading progress badges from localStorage in a single batch pass
   function updateProgressBadges() {
     const badges = document.querySelectorAll<HTMLElement>('[data-progress-badge]');
+    if (!badges.length) return;
+
+    const progressMap = new Map<string, any>();
+    try {
+      for (let i = 0; i < localStorage.length; i++) {
+        const k = localStorage.key(i);
+        if (k && k.startsWith('gyankosh_progress_')) {
+          const s = k.replace('gyankosh_progress_', '');
+          try {
+            progressMap.set(s, JSON.parse(localStorage.getItem(k) || '{}'));
+          } catch {}
+        }
+      }
+    } catch {}
+
     badges.forEach(badge => {
-      const slug = badge.dataset.progressBadge!;
-      const key = `gyankosh_progress_${slug}`;
-      const saved = localStorage.getItem(key);
-      if (saved) {
-        try {
-          const data = JSON.parse(saved);
-          if (data.isCompleted || data.percent >= 99.5) {
-            badge.style.display = 'none';
-          } else if (data.percent && data.percent > 2) {
-            badge.style.display = 'flex';
-            const label = badge.querySelector('.progress-label');
-            if (label) label.textContent = `${toHindiDigits(Math.round(data.percent))}% पठित`;
-          }
-        } catch {}
+      const slug = badge.dataset.progressBadge;
+      if (!slug || !progressMap.has(slug)) return;
+      const data = progressMap.get(slug);
+      if (data && (data.isCompleted || data.percent >= 99.5)) {
+        badge.style.display = 'none';
+      } else if (data && data.percent && data.percent > 2) {
+        badge.style.display = 'flex';
+        const label = badge.querySelector('.progress-label');
+        if (label) label.textContent = `${toHindiDigits(Math.round(data.percent))}% पठित`;
       }
     });
   }

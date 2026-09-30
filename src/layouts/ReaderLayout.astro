@@ -95,9 +95,6 @@ const ogImage = image || (coverImage
     <link rel="shortcut icon" href={`${base}/favicon.ico`} />
     <link rel="apple-touch-icon" sizes="180x180" href={`${base}/apple-touch-icon.png`} />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
     <SEO
       title={seoTitle || title}
       description={description}
@@ -742,22 +739,27 @@ const ogImage = image || (coverImage
         
         if (viewport && topbar && bottombar) {
           let lastScrollY = viewport.scrollTop;
+          let scrollRaf = null;
           
           viewport.addEventListener('scroll', () => {
             if (!document.documentElement.classList.contains('reader-scroll-mode')) return;
-            
-            const currentScrollY = viewport.scrollTop;
-            if (currentScrollY > lastScrollY && currentScrollY > 60) {
-              // Scrolling down
-              topbar.style.transform = 'translateY(-100%)';
-              bottombar.style.transform = 'translateY(100%)';
-            } else {
-              // Scrolling up
-              topbar.style.transform = 'translateY(0)';
-              bottombar.style.transform = 'translateY(0)';
-            }
-            lastScrollY = currentScrollY;
-          });
+            if (scrollRaf) return;
+
+            scrollRaf = requestAnimationFrame(() => {
+              scrollRaf = null;
+              const currentScrollY = viewport.scrollTop;
+              if (currentScrollY > lastScrollY && currentScrollY > 60) {
+                // Scrolling down
+                topbar.style.transform = 'translateY(-100%)';
+                bottombar.style.transform = 'translateY(100%)';
+              } else {
+                // Scrolling up
+                topbar.style.transform = 'translateY(0)';
+                bottombar.style.transform = 'translateY(0)';
+              }
+              lastScrollY = currentScrollY;
+            });
+          }, { passive: true });
           
           // Allow tapping center of viewport to toggle toolbars in both modes
           viewport.addEventListener('click', (e) => {
