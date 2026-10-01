@@ -880,39 +880,34 @@ html.has-js .book-card-wrapper.will-reveal.visible {
 .header-search-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
+  justify-content: center;
   background: var(--color-bg-card);
   border: 1px solid var(--color-border-subtle);
   color: var(--color-text-muted);
-  padding: 0.35rem 0.75rem;
+  padding: 0.38rem 0.62rem;
+  min-width: 36px;
+  height: 34px;
   border-radius: var(--radius-pill);
-  font-family: var(--font-devanagari);
-  font-size: 0.9rem;
-  font-weight: 600;
   cursor: pointer;
   transition: all var(--transition-fast);
   box-shadow: 0 1px 3px rgba(70, 50, 30, 0.04);
+  line-height: 1;
 }
 
 .header-search-btn:hover {
   border-color: var(--color-accent);
   color: var(--color-accent);
   background: var(--color-accent-soft);
+  transform: translateY(-1px);
+}
+
+.header-search-btn:active {
+  transform: scale(0.96);
 }
 
 .header-search-btn .search-btn-icon {
-  font-size: 0.9rem;
-}
-
-.header-search-btn .search-btn-kbd {
-  font-family: var(--font-ui);
-  font-size: 0.75rem;
-  font-weight: 700;
-  background: rgba(70, 50, 30, 0.08);
-  color: var(--color-text-faint);
-  padding: 1px 5px;
-  border-radius: 4px;
-  border: 1px solid var(--color-border-subtle);
+  display: block;
+  flex-shrink: 0;
 }
 
 /* ─── Header Quick Action Buttons (Parichay & Share) ─────── */
@@ -1367,8 +1362,9 @@ body.modal-open {
 }
 
 @media (max-width: 640px) {
-  .header-search-btn .search-btn-kbd {
-    display: none;
+  .header-search-btn {
+    padding: 0.38rem 0.52rem;
+    min-width: 34px;
   }
   .header-action-btn .action-btn-text {
     display: none;
