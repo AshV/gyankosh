@@ -1468,11 +1468,15 @@ const base = config.base || shell?.dataset.base || '';
           const prefs = loadPrefs();
           localStorage.setItem(PREF_KEY, JSON.stringify({ ...prefs, fontSize: next }));
         } catch {}
-        if (isScrollMode()) {
-          gyankoshScrollInstance?.rebuild();
-        } else {
-          gyankoshReaderInstance?.buildPages();
-        }
+        if (window.GyankoshLoader) window.GyankoshLoader.show('पृष्ठ पुनर्गठित हो रहे हैं...', 120);
+        setTimeout(() => {
+          if (isScrollMode()) {
+            gyankoshScrollInstance?.rebuild();
+          } else {
+            gyankoshReaderInstance?.buildPages();
+          }
+          if (window.GyankoshLoader) window.GyankoshLoader.hide();
+        }, 20);
       }
 
       document.getElementById('font-decrease')?.addEventListener('click', (e) => {
@@ -1493,6 +1497,10 @@ const base = config.base || shell?.dataset.base || '';
       function startReading(skipRestore = false) {
         if (isStartingReading) return;
         isStartingReading = true;
+        if (window.GyankoshLoader) {
+          window.GyankoshLoader.show('पाठ तैयार हो रहा है...', 80);
+        }
+        btnAarambh?.classList.add('btn-loading');
         document.querySelector('.reader-shell')?.classList.remove('has-cover-screen');
         document.body.classList.remove('has-cover-screen');
         if (coverScreen) {
@@ -1517,6 +1525,8 @@ const base = config.base || shell?.dataset.base || '';
             }
             gyankoshScrollInstance?.setupEntryAnimations();
             gyankoshScrollInstance?.updateVerseFocus();
+            if (window.GyankoshLoader) window.GyankoshLoader.hide();
+            btnAarambh?.classList.remove('btn-loading');
           };
           setTimeout(onCoverDismissed, 460);
         } else {
@@ -1525,6 +1535,10 @@ const base = config.base || shell?.dataset.base || '';
           } else {
             gyankoshReaderInstance.buildPages();
           }
+          setTimeout(() => {
+            if (window.GyankoshLoader) window.GyankoshLoader.hide();
+            btnAarambh?.classList.remove('btn-loading');
+          }, 460);
         }
         resetWakeLockActivityTimer();
       }
@@ -1990,8 +2004,10 @@ const base = config.base || shell?.dataset.base || '';
       function openTocDrawer() {
         if (!readerTocDrawer) return;
         if (!tocRendered) {
+          if (window.GyankoshLoader) window.GyankoshLoader.show('विषय-सूची तैयार हो रही है...', 70);
           renderTocList(tocItems);
           tocRendered = true;
+          if (window.GyankoshLoader) window.GyankoshLoader.hide();
         }
         readerTocDrawer.style.display = 'flex';
         readerTocBtn?.setAttribute('aria-expanded', 'true');
@@ -2034,6 +2050,9 @@ const base = config.base || shell?.dataset.base || '';
 
       function navigateToTocItem(tocId) {
         closeTocDrawer();
+        if (window.GyankoshLoader) {
+          window.GyankoshLoader.show('अध्याय पर ले जाया जा रहा है...', 80);
+        }
 
         if (isCoverScreenActive()) {
           startReading(true);
@@ -2049,12 +2068,16 @@ const base = config.base || shell?.dataset.base || '';
           if (target) {
             target.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }
+          setTimeout(() => { if (window.GyankoshLoader) window.GyankoshLoader.hide(); }, 240);
         } else if (gyankoshReaderInstance) {
           const pageIdx = gyankoshReaderInstance.findPageForTocId(tocId);
           if (pageIdx !== -1) {
             const dir = pageIdx >= gyankoshReaderInstance.currentPageIndex ? 'next' : 'prev';
             gyankoshReaderInstance.flipToPage(pageIdx, dir);
           }
+          setTimeout(() => { if (window.GyankoshLoader) window.GyankoshLoader.hide(); }, 240);
+        } else {
+          if (window.GyankoshLoader) window.GyankoshLoader.hide();
         }
       }
 
@@ -2411,6 +2434,10 @@ const base = config.base || shell?.dataset.base || '';
           localStorage.setItem(PREF_KEY, JSON.stringify(prefs));
         } catch {}
 
+        if (window.GyankoshLoader) {
+          window.GyankoshLoader.show('पठन शैली बदल रही है...', 60);
+        }
+
         // Apply mode classes
         if (mode === 'scroll') {
           ROOT.classList.add('reader-scroll-mode');
@@ -2424,7 +2451,8 @@ const base = config.base || shell?.dataset.base || '';
               gyankoshScrollInstance = new GyankoshScrollReader();
               gyankoshScrollInstance.restoreScrollPosition();
             }
-          }, 50);
+            if (window.GyankoshLoader) window.GyankoshLoader.hide();
+          }, 60);
         } else {
           ROOT.classList.remove('reader-scroll-mode');
           if (mode === 'lite') {
@@ -2441,7 +2469,8 @@ const base = config.base || shell?.dataset.base || '';
             if (!isCoverScreenActive()) {
               gyankoshReaderInstance = new GyankoshReader();
             }
-          }, 50);
+            if (window.GyankoshLoader) window.GyankoshLoader.hide();
+          }, 60);
         }
         syncReadingModeUI();
         closeInfoModal();

@@ -168,7 +168,13 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
     if (catalog.length === 0) {
       if (statsText) statsText.textContent = 'सूची लोड हो रही है...';
+      if (typeof (window as any).GyankoshLoader !== 'undefined') {
+        (window as any).GyankoshLoader.show('ग्रंथ सूची लोड हो रही है...', 90);
+      }
       await fetchCatalog();
+      if (typeof (window as any).GyankoshLoader !== 'undefined') {
+        (window as any).GyankoshLoader.hide();
+      }
     }
 
     performSearch(searchInput?.value || '');
@@ -348,6 +354,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         if (selectedIndex >= 0 && currentResults[selectedIndex]) {
           e.preventDefault();
           const targetSlug = currentResults[selectedIndex].slug;
+          if (typeof (window as any).GyankoshLoader !== 'undefined') {
+            (window as any).GyankoshLoader.show('ग्रंथ खोला जा रहा है...', 80);
+          }
           window.location.href = `${base}/read/${targetSlug}`;
         }
       }

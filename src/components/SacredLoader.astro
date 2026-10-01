@@ -1,0 +1,143 @@
+---
+/**
+ * SacredLoader.astro
+ * Gyankosh Sacred Indic Universal Loader Engine
+ * 
+ * Provides:
+ * 1. Top progress shimmer bar with gold & vermillion gradient
+ * 2. Sacred Om Chakra modal spinner with blurred parchment backdrop
+ * 3. window.GyankoshLoader API with debounced display (only shows if operation takes >80-100ms)
+ * 4. Automatic page-navigation listener for smooth perceived latency
+ */
+---
+<!-- Top Sleek Shimmer Progress Bar -->
+<div id="gyankosh-top-loader-bar" class="gyankosh-top-loader-bar" aria-hidden="true"></div>
+
+<!-- Sacred Centered Indic Loader Modal Overlay -->
+<div id="gyankosh-loader-overlay" class="gyankosh-loader-overlay" role="status" aria-live="polite">
+  <div class="gyankosh-loader-card">
+    <div class="gyankosh-loader-chakra-wrap">
+      <div class="gyankosh-loader-chakra"></div>
+      <span class="gyankosh-loader-om">ॐ</span>
+    </div>
+    <div class="gyankosh-loader-msg" id="gyankosh-loader-msg">लोड हो रहा है...</div>
+    <div class="gyankosh-loader-sub" id="gyankosh-loader-sub">ज्ञानकोश • पावन सनातन वाङ्मय</div>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    if (typeof window === 'undefined' || window.GyankoshLoader) return;
+
+    var activeTimer = null;
+    var minDisplayTimer = null;
+    var showStartTime = 0;
+    var MIN_DISPLAY_MS = 220; // Prevents visual flicker if task finishes right after appearing
+
+    var bar = null;
+    var overlay = null;
+    var msgEl = null;
+
+    function getElements() {
+      if (!bar) bar = document.getElementById('gyankosh-top-loader-bar');
+      if (!overlay) overlay = document.getElementById('gyankosh-loader-overlay');
+      if (!msgEl) msgEl = document.getElementById('gyankosh-loader-msg');
+      return { bar: bar, overlay: overlay, msgEl: msgEl };
+    }
+
+    window.GyankoshLoader = {
+      show: function (message, delay) {
+        if (typeof delay !== 'number') delay = 90;
+        var el = getElements();
+        if (el.msgEl && message) el.msgEl.textContent = message;
+
+        // Immediately start top progress bar
+        if (el.bar) {
+          el.bar.classList.remove('finish');
+          el.bar.classList.add('start');
+        }
+
+        // Debounced modal card: only displays if the operation takes longer than delay
+        clearTimeout(activeTimer);
+        clearTimeout(minDisplayTimer);
+        activeTimer = setTimeout(function () {
+          showStartTime = Date.now();
+          if (el.overlay) el.overlay.classList.add('active');
+          document.body.classList.add('gyankosh-loading');
+        }, delay);
+      },
+
+      update: function (message) {
+        var el = getElements();
+        if (el.msgEl && message) el.msgEl.textContent = message;
+      },
+
+      hide: function () {
+        clearTimeout(activeTimer);
+        var el = getElements();
+        if (el.bar) {
+          el.bar.classList.add('finish');
+          setTimeout(function () {
+            el.bar.classList.remove('start', 'finish');
+          }, 240);
+        }
+
+        if (!el.overlay || !el.overlay.classList.contains('active')) {
+          document.body.classList.remove('gyankosh-loading');
+          return;
+        }
+
+        var elapsed = Date.now() - showStartTime;
+        var remaining = Math.max(0, MIN_DISPLAY_MS - elapsed);
+        clearTimeout(minDisplayTimer);
+        minDisplayTimer = setTimeout(function () {
+          el.overlay.classList.remove('active');
+          document.body.classList.remove('gyankosh-loading');
+        }, remaining);
+      },
+
+      wrap: function (promiseOrFn, message, delay) {
+        var self = this;
+        self.show(message, delay);
+        try {
+          var res = typeof promiseOrFn === 'function' ? promiseOrFn() : promiseOrFn;
+          if (res && typeof res.then === 'function') {
+            return res
+              .then(function (val) {
+                self.hide();
+                return val;
+              })
+              .catch(function (err) {
+                self.hide();
+                throw err;
+              });
+          }
+          self.hide();
+          return res;
+        } catch (err) {
+          self.hide();
+          throw err;
+        }
+      }
+    };
+
+    // Clean up on back/forward cache navigation
+    window.addEventListener('pageshow', function () {
+      if (window.GyankoshLoader) window.GyankoshLoader.hide();
+    });
+
+    // Auto-show loader for cross-page navigation links if page transition takes > 90ms
+    document.addEventListener('click', function (e) {
+      var link = e.target.closest('a');
+      if (link && link.href && !link.target && !link.hasAttribute('download') && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
+        try {
+          var url = new URL(link.href, window.location.href);
+          if (url.origin === window.location.origin && !url.hash && (url.pathname !== window.location.pathname || url.search !== window.location.search)) {
+            var isReader = url.pathname.indexOf('/read/') !== -1;
+            window.GyankoshLoader.show(isReader ? 'ग्रंथ खोला जा रहा है...' : 'पृष्ठ लोड हो रहा है...', 90);
+          }
+        } catch (_) {}
+      }
+    });
+  })();
+</script>

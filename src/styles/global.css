@@ -1763,3 +1763,205 @@ body.reader-night-mode {
     font-size: 0.85rem;
   }
 }
+
+/* ─── Sacred Gyankosh Universal Loader Animation ────────────── */
+/* 1. Top Sleek Progress Bar */
+.gyankosh-top-loader-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 3.5px;
+  background: linear-gradient(90deg, #8e1b14, #c05621, #d69e2e, #8e1b14);
+  background-size: 200% 100%;
+  z-index: 999999;
+  pointer-events: none;
+  opacity: 0;
+  box-shadow: 0 1px 6px rgba(192, 86, 33, 0.4);
+  transition: width 0.28s cubic-bezier(0.1, 0.9, 0.2, 1), opacity 0.2s ease;
+}
+
+.gyankosh-top-loader-bar.start {
+  opacity: 1;
+  width: 72%;
+  animation: gyankoshBarShimmer 1.8s linear infinite;
+}
+
+.gyankosh-top-loader-bar.finish {
+  opacity: 1;
+  width: 100%;
+  transition: width 0.15s ease, opacity 0.2s ease 0.12s;
+}
+
+@keyframes gyankoshBarShimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* 2. Sacred Modal Overlay & Card */
+.gyankosh-loader-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(252, 248, 238, 0.76);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.22s ease, visibility 0.22s ease;
+}
+
+.gyankosh-loader-overlay.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.gyankosh-loader-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.6rem 2.2rem;
+  background: #fffdfa;
+  border: 2px solid #8e1b14;
+  outline: 1px solid #d69e2e;
+  outline-offset: -5px;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(142, 27, 20, 0.18), 0 2px 8px rgba(0, 0, 0, 0.08);
+  min-width: 250px;
+  max-width: 88vw;
+  text-align: center;
+  transform: scale(0.92);
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.gyankosh-loader-overlay.active .gyankosh-loader-card {
+  transform: scale(1);
+}
+
+/* Sacred Chakra Spinner */
+.gyankosh-loader-chakra-wrap {
+  position: relative;
+  width: 58px;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.95rem;
+}
+
+.gyankosh-loader-chakra {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 3.5px solid rgba(214, 158, 46, 0.25);
+  border-top-color: #8e1b14;
+  border-right-color: #c05621;
+  border-bottom-color: #d69e2e;
+  animation: sacredChakraRotate 0.95s cubic-bezier(0.65, 0.05, 0.36, 1) infinite;
+  box-shadow: 0 0 16px rgba(214, 158, 46, 0.35);
+}
+
+.gyankosh-loader-chakra::after {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  border-radius: 50%;
+  border: 2px dashed rgba(192, 86, 33, 0.5);
+  animation: sacredChakraRotateReverse 2.1s linear infinite;
+}
+
+.gyankosh-loader-om {
+  font-family: 'Rozha One', 'Martel', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #8e1b14;
+  animation: sacredOmPulse 1.6s ease-in-out infinite;
+  user-select: none;
+}
+
+.gyankosh-loader-msg {
+  font-family: 'Rozha One', 'Martel', serif;
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: #2c2523;
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.02em;
+}
+
+.gyankosh-loader-sub {
+  font-family: 'Rozha One', 'Martel', serif;
+  font-size: 0.8rem;
+  color: #8e1b14;
+  opacity: 0.85;
+}
+
+@keyframes sacredChakraRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes sacredChakraRotateReverse {
+  0% { transform: rotate(360deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@keyframes sacredOmPulse {
+  0%, 100% { transform: scale(0.92); opacity: 0.85; }
+  50% { transform: scale(1.1); opacity: 1; filter: drop-shadow(0 0 5px rgba(214, 158, 46, 0.6)); }
+}
+
+/* Night Mode Variant for Loader */
+html.reader-night-mode .gyankosh-loader-overlay,
+body.reader-night-mode .gyankosh-loader-overlay {
+  background: rgba(21, 18, 16, 0.82);
+}
+
+html.reader-night-mode .gyankosh-loader-card,
+body.reader-night-mode .gyankosh-loader-card {
+  background: #1e1916;
+  border-color: #9b2820;
+  outline-color: #e2ad54;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 15px rgba(226, 173, 84, 0.15);
+}
+
+html.reader-night-mode .gyankosh-loader-msg,
+body.reader-night-mode .gyankosh-loader-msg {
+  color: #f0e6d6;
+}
+
+html.reader-night-mode .gyankosh-loader-sub,
+body.reader-night-mode .gyankosh-loader-sub {
+  color: #e2ad54;
+}
+
+html.reader-night-mode .gyankosh-loader-om,
+body.reader-night-mode .gyankosh-loader-om {
+  color: #e54b3f;
+}
+
+/* Button Loading State */
+.btn-aarambh.btn-loading {
+  pointer-events: none;
+  position: relative;
+  opacity: 0.9;
+}
+
+.btn-aarambh.btn-loading span:first-child {
+  display: inline-block;
+  animation: sacredChakraRotate 0.8s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gyankosh-loader-chakra,
+  .gyankosh-loader-chakra::after,
+  .gyankosh-loader-om {
+    animation-duration: 4s !important;
+  }
+}
+

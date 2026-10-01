@@ -13,6 +13,7 @@
 import '../styles/global.css';
 import '../styles/reader.css';
 import SEO from '../components/SEO.astro';
+import SacredLoader from '../components/SacredLoader.astro';
 import { tagToSlug } from '../utils/tags';
 import { getCategoryLabel } from '../data/categoryMeta';
 
@@ -172,6 +173,9 @@ const ogImage = image || (coverImage
   </head>
 
   <body class={`${!showNumbering ? 'hide-numbering' : ''} chanting-mode has-cover-screen`}>
+    <!-- Sacred Universal Loader -->
+    <SacredLoader />
+
     <!-- Sacred Red/Gold Reading Progress Bar -->
     <div id="reading-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="पठन प्रगति"></div>
 

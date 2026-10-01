@@ -325,6 +325,9 @@ const resolvedJpgImage = resolvedCoverImage.endsWith('.webp')
         const readUrl = card.getAttribute('data-read-url');
         if (readUrl) {
           triggerHaptic(12);
+          if (typeof (window as any).GyankoshLoader !== 'undefined') {
+            (window as any).GyankoshLoader.show('ग्रंथ खोला जा रहा है...', 80);
+          }
           window.location.href = readUrl;
         }
       }
