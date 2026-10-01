@@ -4,7 +4,7 @@
  * and zero-network overhead for immutable Vite assets.
  */
 
-const VERSION = 'v6';
+const VERSION = 'v7';
 const CACHE_SHELL = `gyankosh-shell-${VERSION}`;
 const CACHE_CONTENT = `gyankosh-content-${VERSION}`;
 const CACHE_MEDIA = `gyankosh-media-${VERSION}`;
@@ -166,66 +166,73 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 5. HTML Navigation (Scriptures, categories, tags, home) -> Network-First with Offline Fallback
+  // 5. HTML Navigation (Scriptures, categories, tags, home) -> Stale-While-Revalidate with Instant Local Render
   if (req.mode === 'navigate' || req.headers.get('accept')?.includes('text/html')) {
     event.respondWith(
-      fetch(req)
-        .then((networkRes) => {
-          if (networkRes && networkRes.status === 200) {
-            const resClone = networkRes.clone();
-            caches.open(CACHE_CONTENT).then((cache) => {
-              cache.put(req, resClone);
-              trimCache(CACHE_CONTENT, MAX_CONTENT_PAGES);
-            });
-          }
-          return networkRes;
-        })
-        .catch(async () => {
-          // Offline fallback: try cache for this exact page
-          const cached = await caches.match(req);
-          if (cached) return cached;
+      (async () => {
+        // Try exact cache or trailing slash alternative first for 0ms instant display
+        const altUrl = url.pathname.endsWith('/')
+          ? url.pathname.slice(0, -1)
+          : url.pathname + '/';
+        const cached = (await caches.match(req)) || (await caches.match(altUrl));
 
-          // Try without trailing slash / with trailing slash
-          const altUrl = url.pathname.endsWith('/')
-            ? url.pathname.slice(0, -1)
-            : url.pathname + '/';
-          const altCached = await caches.match(altUrl);
-          if (altCached) return altCached;
-
-          // Fallback to home page if available in cache
-          const homeCached = await caches.match(`${BASE}/`);
-          if (homeCached) return homeCached;
-
-          // Custom offline message in sacred Indic styling
-          return new Response(
-            `<!doctype html>
-            <html lang="hi">
-              <head>
-                <meta charset="utf-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1">
-                <title>ऑफलाइन — ज्ञानकोश</title>
-                <style>
-                  body { font-family: 'Rozha One', 'Martel', serif; background: #fcf8ee; color: #2c2523; text-align: center; padding: 3rem 1.5rem; }
-                  .card { max-width: 500px; margin: 0 auto; background: #fffdfa; border: 2px solid #8e1b14; border-radius: 12px; padding: 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
-                  h1 { color: #8e1b14; font-size: 1.8rem; margin-bottom: 1rem; }
-                  p { font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem; }
-                  a { display: inline-block; background: #8e1b14; color: #fff; padding: 0.6rem 1.4rem; border-radius: 6px; text-decoration: none; font-weight: bold; }
-                </style>
-              </head>
-              <body>
-                <div class="card">
-                  <div style="font-size: 3rem; margin-bottom: 1rem;">🕉️</div>
-                  <h1>आप वर्तमान में ऑफलाइन हैं</h1>
-                  <p>यह पृष्ठ अभी कैशे में उपलब्ध नहीं है। कृपया इंटरनेट कनेक्शन पुनः स्थापित होने पर पुनः प्रयास करें, या पहले से पढ़े गए ग्रंथों को पढ़ें।</p>
-                  <a href="${BASE}/">ज्ञानकोश मुख्य पृष्ठ</a>
-                </div>
-              </body>
-            </html>`,
-            {
-              headers: { 'Content-Type': 'text/html; charset=utf-8' }
+        // Background network fetch to revalidate and update cache
+        const networkFetchPromise = fetch(req)
+          .then((networkRes) => {
+            if (networkRes && networkRes.status === 200) {
+              const resClone = networkRes.clone();
+              caches.open(CACHE_CONTENT).then((cache) => {
+                cache.put(req, resClone);
+                trimCache(CACHE_CONTENT, MAX_CONTENT_PAGES);
+              });
             }
-          );
-        })
+            return networkRes;
+          })
+          .catch(() => null);
+
+        // If we have cached content, return it IMMEDIATELY (0ms instant page load!)
+        if (cached) {
+          return cached;
+        }
+
+        // If not cached, await the network request
+        const networkRes = await networkFetchPromise;
+        if (networkRes) return networkRes;
+
+        // Fallback to home page if available in cache
+        const homeCached = await caches.match(`${BASE}/`);
+        if (homeCached) return homeCached;
+
+        // Sacred Indic Offline Fallback Page
+        return new Response(
+          `<!doctype html>
+          <html lang="hi">
+            <head>
+              <meta charset="utf-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1">
+              <title>ऑफलाइन — ज्ञानकोश</title>
+              <style>
+                body { font-family: 'Rozha One', 'Martel', serif; background: #fcf8ee; color: #2c2523; text-align: center; padding: 3rem 1.5rem; }
+                .card { max-width: 500px; margin: 0 auto; background: #fffdfa; border: 2px solid #8e1b14; border-radius: 12px; padding: 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
+                h1 { color: #8e1b14; font-size: 1.8rem; margin-bottom: 1rem; }
+                p { font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem; }
+                a { display: inline-block; background: #8e1b14; color: #fff; padding: 0.6rem 1.4rem; border-radius: 6px; text-decoration: none; font-weight: bold; }
+              </style>
+            </head>
+            <body>
+              <div class="card">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">🕉️</div>
+                <h1>आप वर्तमान में ऑफलाइन हैं</h1>
+                <p>यह पृष्ठ अभी कैशे में उपलब्ध नहीं है। कृपया इंटरनेट कनेक्शन पुनः स्थापित होने पर पुनः प्रयास करें, या पहले से पढ़े गए ग्रंथों को पढ़ें।</p>
+                <a href="${BASE}/">ज्ञानकोश मुख्य पृष्ठ</a>
+              </div>
+            </body>
+          </html>`,
+          {
+            headers: { 'Content-Type': 'text/html; charset=utf-8' }
+          }
+        );
+      })()
     );
     return;
   }

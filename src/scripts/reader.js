@@ -52,6 +52,12 @@ const base = config.base || shell?.dataset.base || '';
         return prefersReducedMotion || isSaveData || isLowMemory || isLowCpu;
       }
 
+      function triggerHaptic(pattern = 10) {
+        if ('vibrate' in navigator) {
+          try { navigator.vibrate(pattern); } catch (_) {}
+        }
+      }
+
       /* ── Gyankosh Vertical Pothi Page Flip Engine ── */
       class GyankoshReader {
         constructor() {
@@ -394,6 +400,8 @@ const base = config.base || shell?.dataset.base || '';
         flipToPage(newIndex, direction = 'down') {
           if (newIndex < 0 || newIndex >= this.pages.length || this.isFlipping) return;
           if (newIndex === this.currentPageIndex) return;
+
+          triggerHaptic(12);
 
           if (typeof resetWakeLockActivityTimer === 'function') {
             resetWakeLockActivityTimer();
@@ -1046,6 +1054,7 @@ const base = config.base || shell?.dataset.base || '';
 
         scrollToNextSection() {
           if (!this.viewport) return;
+          triggerHaptic(8);
           if (this.sectionAnchors.length > 0) {
             const nextIdx = Math.min(this.currentSectionIndex + 1, this.sectionAnchors.length - 1);
             if (nextIdx !== this.currentSectionIndex) {
@@ -1063,6 +1072,7 @@ const base = config.base || shell?.dataset.base || '';
 
         scrollToPrevSection() {
           if (!this.viewport) return;
+          triggerHaptic(8);
           if (this.sectionAnchors.length > 0) {
             const prevIdx = Math.max(this.currentSectionIndex - 1, 0);
             if (prevIdx !== this.currentSectionIndex || this.currentSectionIndex > 0) {
@@ -1635,6 +1645,7 @@ const base = config.base || shell?.dataset.base || '';
       btnAarambh?.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
+        triggerHaptic([12, 40, 18]);
         playTempleChime();
         startReading();
       });
@@ -1642,6 +1653,7 @@ const base = config.base || shell?.dataset.base || '';
       btnAarambh?.addEventListener('touchend', (e) => {
         e.preventDefault();
         e.stopPropagation();
+        triggerHaptic([12, 40, 18]);
         playTempleChime();
         startReading();
       });
@@ -1728,6 +1740,7 @@ const base = config.base || shell?.dataset.base || '';
 
       readerSaveBtn?.addEventListener('click', (e) => {
         e.stopPropagation();
+        triggerHaptic(15);
         try {
           let saved = JSON.parse(localStorage.getItem('gyankosh_saved') || '[]');
           const idx = saved.indexOf(slug);
@@ -1751,6 +1764,7 @@ const base = config.base || shell?.dataset.base || '';
       const readerShareBtn = document.getElementById('reader-share-btn');
       readerShareBtn?.addEventListener('click', async (e) => {
         e.stopPropagation();
+        triggerHaptic(10);
         const shareUrl = window.location.href;
         const formattedShareMessage = `॥ ${bookTitle} ॥\nज्ञानकोश पर पढ़िए सम्पूर्ण शुद्ध पाठ एवं प्रामाणिक भावार्थ:\n${shareUrl}`;
         const shareData = {
@@ -1781,13 +1795,15 @@ const base = config.base || shell?.dataset.base || '';
         const screen = document.getElementById('reader-completion-screen');
         if (completionShown || !screen) return;
         completionShown = true;
+        triggerHaptic([18, 50, 22, 50, 30]);
 
         // Generate falling flower petals 🌸
         const petalsContainer = document.getElementById('completion-petals');
         if (petalsContainer) {
           petalsContainer.innerHTML = '';
           const petalEmojis = ['🌸', '🪷', '🌺', '✿', '❀', '🏵️'];
-          for (let i = 0; i < 35; i++) {
+          const petalCount = evaluateDeviceCapability() ? 12 : 35;
+          for (let i = 0; i < petalCount; i++) {
             const petal = document.createElement('span');
             petal.className = 'falling-petal';
             petal.textContent = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];

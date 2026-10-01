@@ -250,9 +250,40 @@ const resolvedJpgImage = resolvedCoverImage.endsWith('.webp')
   }
   (window as any).shareGyankoshText = shareText;
 
+  function triggerHaptic(duration = 10) {
+    if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+      try { navigator.vibrate(duration); } catch {}
+    }
+  }
+
   // Single delegated click handler for all cards
   if (!(window as any).__gyankoshCardEventsAttached) {
     (window as any).__gyankoshCardEventsAttached = true;
+
+    // Speculative Touch-Intent Prefetching
+    const prefetchedUrls = new Set<string>();
+    function prefetchUrl(url: string | null) {
+      if (!url || prefetchedUrls.has(url)) return;
+      prefetchedUrls.add(url);
+      const link = document.createElement('link');
+      link.rel = 'prefetch';
+      link.href = url;
+      document.head.appendChild(link);
+    }
+
+    document.addEventListener('touchstart', (e) => {
+      const card = (e.target as HTMLElement).closest('.book-card') as HTMLElement;
+      if (card) {
+        prefetchUrl(card.getAttribute('data-read-url'));
+      }
+    }, { passive: true });
+
+    document.addEventListener('pointerenter', (e) => {
+      const card = (e.target as HTMLElement).closest('.book-card') as HTMLElement;
+      if (card) {
+        prefetchUrl(card.getAttribute('data-read-url'));
+      }
+    }, { passive: true });
 
     document.addEventListener('click', (e) => {
       const target = e.target as HTMLElement;
@@ -262,6 +293,7 @@ const resolvedJpgImage = resolvedCoverImage.endsWith('.webp')
       if (saveBtn) {
         e.preventDefault();
         e.stopPropagation();
+        triggerHaptic(15);
         const slug = saveBtn.getAttribute('data-save-slug');
         const title = saveBtn.getAttribute('data-save-title') || 'ग्रंथ';
         if (slug) {
@@ -280,6 +312,7 @@ const resolvedJpgImage = resolvedCoverImage.endsWith('.webp')
       if (shareBtn) {
         e.preventDefault();
         e.stopPropagation();
+        triggerHaptic(10);
         const title = shareBtn.getAttribute('data-share-title') || 'ग्रंथ';
         const url = shareBtn.getAttribute('data-share-url') || window.location.href;
         shareText(title, url);
@@ -291,6 +324,7 @@ const resolvedJpgImage = resolvedCoverImage.endsWith('.webp')
       if (card && !target.closest('a') && !target.closest('button')) {
         const readUrl = card.getAttribute('data-read-url');
         if (readUrl) {
+          triggerHaptic(12);
           window.location.href = readUrl;
         }
       }
