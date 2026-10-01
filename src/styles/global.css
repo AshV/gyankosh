@@ -8,6 +8,7 @@
 
 /* ─── Gyankosh Design Tokens (Single Sacred Paper Theme) ──── */
 :root {
+  color-scheme: light;
   /* Authentic Sacred Paper Texture & Colors */
   --color-bg:               #fcf8ee;       /* Natural warm antique book paper */
   --color-bg-elevated:      #f5eedd;       /* Slightly deeper paper tone for panels */
@@ -884,14 +885,16 @@ html.has-js .book-card-wrapper.will-reveal.visible {
   background: var(--color-bg-card);
   border: 1px solid var(--color-border-subtle);
   color: var(--color-text-muted);
-  padding: 0.38rem 0.62rem;
-  min-width: 36px;
-  height: 34px;
-  border-radius: var(--radius-pill);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
   cursor: pointer;
   transition: all var(--transition-fast);
   box-shadow: 0 1px 3px rgba(70, 50, 30, 0.04);
   line-height: 1;
+  padding: 0;
+  box-sizing: border-box;
+  flex-shrink: 0;
 }
 
 .header-search-btn:hover {
@@ -910,24 +913,25 @@ html.has-js .book-card-wrapper.will-reveal.visible {
   flex-shrink: 0;
 }
 
-/* ─── Header Quick Action Buttons (Parichay & Share) ─────── */
+/* ─── Header Quick Action Buttons (Parichay, Theme & Share) ─────── */
 .header-action-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
+  justify-content: center;
   background: var(--color-bg-card);
   border: 1px solid var(--color-border-subtle);
   color: var(--color-text-muted);
-  padding: 0.35rem 0.65rem;
-  border-radius: var(--radius-pill);
-  font-family: var(--font-devanagari);
-  font-size: 0.88rem;
-  font-weight: 600;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
   cursor: pointer;
   text-decoration: none;
   transition: all var(--transition-fast);
   box-shadow: 0 1px 3px rgba(70, 50, 30, 0.04);
   line-height: 1;
+  padding: 0;
+  box-sizing: border-box;
+  flex-shrink: 0;
 }
 
 .header-action-btn:hover {
@@ -949,6 +953,12 @@ html.has-js .book-card-wrapper.will-reveal.visible {
 .header-action-btn .action-btn-icon {
   font-size: 0.95rem;
   line-height: 1;
+  display: block;
+  flex-shrink: 0;
+}
+
+.header-action-btn .action-btn-text {
+  display: none;
 }
 
 /* ─── Floating Navigation Dock (Scroll to Tags & Top) ─────── */
@@ -1362,16 +1372,12 @@ body.modal-open {
 }
 
 @media (max-width: 640px) {
-  .header-search-btn {
-    padding: 0.38rem 0.52rem;
-    min-width: 34px;
-  }
-  .header-action-btn .action-btn-text {
-    display: none;
-  }
+  .header-search-btn,
   .header-action-btn {
-    padding: 0.38rem 0.52rem;
+    width: 34px;
+    height: 34px;
     min-width: 34px;
+    padding: 0;
     justify-content: center;
   }
   .floating-scroll-dock {
@@ -1699,6 +1705,7 @@ body.modal-open {
 /* ─── Sacred Night Mode (रात्रि पठन मोड) (Global variables) ───────── */
 html.reader-night-mode,
 body.reader-night-mode {
+  color-scheme: dark;
   --color-bg: #151210;
   --color-bg-elevated: #1e1916;
   --color-bg-card: #231d18;

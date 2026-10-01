@@ -2509,10 +2509,14 @@ const base = config.base || shell?.dataset.base || '';
           btn.setAttribute('aria-checked', isActive ? 'true' : 'false');
         });
 
-        // Update meta theme-color
+        // Update meta theme-color and color-scheme
         const themeColorMeta = document.getElementById('theme-color-meta');
         if (themeColorMeta) {
           themeColorMeta.setAttribute('content', enable ? '#151210' : '#8e1b14');
+        }
+        const colorSchemeMeta = document.getElementById('color-scheme-meta');
+        if (colorSchemeMeta) {
+          colorSchemeMeta.setAttribute('content', enable ? 'dark' : 'light');
         }
 
         // Save preference
@@ -2525,7 +2529,7 @@ const base = config.base || shell?.dataset.base || '';
 
       function syncNightModeUI() {
         const prefs = loadPrefs();
-        const enable = !!prefs.nightMode;
+        const enable = prefs.nightMode === true;
         setNightMode(enable);
       }
 

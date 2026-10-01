@@ -38,7 +38,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="theme-color" content="#8e1b14" />
+    <meta name="theme-color" content="#8e1b14" id="theme-color-meta" />
+    <meta name="color-scheme" content="light" id="color-scheme-meta" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -58,13 +59,19 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <!-- RSS Feed Autodiscovery -->
     <link rel="alternate" type="application/rss+xml" title="ज्ञानकोश RSS" href={`${base}/rss.xml`} />
 
-    <!-- Restore theme preference immediately before paint -->
+    <!-- Restore theme preference immediately before paint (Default: always light for new users) -->
     <script is:inline>
       (function () {
         var prefs = {};
         try { prefs = JSON.parse(localStorage.getItem('gyankosh_prefs') || '{}'); } catch(e) {}
-        if (prefs.nightMode) {
+        if (prefs.nightMode === true) {
           document.documentElement.classList.add('reader-night-mode');
+          var colorSchemeMeta = document.getElementById('color-scheme-meta');
+          if (colorSchemeMeta) colorSchemeMeta.content = 'dark';
+          var themeColorMeta = document.getElementById('theme-color-meta');
+          if (themeColorMeta) themeColorMeta.content = '#151210';
+        } else {
+          document.documentElement.classList.remove('reader-night-mode');
         }
       })();
     </script>
@@ -123,7 +130,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             title="ज्ञानकोश परिचय"
           >
             <span class="action-btn-icon" aria-hidden="true">📖</span>
-            <span class="action-btn-text">परिचय</span>
+            <span class="action-btn-text sr-only">परिचय</span>
           </a>
 
           <!-- Theme Toggle -->
@@ -134,7 +141,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             aria-label="थीम बदलें"
             title="दिवस/रात्रि मोड"
           >
-            <span class="action-btn-icon" aria-hidden="true" id="global-theme-icon">🌙</span>
+            <span class="action-btn-icon" aria-hidden="true" id="global-theme-icon">☀️</span>
             <span class="action-btn-text sr-only">थीम</span>
           </button>
 
@@ -153,7 +160,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
               <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
               <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
             </svg>
-            <span class="action-btn-text">साझा करें</span>
+            <span class="action-btn-text sr-only">साझा करें</span>
           </button>
 
           <button
@@ -316,7 +323,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       function updateThemeIcon() {
         if (themeIcon) {
           const isNight = document.documentElement.classList.contains('reader-night-mode');
-          themeIcon.textContent = isNight ? '☀️' : '🌙';
+          themeIcon.textContent = isNight ? '🌙' : '☀️';
         }
       }
       updateThemeIcon();
@@ -329,6 +336,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         prefs.nightMode = isNight;
         localStorage.setItem('gyankosh_prefs', JSON.stringify(prefs));
         updateThemeIcon();
+        const colorSchemeMeta = document.getElementById('color-scheme-meta');
+        if (colorSchemeMeta) colorSchemeMeta.content = isNight ? 'dark' : 'light';
+        const themeColorMeta = document.getElementById('theme-color-meta');
+        if (themeColorMeta) themeColorMeta.content = isNight ? '#151210' : '#8e1b14';
       });
 
       // Header Share Page Button (Shares current page with title and description)
