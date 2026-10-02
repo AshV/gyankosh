@@ -4,6 +4,8 @@
  * Premium book card for the catalog/category pages.
  * Shows generated cover art, title, author, category chip, and resume-reading progress.
  */
+import { computeBuildReadingStats, toHindiDigits } from '../utils/indicParser';
+
 export interface Props {
   slug: string;
   title: string;
@@ -13,6 +15,8 @@ export interface Props {
   language: string;
   coverColor?: string;
   coverImage?: string;
+  body?: string;
+  readingMinutes?: number;
 }
 
 const {
@@ -24,6 +28,8 @@ const {
   language,
   coverColor = 'hsl(22, 70%, 45%)',
   coverImage,
+  body,
+  readingMinutes,
 } = Astro.props;
 
 // Category → emoji & Hindi name mapping
@@ -62,6 +68,10 @@ const resolvedWebpImage = resolvedCoverImage.endsWith('.jpg')
 const resolvedJpgImage = resolvedCoverImage.endsWith('.webp')
   ? resolvedCoverImage.replace(/\.webp$/, '.jpg')
   : resolvedCoverImage;
+
+const stats = body ? computeBuildReadingStats(body) : null;
+const minutes = readingMinutes ?? stats?.estimatedMinutes;
+const readingTimeLabel = minutes ? `⏱ ~${toHindiDigits(minutes)} मिनट` : null;
 ---
 
 <div
@@ -111,6 +121,15 @@ const resolvedJpgImage = resolvedCoverImage.endsWith('.webp')
           {meta.icon} {meta.nameHindi}
         </span>
         <span class="language-badge">{resolvedLanguage}</span>
+        {readingTimeLabel && (
+          <span
+            class="reading-time-badge"
+            title={`अनुमानित पठन समय: लगभग ${toHindiDigits(minutes!)} मिनट`}
+            aria-label={`पठन समय: लगभग ${toHindiDigits(minutes!)} मिनट`}
+          >
+            {readingTimeLabel}
+          </span>
+        )}
       </div>
       
       <!-- Progress badge — populated client-side from localStorage -->

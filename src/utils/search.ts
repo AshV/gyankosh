@@ -22,6 +22,7 @@ export interface SearchCatalogItem {
   coverImage?: string;
   keywords: string[];
   weight: number;
+  readingTime?: string;
 }
 
 

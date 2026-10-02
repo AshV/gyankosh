@@ -224,18 +224,20 @@ export function parseIndicMarkdown(body: string, options: IndicParserOptions = {
 export interface ReadingStats {
   estimatedMinutes: number;
   timeLabel: string;
+  cardTimeLabel: string;
   countLabel: string;
 }
 
 /**
  * Precomputes reading statistics at build time so the cover screen
- * renders immediately with authentic Hindi metrics (no "गणना जारी...").
+ * and book cards render immediately with authentic Hindi metrics.
  */
 export function computeBuildReadingStats(body: string): ReadingStats {
   if (!body) {
     return {
       estimatedMinutes: 1,
       timeLabel: `⏱ ~${toHindiDigits(1)} मिनट पठन`,
+      cardTimeLabel: `⏱ ~${toHindiDigits(1)} मिनट`,
       countLabel: `📄 ${toHindiDigits(0)} पद`,
     };
   }
@@ -266,6 +268,7 @@ export function computeBuildReadingStats(body: string): ReadingStats {
 
   const estimatedMinutes = Math.max(1, Math.round(wordCount / 105));
   const timeLabel = `⏱ ~${toHindiDigits(estimatedMinutes)} मिनट पठन`;
+  const cardTimeLabel = `⏱ ~${toHindiDigits(estimatedMinutes)} मिनट`;
 
   const parts: string[] = [];
   if (typeCounters.chaupai) parts.push(`${toHindiDigits(typeCounters.chaupai)} चौपाई`);
@@ -287,6 +290,7 @@ export function computeBuildReadingStats(body: string): ReadingStats {
   return {
     estimatedMinutes,
     timeLabel,
+    cardTimeLabel,
     countLabel,
   };
 }
