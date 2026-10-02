@@ -6,7 +6,7 @@
  * All interactive features (transliteration, themes, etc.) via client scripts in ReaderLayout.
  */
 import { getCollection } from 'astro:content';
-import { parseIndicMarkdown } from '../../utils/indicParser';
+import { parseIndicMarkdown, computeBuildReadingStats } from '../../utils/indicParser';
 import ReaderLayout from '../../layouts/ReaderLayout.astro';
 import { sortTexts } from '../../utils/sorting';
 import { getCategoryHindi } from '../../data/categoryMeta';
@@ -26,11 +26,12 @@ export async function getStaticPaths() {
 const { entry, prevText, nextText } = Astro.props;
 const { data } = entry;
 
-// ── Build-time parsing ──────────────────────────────────────
+// ── Build-time parsing & statistics ──────────────────────────
 // entry.body is the raw Markdown string (no frontmatter).
 // We pass it through our custom parser to get semantic HTML.
 // Zero client-side parsing cost — all done at build time.
 const parsedHtml = parseIndicMarkdown(entry.body, { showNumbering: data.showNumbering });
+const readingStats = computeBuildReadingStats(entry.body);
 
 // ── Resolve URLs ─────────────────────────────────────────────
 const siteUrl = 'https://www.ashishvishwakarma.com/gyankosh';
@@ -152,6 +153,7 @@ const jsonLdBreadcrumb = {
   context={data.context}
   prevText={prevText}
   nextText={nextText}
+  readingStats={readingStats}
 >
   <!--
     The parsed HTML is injected here via set:html.

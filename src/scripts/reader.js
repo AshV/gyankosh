@@ -2840,6 +2840,7 @@ const base = config.base || shell?.dataset.base || '';
         });
 
         // Fast zero-allocation word counter
+        const fullText = rawSource.textContent || '';
         let wordCount = 0;
         let inWord = false;
         for (let wi = 0; wi < fullText.length; wi++) {
@@ -2866,6 +2867,7 @@ const base = config.base || shell?.dataset.base || '';
           if (typeCounters.shloka) parts.push(`${toHindiDigits(typeCounters.shloka)} श्लोक`);
           if (typeCounters.mantra) parts.push(`${toHindiDigits(typeCounters.mantra)} मन्त्र`);
           if (typeCounters.soratha) parts.push(`${toHindiDigits(typeCounters.soratha)} सोरठा`);
+          if (typeCounters.name) parts.push(`${toHindiDigits(typeCounters.name)} नाम`);
 
           if (parts.length > 0) {
             countEl.textContent = `📄 ${parts.join(', ')}`;

@@ -220,3 +220,73 @@ export function parseIndicMarkdown(body: string, options: IndicParserOptions = {
 
   return htmlParts.join('\n\n');
 }
+
+export interface ReadingStats {
+  estimatedMinutes: number;
+  timeLabel: string;
+  countLabel: string;
+}
+
+/**
+ * Precomputes reading statistics at build time so the cover screen
+ * renders immediately with authentic Hindi metrics (no "गणना जारी...").
+ */
+export function computeBuildReadingStats(body: string): ReadingStats {
+  if (!body) {
+    return {
+      estimatedMinutes: 1,
+      timeLabel: `⏱ ~${toHindiDigits(1)} मिनट पठन`,
+      countLabel: `📄 ${toHindiDigits(0)} पद`,
+    };
+  }
+
+  const normalizedBody = body.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+  const rawBlocks = normalizedBody.split(/\n\s*\n+/).map(b => b.trim()).filter(Boolean);
+
+  const typeCounters: Record<string, number> = {};
+  let totalVerses = 0;
+  let wordCount = 0;
+
+  for (const rawBlock of rawBlocks) {
+    const tagMatch = rawBlock.match(TAG_REGEX);
+    if (tagMatch) {
+      const tag = tagMatch[1].toLowerCase();
+      if (['shloka', 'mantra', 'chaupai', 'doha', 'soratha', 'chhanda', 'chhand', 'prose', 'name'].includes(tag)) {
+        typeCounters[tag] = (typeCounters[tag] || 0) + 1;
+        totalVerses++;
+      }
+      const text = rawBlock.slice(tagMatch[0].length);
+      const words = text.trim().split(/\s+/).filter(Boolean);
+      wordCount += words.length;
+    } else {
+      const words = rawBlock.trim().split(/\s+/).filter(Boolean);
+      wordCount += words.length;
+    }
+  }
+
+  const estimatedMinutes = Math.max(1, Math.round(wordCount / 105));
+  const timeLabel = `⏱ ~${toHindiDigits(estimatedMinutes)} मिनट पठन`;
+
+  const parts: string[] = [];
+  if (typeCounters.chaupai) parts.push(`${toHindiDigits(typeCounters.chaupai)} चौपाई`);
+  if (typeCounters.doha) parts.push(`${toHindiDigits(typeCounters.doha)} दोहा`);
+  if (typeCounters.shloka) parts.push(`${toHindiDigits(typeCounters.shloka)} श्लोक`);
+  if (typeCounters.mantra) parts.push(`${toHindiDigits(typeCounters.mantra)} मन्त्र`);
+  if (typeCounters.soratha) parts.push(`${toHindiDigits(typeCounters.soratha)} सोरठा`);
+  if (typeCounters.name) parts.push(`${toHindiDigits(typeCounters.name)} नाम`);
+
+  let countLabel = '';
+  if (parts.length > 0) {
+    countLabel = `📄 ${parts.join(', ')}`;
+  } else if (totalVerses > 0) {
+    countLabel = `📄 ${toHindiDigits(totalVerses)} पद`;
+  } else {
+    countLabel = `📄 ${toHindiDigits(estimatedMinutes)} मिनट`;
+  }
+
+  return {
+    estimatedMinutes,
+    timeLabel,
+    countLabel,
+  };
+}

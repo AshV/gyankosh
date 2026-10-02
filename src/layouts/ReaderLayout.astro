@@ -36,6 +36,7 @@ export interface Props {
   seoTitle?: string;
   prevText?: { slug: string; title: string } | null;
   nextText?: { slug: string; title: string } | null;
+  readingStats?: { timeLabel: string; countLabel: string };
 }
 
 const {
@@ -57,6 +58,7 @@ const {
   context,
   prevText,
   nextText,
+  readingStats,
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -397,8 +399,8 @@ const ogImage = image || (slug
 
             <!-- Phase 7: Reading Stats Badges (पठन सांख्यिकी) -->
             <div class="cover-stats-row" id="cover-stats-row">
-              <span class="cover-stat-badge" id="cover-stat-time">⏱ गणना जारी...</span>
-              <span class="cover-stat-badge" id="cover-stat-count">📄 पद गणना...</span>
+              <span class="cover-stat-badge" id="cover-stat-time">{readingStats?.timeLabel || '⏱ ~१ मिनट पठन'}</span>
+              <span class="cover-stat-badge" id="cover-stat-count">{readingStats?.countLabel || '📄 पद'}</span>
             </div>
 
             <button 
