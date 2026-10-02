@@ -11,9 +11,9 @@
 | Metric | Value |
 | :--- | :--- |
 | **Source of Truth** | [`src/data/weights.json`](file:///a:/GitHub/Gyankosh/src/data/weights.json) |
-| **Total Sacred Texts** | `86` |
-| **Highest Weight Allocated** | `860` |
-| **Next Recommended Weight** | **`870`** (increment by 10) |
+| **Total Sacred Texts** | `91` |
+| **Highest Weight Allocated** | `910` |
+| **Next Recommended Weight** | **`920`** (increment by 10) |
 | **Default Fallback Weight** | `1000` |
 
 ---
@@ -32,7 +32,8 @@ Gyankosh assigns weights in blocks of 10 to allow future insertions without renu
 | **610 – 690** | **Additional Stotras & Deva Chalisas** | Ganga, Navagraha, Shani, Saraswati, Krishna, Ram, Gayatri, Surya, Bhairav |
 | **700 – 740** | **Lord Vishwakarma Corpus** | Chalisa (700), Aarti (710), Suktam (720), Stotram (730), Puran (740) |
 | **750 – 860** | **Lord Rama, Hanuman & Chitrakoot Corpus** | Ramashtakam (750), Ram Raksha (760), Bahuk (850), Ram Sahasranama (860) |
-| **870+** | **Next Planned Additions** | Ready for next texts |
+| **870 – 910** | **Lord Shiva Stotras & Namavali Corpus** | Panchakshara (870), Manasa Puja (880), Jyotirlinga (890), Ashtottara (900), Namavali (910) |
+| **920+** | **Next Planned Additions** | Ready for next texts |
 
 ---
 
@@ -126,6 +127,11 @@ Gyankosh assigns weights in blocks of 10 to allow future insertions without renu
 | **840** | Stotra | विनयपत्रिका — चित्रकूट महिमा एवं राम-निवेदन | `vinaya-patrika-chitrakoot` |
 | **850** | Stotra | श्री हनुमान बाहुक | `hanuman-bahuk` |
 | **860** | Stotra | श्रीरामसहस्रनाम स्तोत्रम् | `ram-sahasranama` |
+| **870** | Stotra | श्रीशिवपञ्चाक्षरस्तोत्रम् | `shiva-panchakshara-stotram` |
+| **880** | Stotra | श्रीशिवमानसपूजा | `shiva-manasa-puja` |
+| **890** | Stotra | द्वादशज्योतिर्लिङ्ग स्मरणम् एवं स्तोत्रम् | `dwadash-jyotirlinga-stotram` |
+| **900** | Stotra | श्रीशिवाष्टोत्तरशतनामस्तोत्रम् | `shiva-ashtottara-shatanama-stotram` |
+| **910** | Stotra | श्रीशिवाष्टोत्तरशतनामावली | `shiva-ashtottara-shatanamavali` |
 
 ---
 *Last updated: Master Physical Verification Edition, Oct 2026*

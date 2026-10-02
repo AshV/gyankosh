@@ -3,31 +3,31 @@
 > 🎯 **Master Verification Directive**: Every sacred text in Gyankosh is verified word-for-word against authoritative physical scriptures.  
 > 🏛️ **Primary Publisher Standard**: **गीता प्रेस, गोरखपुर (Gita Press, Gorakhpur)** — revered for scholarly textual accuracy, authentic sandhi/anvaya, and affordable, non-profit pricing. Complementary editions from **चौखम्बा (Chaukhamba)** and **मन्दिर ट्रस्ट (Temple Trusts)** are used for specialized texts.  
 > ⚖️ **Single Source of Truth**: [`src/data/weights.json`](file:///a:/GitHub/Gyankosh/src/data/weights.json) & [`WEIGHTS.md`](file:///a:/GitHub/Gyankosh/WEIGHTS.md)  
-> 📊 **Current Library Status**: **86 Sacred Texts Total** | **0 Unverified** placeholder entries | 100% full content.
+> 📊 **Current Library Status**: **91 Sacred Texts Total** | **0 Unverified** placeholder entries | 100% full content.
 
 ---
 
 ## ⚡ Quick Navigation
 
 1. [📚 Optimized Physical Book Purchasing Guide (16 Books Total)](#-optimized-physical-book-purchasing-guide)
-   - [Tier 1: The Essential Core 5 Compilations (Covers 63+ Texts ~ 73%)](#tier-1-the-essential-core-5-compilations-covers-63-texts--73)
-   - [Tier 2: Extended Classical Pack (4 Books — Brings Coverage to 73 Texts ~ 85%)](#tier-2-extended-classical-pack-4-books--brings-coverage-to-73-texts--85)
+   - [Tier 1: The Essential Core 5 Compilations (Covers 68+ Texts ~ 75%)](#tier-1-the-essential-core-5-compilations-covers-68-texts--75)
+   - [Tier 2: Extended Classical Pack (4 Books — Brings Coverage to 78 Texts ~ 86%)](#tier-2-extended-classical-pack-4-books--brings-coverage-to-78-texts--86)
    - [Tier 3: Specialized Wisdom & Sahasranama Pack (7 Books — 100% Coverage)](#tier-3-specialized-wisdom--sahasranama-pack-7-books--100-coverage)
-2. [📋 Master 86-Text Verification Checklist (Interactive)](#-master-86-text-verification-checklist)
+2. [📋 Master 91-Text Verification Checklist (Interactive)](#-master-91-text-verification-checklist)
 3. [🔍 Standard Operating Procedure (SOP) for Text Verification](#-standard-operating-procedure-sop-for-physical-verification)
-4. [📜 Completed Library Roadmap & Phase History (Phases 1 to 7)](#-completed-library-roadmap--phase-history)
+4. [📜 Completed Library Roadmap & Phase History (Phases 1 to 8)](#-completed-library-roadmap--phase-history)
 
 ---
 
 ## 📚 Optimized Physical Book Purchasing Guide
 
-Rather than buying 86 individual thin booklets (which would cost more, clutter bookshelves, and often contain non-standard bazaar errors), the entire Gyankosh library is engineered to be verified using just **16 authoritative physical compilations** (संग्रह ग्रन्थ).
+Rather than buying 91 individual thin booklets (which would cost more, clutter bookshelves, and often contain non-standard bazaar errors), the entire Gyankosh library is engineered to be verified using just **16 authoritative physical compilations** (संग्रह ग्रन्थ).
 
 ### 🏷️ Purchasing Summary Table
 
 | # | ग्रन्थ का नाम (Book Title) | प्रकाशक एवं कोड (Publisher & Code) | मूल्य (Est. Price) | Gyankosh Texts Covered | कवर्ड ग्रन्थों की संख्या |
 | :-: | :--- | :--- | :-: | :--- | :-: |
-| **1** | **स्तोत्र-रत्नावली (सटीक)** | गीताप्रेस कोड: **65** | ₹140 | विष्णुसहस्रनाम, शिवताण्डव, शिवमहिम्न, रुद्राष्टक, कनकधारा, महिषासुरमर्दिनी, आदित्यहृदय, मधुराष्टक, कालभैरवाष्टक, नवग्रह, गंगा, दामोदराष्टक, रामरक्षा, रामाष्टक, श्रीसूक्त, पुरुषसूक्त, नारायणसूक्त, गोपीगीत | **18 Texts** |
+| **1** | **स्तोत्र-रत्नावली (सटीक)** | गीताप्रेस कोड: **65** | ₹140 | विष्णुसहस्रनाम, शिवताण्डव, शिवमहिम्न, रुद्राष्टक, कनकधारा, महिषासुरमर्दिनी, आदित्यहृदय, मधुराष्टक, कालभैरवाष्टक, नवग्रह, गंगा, दामोदराष्टक, रामरक्षा, रामाष्टक, श्रीसूक्त, पुरुषसूक्त, नारायणसूक्त, गोपीगीत, **शिवपञ्चाक्षर, शिवमानसपूजा, द्वादशज्योतिर्लिङ्ग, शिवाष्टोत्तरशतनाम स्तोत्र एवं नामावली** | **23 Texts** |
 | **2** | **श्रीमद्भगवद्गीता (सटीक)** | गीताप्रेस कोड: **11** / **16** / **18** | ₹60 – ₹200 | सम्पूर्ण भगवद्गीता (अध्याय १ से १८) | **18 Texts** |
 | **3** | **चालीसा संग्रह / आरती-चालीसा** | गीताप्रेस कोड: **1374** / **1404** | ₹40 – ₹60 | शिव, दुर्गा, गणेश, लक्ष्मी, सरस्वती, शनि, सूर्य, कृष्ण, राम, गायत्री, भैरव चालीसा + ६ दैनिक महाआरतियां | **17 Texts** |
 | **4** | **ईशादि नौ उपनिषद् (सानुवाद)** | गीताप्रेस कोड: **90** / **610** | ₹110 | ईश, केन, कठ, प्रश्न, मुण्डक, माण्डूक्य, तैत्तिरीय उपनिषद् | **7 Texts** |
@@ -43,22 +43,22 @@ Rather than buying 86 individual thin booklets (which would cost more, clutter b
 | **14** | **श्री विश्वकर्मा पुराण एवं माहात्म्य** | रणधीर प्रकाशन / देहाती पुस्तक भण्डार | ₹70 – ₹120 | विश्वकर्मा चालीसा, आरती, सूक्त, स्तोत्रम् व अष्टकम्, पुराण कथा | **5 Texts** |
 | **15** | **चित्रकूट दर्शन एवं कामदनाथ माहात्म्य** | कामतानाथ मन्दिर ट्रस्ट / कल्याण तीर्थाङ्क (132) | ₹50 – ₹100 | श्री कामतानाथ स्तुति, कामदनाथ आरती, मन्दाकिनी स्तोत्रम् | **3 Texts** |
 | **16** | **ऋग्वेद संहिता (प्रथम मण्डल)** | गीताप्रेस कोड: **1947** / चौखम्बा | ₹180 – ₹250 | ऋग्वेद मण्डल १, सूक्त १ (अग्नि सूक्त) | **1 Text** |
-| **कुल** | **१६ भौतिक ग्रन्थ (Complete Master Pack)** | — | **~₹1,200 – ₹1,800** | **सम्पूर्ण ८६ ग्रन्थ (100% of Gyankosh)** | **86 Texts** |
+| **कुल** | **१६ भौतिक ग्रन्थ (Complete Master Pack)** | — | **~₹1,200 – ₹1,800** | **सम्पूर्ण ९१ ग्रन्थ (100% of Gyankosh)** | **91 Texts** |
 
 ---
 
 ### 🛒 Purchasing Phases & Strategy
 
-#### 🥇 Tier 1: The Essential Core 5 Compilations (Covers 63+ Texts ~ 73%)
+#### 🥇 Tier 1: The Essential Core 5 Compilations (Covers 68+ Texts ~ 75%)
 > **Budget**: ~₹550 – ₹800  
 > **Where to buy**: Any local Gita Press bookstore, railway station stall, or official [Gita Press Book Shop](https://gitapressbookshop.in).
-1. **स्तोत्र-रत्नावली (गीताप्रेस कोड: 65)** — The undisputed encyclopaedia of Sanskrit devotional hymns. Instantly unlocks verification for 18 master stotras and suktams.
+1. **स्तोत्र-रत्नावली (गीताप्रेस कोड: 65)** — The undisputed encyclopaedia of Sanskrit devotional hymns. Verifies 23 master stotras, suktams, and Shiva texts (including Shiva Panchakshara, Manasa Puja, Jyotirlinga, and Ashtottara Shatinama Stotram/Namavali).
 2. **श्रीमद्भगवद्गीता (गीताप्रेस कोड: 11 या 16)** — Complete 18 chapters with shloka-by-shloka anvaya and Hindi translation.
 3. **चालीसा-संग्रह / आरती-चालीसा संग्रह (गीताप्रेस कोड: 1374 / 1404)** — Standard reference for daily devotional practice across all deities.
 4. **ईशादि नौ उपनिषद् (गीताप्रेस कोड: 90)** — Verifies all 7 principal Upanishads included in Gyankosh in one stroke.
 5. **श्रीरामचरितमानस (गीताप्रेस कोड: 1 या 2)** — The gold standard for Awadhi Ramkatha, Sundarkand, and Ram Janmotsava.
 
-#### 🥈 Tier 2: Extended Classical Pack (4 Books — Brings Coverage to 73 Texts ~ 85%)
+#### 🥈 Tier 2: Extended Classical Pack (4 Books — Brings Coverage to 78 Texts ~ 86%)
 > **Budget**: ~₹250 – ₹400
 6. **श्रीहनुमान-बाहुक (गीताप्रेस कोड: 1530)** — Authentic Brajbhasha stuti of 44 verses by Goswami Tulsidas.
 7. **विनय-पत्रिका (गीताप्रेस कोड: 108)** — Essential for verifying Tulsidas's finest classical lyrics including *Shri Ramachandra Kripalu*.
@@ -75,7 +75,7 @@ Rather than buying 86 individual thin booklets (which would cost more, clutter b
 
 ---
 
-## 📋 Master 86-Text Verification Checklist
+## 📋 Master 91-Text Verification Checklist
 
 > 💡 **How to Use**: Use the interactive GitHub checkboxes below to track your progress as you inspect each text against the physical book. Check off each row after verifying Sanskrit/Awadhi spelling, verse numbering, and Hindi meaning.
 
@@ -167,6 +167,11 @@ Rather than buying 86 individual thin booklets (which would cost more, clutter b
 | [ ] | **840** | **विनयपत्रिका — चित्रकूट महिमा एवं राम-निवेदन**<br>([`vinaya-patrika-chitrakoot.md`](file:///a:/GitHub/Gyankosh/src/content/library/vinaya-patrika-chitrakoot.md)) | `Stotra` | विनय-पत्रिका सटीक (गीताप्रेस कोड 108 / 109) | चित्रकूट महिमा पद (पद २६४ 'अब चित चेति चित्रकूटहि चलु', पद २६५, १७४ 'जाके प्रिय न राम बैदेही') | तुलसीदास जी का आत्म-बोधन, चित्रकूट की परम पावनता, शरणागति भाव |
 | [ ] | **850** | **श्री हनुमान बाहुक**<br>([`hanuman-bahuk.md`](file:///a:/GitHub/Gyankosh/src/content/library/hanuman-bahuk.md)) | `Stotra` | श्रीहनुमान-बाहुक सटीक (गीताप्रेस कोड 1530 / गुटका) | सम्पूर्ण ४४ छन्द (छप्पय, सवैया, घनाक्षरी/कवित्त, झूलना) | बाहु-पीड़ा मुक्ति, कलि-दोष निवारण, छन्द १-४४ की संख्या व क्रमबद्धता, ब्रजभाषा वर्तनी |
 | [ ] | **860** | **श्रीरामसहस्रनाम स्तोत्रम्**<br>([`ram-sahasranama.md`](file:///a:/GitHub/Gyankosh/src/content/library/ram-sahasranama.md)) | `Stotra` | श्रीरामसहस्रनामस्तोत्रम् (गीताप्रेस कोड 1876 / आनन्दरामायण राज्यकाण्ड) | भगवान शिव-पार्वती संवाद (पूर्वपीठिका, १००० पावन नाम, फलश्रुति) | मर्यादा पुरुषोत्तम के १००० दिव्य नाम, ध्यान श्लोक, नामानुक्रमणिका, 'ॐ रामचन्द्राय नमः' आदि |
+| [ ] | **870** | **श्रीशिवपञ्चाक्षरस्तोत्रम्**<br>([`shiva-panchakshara-stotram.md`](file:///a:/GitHub/Gyankosh/src/content/library/shiva-panchakshara-stotram.md)) | `Stotra` | स्तोत्र-रत्नावली (गीताप्रेस कोड 65) | शिव स्तोत्र खण्ड (आदिशङ्कराचार्य विरचित, ६ श्लोक मय फलश्रुति) | न-म-शि-वा-य बीजाक्षर, 'नागेन्द्रहाराय त्रिलोचनाय', 'मन्दाकिनीसलिलचन्दनचर्चिताय', 'शिवलोकमवाप्नोति शिवेन सह मोदते' |
+| [ ] | **880** | **श्रीशिवमानसपूजा**<br>([`shiva-manasa-puja.md`](file:///a:/GitHub/Gyankosh/src/content/library/shiva-manasa-puja.md)) | `Stotra` | स्तोत्र-रत्नावली (गीताप्रेस कोड 65) | शिव स्तोत्र खण्ड (आदिशङ्कराचार्य विरचित, ५ श्लोक) | 'रत्नैः कल्पितमासनं', 'सौवर्णे नवरत्नखण्डरचिते पात्रे', 'आत्मा त्वं गिरिजा मतिः', 'करचरणकृतं वाक्कायजं', अद्वैत पराभक्ति |
+| [ ] | **890** | **द्वादशज्योतिर्लिङ्ग स्मरणम् एवं स्तोत्रम्**<br>([`dwadash-jyotirlinga-stotram.md`](file:///a:/GitHub/Gyankosh/src/content/library/dwadash-jyotirlinga-stotram.md)) | `Stotra` | स्तोत्र-रत्नावली (गीताप्रेस कोड 65) / शिवपुराण कोटिरुद्रसंहिता १ | द्वादश ज्योतिर्लिङ्ग खण्ड (महर्षि व्यास विरचित, ६ श्लोक मय फलश्रुति) | १२ ज्योतिर्लिङ्गों के नाम व स्थान: सोमनाथ, मल्लिकार्जुन, महाकाल, ॐकार, वैद्यनाथ, भीमशङ्कर, रामेश, नागेश, विश्वेश, त्र्यम्बक, केदार, घुश्मेश |
+| [ ] | **900** | **श्रीशिवाष्टोत्तरशतनामस्तोत्रम्**<br>([`shiva-ashtottara-shatanama-stotram.md`](file:///a:/GitHub/Gyankosh/src/content/library/shiva-ashtottara-shatanama-stotram.md)) | `Stotra` | स्तोत्र-रत्नावली (गीताप्रेस कोड 65) / स्कन्दपुराण | शिव स्तोत्र खण्ड (अनुष्टुप् छन्द, १६ श्लोक मय १०८ नाम व फलश्रुति) | १०८ नाम: शिव, महेश्वर, शम्भु, पिनाकी, शशिशेखर से लेकर तारक, परमेश्वर पर्यन्त |
+| [ ] | **910** | **श्रीशिवाष्टोत्तरशतनामावली**<br>([`shiva-ashtottara-shatanamavali.md`](file:///a:/GitHub/Gyankosh/src/content/library/shiva-ashtottara-shatanamavali.md)) | `Stotra` | स्तोत्र-रत्नावली (गीताप्रेस कोड 65) / शिव पूजापद्धति | १०८ नामावली अर्चना मन्त्राः (ॐ ... नमः) | १०८ अर्चना मन्त्र (चतुर्थी विभक्ति सानुवाद): 'ॐ शिवाय नमः' से 'ॐ परमेश्वराय नमः' तक |
 
 ---
 
@@ -200,7 +205,7 @@ When verifying a text from Gyankosh against a physical book, execute the followi
 
 ## 📜 Completed Library Roadmap & Phase History
 
-Gyankosh content has been developed systematically across 7 dedicated phases, accumulating **86 master texts**:
+Gyankosh content has been developed systematically across 8 dedicated phases, accumulating **91 master texts**:
 
 ### 📌 Phase 1: Foundations of Devotion (Daily Chalisas & Aartis) [COMPLETED]
 - [x] **12 Daily Chalisas**: Hanuman, Shiva, Durga, Ganesh, Lakshmi, Saraswati, Shani, Surya, Krishna, Ram, Gayatri, Bhairav.
@@ -253,6 +258,13 @@ Gyankosh content has been developed systematically across 7 dedicated phases, ac
 - [x] **विनयपत्रिका — चित्रकूट महिमा एवं राम-निवेदन** (`vinaya-patrika-chitrakoot.md`)
 - [x] **श्री हनुमान बाहुक** (`hanuman-bahuk.md`) — गोस्वामी तुलसीदास कृत ४४ पावन पद
 - [x] **श्रीरामसहस्रनाम स्तोत्रम्** (`ram-sahasranama.md`) — आनन्द रामायण राज्यकाण्ड (१,००० दिव्य नाम)
+
+### 📌 Phase 8: Sacred Shiva Stotras & Namavali Collection (श्री मत्यगजेंद्र नाथ एवं शिव स्तोत्र संग्रह) [COMPLETED]
+- [x] **श्रीशिवपञ्चाक्षरस्तोत्रम्** (`shiva-panchakshara-stotram.md`) — आदिशङ्कराचार्य विरचित (६ श्लोक)
+- [x] **श्रीशिवमानसपूजा** (`shiva-manasa-puja.md`) — आदिशङ्कराचार्य विरचित षोडशोपचार मानस पूजा
+- [x] **द्वादशज्योतिर्लिङ्ग स्मरणम् एवं स्तोत्रम्** (`dwadash-jyotirlinga-stotram.md`) — शिवपुराण कोटिरुद्रसंहिता १
+- [x] **श्रीशिवाष्टोत्तरशतनामस्तोत्रम्** (`shiva-ashtottara-shatanama-stotram.md`) — स्कन्दपुराण (१०८ नाम)
+- [x] **श्रीशिवाष्टोत्तरशतनामावली** (`shiva-ashtottara-shatanamavali.md`) — १०८ पावन मन्त्र-नामावली सानुवाद
 
 ---
 

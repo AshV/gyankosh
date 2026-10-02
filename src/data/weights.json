@@ -1,7 +1,7 @@
 {
   "_description": "Gyankosh Master Weight Registry (Single Source of Truth). Lower number = higher priority.",
-  "highestWeight": 860,
-  "nextRecommendedWeight": 870,
+  "highestWeight": 910,
+  "nextRecommendedWeight": 920,
   "weights": {
     "hanuman-chalisa": 10,
     "sundarkand": 20,
@@ -88,6 +88,11 @@
     "ramcharitmanas-chitrakoot-prasang": 830,
     "vinaya-patrika-chitrakoot": 840,
     "hanuman-bahuk": 850,
-    "ram-sahasranama": 860
+    "ram-sahasranama": 860,
+    "shiva-panchakshara-stotram": 870,
+    "shiva-manasa-puja": 880,
+    "dwadash-jyotirlinga-stotram": 890,
+    "shiva-ashtottara-shatanama-stotram": 900,
+    "shiva-ashtottara-shatanamavali": 910
   }
 }
