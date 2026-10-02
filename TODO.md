@@ -2,7 +2,7 @@
 
 > 🎯 **Master Verification Directive**: Every sacred text in Gyankosh is verified word-for-word against authoritative physical scriptures.  
 > 🏛️ **Primary Publisher Standard**: **गीता प्रेस, गोरखपुर (Gita Press, Gorakhpur)** — revered for scholarly textual accuracy, authentic sandhi/anvaya, and affordable, non-profit pricing. Complementary editions from **चौखम्बा (Chaukhamba)** and **मन्दिर ट्रस्ट (Temple Trusts)** are used for specialized texts.  
-> ⚖️ **Single Source of Truth**: [`src/data/weights.json`](file:///a:/GitHub/Gyanko> 📊 **Current Library Status**: **97 Sacred Texts Total** | **0 Unverified** placeholder entries | 100% full content.
+> ⚖️ **Single Source of Truth**: [`src/data/weights.json`](file:///a:/GitHub/Gyanko> 📊 **Current Library Status**: **108 Sacred Texts Total (✨ 108 Sacred Milestone Achieved)** | **0 Unverified** placeholder entries | 100% full content.
 
 ---
 
@@ -20,13 +20,13 @@
 
 ## 📚 Optimized Physical Book Purchasing Guide
 
-Rather than buying 97 individual thin booklets (which would cost more, clutter bookshelves, and often contain non-standard bazaar errors), the entire Gyankosh library is engineered to be verified using just **16 authoritative physical compilations** (संग्रह ग्रन्थ).
+Rather than buying 108 individual thin booklets (which would cost more, clutter bookshelves, and often contain non-standard bazaar errors), the entire Gyankosh library is engineered to be verified using just **16 authoritative physical compilations** (संग्रह ग्रन्थ).
 
 ### 🏷️ Purchasing Summary Table
 
 | # | ग्रन्थ का नाम (Book Title) | प्रकाशक एवं कोड (Publisher & Code) | मूल्य (Est. Price) | Gyankosh Texts Covered | कवर्ड ग्रन्थों की संख्या |
 | :-: | :--- | :--- | :--- | :--- | :-: |
-| **1** | **स्तोत्र-रत्नावली (सटीक)** | गीताप्रेस कोड: **65** | ₹140 | विष्णुसहस्रनाम, शिवताण्डव, शिवमहिम्न, रुद्राष्टक, कनकधारा, महिषासुरमर्दिनी, आदित्यहृदय, मधुराष्टक, कालभैरवाष्टक, नवग्रह, गंगा, दामोदराष्टक, रामरक्षा, रामाष्टक, श्रीसूक्त, पुरुषसूक्त, नारायणसूक्त, गोपीगीत, **शिवपञ्चाक्षर, शिवमानसपूजा, द्वादशज्योतिर्लिङ्ग, शिवाष्टोत्तरशतनाम स्तोत्र एवं नामावली** | **23 Texts** |
+| **1** | **स्तोत्र-रत्नावली (सटीक)** | गीताप्रेस कोड: **65** | ₹140 | विष्णुसहस्रनाम, शिवताण्डव, शिवमहिम्न, रुद्राष्टक, कनकधारा, महिषासुरमर्दिनी, आदित्यहृदय, मधुराष्टक, कालभैरवाष्टक, नवग्रह, गंगा, दामोदराष्टक, रामरक्षा, रामाष्टक, श्रीसूक्त, पुरुषसूक्त, नारायणसूक्त, गोपीगीत, शिवपञ्चाक्षर, शिवमानसपूजा, द्वादशज्योतिर्लिङ्ग, शिवाष्टोत्तरशतनाम स्तोत्र एवं नामावली, **निर्वाणषट्कम्, भज गोविन्दम्, भवान्यष्टकम्, देव्यपराधक्षमापन, अच्युताष्टकम्, बिल्वाष्टकम्, लिङ्गाष्टकम्, शिवापराधक्षमापन, नारायणकवच** | **32 Texts** |
 | **2** | **श्रीमद्भगवद्गीता (सटीक)** | गीताप्रेस कोड: **11** / **16** / **18** | ₹60 – ₹200 | सम्पूर्ण भगवद्गीता (अध्याय १ से १८) | **18 Texts** |
 | **3** | **चालीसा संग्रह / आरती-चालीसा** | गीताप्रेस कोड: **1374** / **1404** | ₹40 – ₹60 | शिव, दुर्गा, गणेश, लक्ष्मी, सरस्वती, शनि, सूर्य, कृष्ण, राम, गायत्री, भैरव चालीसा + ६ दैनिक महाआरतियां | **17 Texts** |
 | **4** | **ईशादि नौ उपनिषद् (सानुवाद)** | गीताप्रेस कोड: **90** / **610** | ₹110 | ईश, केन, कठ, प्रश्न, मुण्डक, माण्डूक्य, तैत्तिरीय उपनिषद् | **7 Texts** |
@@ -41,7 +41,7 @@ Rather than buying 97 individual thin booklets (which would cost more, clutter b
 | **13** | **श्रीरामसहस्रनामस्तोत्रम्** | गीताप्रेस कोड: **1876** (या आनन्दरामायण) | ₹50 – ₹90 | श्रीरामसहस्रनाम स्तोत्रम् (आनन्द रामायण / शिव-पार्वती संवाद) | **1 Text** |
 | **14** | **श्री विश्वकर्मा पुराण एवं माहात्म्य** | रणधीर प्रकाशन / देहाती पुस्तक भण्डार | ₹70 – ₹120 | विश्वकर्मा चालीसा, आरती, सूक्त, स्तोत्रम् व अष्टकम्, पुराण कथा | **5 Texts** |
 | **15** | **चित्रकूट दर्शन एवं कामदनाथ माहात्म्य** | कामतानाथ मन्दिर ट्रस्ट / कल्याण तीर्थाङ्क (132) | ₹50 – ₹100 | श्री कामतानाथ स्तुति, कामदनाथ आरती, मन्दाकिनी स्तोत्रम् | **3 Texts** |
-| **कुल** | **१६ भौतिक ग्रन्थ (Complete Master Pack)** | — | **~₹1,200 – ₹1,800** | **सम्पूर्ण ९७ ग्रन्थ (100% of Gyankosh)** | **97 Texts** |
+| **कुल** | **१६ भौतिक ग्रन्थ (Complete Master Pack)** | — | **~₹1,200 – ₹1,800** | **सम्पूर्ण १०८ पावन ग्रन्थ (100% of Gyankosh — 108 Milestone)** | **108 Texts** |
 
 ---
 
@@ -73,7 +73,7 @@ Rather than buying 97 individual thin booklets (which would cost more, clutter b
 
 ---
 
-## 📋 Master 91-Text Verification Checklist
+## 📋 Master 108-Text Verification Checklist
 
 > 💡 **How to Use**: Use the interactive GitHub checkboxes below to track your progress as you inspect each text against the physical book. Check off each row after verifying Sanskrit/Awadhi spelling, verse numbering, and Hindi meaning.
 
@@ -176,6 +176,17 @@ Rather than buying 97 individual thin booklets (which would cost more, clutter b
 | [ ] | **950** | **श्रीरामचरितमानस — किष्किन्धाकाण्ड**<br>([`ramcharitmanas-kishkindhakand.md`](file:///a:/GitHub/Gyankosh/src/content/library/ramcharitmanas-kishkindhakand.md)) | `Purana` | श्रीरामचरितमानस सटीक (गीताप्रेस कोड 1 / 2 / 7) | चतुर्थ सोपान (सम्पूर्ण ३० दोहे, पम्पा सरोवर, हनुमान-राम मिलन, सुग्रीव सख्य, बालि वध, वर्षा-शरद वर्णन, सीता-खोज) | 'कुन्देन्दीवरसुन्दरावतिबलौ', 'मुक्ति जन्म महि जानि', बालि उद्धार, वर्षा-शरद रूपक |
 | [ ] | **960** | **श्रीरामचरितमानस — लङ्काकाण्ड**<br>([`ramcharitmanas-lankakand.md`](file:///a:/GitHub/Gyankosh/src/content/library/ramcharitmanas-lankakand.md)) | `Purana` | श्रीरामचरितमानस सटीक (गीताप्रेस कोड 1 / 2 / 7) | षष्ठ सोपान (सम्पूर्ण १२१ दोहे, नल-नील सेतु निर्माण, अंगद दूत प्रसंग, महायुद्ध, लक्ष्मण-शक्ति, मेघनाद-कुम्भकर्ण-रावण वध, विभीषण राज्याभिषेक) | 'रामं कामारिसेव्यं', 'लव निमेष परमानु जुग', अंगद चरण रोपण, रावण वध, मन्दोदरी विलाप, अग्निपरीक्षा |
 | [ ] | **970** | **श्रीरामचरितमानस — उत्तरकाण्ड**<br>([`ramcharitmanas-uttarakand.md`](file:///a:/GitHub/Gyankosh/src/content/library/ramcharitmanas-uttarakand.md)) | `Purana` | श्रीरामचरितमानस सटीक (गीताप्रेस कोड 1 / 2 / 7) | सप्तम सोपान (सम्पूर्ण १३० दोहे, श्रीराम राज्याभिषेक, रामराज्य वर्णन, कागभुशुण्डि-गरुड़ संवाद, मानस रोग निरूपण, रामायण आरती व माहात्म्य) | 'केकीकण्ठाभनीलं', 'रहा एक दिन अवधि कर', रामराज्य महिमा, ज्ञान-दीपक, मानस रोग, कलिमल विध्वंसन |
+| [ ] | **980** | **निर्वाणषट्कम्**<br>([`nirvana-shatkam.md`](file:///a:/GitHub/Gyankosh/src/content/library/nirvana-shatkam.md)) | `Stotra` | स्तोत्र-रत्नावली (गीताप्रेस कोड 65) | स्तोत्र खण्ड (आदिशङ्कराचार्य विरचित, ६ श्लोक) | 'मनोबुद्ध्यहङ्कारचित्तानि नाहं', 'चिदानन्दरूपः शिवोऽहं शिवोऽहम्', अद्वैत परमहंस भावार्थ |
+| [ ] | **990** | **भज गोविन्दम् (चर्पटपञ्जरिका)**<br>([`bhaja-govindam.md`](file:///a:/GitHub/Gyankosh/src/content/library/bhaja-govindam.md)) | `Stotra` | स्तोत्र-रत्नावली (गीताप्रेस कोड 65) | वैराग्य स्तोत्र खण्ड (आदिशङ्कराचार्य विरचित, ३१ श्लोक) | 'भज गोविन्दं भज गोविन्दं', 'डुकृञ्करणे', 'का ते कान्ता कस्ते पुत्रः', 'सत्सङ्गत्वे निस्सङ्गत्वं', वैराग्य-ज्ञान भावार्थ |
+| [ ] | **1000** | **भवान्यष्टकम्**<br>([`bhavani-ashtakam.md`](file:///a:/GitHub/Gyankosh/src/content/library/bhavani-ashtakam.md)) | `Stotra` | स्तोत्र-रत्नावली (गीताप्रेस कोड 65) | देवी स्तोत्र खण्ड (आदिशङ्कराचार्य विरचित, ८ श्लोक) | 'न तातो न माता न बन्धुर्न दाता', 'गतिस्त्वं गतिस्त्वं त्वमेका भवानि', अनन्य शरणागति |
+| [ ] | **1010** | **देव्यपराधक्षमापनस्तोत्रम्**<br>([`devi-aparadha-kshamapana-stotram.md`](file:///a:/GitHub/Gyankosh/src/content/library/devi-aparadha-kshamapana-stotram.md)) | `Stotra` | स्तोत्र-रत्नावली (गीताप्रेस कोड 65) | देवी स्तोत्र खण्ड (आदिशङ्कराचार्य विरचित, १२ श्लोक) | 'न मन्त्रं नो यन्त्रं', 'कुपुत्रो जायेत क्वचिदपि कुमाता न भवति', 'मत्समः पातकी नास्ति' |
+| [ ] | **1020** | **अच्युताष्टकम्**<br>([`achyutashtakam.md`](file:///a:/GitHub/Gyankosh/src/content/library/achyutashtakam.md)) | `Stotra` | स्तोत्र-रत्नावली (गीताप्रेस कोड 65) | विष्णु स्तोत्र खण्ड (आदिशङ्कराचार्य विरचित, ८ श्लोक मय फलश्रुति) | 'अच्युतं केशवं रामनारायणं कृष्णदामोदरं वासुदेवं हरिम्', राम-कृष्ण लीला, फलश्रुति |
+| [ ] | **1030** | **बिल्वाष्टकम्**<br>([`bilvashtakam.md`](file:///a:/GitHub/Gyankosh/src/content/library/bilvashtakam.md)) | `Stotra` | स्तोत्र-रत्नावली (गीताप्रेस कोड 65) / शिवपुराण | शिव स्तोत्र खण्ड (८ श्लोक मय फलश्रुति) | 'त्रिदलं त्रिगुणाकारं त्रिनेत्रं च त्रियायुधम्', 'एकबिल्वं शिवार्पणम्', 'मूलतो ब्रह्मरूपाय' |
+| [ ] | **1040** | **लिङ्गाष्टकम्**<br>([`lingashtakam.md`](file:///a:/GitHub/Gyankosh/src/content/library/lingashtakam.md)) | `Stotra` | स्तोत्र-रत्नावली (गीताप्रेस कोड 65) / ब्रह्मपुराण | शिव स्तोत्र खण्ड (८ श्लोक मय फलश्रुति) | 'ब्रह्ममुरारिसुरार्चितलिङ्गं निर्मलभासितशोभितलिङ्गम्', 'तत् प्रणमामि सदाशिवलिङ्गम्', फलश्रुति |
+| [ ] | **1050** | **शिवापराधक्षमापनस्तोत्रम्**<br>([`shiva-aparadha-kshamapana-stotram.md`](file:///a:/GitHub/Gyankosh/src/content/library/shiva-aparadha-kshamapana-stotram.md)) | `Stotra` | स्तोत्र-रत्नावली (गीताप्रेस कोड 65) | शिव स्तोत्र खण्ड (आदिशङ्कराचार्य विरचित, १४ श्लोक) | 'आदौ कर्मप्रसङ्गात् कलयति कलुषं', 'करचरणकृतं वाक्कायजं कर्मजं वा', 'श्रीमहादेव शम्भो' |
+| [ ] | **1060** | **नारायणकवचम्**<br>([`narayana-kavach.md`](file:///a:/GitHub/Gyankosh/src/content/library/narayana-kavach.md)) | `Stotra` | श्रीमद्भागवतमहापुराण (गीताप्रेस कोड 25) / स्तोत्र-रत्नावली (कोड 65) | षष्ठ स्कन्ध अध्याय ८ (विश्वरूप-इन्द्र संवाद, ३४ श्लोक मय न्यास व फलश्रुति) | अङ्गन्यास, करन्यास, 'हरिविदध्यान्मम सर्वरक्षां', समस्त दिशा व अङ्ग रक्षा, कौशिक मुनि आख्यान |
+| [ ] | **1070** | **शिवसङ्कल्पसूक्तम्**<br>([`shiva-sankalpa-suktam.md`](file:///a:/GitHub/Gyankosh/src/content/library/shiva-sankalpa-suktam.md)) | `Veda` | शुक्लयजुर्वेद संहिता (गीताप्रेस कोड 1947) / वैदिक सूक्त संग्रह | शुक्लयजुर्वेद अध्याय ३४ (मन्त्र १-६, शिवसङ्कल्प सूक्त) | 'यज्जाग्रतो दूरमुदैति दैवं', 'तन्मे मनः शिवसङ्कल्पमस्तु', वैदिक पद-परिचय एवं सानुवाद |
+| [ ] | **1080** | **वैदिक शान्तिपाठ**<br>([`vaidic-shanti-path.md`](file:///a:/GitHub/Gyankosh/src/content/library/vaidic-shanti-path.md)) | `Veda` | शुक्लयजुर्वेद संहिता (गीताप्रेस कोड 1947) / ईशादि नौ उपनिषद् (कोड 90) | यजुर्वेद ३६.१७, बृहदारण्यक, ईश, तैत्तिरीय, प्रश्न उपनिषद् एवं ऋग्वेद संज्ञान सूक्त | 'द्यौः शान्तिरन्तरिक्षं शान्तिः', 'असतो मा सद्गमय', 'पूर्णमदः पूर्णमिदं', 'सह नाववतु', 'भद्रं कर्णेभिः' |
 
 ---
 
@@ -272,4 +283,28 @@ Gyankosh content has been developed systematically across 8 dedicated phases, ac
 
 ---
 
-*Last updated: Master Physical Verification Edition, Oct 2026*
+### 📌 Phase 9: Shri Ramcharitmanas Complete 7 Kandas (सम्पूर्ण सप्तकाण्ड संग्रह) [COMPLETED]
+- [x] **बालकाण्ड** (`ramcharitmanas-balakand.md`) — ३६१ दोहे (मंगलाचरण, शिव चरित, राम जन्म, धनुष-यज्ञ, सीता विवाह)
+- [x] **अयोध्याकाण्ड** (`ramcharitmanas-ayodhyakand.md`) — ३२६ दोहे (राम-वन गमन, केवट प्रसंग, चित्रकूट निवास, भरत मिलाप)
+- [x] **अरण्यकाण्ड** (`ramcharitmanas-aranyakand.md`) — ४६ दोहे (अत्रि-अनुसूया, पञ्चवटी, शूर्पणखा, सीता हरण, जटायु, शबरी)
+- [x] **किष्किन्धाकाण्ड** (`ramcharitmanas-kishkindhakand.md`) — ३० दोहे (सुग्रीव सख्य, बालि उद्धार, वर्षा-शरद वर्णन, सीता-खोज)
+- [x] **सुन्दरकाण्ड** (`sundarkand.md`) — ६० दोहे (हनुमान लंका गमन, अशोक वाटिका, लंका दहन, विभीषण शरणागति)
+- [x] **लङ्काकाण्ड** (`ramcharitmanas-lankakand.md`) — १२१ दोहे (सेतु-निर्माण, अंगद संवाद, महायुद्ध, कुम्भकर्ण-मेघनाद-रावण वध)
+- [x] **उत्तरकाण्ड** (`ramcharitmanas-uttarakand.md`) — १३० दोहे (राम राज्याभिषेक, रामराज्य, कागभुशुण्डि-गरुड़ संवाद, मानस रोग)
+
+### 📌 Phase 10: 108 Sacred Texts Milestone (Classical Stotras, Kavach & Vedic Peace Collection) [COMPLETED]
+- [x] **निर्वाणषट्कम्** (`nirvana-shatkam.md`) — आदि शङ्कराचार्य विरचित 'चिदानन्दरूपः शिवोऽहं शिवोऽहम्' (६ श्लोक)
+- [x] **भज गोविन्दम्** (`bhaja-govindam.md`) — चर्पटपञ्जरिका / मोहमुद्गरः (सम्पूर्ण ३१ श्लोक)
+- [x] **भवान्यष्टकम्** (`bhavani-ashtakam.md`) — आदि शङ्कराचार्य विरचित 'गतिस्त्वं गतिस्त्वं त्वमेका भवानि' (८ श्लोक)
+- [x] **देव्यपराधक्षमापनस्तोत्रम्** (`devi-aparadha-kshamapana-stotram.md`) — 'कुपुत्रो जायेत क्वचिदपि कुमाता न भवति' (१२ श्लोक)
+- [x] **अच्युताष्टकम्** (`achyutashtakam.md`) — 'अच्युतं केशवं रामनारायणम्' (८ श्लोक मय फलश्रुति)
+- [x] **बिल्वाष्टकम्** (`bilvashtakam.md`) — 'त्रिदलं त्रिगुणाकारं... एकबिल्वं शिवार्पणम्' (८ श्लोक मय फलश्रुति)
+- [x] **लिङ्गाष्टकम्** (`lingashtakam.md`) — 'ब्रह्ममुरारिसुरार्चितलिङ्गम्' (८ श्लोक मय फलश्रुति)
+- [x] **शिवापराधक्षमापनस्तोत्रम्** (`shiva-aparadha-kshamapana-stotram.md`) — 'करचरणकृतं वाक्कायजं कर्मजं वा' (१४ श्लोक)
+- [x] **नारायणकवचम्** (`narayana-kavach.md`) — श्रीमद्भागवतमहापुराण ६.८ (विश्वरूप-इन्द्र संवाद, ३४ श्लोक मय न्यास)
+- [x] **शिवसङ्कल्पसूक्तम्** (`shiva-sankalpa-suktam.md`) — शुक्लयजुर्वेद ३४.१-६ 'तन्मे मनः शिवसङ्कल्पमस्तु' (६ मन्त्र)
+- [x] **वैदिक शान्तिपाठ** (`vaidic-shanti-path.md`) — शुक्लयजुर्वेद ३६.१७ एवं उपनिषदीय महाशान्तिमन्त्र
+
+---
+
+*Last updated: Master Physical Verification Edition — 108 Sacred Texts Milestone, Oct 2026*

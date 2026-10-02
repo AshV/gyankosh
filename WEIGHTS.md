@@ -11,9 +11,9 @@
 | Metric | Value |
 | :--- | :--- |
 | **Source of Truth** | [`src/data/weights.json`](file:///a:/GitHub/Gyankosh/src/data/weights.json) |
-| **Total Sacred Texts** | `97` |
-| **Highest Weight Allocated** | `970` |
-| **Next Recommended Weight** | **`980`** (increment by 10) |
+| **Total Sacred Texts** | `108` (✨ 108 Sacred Milestone Achieved) |
+| **Highest Weight Allocated** | `1080` |
+| **Next Recommended Weight** | **`1090`** (increment by 10) |
 | **Default Fallback Weight** | `1000` |
 
 ---
@@ -33,7 +33,8 @@ Gyankosh assigns weights in blocks of 10 to allow future insertions without renu
 | **700 – 740** | **Lord Vishwakarma Corpus** | Chalisa (700), Aarti (710), Suktam (720), Stotram (730), Puran (740) |
 | **750 – 860** | **Lord Rama, Hanuman & Chitrakoot Corpus** | Ramashtakam (750), Ram Raksha (760), Bahuk (850), Ram Sahasranama (860) |
 | **870 – 910** | **Lord Shiva Stotras & Namavali Corpus** | Panchakshara (870), Manasa Puja (880), Jyotirlinga (890), Ashtottara (900), Namavali (910) |
-| **920+** | **Next Planned Additions** | Ready for next texts |
+| **920 – 970** | **Shri Ramcharitmanas Complete Kandas** | Balakand (920), Ayodhya (930), Aranya (940), Kishkindha (950), Lanka (960), Uttara (970) |
+| **980 – 1080** | **Classical Stotras, Kavach & Vedic Suktam (108 Milestone)** | Nirvana Shatkam (980), Bhaja Govindam (990), Bhavani Ashtakam (1000), Devi Aparadha (1010), Achyutashtakam (1020), Bilvashtakam (1030), Lingashtakam (1040), Shiva Aparadha (1050), Narayana Kavach (1060), Shiva Sankalpa (1070), Vaidic Shanti Path (1080) |
 
 ---
 
@@ -138,6 +139,17 @@ Gyankosh assigns weights in blocks of 10 to allow future insertions without renu
 | **950** | Purana | श्रीरामचरितमानस — किष्किन्धाकाण्ड | `ramcharitmanas-kishkindhakand` |
 | **960** | Purana | श्रीरामचरितमानस — लङ्काकाण्ड | `ramcharitmanas-lankakand` |
 | **970** | Purana | श्रीरामचरितमानस — उत्तरकाण्ड | `ramcharitmanas-uttarakand` |
+| **980** | Stotra | निर्वाणषट्कम् | `nirvana-shatkam` |
+| **990** | Stotra | भज गोविन्दम् (चर्पटपञ्जरिका) | `bhaja-govindam` |
+| **1000** | Stotra | भवान्यष्टकम् | `bhavani-ashtakam` |
+| **1010** | Stotra | देव्यपराधक्षमापनस्तोत्रम् | `devi-aparadha-kshamapana-stotram` |
+| **1020** | Stotra | अच्युताष्टकम् | `achyutashtakam` |
+| **1030** | Stotra | बिल्वाष्टकम् | `bilvashtakam` |
+| **1040** | Stotra | लिङ्गाष्टकम् | `lingashtakam` |
+| **1050** | Stotra | शिवापराधक्षमापनस्तोत्रम् | `shiva-aparadha-kshamapana-stotram` |
+| **1060** | Stotra | नारायणकवचम् | `narayana-kavach` |
+| **1070** | Veda | शिवसङ्कल्पसूक्तम् | `shiva-sankalpa-suktam` |
+| **1080** | Veda | वैदिक शान्तिपाठ | `vaidic-shanti-path` |
 
 ---
 *Last updated: Master Physical Verification Edition, Oct 2026*

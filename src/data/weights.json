@@ -1,7 +1,7 @@
 {
   "_description": "Gyankosh Master Weight Registry (Single Source of Truth). Lower number = higher priority.",
-  "highestWeight": 970,
-  "nextRecommendedWeight": 980,
+  "highestWeight": 1080,
+  "nextRecommendedWeight": 1090,
   "weights": {
     "hanuman-chalisa": 10,
     "sundarkand": 20,
@@ -99,6 +99,17 @@
     "ramcharitmanas-aranyakand": 940,
     "ramcharitmanas-kishkindhakand": 950,
     "ramcharitmanas-lankakand": 960,
-    "ramcharitmanas-uttarakand": 970
+    "ramcharitmanas-uttarakand": 970,
+    "nirvana-shatkam": 980,
+    "bhaja-govindam": 990,
+    "bhavani-ashtakam": 1000,
+    "devi-aparadha-kshamapana-stotram": 1010,
+    "achyutashtakam": 1020,
+    "bilvashtakam": 1030,
+    "lingashtakam": 1040,
+    "shiva-aparadha-kshamapana-stotram": 1050,
+    "narayana-kavach": 1060,
+    "shiva-sankalpa-suktam": 1070,
+    "vaidic-shanti-path": 1080
   }
 }
