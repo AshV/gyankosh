@@ -1,176 +1,259 @@
-# Gyankosh Content Roadmap & ToDo List
+# Gyankosh Physical Book Verification Roadmap & Master Catalog
 
-This document tracks all planned sacred texts, scriptures, and stotras for Gyankosh, organized by category, priority, and SEO/devotional impact.
-
-> ⚖️ **Weight Registry**: For the complete list of text sorting weights and the next available weight (**`750`**), see [`WEIGHTS.md`](file:///a:/GitHub/Gyankosh/WEIGHTS.md) or run `npm run weights`.
-
----
-
-## ✅ Completed in Phases 1, 2, 3, 4, 5 & 6 (74 Texts Total)
-
-### 🪔 चालीसा (13)
-- [x] श्री हनुमान चालीसा (`hanuman-chalisa.md`)
-- [x] श्री शिव चालीसा (`shiva-chalisa.md`)
-- [x] श्री दुर्गा चालीसा (`durga-chalisa.md`)
-- [x] श्री गणेश चालीसा (`ganesh-chalisa.md`)
-- [x] श्री लक्ष्मी चालीसा (`lakshmi-chalisa.md`)
-- [x] श्री सरस्वती चालीसा (`saraswati-chalisa.md`)
-- [x] श्री शनि चालीसा (`shani-chalisa.md`)
-- [x] श्री सूर्य चालीसा (`surya-chalisa.md`)
-- [x] श्री कृष्ण चालीसा (`krishna-chalisa.md`)
-- [x] श्री राम चालीसा (`ram-chalisa.md`)
-- [x] श्री गायत्री चालीसा (`gayatri-chalisa.md`)
-- [x] श्री भैरव चालीसा (`bhairav-chalisa.md`)
-- [x] श्री विश्वकर्मा चालीसा (`vishwakarma-chalisa.md`)
-
-### 🌸 स्तोत्र, अष्टक एवं सहस्रनाम (17)
-- [x] श्री विष्णु सहस्रनाम स्तोत्रम् (`vishnu-sahasranama.md`)
-- [x] श्री ललिता सहस्रनाम स्तोत्रम् (`lalita-sahasranama.md`)
-- [x] शिवमहिम्नः स्तोत्रम् (`shiva-mahimna-stotram.md`)
-- [x] कनकधारा स्तोत्रम् (`kanakadhara-stotram.md`)
-- [x] शिव ताण्डव स्तोत्रम् (`shiva-tandava-stotram.md`)
-- [x] श्रीरुद्राष्टकम् (`rudrashtakam.md`)
-- [x] संकटमोचन हनुमानाष्टक (`sankat-mochan-hanuman-ashtak.md`)
-- [x] श्री बजरंग बाण (`bajrang-baan.md`)
-- [x] महिषासुरमर्दिनी स्तोत्रम् / अयि गिरिनन्दिनि (`mahishasura-mardini-stotram.md`)
-- [x] आदित्यहृदय स्तोत्रम् (`aditya-hridaya-stotram.md`)
-- [x] मधुराष्टकम् (`madhurashtakam.md`)
-- [x] कालभैरवाष्टकम् (`kala-bhairava-ashtakam.md`)
-- [x] नवग्रह स्तोत्रम् (`navagraha-stotram.md`)
-- [x] गंगा स्तोत्रम् (`ganga-stotram.md`)
-- [x] दुर्गा सप्तशती मुख्य स्तोत्र — कवच, अर्गला, कीलक (`durga-saptashati-traya.md`)
-- [x] दामोदराष्टकम् (`damodarashtakam.md`)
-- [x] श्री विश्वकर्मा स्तोत्रम् एवं अष्टकम् (`vishwakarma-stotram.md`)
-
-### 🎵 गीता (19 — सम्पूर्ण भगवद्गीता एवं अष्टावक्र गीता)
-- [x] श्रीमद्भगवद्गीता — अध्याय १: अर्जुनविषादयोग (`bhagavad-gita-ch1.md`)
-- [x] श्रीमद्भगवद्गीता — अध्याय २: सांख्ययोग (`bhagavad-gita-ch2.md`)
-- [x] श्रीमद्भगवद्गीता — अध्याय ३: कर्मयोग (`bhagavad-gita-ch3.md`)
-- [x] श्रीमद्भगवद्गीता — अध्याय ४: ज्ञानकर्मसंन्यासयोग (`bhagavad-gita-ch4.md`)
-- [x] श्रीमद्भगवद्गीता — अध्याय ५: कर्मसंन्यासयोग (`bhagavad-gita-ch5.md`)
-- [x] श्रीमद्भगवद्गीता — अध्याय ६: आत्मसंयमयोग / ध्यानयोग (`bhagavad-gita-ch6.md`)
-- [x] श्रीमद्भगवद्गीता — अध्याय ७: ज्ञानविज्ञानयोग (`bhagavad-gita-ch7.md`)
-- [x] श्रीमद्भगवद्गीता — अध्याय ८: अक्षरब्रह्मयोग (`bhagavad-gita-ch8.md`)
-- [x] श्रीमद्भगवद्गीता — अध्याय ९: राजविद्याराजगुह्ययोग (`bhagavad-gita-ch9.md`)
-- [x] श्रीमद्भगवद्गीता — अध्याय १०: विभूतियोग (`bhagavad-gita-ch10.md`)
-- [x] श्रीमद्भगवद्गीता — अध्याय ११: विश्वरूपदर्शनयोग (`bhagavad-gita-ch11.md`)
-- [x] श्रीमद्भगवद्गीता — अध्याय १२: भक्तियोग (`bhagavad-gita-ch12.md`)
-- [x] श्रीमद्भगवद्गीता — अध्याय १३: क्षेत्रक्षेत्रज्ञविभागयोग (`bhagavad-gita-ch13.md`)
-- [x] श्रीमद्भगवद्गीता — अध्याय १४: गुणत्रयविभागयोग (`bhagavad-gita-ch14.md`)
-- [x] श्रीमद्भगवद्गीता — अध्याय १५: पुरुषोत्तमयोग (`bhagavad-gita-ch15.md`)
-- [x] श्रीमद्भगवद्गीता — अध्याय १६: दैवासुरसम्पद्विभागयोग (`bhagavad-gita-ch16.md`)
-- [x] श्रीमद्भगवद्गीता — अध्याय १७: श्रद्धात्रयविभागयोग (`bhagavad-gita-ch17.md`)
-- [x] श्रीमद्भगवद्गीता — अध्याय १८: मोक्षसंन्यासयोग (`bhagavad-gita-ch18.md`)
-- [x] अष्टावक्र गीता — महर्षि अष्टावक्र एवं जनक संवाद (`ashtavakra-gita.md`)
-
-### 🔥 वेद (6)
-- [x] ऋग्वेद — मण्डल १, सूक्त १ (`rigveda-mandala1.md`)
-- [x] श्री सूक्तम् — ऋग्वेद खिलभाग (`sri-suktam.md`)
-- [x] पुरुष सूक्तम् — ऋग्वेद १०.९० (`purusha-suktam.md`)
-- [x] नारायण सूक्तम् — यजुर्वेद तैत्तिरीय आरण्यक (`narayana-suktam.md`)
-- [x] दुर्गा सूक्तम् — महानारायण उपनिषद् (`durga-suktam.md`)
-- [x] विश्वकर्मा सूक्तम् — ऋग्वेद १०.८१ एवं १०.८२ (`vishwakarma-suktam.md`)
-
-### 🕉️ उपनिषद् (7 — मुख्य उपनिषद्)
-- [x] ईशावास्योपनिषद् (`isha-upanishad.md`)
-- [x] माण्डूक्योपनिषद् (`mandukya-upanishad.md`)
-- [x] केनोपनिषद् (`kena-upanishad.md`)
-- [x] कठोपनिषद् (`katha-upanishad.md`)
-- [x] प्रश्नोपनिषद् (`prashna-upanishad.md`)
-- [x] मुण्डकोपनिषद् (`mundaka-upanishad.md`)
-- [x] तैत्तिरीयोपनिषद् (`taittiriya-upanishad.md`)
-
-### 🪔 आरती (7 — नित्य दैनिक आरतियाँ)
-- [x] आरती कुंजबिहारी की (`aarti-kunjbihari-ki.md`)
-- [x] आरती ॐ जय जगदीश हरे (`aarti-jai-jagdish-hare.md`)
-- [x] आरती हनुमान लला की (`aarti-hanuman-ji.md`)
-- [x] आरती जय शिव ओंकारा (`aarti-shiva-ji.md`)
-- [x] आरती जय अम्बे गौरी (`aarti-durga-mata.md`)
-- [x] आरती जय गणेश देवा (`aarti-ganesh-ji.md`)
-- [x] आरती श्री विश्वकर्मा जी की (`vishwakarma-aarti.md`)
-
-### 📖 पुराण (1)
-- [x] श्री विश्वकर्मा पुराण — माहात्म्य एवं पंचऋषि कथा (`vishwakarma-puran.md`)
-
-### 📜 अन्य (4 — नीति एवं पौराणिक संग्रह)
-- [x] चाणक्य नीति (`chanakya-niti.md`)
-- [x] विदुर नीति (`vidura-niti.md`)
-- [x] गोपी गीत — श्रीमद्भागवत महापुराण (`gopi-geet.md`)
-- [x] श्री सुन्दरकाण्ड — श्रीरामचरितमानस (`sundarkand.md`)
+> 🎯 **Master Verification Directive**: Every sacred text in Gyankosh is verified word-for-word against authoritative physical scriptures.  
+> 🏛️ **Primary Publisher Standard**: **गीता प्रेस, गोरखपुर (Gita Press, Gorakhpur)** — revered for scholarly textual accuracy, authentic sandhi/anvaya, and affordable, non-profit pricing. Complementary editions from **चौखम्बा (Chaukhamba)** and **मन्दिर ट्रस्ट (Temple Trusts)** are used for specialized texts.  
+> ⚖️ **Single Source of Truth**: [`src/data/weights.json`](file:///a:/GitHub/Gyankosh/src/data/weights.json) & [`WEIGHTS.md`](file:///a:/GitHub/Gyankosh/WEIGHTS.md)  
+> 📊 **Current Library Status**: **86 Sacred Texts Total** | **0 Unverified** placeholder entries | 100% full content.
 
 ---
 
-## 📌 Phase 6: Lord Vishwakarma Sacred Collection (श्री विश्वकर्मा पञ्चरत्न संग्रह) [COMPLETED]
+## ⚡ Quick Navigation
 
-- [x] **श्री विश्वकर्मा चालीसा (Shri Vishwakarma Chalisa)** — शिल्प, तकनीकी कौशल, निर्माण एवं वास्तु समृद्धि हेतु ४० पावन चौपाइयां व दोहे (`vishwakarma-chalisa.md`)
-- [x] **आरती श्री विश्वकर्मा जी की (Shri Vishwakarma Aarti)** — 'ॐ जय श्री विश्वकर्मा, प्रभु जय श्री विश्वकर्मा...' सम्पूर्ण पद्य मय हिन्दी भावार्थ (`vishwakarma-aarti.md`)
-- [x] **विश्वकर्मा सूक्तम् (Vishwakarma Suktam)** — ऋग्वेद मण्डल १०, सूक्त ८१ एवं ८२, १४ मन्त्र मय अन्वय एवं वैदिक हिन्दी अर्थ (`vishwakarma-suktam.md`)
-- [x] **श्री विश्वकर्मा स्तोत्रम् एवं अष्टकम् (Shri Vishwakarma Stotram & Ashtakam)** — ध्यान, ८ श्लोक अष्टकम् एवं फलश्रुति मय हिन्दी अनुवाद (`vishwakarma-stotram.md`)
-- [x] **श्री विश्वकर्मा पुराण (Shri Vishwakarma Purana)** — स्कन्द पुराण नागर खण्ड एवं उपपुराण अन्तर्गत आदि प्राकट्य, पंचऋषि (मनु, मय, त्वष्टा, शिल्पी, दैवज्ञ) उत्पत्ति, सूर्य-तेज कर्तन एवं जगन्नाथ दारुब्रह्म कथा (`vishwakarma-puran.md`)
-
----
-
-## 📌 Phase 2: Complete Srimad Bhagavad Gita (P0 — Core Spiritual Authority) [COMPLETED]
-
-- [x] **अध्याय २: सांख्ययोग (Chapter 2: Sankhya Yoga)** — *कर्मण्येवाधिकारस्ते...*, आत्मा की अमरता (72 Shlokas)
-- [x] **अध्याय ३: कर्मयोग (Chapter 3: Karma Yoga)** — निष्काम कर्म का सिद्धान्त (43 Shlokas)
-- [x] **अध्याय ४: ज्ञानकर्मसंन्यासयोग (Chapter 4: Jnana Karma Sanyasa Yoga)** — *यदा यदा ही धर्मस्य...* (42 Shlokas)
-- [x] **अध्याय ५: कर्मसंन्यासयोग (Chapter 5: Karma Sanyasa Yoga)** (29 Shlokas)
-- [x] **अध्याय ६: आत्मसंयमयोग / ध्यानयोग (Chapter 6: Dhyana Yoga)** (47 Shlokas)
-- [x] **अध्याय ७: ज्ञानविज्ञानयोग (Chapter 7: Jnana Vijnana Yoga)** (30 Shlokas)
-- [x] **अध्याय ८: अक्षरब्रह्मयोग (Chapter 8: Akshara Brahma Yoga)** (28 Shlokas)
-- [x] **अध्याय ९: राजविद्याराजगुह्ययोग (Chapter 9: Raja Vidya Raja Guhya Yoga)** (34 Shlokas)
-- [x] **अध्याय १०: विभूतियोग (Chapter 10: Vibhuti Yoga)** (42 Shlokas)
-- [x] **अध्याय ११: विश्वरूपदर्शनयोग (Chapter 11: Vishwaroopa Darshana Yoga)** (55 Shlokas)
-- [x] **अध्याय १२: भक्तियोग (Chapter 12: Bhakti Yoga)** — भक्ति के लक्षण (20 Shlokas)
-- [x] **अध्याय १३: क्षेत्रक्षेत्रज्ञविभागयोग (Chapter 13: Kshetra Kshetrajna Vibhaga Yoga)** (35 Shlokas)
-- [x] **अध्याय १४: गुणत्रयविभागयोग (Chapter 14: Gunatraya Vibhaga Yoga)** (27 Shlokas)
-- [x] **अध्याय १५: पुरुषोत्तमयोग (Chapter 15: Purushottama Yoga)** — अश्वत्थ वृक्ष एवं पुरुषोत्तम स्वरूप (20 Shlokas)
-- [x] **अध्याय १६: दैवासुरसम्पद्विभागयोग (Chapter 16: Daivasura Sampad Vibhaga Yoga)** (24 Shlokas)
-- [x] **अध्याय १७: श्रद्धात्रयविभागयोग (Chapter 17: Shraddhatraya Vibhaga Yoga)** (28 Shlokas)
-- [x] **अध्याय १८: मोक्षसंन्यासयोग (Chapter 18: Moksha Sanyasa Yoga)** — *सर्वधर्मान्परित्यज्य...* (78 Shlokas)
+1. [📚 Optimized Physical Book Purchasing Guide (16 Books Total)](#-optimized-physical-book-purchasing-guide)
+   - [Tier 1: The Essential Core 5 Compilations (Covers 63+ Texts ~ 73%)](#tier-1-the-essential-core-5-compilations-covers-63-texts--73)
+   - [Tier 2: Extended Classical Pack (4 Books — Brings Coverage to 73 Texts ~ 85%)](#tier-2-extended-classical-pack-4-books--brings-coverage-to-73-texts--85)
+   - [Tier 3: Specialized Wisdom & Sahasranama Pack (7 Books — 100% Coverage)](#tier-3-specialized-wisdom--sahasranama-pack-7-books--100-coverage)
+2. [📋 Master 86-Text Verification Checklist (Interactive)](#-master-86-text-verification-checklist)
+3. [🔍 Standard Operating Procedure (SOP) for Text Verification](#-standard-operating-procedure-sop-for-physical-verification)
+4. [📜 Completed Library Roadmap & Phase History (Phases 1 to 7)](#-completed-library-roadmap--phase-history)
 
 ---
 
-## 📌 Phase 3: Sacred Vedic Suktams & Key Sahasranamas (P1 — Liturgical Depth) [COMPLETED]
+## 📚 Optimized Physical Book Purchasing Guide
 
-- [x] **श्री सूक्तम् (Sri Suktam)** — ऋग्वेद खिलभाग, देवी लक्ष्मी की पावन वैदिक ऋचाएं (15 Mantras + Phalasruti)
-- [x] **पुरुष सूक्तम् (Purusha Suktam)** — ऋग्वेद १०.९० / यजुर्वेद ३१ (16 Mantras)
-- [x] **शिवमहिम्नः स्तोत्रम् (Shiva Mahimna Stotram)** — गन्धर्वराज पुष्पदन्त विरचित (43 Shlokas)
-- [x] **कनकधारा स्तोत्रम् (Kanakadhara Stotram)** — आदिशङ्कराचार्य विरचित (21 Shlokas)
-- [x] **ललिता सहस्रनाम स्तोत्रम् (Lalita Sahasranama Stotram)** — ब्रह्माण्ड पुराण
-- [x] **नारायण सूक्तम् (Narayana Suktam)** — यजुर्वेद तैत्तिरीय आरण्यक
-- [x] **दुर्गा सूक्तम् (Durga Suktam)** — महानारायण उपनिषद्
-- [x] **रुद्राष्टकम् (Rudrashtakam)** — गोस्वामी तुलसीदास (नमामीशमीशान निर्वाणरूपं)
-- [x] **नवग्रह स्तोत्रम् (Navagraha Stotram)** — वेदव्यास विरचित
-- [x] **गंगा स्तोत्रम् (Ganga Stotram)** — आदिशङ्कराचार्य (देवि सुरेश्वरि भगवति गङ्गे)
+Rather than buying 86 individual thin booklets (which would cost more, clutter bookshelves, and often contain non-standard bazaar errors), the entire Gyankosh library is engineered to be verified using just **16 authoritative physical compilations** (संग्रह ग्रन्थ).
+
+### 🏷️ Purchasing Summary Table
+
+| # | ग्रन्थ का नाम (Book Title) | प्रकाशक एवं कोड (Publisher & Code) | मूल्य (Est. Price) | Gyankosh Texts Covered | कवर्ड ग्रन्थों की संख्या |
+| :-: | :--- | :--- | :-: | :--- | :-: |
+| **1** | **स्तोत्र-रत्नावली (सटीक)** | गीताप्रेस कोड: **65** | ₹140 | विष्णुसहस्रनाम, शिवताण्डव, शिवमहिम्न, रुद्राष्टक, कनकधारा, महिषासुरमर्दिनी, आदित्यहृदय, मधुराष्टक, कालभैरवाष्टक, नवग्रह, गंगा, दामोदराष्टक, रामरक्षा, रामाष्टक, श्रीसूक्त, पुरुषसूक्त, नारायणसूक्त, गोपीगीत | **18 Texts** |
+| **2** | **श्रीमद्भगवद्गीता (सटीक)** | गीताप्रेस कोड: **11** / **16** / **18** | ₹60 – ₹200 | सम्पूर्ण भगवद्गीता (अध्याय १ से १८) | **18 Texts** |
+| **3** | **चालीसा संग्रह / आरती-चालीसा** | गीताप्रेस कोड: **1374** / **1404** | ₹40 – ₹60 | शिव, दुर्गा, गणेश, लक्ष्मी, सरस्वती, शनि, सूर्य, कृष्ण, राम, गायत्री, भैरव चालीसा + ६ दैनिक महाआरतियां | **17 Texts** |
+| **4** | **ईशादि नौ उपनिषद् (सानुवाद)** | गीताप्रेस कोड: **90** / **610** | ₹110 | ईश, केन, कठ, प्रश्न, मुण्डक, माण्डूक्य, तैत्तिरीय उपनिषद् | **7 Texts** |
+| **5** | **श्रीरामचरितमानस (सटीक)** | गीताप्रेस कोड: **1** / **2** / **7** | ₹220 – ₹350 | सुन्दरकाण्ड, राम प्राकट्य (भए प्रगट कृपाला), चित्रकूट प्रसंग एवं भरत-मिलाप | **3 Texts** |
+| **6** | **श्रीहनुमान-बाहुक / हनुमत्-उपासना** | गीताप्रेस कोड: **1530** / **1445** | ₹30 – ₹50 | हनुमान बाहुक (४४ पद), हनुमान चालीसा, संकटमोचन हनुमानाष्टक, बजरंग बाण | **4 Texts** |
+| **7** | **विनय-पत्रिका (सटीक)** | गीताप्रेस कोड: **108** / **109** | ₹80 – ₹120 | श्रीरामचन्द्र कृपालु भजु मन (पद ४५), चित्रकूट महिमा पद, जानकी स्तुति | **3 Texts** |
+| **8** | **श्रीदुर्गासप्तशती (सटीक)** | गीताप्रेस कोड: **104** / **118** | ₹70 – ₹110 | दुर्गा सप्तशती मुख्य त्रय (कवच, अर्गला, कीलक), दुर्गा सूक्तम् | **2 Texts** |
+| **9** | **अष्टावक्र-गीता (सटीक)** | गीताप्रेस कोड: **136** / **1548** | ₹40 – ₹60 | अष्टावक्र गीता (सम्पूर्ण २० प्रकरण) | **1 Text** |
+| **10** | **विदुर-नीति (सटीक)** | गीताप्रेस कोड: **152** | ₹45 | विदुर नीति (महाभारत उद्योगपर्व, सम्पूर्ण ८ अध्याय) | **1 Text** |
+| **11** | **चाणक्य-नीति-दर्पण (सटीक)** | गीताप्रेस कोड: **1459** (या चौखम्बा) | ₹40 – ₹60 | चाणक्य नीति (सम्पूर्ण १७ अध्याय) | **1 Text** |
+| **12** | **श्रीललितासहस्रनामस्तोत्रम्** | गीताप्रेस कोड: **1801** / **864** | ₹50 – ₹80 | श्री ललिता सहस्रनाम स्तोत्रम् (ब्रह्माण्ड पुराण, १००० नाम) | **1 Text** |
+| **13** | **श्रीरामसहस्रनामस्तोत्रम्** | गीताप्रेस कोड: **1876** (या आनन्दरामायण) | ₹50 – ₹90 | श्रीरामसहस्रनाम स्तोत्रम् (आनन्द रामायण / शिव-पार्वती संवाद) | **1 Text** |
+| **14** | **श्री विश्वकर्मा पुराण एवं माहात्म्य** | रणधीर प्रकाशन / देहाती पुस्तक भण्डार | ₹70 – ₹120 | विश्वकर्मा चालीसा, आरती, सूक्त, स्तोत्रम् व अष्टकम्, पुराण कथा | **5 Texts** |
+| **15** | **चित्रकूट दर्शन एवं कामदनाथ माहात्म्य** | कामतानाथ मन्दिर ट्रस्ट / कल्याण तीर्थाङ्क (132) | ₹50 – ₹100 | श्री कामतानाथ स्तुति, कामदनाथ आरती, मन्दाकिनी स्तोत्रम् | **3 Texts** |
+| **16** | **ऋग्वेद संहिता (प्रथम मण्डल)** | गीताप्रेस कोड: **1947** / चौखम्बा | ₹180 – ₹250 | ऋग्वेद मण्डल १, सूक्त १ (अग्नि सूक्त) | **1 Text** |
+| **कुल** | **१६ भौतिक ग्रन्थ (Complete Master Pack)** | — | **~₹1,200 – ₹1,800** | **सम्पूर्ण ८६ ग्रन्थ (100% of Gyankosh)** | **86 Texts** |
 
 ---
 
-## 📌 Phase 4: Principal Upanishads (Mukhya Upanishads) (P1 — Philosophical Classics) [COMPLETED]
+### 🛒 Purchasing Phases & Strategy
 
-- [x] **ईशावास्योपनिषद् (Isha Upanishad)** — शुक्ल यजुर्वेद, १८ मन्त्र (*ईशा वास्यमिदं सर्वं...*) (`isha-upanishad.md`)
-- [x] **माण्डूक्योपनिषद् (Mandukya Upanishad)** — अथर्ववेद, १२ गद्य मन्त्र (ॐ एवं तुरीय चेतना) (`mandukya-upanishad.md`)
-- [x] **केनोपनिषद् (Kena Upanishad)** — सामवेद (*केनेषितं पतति प्रेषितं मनः...*) (`kena-upanishad.md`)
-- [x] **कठोपनिषद् (Katha Upanishad)** — कृष्ण यजुर्वेद (नचिकेता एवं यमराज संवाद) (`katha-upanishad.md`)
-- [x] **प्रश्नोपनिषद् (Prashna Upanishad)** — अथर्ववेद, ६ ऋषियों के ६ प्रश्न (`prashna-upanishad.md`)
-- [x] **मुण्डकोपनिषद् (Mundaka Upanishad)** — अथर्ववेद (*सत्यमेव जयते नानृतम्...*) (`mundaka-upanishad.md`)
-- [x] **तैत्तिरीयोपनिषद् (Taittiriya Upanishad)** — शीक्षावल्ली, ब्रह्मानन्दवल्ली, भृगुवल्ली (`taittiriya-upanishad.md`)
+#### 🥇 Tier 1: The Essential Core 5 Compilations (Covers 63+ Texts ~ 73%)
+> **Budget**: ~₹550 – ₹800  
+> **Where to buy**: Any local Gita Press bookstore, railway station stall, or official [Gita Press Book Shop](https://gitapressbookshop.in).
+1. **स्तोत्र-रत्नावली (गीताप्रेस कोड: 65)** — The undisputed encyclopaedia of Sanskrit devotional hymns. Instantly unlocks verification for 18 master stotras and suktams.
+2. **श्रीमद्भगवद्गीता (गीताप्रेस कोड: 11 या 16)** — Complete 18 chapters with shloka-by-shloka anvaya and Hindi translation.
+3. **चालीसा-संग्रह / आरती-चालीसा संग्रह (गीताप्रेस कोड: 1374 / 1404)** — Standard reference for daily devotional practice across all deities.
+4. **ईशादि नौ उपनिषद् (गीताप्रेस कोड: 90)** — Verifies all 7 principal Upanishads included in Gyankosh in one stroke.
+5. **श्रीरामचरितमानस (गीताप्रेस कोड: 1 या 2)** — The gold standard for Awadhi Ramkatha, Sundarkand, and Ram Janmotsava.
+
+#### 🥈 Tier 2: Extended Classical Pack (4 Books — Brings Coverage to 73 Texts ~ 85%)
+> **Budget**: ~₹250 – ₹400
+6. **श्रीहनुमान-बाहुक (गीताप्रेस कोड: 1530)** — Authentic Brajbhasha stuti of 44 verses by Goswami Tulsidas.
+7. **विनय-पत्रिका (गीताप्रेस कोड: 108)** — Essential for verifying Tulsidas's finest classical lyrics including *Shri Ramachandra Kripalu*.
+8. **श्रीदुर्गासप्तशती (गीताप्रेस कोड: 104)** — Verifies Kavach, Argala, Keelak, and Durga Suktam.
+9. **अष्टावक्र-गीता (गीताप्रेस कोड: 136)** — Verifies all 20 prakaranas of supreme non-dual Vedanta.
+
+#### 🥉 Tier 3: Specialized Wisdom & Sahasranama Pack (7 Books — 100% Coverage)
+> **Budget**: ~₹400 – ₹600
+10. **विदुर-नीति (गीताप्रेस कोड: 152)** & **चाणक्य-नीति-दर्पण (गीताप्रेस कोड: 1459)**
+11. **श्रीललितासहस्रनामस्तोत्रम् (गीताप्रेस कोड: 1801)** & **श्रीरामसहस्रनामस्तोत्रम् (गीताप्रेस कोड: 1876)**
+12. **श्री विश्वकर्मा पुराण एवं माहात्म्य** (रणधीर प्रकाशन, हरिद्वार / देहाती पुस्तक भण्डार)
+13. **चित्रकूट दर्शन एवं कामदनाथ माहात्म्य** (श्री कामतानाथ प्राचीन मन्दिर ट्रस्ट / कल्याण तीर्थाङ्क)
+14. **ऋग्वेद संहिता प्रथम मण्डल (गीताप्रेस कोड: 1947)**
 
 ---
 
-## 📌 Phase 5: Practical Wisdom, Niti, Puranic Selections & Daily Aartis [COMPLETED]
+## 📋 Master 86-Text Verification Checklist
 
-- [x] **चाणक्य नीति (Chanakya Niti)** — आचार्य चाणक्य विरचित कालजयी नीति-सूत्र (`chanakya-niti.md`)
-- [x] **विदुर नीति (Vidura Niti)** — महाभारत उद्योगपर्व (महात्मा विदुर एवं धृतराष्ट्र संवाद) (`vidura-niti.md`)
-- [x] **अष्टावक्र गीता (Ashtavakra Gita)** — महर्षि अष्टावक्र एवं राजा जनक का अद्वैत संवाद (`ashtavakra-gita.md`)
-- [x] **दुर्गा सप्तशती मुख्य स्तोत्र (Durga Saptashati Key Stotras)** — देवी कवचम्, अर्गला स्तोत्रम्, कीलकम् (`durga-saptashati-traya.md`)
-- [x] **गोपी गीत (Gopi Geet)** — श्रीमद्भागवत महापुराण, दशम स्कन्ध, अध्याय ३१ (`gopi-geet.md`)
-- [x] **दामोदराष्टकम् (Damodarashtakam)** — पद्मपुराणान्तर्गतम्, सत्यव्रत मुनि (`damodarashtakam.md`)
-- [x] **दैनिक प्रमुख आरतियाँ (Daily Aartis Collection — 6 Dedicated Texts)**:
-  - [x] आरती कुंजबिहारी की (`aarti-kunjbihari-ki.md`)
-  - [x] आरती ॐ जय जगदीश हरे (`aarti-jai-jagdish-hare.md`)
-  - [x] आरती कीजै हनुमान लला की (`aarti-hanuman-ji.md`)
-  - [x] आरती जय शिव ओंकारा (`aarti-shiva-ji.md`)
-  - [x] आरती जय अम्बे गौरी (`aarti-durga-mata.md`)
-  - [x] आरती जय गणेश देवा (`aarti-ganesh-ji.md`)
+> 💡 **How to Use**: Use the interactive GitHub checkboxes below to track your progress as you inspect each text against the physical book. Check off each row after verifying Sanskrit/Awadhi spelling, verse numbering, and Hindi meaning.
+
+| स्थिति (Status) | भार (Weight) | शीर्षक (Title) | श्रेणी (Category) | भौतिक ग्रन्थ एवं कोड (Physical Book & Code) | ग्रन्थ में स्थान / अध्याय (Section in Book) | मुख्य सत्यापन बिन्दु (Verification Focus) |
+| :---: | :---: | :--- | :--- | :--- | :--- | :--- |
+| [ ] | **10** | **हनुमान चालीसा**<br>([`hanuman-chalisa.md`](file:///a:/GitHub/Gyankosh/src/content/library/hanuman-chalisa.md)) | `Chalisa` | श्रीहनुमान-बाहुक (कोड 1530) / चालीसा-संग्रह (कोड 1374) | चालीसा खण्ड (२ दोहे प्रारम्भ, ४० चौपाइयां, १ अन्तिम दोहा) | जाके बल भरतेहि - 'भरतेहि' पाठ भेद, 'कंचन बरन बिराज सुबेसा', 'शंकर सुवन/स्वयं केसरीनन्दन' परम्परा अनुसार |
+| [ ] | **20** | **श्री सुन्दरकाण्ड**<br>([`sundarkand.md`](file:///a:/GitHub/Gyankosh/src/content/library/sundarkand.md)) | `Purana` | श्रीरामचरितमानस सटीक (गीताप्रेस कोड 1, 2, 7) | पञ्चम सोपान: सुन्दरकाण्ड (श्लोक १-३, दोहा १ से ६० मय चौपाई, छन्द व सोरठा) | 'सिंधु तरन कपि सीक न सोची' vs 'कपि रीछ न सोची', विभीषण शरणागति, लंका दहन, समुद्र अनुनय |
+| [ ] | **30** | **शिव ताण्डव स्तोत्रम्**<br>([`shiva-tandava-stotram.md`](file:///a:/GitHub/Gyankosh/src/content/library/shiva-tandava-stotram.md)) | `Stotra` | स्तोत्र-रत्नावली (गीताप्रेस कोड 65) | शिव-स्तोत्र खण्ड (रावण विरचित, १५ श्लोक मय फलश्रुति) | पञ्चचामर छन्द की लय, द्वित्व वर्ण (जटाटवीगलज्जलप्रवाहपावितस्थले), विसर्ग एवं अनुस्वार शुद्धि |
+| [ ] | **40** | **आरती ॐ जय जगदीश हरे**<br>([`aarti-jai-jagdish-hare.md`](file:///a:/GitHub/Gyankosh/src/content/library/aarti-jai-jagdish-hare.md)) | `Aarti` | आरती-संग्रह (कोड 698) / आरती-चालीसा संग्रह (कोड 1404) | दैनिक आरती खण्ड (पं. श्रद्धाराम फिल्लौरी विरचित) | 'तुम पूरण परमात्मा', 'विषय विकार मिटाओ पाप हरो देवा', पद्य लय व शुद्ध तुकान्त |
+| [ ] | **50** | **बजरंग बाण**<br>([`bajrang-baan.md`](file:///a:/GitHub/Gyankosh/src/content/library/bajrang-baan.md)) | `Stotra` | श्रीहनुमान-बाहुक (कोड 1530) / हनुमत्-उपासना (कोड 1445) | हनुमान तांत्रिक/रक्षक स्तोत्र खण्ड | बीज मन्त्र 'ॐ हं हं हं हनुमन्त हठीले', 'इहिं अवसर कायर मत बानो', शाबर मन्त्र की यथार्थ वर्तनी |
+| [ ] | **60** | **संकटमोचन हनुमानाष्टक**<br>([`sankat-mochan-hanuman-ashtak.md`](file:///a:/GitHub/Gyankosh/src/content/library/sankat-mochan-hanuman-ashtak.md)) | `Stotra` | श्रीहनुमान-बाहुक (कोड 1530) / हनुमत्-उपासना (कोड 1445) | अष्टक खण्ड (गोस्वामी तुलसीदास कृत ८ मत्तगयन्द सवैया व दोहा) | 'बाल समय रबि भक्षि लियो तब', 'जानत है जग में कपि संकटमोचन नाम तिहारो', सवैया छन्द मात्राएं |
+| [ ] | **70** | **शिव चालीसा**<br>([`shiva-chalisa.md`](file:///a:/GitHub/Gyankosh/src/content/library/shiva-chalisa.md)) | `Chalisa` | चालीसा संग्रह (गीताप्रेस कोड 1374) | शिव खण्ड (दोहा, ४० चौपाइयां, दोहा) | 'जय गणेश गिरिजासुवन', 'शारद नारद सीस निवावहिं', त्रिपुण्ड्र, मन्मथ दहन प्रसंग |
+| [ ] | **80** | **दुर्गा चालीसा**<br>([`durga-chalisa.md`](file:///a:/GitHub/Gyankosh/src/content/library/durga-chalisa.md)) | `Chalisa` | चालीसा संग्रह (गीताप्रेस कोड 1374) / दुर्गा सप्तशती (कोड 104) | देवी खण्ड (नमो नमो दुर्गे सुख करनी) | शुम्भ-निशुम्भ, महिषासुर संहार चौपाइयां, चौपाई ३२-३५ में नौ रूपों की स्तुति |
+| [ ] | **90** | **आदित्यहृदय स्तोत्रम्**<br>([`aditya-hridaya-stotram.md`](file:///a:/GitHub/Gyankosh/src/content/library/aditya-hridaya-stotram.md)) | `Stotra` | स्तोत्र-रत्नावली (गीताप्रेस कोड 65) / वाल्मीकि रामायण (कोड 75) | युद्धकाण्ड सर्ग १०५ (अगस्त्य-राम संवाद, ३१ श्लोक) | 'ततो युद्धपरिश्रान्तं समरे चिन्तया स्थितम्', आदित्य द्वादश नाम, फलश्रुति एवं मन्त्र जप |
+| [ ] | **100** | **श्रीविष्णुसहस्रनाम स्तोत्रम्**<br>([`vishnu-sahasranama.md`](file:///a:/GitHub/Gyankosh/src/content/library/vishnu-sahasranama.md)) | `Stotra` | स्तोत्र-रत्नावली (गीताप्रेस कोड 65) / महाभारत अनुशासनपर्व (कोड 149) | विष्णु स्तोत्र खण्ड (पूर्वपीठिका, १००० पावन नाम, उत्तरपीठिका) | शङ्करभाष्य अन्वय, 'विश्वं विष्णुर्वषट्कारो', नाम क्रमांक १ से १००० की क्रमबद्धता |
+| [ ] | **110** | **आरती जय गणेश देवा**<br>([`aarti-ganesh-ji.md`](file:///a:/GitHub/Gyankosh/src/content/library/aarti-ganesh-ji.md)) | `Aarti` | आरती संग्रह (कोड 698) / आरती-चालीसा संग्रह (कोड 1404) | गणेश खण्ड ('जय गणेश जय गणेश जय गणेश देवा') | 'माता जाकी पार्वती पिता महादेवा', 'एकदन्त दयावन्त चारभुजाधारी', 'पान चढ़े फूल चढ़े और चढ़े मेवा' |
+| [ ] | **120** | **गणेश चालीसा**<br>([`ganesh-chalisa.md`](file:///a:/GitHub/Gyankosh/src/content/library/ganesh-chalisa.md)) | `Chalisa` | चालीसा संग्रह (गीताप्रेस कोड 1374) | गणेश खण्ड (जय गणपति सदगुण सदन) | गजानन स्वरूप, ऋद्धि-सिद्धि वर्णन, विघ्नहर्ता स्वरूप |
+| [ ] | **130** | **आरती हनुमान लला की**<br>([`aarti-hanuman-ji.md`](file:///a:/GitHub/Gyankosh/src/content/library/aarti-hanuman-ji.md)) | `Aarti` | श्रीरामचरितमानस अन्त / हनुमान-बाहुक (कोड 1530) | आरती खण्ड ('आरती कीजै हनुमान लला की') | 'दुष्ट दलन रघुनाथ कला की', 'जाके बल से गिरिवर कांपै', 'सुर नर मुनि जन आरती उतारें' |
+| [ ] | **140** | **महिषासुरमर्दिनी स्तोत्रम्**<br>([`mahishasura-mardini-stotram.md`](file:///a:/GitHub/Gyankosh/src/content/library/mahishasura-mardini-stotram.md)) | `Stotra` | स्तोत्र-रत्नावली (गीताप्रेस कोड 65) | देवी स्तोत्र खण्ड (अयि गिरिनन्दिनि नन्दितमेदिनि, २१ श्लोक) | अनुप्रासमयी दीर्घ पदावली (मधुरमधुरमूर्ते, धनुषानुगत), विसर्ग व हलन्त की सूक्ष्म शुद्धि |
+| [ ] | **150** | **कनकधारा स्तोत्रम्**<br>([`kanakadhara-stotram.md`](file:///a:/GitHub/Gyankosh/src/content/library/kanakadhara-stotram.md)) | `Stotra` | स्तोत्र-रत्नावली (गीताप्रेस कोड 65) | लक्ष्मी स्तोत्र खण्ड (आदिशङ्कराचार्य विरचित, २१ श्लोक) | 'अङ्गमहरेः पुलकभूषणमाश्रयन्ती', बसन्ततिलका छन्द, माता महालक्ष्मी की कृपा-कटाक्ष स्तुति |
+| [ ] | **160** | **लक्ष्मी चालीसा**<br>([`lakshmi-chalisa.md`](file:///a:/GitHub/Gyankosh/src/content/library/lakshmi-chalisa.md)) | `Chalisa` | चालीसा संग्रह (गीताप्रेस कोड 1374) | लक्ष्मी खण्ड (मातु लक्ष्मी करि कृपा करो हृदय में वास) | सिन्धु सुता, विष्णु प्रिया, अष्टलक्ष्मी रूप एवं धन-वैभव फलश्रुति |
+| [ ] | **170** | **श्रीरुद्राष्टकम्**<br>([`rudrashtakam.md`](file:///a:/GitHub/Gyankosh/src/content/library/rudrashtakam.md)) | `Stotra` | श्रीरामचरितमानस उत्तरकाण्ड (दोहा १०७-१०८) / स्तोत्र-रत्नावली (कोड 65) | रुद्राष्टकम् (नमामीशमीशान निर्वाणरूपं, भुजङ्गप्रयात छन्द, ८ श्लोक + फलश्रुति) | मानस उत्तरकाण्ड कागभुशुण्डि उपाख्यान में शिव वन्दना, 'निराकारमोंकारमूलं तुरीयं' |
+| [ ] | **180** | **मधुराष्टकम्**<br>([`madhurashtakam.md`](file:///a:/GitHub/Gyankosh/src/content/library/madhurashtakam.md)) | `Stotra` | स्तोत्र-रत्नावली (गीताप्रेस कोड 65) | कृष्ण स्तोत्र खण्ड (श्रीमद्वल्लभाचार्य विरचित, ८ श्लोक) | 'अधरं मधुरं वदनं मधुरं', 'मधुराधिपतेरखिलं मधुरम्', पद-संयोजन एवं मधुर भाव |
+| [ ] | **190** | **आरती जय शिव ओंकारा**<br>([`aarti-shiva-ji.md`](file:///a:/GitHub/Gyankosh/src/content/library/aarti-shiva-ji.md)) | `Aarti` | आरती संग्रह (कोड 698) / आरती-चालीसा संग्रह (कोड 1404) | शिव आरती ('आरती जय शिव ओंकारा, ॐ जय शिव ओंकारा') | 'ब्रह्मा विष्णु सदाशिव जानत अविवेका', 'एकानन चतुरानन पञ्चानन राजे', 'अक्षमाला वनमाला' |
+| [ ] | **200** | **आरती जय अम्बे गौरी**<br>([`aarti-durga-mata.md`](file:///a:/GitHub/Gyankosh/src/content/library/aarti-durga-mata.md)) | `Aarti` | दुर्गा सप्तशती (कोड 104) / आरती संग्रह (कोड 698) | देवी आरती ('जय अम्बे गौरी, मैया जय श्यामा गौरी') | 'तुमको निशदिन ध्यावत हरि ब्रह्मा शिवरी', 'मांग सिन्दूर विराजत टीको मृगमद को' |
+| [ ] | **210** | **आरती कुंजबिहारी की**<br>([`aarti-kunjbihari-ki.md`](file:///a:/GitHub/Gyankosh/src/content/library/aarti-kunjbihari-ki.md)) | `Aarti` | आरती संग्रह (कोड 698) / स्तोत्र-रत्नावली (कोड 65) | कृष्ण आरती ('आरती कुंजबिहारी की, श्री गिरिधर कृष्ण मुरारी की') | 'गले में बैजंती माला बजावै मुरली मधुर बाला', 'कनकमय मोर मुकुट बिलसै', 'छबि लखि गोपियां मुग्ध भई' |
+| [ ] | **220** | **दुर्गा सप्तशती मुख्य स्तोत्र (कवच, अर्गला, कीलक)**<br>([`durga-saptashati-traya.md`](file:///a:/GitHub/Gyankosh/src/content/library/durga-saptashati-traya.md)) | `Stotra` | श्रीदुर्गासप्तशती सटीक (गीताप्रेस कोड 104 / 118) | सप्तशती आरम्भ: देव्याः कवचम्, अर्गलास्तोत्रम्, कीलकस्तोत्रम् | कवच के ५६ श्लोक (अग्नि-दिशा, चक्र, अङ्ग रक्षा), अर्गला के २४ श्लोक ('रूपं देहि जयं देहि'), कीलक के १६ श्लोक |
+| [ ] | **230** | **कालभैरवाष्टकम्**<br>([`kala-bhairava-ashtakam.md`](file:///a:/GitHub/Gyankosh/src/content/library/kala-bhairava-ashtakam.md)) | `Stotra` | स्तोत्र-रत्नावली (गीताप्रेस कोड 65) | भैरव स्तोत्र खण्ड (आदिशङ्कराचार्य कृत, ८ श्लोक) | 'देवराजसेव्यमानपावनाङ्घ्रिपङ्कजं', काशी-पुराधिनाथ कालभैरव ध्यान, यम त्रास हरण |
+| [ ] | **240** | **शिवमहिम्नः स्तोत्रम्**<br>([`shiva-mahimna-stotram.md`](file:///a:/GitHub/Gyankosh/src/content/library/shiva-mahimna-stotram.md)) | `Stotra` | स्तोत्र-रत्नावली (गीताप्रेस कोड 65) | शिव स्तोत्र खण्ड (गन्धर्वराज पुष्पदन्त विरचित, ४३ श्लोक) | शिखरिणी छन्द, 'महिम्नः पारं ते', श्लोक २६ 'त्रयी सांख्यं योगः', श्लोक ४०-४३ फलश्रुति |
+| [ ] | **250** | **श्री ललिता सहस्रनाम स्तोत्रम्**<br>([`lalita-sahasranama.md`](file:///a:/GitHub/Gyankosh/src/content/library/lalita-sahasranama.md)) | `Stotra` | श्रीललितासहस्रनामस्तोत्रम् (गीताप्रेस कोड 1801 / 864) | ब्रह्माण्ड पुराण (ललितोपाख्यान, पूर्वपीठिका, १००० दिव्य नाम, उत्तरपीठिका) | 'श्रीमहात्रिपुरसुन्दरी', 'ककार' रहस्य, चक्रराज पीठ, नामानुक्रमणिका एवं शुद्ध सन्धियां |
+| [ ] | **260** | **गोपी गीत**<br>([`gopi-geet.md`](file:///a:/GitHub/Gyankosh/src/content/library/gopi-geet.md)) | `Other` | स्तोत्र-रत्नावली (कोड 65) / श्रीमद्भागवत महापुराण (१०.३१, कोड 25/503) | रासपञ्चाध्यायी: दशम स्कन्ध अध्याय ३१ (१९ श्लोक) | 'जयति तेऽधिकं जन्मना व्रजः', 'शरदुदाशये साधुजातसत्सरसिजोदरश्रीमुषा दृशा', विरह रस भावार्थ |
+| [ ] | **270** | **दामोदराष्टकम्**<br>([`damodarashtakam.md`](file:///a:/GitHub/Gyankosh/src/content/library/damodarashtakam.md)) | `Stotra` | स्तोत्र-रत्नावली (गीताप्रेस कोड 65) / पद्मपुराण | दामोदर स्तोत्र खण्ड (सत्यव्रत मुनि कृत, ८ श्लोक) | 'नमामीश्वरं सच्चिदानन्दरूपं लसत्कुण्डलं गोकुले भ्राजमानम्', उलूखल बन्धन प्रसंग, फलश्रुति |
+| [ ] | **280** | **श्री सूक्तम्**<br>([`sri-suktam.md`](file:///a:/GitHub/Gyankosh/src/content/library/sri-suktam.md)) | `Veda` | स्तोत्र-रत्नावली (कोड 65) / नित्यकर्म पूजाप्रकाश (कोड 199) | वैदिक सूक्त खण्ड (ऋग्वेद खिलभाग, १५ मन्त्र + फलश्रुति) | वैदिक स्वर (उदात्त, अनुदात्त, स्वरित), 'हिरण्यवर्णां हरिणीं सुवर्णरजतस्रजाम्', पद्मानना, चन्द्रां प्रभासाम् |
+| [ ] | **290** | **पुरुष सूक्तम्**<br>([`purusha-suktam.md`](file:///a:/GitHub/Gyankosh/src/content/library/purusha-suktam.md)) | `Veda` | स्तोत्र-रत्नावली (कोड 65) / नित्यकर्म पूजाप्रकाश (कोड 199) | वैदिक सूक्त खण्ड (ऋग्वेद १०.९० / वाजसनेयी यजुर्वेद ३१, १६ मन्त्र) | 'सहस्रशीर्षा पुरुषः सहस्राक्षः सहस्रपात्', विराट् पुरुष की सृष्टि यज्ञ मीमांसा, यज्ञेन यज्ञमयजन्त देवाः |
+| [ ] | **300** | **श्रीमद्भगवद्गीता — अध्याय १**<br>([`bhagavad-gita-ch1.md`](file:///a:/GitHub/Gyankosh/src/content/library/bhagavad-gita-ch1.md)) | `Gita` | श्रीमद्भगवद्गीता सटीक (गीताप्रेस कोड 11 / 16 / 18) | प्रथम अध्याय: अर्जुनविषादयोग (४७ श्लोक) | 'धर्मक्षेत्रे कुरुक्षेत्रे समवेता युयुत्सवः', दोनों सेनाओं के शङ्ख, अर्जुन का धनुष त्याग |
+| [ ] | **310** | **श्रीमद्भगवद्गीता — अध्याय २**<br>([`bhagavad-gita-ch2.md`](file:///a:/GitHub/Gyankosh/src/content/library/bhagavad-gita-ch2.md)) | `Gita` | श्रीमद्भगवद्गीता सटीक (गीताप्रेस कोड 11 / 16 / 18) | द्वितीय अध्याय: सांख्ययोग (७२ श्लोक) | 'कर्मण्येवाधिकारस्ते मा फलेषु कदाचन', 'नैनं छिन्दन्ति शस्त्राणि', स्थितप्रज्ञ के लक्षण (५४-७२) |
+| [ ] | **320** | **श्रीमद्भगवद्गीता — अध्याय ३**<br>([`bhagavad-gita-ch3.md`](file:///a:/GitHub/Gyankosh/src/content/library/bhagavad-gita-ch3.md)) | `Gita` | श्रीमद्भगवद्गीता सटीक (गीताप्रेस कोड 11 / 16 / 18) | तृतीय अध्याय: कर्मयोग (४३ श्लोक) | 'न कर्मणामनारम्भान्नैष्कर्म्यं पुरुषोऽश्नुते', यज्ञ चक्र, जनकादि का लोकसंग्रह, काम-क्रोध विवेचन |
+| [ ] | **330** | **श्रीमद्भगवद्गीता — अध्याय ४**<br>([`bhagavad-gita-ch4.md`](file:///a:/GitHub/Gyankosh/src/content/library/bhagavad-gita-ch4.md)) | `Gita` | श्रीमद्भगवद्गीता सटीक (गीताप्रेस कोड 11 / 16 / 18) | चतुर्थ अध्याय: ज्ञानकर्मसंन्यासयोग (४२ श्लोक) | 'यदा यदा हि धर्मस्य ग्लानिर्भवति भारत', 'कर्मण्यकर्म यः पश्येदकर्मणि च कर्म यः', ज्ञान यज्ञ |
+| [ ] | **340** | **श्रीमद्भगवद्गीता — अध्याय ५**<br>([`bhagavad-gita-ch5.md`](file:///a:/GitHub/Gyankosh/src/content/library/bhagavad-gita-ch5.md)) | `Gita` | श्रीमद्भगवद्गीता सटीक (गीताप्रेस कोड 11 / 16 / 18) | पञ्चम अध्याय: कर्मसंन्यासयोग (२९ श्लोक) | 'संन्यासः कर्मयोगश्च निःश्रेयसकरावुभौ', पद्मपत्रमिवाम्भसा, ब्रह्मनिर्वाण, भोक्तारं यज्ञतपसाम् |
+| [ ] | **350** | **श्रीमद्भगवद्गीता — अध्याय ६**<br>([`bhagavad-gita-ch6.md`](file:///a:/GitHub/Gyankosh/src/content/library/bhagavad-gita-ch6.md)) | `Gita` | श्रीमद्भगवद्गीता सटीक (गीताप्रेस कोड 11 / 16 / 18) | षष्ठ अध्याय: आत्मसंयमयोग / ध्यानयोग (४७ श्लोक) | 'उद्धरेदात्मनात्मानं नात्मानमवसादयेत्', आसन विधि, मन का निग्रह, योगभ्रष्ट की गति |
+| [ ] | **360** | **श्रीमद्भगवद्गीता — अध्याय ७**<br>([`bhagavad-gita-ch7.md`](file:///a:/GitHub/Gyankosh/src/content/library/bhagavad-gita-ch7.md)) | `Gita` | श्रीमद्भगवद्गीता सटीक (गीताप्रेस कोड 11 / 16 / 18) | सप्तम अध्याय: ज्ञानविज्ञानयोग (३० श्लोक) | 'भूमिरापोऽनलो वायुः खं मनो बुद्धिरेव च', परा-अपरा प्रकृति, चतुर्विधा भजन्ते मां, मायातरण |
+| [ ] | **370** | **श्रीमद्भगवद्गीता — अध्याय ८**<br>([`bhagavad-gita-ch8.md`](file:///a:/GitHub/Gyankosh/src/content/library/bhagavad-gita-ch8.md)) | `Gita` | श्रीमद्भगवद्गीता सटीक (गीताप्रेस कोड 11 / 16 / 18) | अष्टम अध्याय: अक्षरब्रह्मयोग (२८ श्लोक) | 'अन्तकाले च मामेव स्मरन्मुक्त्वा कलेवरम्', ओमित्येकाक्षरं ब्रह्म, शुक्ल-कृष्ण गति |
+| [ ] | **380** | **श्रीमद्भगवद्गीता — अध्याय ९**<br>([`bhagavad-gita-ch9.md`](file:///a:/GitHub/Gyankosh/src/content/library/bhagavad-gita-ch9.md)) | `Gita` | श्रीमद्भगवद्गीता सटीक (गीताप्रेस कोड 11 / 16 / 18) | नवम अध्याय: राजविद्याराजगुह्ययोग (३४ श्लोक) | 'अनन्याश्चिन्तयन्तो मां ये जनाः पर्युपासते', 'पत्रं पुष्पं फलं तोयं', मन्मना भव मद्भक्तो |
+| [ ] | **390** | **श्रीमद्भगवद्गीता — अध्याय १०**<br>([`bhagavad-gita-ch10.md`](file:///a:/GitHub/Gyankosh/src/content/library/bhagavad-gita-ch10.md)) | `Gita` | श्रीमद्भगवद्गीता सटीक (गीताप्रेस कोड 11 / 16 / 18) | दशम अध्याय: विभूतियोग (४२ श्लोक) | 'अहमात्मा गुडाकेश सर्वभूताशयस्थितः', चतुःश्लोकी गीता (८-११), प्रमुख विभूतियों का परिगणन |
+| [ ] | **400** | **श्रीमद्भगवद्गीता — अध्याय ११**<br>([`bhagavad-gita-ch11.md`](file:///a:/GitHub/Gyankosh/src/content/library/bhagavad-gita-ch11.md)) | `Gita` | श्रीमद्भगवद्गीता सटीक (गीताप्रेस कोड 11 / 16 / 18) | एकादश अध्याय: विश्वरूपदर्शनयोग (५५ श्लोक) | 'दिवि सूर्यसहस्रस्य भवेद्युगपदुत्थिता', 'कालोऽस्मि लोकक्षयकृत्प्रवृद्धो', चतुर्भुज दर्शन प्रार्थना |
+| [ ] | **410** | **श्रीमद्भगवद्गीता — अध्याय १२**<br>([`bhagavad-gita-ch12.md`](file:///a:/GitHub/Gyankosh/src/content/library/bhagavad-gita-ch12.md)) | `Gita` | श्रीमद्भगवद्गीता सटीक (गीताप्रेस कोड 11 / 16 / 18) | द्वादश अध्याय: भक्तियोग (२० श्लोक) | 'क्लेशोऽधिकतरस्तेषामव्यक्तासक्तचेतसाम्', प्रिय भक्त के ३५ दिव्य लक्षण (अद्वेष्टा सर्वभूतानां...) |
+| [ ] | **420** | **श्रीमद्भगवद्गीता — अध्याय १३**<br>([`bhagavad-gita-ch13.md`](file:///a:/GitHub/Gyankosh/src/content/library/bhagavad-gita-ch13.md)) | `Gita` | श्रीमद्भगवद्गीता सटीक (गीताप्रेस कोड 11 / 16 / 18) | त्रयोदश अध्याय: क्षेत्रक्षेत्रज्ञविभागयोग (३५ श्लोक) | 'इदं शरीरं कौन्तेय क्षेत्रमित्यभिधीयते', ज्ञान के २० साधन (अमानित्वमदम्भित्वं...), प्रकृति-पुरुष |
+| [ ] | **430** | **श्रीमद्भगवद्गीता — अध्याय १४**<br>([`bhagavad-gita-ch14.md`](file:///a:/GitHub/Gyankosh/src/content/library/bhagavad-gita-ch14.md)) | `Gita` | श्रीमद्भगवद्गीता सटीक (गीताप्रेस कोड 11 / 16 / 18) | चतुर्दश अध्याय: गुणत्रयविभागयोग (२७ श्लोक) | सत्त्व, रज, तम के बन्धन लक्षण, गुणातीत के लक्षण एवं आचरण (२१-२७) |
+| [ ] | **440** | **श्रीमद्भगवद्गीता — अध्याय १५**<br>([`bhagavad-gita-ch15.md`](file:///a:/GitHub/Gyankosh/src/content/library/bhagavad-gita-ch15.md)) | `Gita` | श्रीमद्भगवद्गीता सटीक (गीताप्रेस कोड 11 / 16 / 18) | पञ्चदश अध्याय: पुरुषोत्तमयोग (२० श्लोक) | 'ऊर्ध्वमूलमधःशाखमश्वत्थं प्राहुरव्ययम्', क्षर-अक्षर पुरुष, पुरुषोत्तम स्वरूप (१६-२०) |
+| [ ] | **450** | **श्रीमद्भगवद्गीता — अध्याय १६**<br>([`bhagavad-gita-ch16.md`](file:///a:/GitHub/Gyankosh/src/content/library/bhagavad-gita-ch16.md)) | `Gita` | श्रीमद्भगवद्गीता सटीक (गीताप्रेस कोड 11 / 16 / 18) | षोडश अध्याय: दैवासुरसम्पद्विभागयोग (२४ श्लोक) | २६ दैवी सम्पदाएं (अभयं सत्त्वसंशुद्धिः...), आसुरी सम्पदा, नरक के त्रिविध द्वार (काम, क्रोध, लोभ) |
+| [ ] | **460** | **श्रीमद्भगवद्गीता — अध्याय १७**<br>([`bhagavad-gita-ch17.md`](file:///a:/GitHub/Gyankosh/src/content/library/bhagavad-gita-ch17.md)) | `Gita` | श्रीमद्भगवद्गीता सटीक (गीताप्रेस कोड 11 / 16 / 18) | सप्तदश अध्याय: श्रद्धात्रयविभागयोग (२८ श्लोक) | त्रिविध आहार, यज्ञ, तप, दान का वर्गीकरण, 'ॐ तत्सदिति निर्देशो ब्रह्मणस्त्रिविधः स्मृतः' |
+| [ ] | **470** | **श्रीमद्भगवद्गीता — अध्याय १८**<br>([`bhagavad-gita-ch18.md`](file:///a:/GitHub/Gyankosh/src/content/library/bhagavad-gita-ch18.md)) | `Gita` | श्रीमद्भगवद्गीता सटीक (गीताप्रेस कोड 11 / 16 / 18) | अष्टादश अध्याय: मोक्षसंन्यासयोग (७८ श्लोक) | 'यतः प्रवृत्तिर्भूतानां येन सर्वमिदं ततम्', 'सर्वधर्मान्परित्यज्य मामेकं शरणं व्रज', 'यत्र योगेश्वरः कृष्णो' |
+| [ ] | **480** | **अष्टावक्र गीता**<br>([`ashtavakra-gita.md`](file:///a:/GitHub/Gyankosh/src/content/library/ashtavakra-gita.md)) | `Gita` | अष्टावक्र-गीता सटीक (गीताप्रेस कोड 136 / 1548) | सम्पूर्ण २० प्रकरण (जनक-अष्टावक्र अद्वैत संवाद) | 'मुक्तिमिच्छसि चेत्तात विषयान् विषवत्त्यज', आत्म-साक्षात्कार, विश्रान्ति, लेशमात्र बन्धन रहित स्वरूप |
+| [ ] | **490** | **ईशावास्योपनिषद्**<br>([`isha-upanishad.md`](file:///a:/GitHub/Gyankosh/src/content/library/isha-upanishad.md)) | `Upanishad` | ईशादि नौ उपनिषद् (गीताप्रेस कोड 90 / 610) | शुक्ल यजुर्वेद काण्व/माध्यन्दिन शाखा (१८ मन्त्र) | 'ईशा वास्यमिदं सर्वं यत्किञ्च जगत्यां जगत्', विद्या-अविद्या, सम्भूति-असम्भूति, हिरण्मयेन पात्रेण |
+| [ ] | **500** | **कठोपनिषद्**<br>([`katha-upanishad.md`](file:///a:/GitHub/Gyankosh/src/content/library/katha-upanishad.md)) | `Upanishad` | ईशादि नौ उपनिषद् (गीताप्रेस कोड 90 / 610) | कृष्ण यजुर्वेद कठ शाखा (२ अध्याय, ६ वल्ली, ११९ मन्त्र) | नचिकेता-यम संवाद, श्रेय व प्रेय मार्ग, रथ रूपक (आत्मानं रथिनं विद्धि), 'उत्तिष्ठत जाग्रत प्राप्य वरान्निबोधत' |
+| [ ] | **510** | **केनोपनिषद्**<br>([`kena-upanishad.md`](file:///a:/GitHub/Gyankosh/src/content/library/kena-upanishad.md)) | `Upanishad` | ईशादि नौ उपनिषद् (गीताप्रेस कोड 90 / 610) | सामवेद तलवकार शाखा (४ खण्ड, ३४ मन्त्र) | 'केनेषितं पतति प्रेषितं मनः', यन्मनसा न मनुते, यक्ष उपाख्यान (इन्द्र, अग्नि, वायु, उमा हैमवती) |
+| [ ] | **520** | **माण्डूक्योपनिषद्**<br>([`mandukya-upanishad.md`](file:///a:/GitHub/Gyankosh/src/content/library/mandukya-upanishad.md)) | `Upanishad` | ईशादि नौ उपनिषद् (गीताप्रेस कोड 90 / 610) | अथर्ववेद (१२ गद्य मन्त्र) | ॐकार के चार पाद (जाग्रत, स्वप्न, सुषुप्ति, तुरीय - अ, उ, म, अमात्र), 'अयमात्मा ब्रह्म', 'नान्तःप्रज्ञं न बहिष्प्रज्ञं' |
+| [ ] | **530** | **मुण्डकोपनिषद्**<br>([`mundaka-upanishad.md`](file:///a:/GitHub/Gyankosh/src/content/library/mundaka-upanishad.md)) | `Upanishad` | ईशादि नौ उपनिषद् (गीताप्रेस कोड 90 / 610) | अथर्ववेद (३ मुण्डक, ६ खण्ड, ६४ मन्त्र) | परा व अपरा विद्या, 'द्वा सुपर्णा सयुजा सखाया', 'सत्यमेव जयते नानृतं', प्लवा ह्येते अदृढा यज्ञरूपाः |
+| [ ] | **540** | **प्रश्नोपनिषद्**<br>([`prashna-upanishad.md`](file:///a:/GitHub/Gyankosh/src/content/library/prashna-upanishad.md)) | `Upanishad` | ईशादि नौ उपनिषद् (गीताप्रेस कोड 90 / 610) | अथर्ववेद पिप्पलाद शाखा (६ ऋषियों के ६ प्रश्न) | कबन्धिन, भार्गव, कौसल्य, सौर्यायणि, शैब्य, सुकेशा के प्रश्न; प्राण, पञ्चप्राण, षोडशकल पुरुष |
+| [ ] | **550** | **तैत्तिरीयोपनिषद्**<br>([`taittiriya-upanishad.md`](file:///a:/GitHub/Gyankosh/src/content/library/taittiriya-upanishad.md)) | `Upanishad` | ईशादि नौ उपनिषद् (गीताप्रेस कोड 90 / 610) | कृष्ण यजुर्वेद तैत्तिरीय शाखा (शीक्षावल्ली, ब्रह्मानन्दवल्ली, भृगुवल्ली) | 'सत्यं वद धर्मं चर', पञ्चकोश विवेक (अन्नमय, प्राणमय, मनोमय, विज्ञानमय, आनन्दमय), आनन्द मीमांसा |
+| [ ] | **560** | **चाणक्य नीति**<br>([`chanakya-niti.md`](file:///a:/GitHub/Gyankosh/src/content/library/chanakya-niti.md)) | `Other` | चाणक्य-नीति-दर्पण सटीक (गीताप्रेस कोड 1459 / चौखम्बा) | सम्पूर्ण १७ अध्याय (नीति सूत्र) | श्लोक क्रम, मित्रता, कुल, स्त्री, धन, विद्या एवं राजा के धर्म व व्यावहारिक नीति |
+| [ ] | **570** | **विदुर नीति**<br>([`vidura-niti.md`](file:///a:/GitHub/Gyankosh/src/content/library/vidura-niti.md)) | `Other` | विदुर-नीति सटीक (गीताप्रेस कोड 152) | महाभारत उद्योगपर्व (प्रजागर पर्व, अध्याय ३३-४०, सम्पूर्ण ८ अध्याय) | पण्डित एवं मूढ़ के लक्षण, आत्म-नियन्त्रण, सत्य, क्षमा, धृतराष्ट्र-विदुर संवाद |
+| [ ] | **580** | **दुर्गा सूक्तम्**<br>([`durga-suktam.md`](file:///a:/GitHub/Gyankosh/src/content/library/durga-suktam.md)) | `Veda` | दुर्गा सप्तशती परिशिष्ट (कोड 104) / महानारायण उपनिषद् / स्तोत्र-रत्नावली (कोड 65) | महानारायण उपनिषद् अनुवाक २ / सप्तशती परिशिष्ट (८ मन्त्र) | 'जातवेदसे सुनवाम सोममरातीयतो निदहाति वेदः', 'तामग्निवर्णां तपसा ज्वलन्तीं वैरोचनीं कर्मफलेषु जुष्टाम्' |
+| [ ] | **590** | **नारायण सूक्तम्**<br>([`narayana-suktam.md`](file:///a:/GitHub/Gyankosh/src/content/library/narayana-suktam.md)) | `Veda` | स्तोत्र-रत्नावली (गीताप्रेस कोड 65) / नित्यकर्म पूजाप्रकाश (कोड 199) | यजुर्वेद तैत्तिरीय आरण्यक प्रपाठक १० अनुवाक ११ | 'सहस्रशीर्षं देवं विश्वाक्षं विश्वशम्भुवम्', पद्मकोशप्रतीकाशं हृदयं चाप्यधोमुखम्, दह्रं विपापं |
+| [ ] | **600** | **ऋग्वेद — मण्डल १, सूक्त १**<br>([`rigveda-mandala1.md`](file:///a:/GitHub/Gyankosh/src/content/library/rigveda-mandala1.md)) | `Veda` | ऋग्वेद संहिता प्रथम मण्डल (गीताप्रेस कोड 1947 / चौखम्बा) | मण्डल १, सूक्त १ (मधुच्छन्दा वैश्वामित्र ऋषि, अग्नि देवता, गायत्री छन्द, ९ मन्त्र) | वैदिक स्वर, 'अग्निमीळे पुरोहितं यज्ञस्य देवमृत्विजम्', 'स नः पितेव सूनवेऽग्ने सूपायनो भव' |
+| [ ] | **610** | **गंगा स्तोत्रम्**<br>([`ganga-stotram.md`](file:///a:/GitHub/Gyankosh/src/content/library/ganga-stotram.md)) | `Stotra` | स्तोत्र-रत्नावली (गीताप्रेस कोड 65) | गंगा स्तोत्र खण्ड (आदिशङ्कराचार्य विरचित, १४ श्लोक) | 'देवि सुरेश्वरि भगवति गङ्गे त्रिभुवनतारिणी तरलतरङ्गे', पझटिका छन्द, मोक्षदायिनी स्तुति |
+| [ ] | **620** | **नवग्रह स्तोत्रम्**<br>([`navagraha-stotram.md`](file:///a:/GitHub/Gyankosh/src/content/library/navagraha-stotram.md)) | `Stotra` | स्तोत्र-रत्नावली (गीताप्रेस कोड 65) | ग्रह स्तोत्र खण्ड (महर्षि वेदव्यास विरचित, ९ ग्रह श्लोक + फलश्रुति) | 'जपाकुसुमसंकाशं काश्यपेयं महाद्युतिम्', सूर्य, चन्द्र, मङ्गल, बुध, गुरु, शुक्र, शनि, राहु, केतु मन्त्र |
+| [ ] | **630** | **शनि चालीसा**<br>([`shani-chalisa.md`](file:///a:/GitHub/Gyankosh/src/content/library/shani-chalisa.md)) | `Chalisa` | चालीसा संग्रह (गीताप्रेस कोड 1374) | शनिदेव खण्ड (जय गणेश गिरिजा सुवन मङ्गल करण कृपाल) | छाया सुत, सूर्य पुत्र, साढ़े साती व ढैय्या शान्ति, दण्डनायक स्वरूप |
+| [ ] | **640** | **सरस्वती चालीसा**<br>([`saraswati-chalisa.md`](file:///a:/GitHub/Gyankosh/src/content/library/saraswati-chalisa.md)) | `Chalisa` | चालीसा संग्रह (गीताप्रेस कोड 1374) | सरस्वती खण्ड (जनक जननि पद्महिं लगौं) | वीणा वादिनी, विद्यादायिनी, हंसवाहिनी, मति-विशुद्धि |
+| [ ] | **650** | **कृष्ण चालीसा**<br>([`krishna-chalisa.md`](file:///a:/GitHub/Gyankosh/src/content/library/krishna-chalisa.md)) | `Chalisa` | चालीसा संग्रह (गीताप्रेस कोड 1374) | कृष्ण खण्ड (बंशी शोभित कर मधुर नील जलद तन स्याम) | गोकुल लीला, माखन चोरी, कालिया दमन, महाभारत सारथी स्वरूप |
+| [ ] | **660** | **राम चालीसा**<br>([`ram-chalisa.md`](file:///a:/GitHub/Gyankosh/src/content/library/ram-chalisa.md)) | `Chalisa` | चालीसा संग्रह (गीताप्रेस कोड 1374) | श्री राम खण्ड (श्री रघुवीर भक्त हितकारी) | अयोध्या जन्म, ताड़का वध, धनुष भङ्ग, रावण संहार, रामराज्य |
+| [ ] | **670** | **गायत्री चालीसा**<br>([`gayatri-chalisa.md`](file:///a:/GitHub/Gyankosh/src/content/library/gayatri-chalisa.md)) | `Chalisa` | चालीसा संग्रह (गीताप्रेस कोड 1374) | गायत्री खण्ड (ह्रीं क्लीं श्रीं वर दे) | वेदमाता, त्रिपदा, भुवर्लोक, ज्ञान प्रकाश दायिनी |
+| [ ] | **680** | **सूर्य चालीसा**<br>([`surya-chalisa.md`](file:///a:/GitHub/Gyankosh/src/content/library/surya-chalisa.md)) | `Chalisa` | चालीसा संग्रह (गीताप्रेस कोड 1374) | सूर्यदेव खण्ड (कनक बदन कुण्डल मकर) | सप्त अश्व रथ, भुवन भास्कर, अन्धकार नाशक, आरोग्य प्रदाता |
+| [ ] | **690** | **भैरव चालीसा**<br>([`bhairav-chalisa.md`](file:///a:/GitHub/Gyankosh/src/content/library/bhairav-chalisa.md)) | `Chalisa` | चालीसा संग्रह (गीताप्रेस कोड 1374) | भैरव खण्ड (जय जय श्री कालि के लला) | बटुक भैरव, काल भैरव, डमरू-त्रिशूल धारी, भय-बाधा निवारण |
+| [ ] | **700** | **श्री विश्वकर्मा चालीसा**<br>([`vishwakarma-chalisa.md`](file:///a:/GitHub/Gyankosh/src/content/library/vishwakarma-chalisa.md)) | `Chalisa` | श्री विश्वकर्मा पूजन एवं माहात्म्य / पुराण (रणधीर प्रकाशन / देहाती पुस्तक भण्डार) | चालीसा खण्ड (४० चौपाइयां व दोहे) | देव शिल्पी, निर्माण, यन्त्र-उपकरण, वास्तु एवं हस्तशिल्प आशीर्वाद |
+| [ ] | **710** | **आरती श्री विश्वकर्मा जी की**<br>([`vishwakarma-aarti.md`](file:///a:/GitHub/Gyankosh/src/content/library/vishwakarma-aarti.md)) | `Aarti` | श्री विश्वकर्मा पूजन एवं माहात्म्य (रणधीर प्रकाशन / देहाती पुस्तक भण्डार) | आरती खण्ड ('ॐ जय श्री विश्वकर्मा, प्रभु जय श्री विश्वकर्मा') | हंस वाहन, गज वाहन, कमण्डलु-सूत-गज धारी स्वरूप |
+| [ ] | **720** | **विश्वकर्मा सूक्तम्**<br>([`vishwakarma-suktam.md`](file:///a:/GitHub/Gyankosh/src/content/library/vishwakarma-suktam.md)) | `Veda` | ऋग्वेद संहिता दशम मण्डल (गीताप्रेस कोड 1948 / चौखम्बा) | ऋग्वेद मण्डल १०, सूक्त ८१ एवं ८२ (भौवन विश्वकर्मा ऋषि, १४ मन्त्र) | सृष्टि कर्ता परम विश्वकर्मा, 'य इमा विश्वा भुवनानि जुह्वत्', 'विश्वतश्चक्षुरुत विश्वतोमुखो' |
+| [ ] | **730** | **श्री विश्वकर्मा स्तोत्रम् एवं अष्टकम्**<br>([`vishwakarma-stotram.md`](file:///a:/GitHub/Gyankosh/src/content/library/vishwakarma-stotram.md)) | `Stotra` | श्री विश्वकर्मा पूजन एवं माहात्म्य (रणधीर प्रकाशन / चौखम्बा) | स्तोत्र एवं अष्टक खण्ड (८ श्लोक मय फलश्रुति) | शिल्प-सम्पदा, गृह-निर्माण, उद्योग-व्यापार समृद्धि फलश्रुति |
+| [ ] | **740** | **श्री विश्वकर्मा पुराण — माहात्म्य एवं पंचऋषि कथा**<br>([`vishwakarma-puran.md`](file:///a:/GitHub/Gyankosh/src/content/library/vishwakarma-puran.md)) | `Purana` | स्कन्द पुराण नागर खण्ड / प्रभास खण्ड (गीताप्रेस कोड 1664 / रणधीर प्रकाशन) | विश्वकर्मा प्राकट्य, पंचऋषि (मनु, मय, त्वष्टा, शिल्पी, दैवज्ञ) एवं दारुब्रह्म कथा | सूर्य-तेज कर्तन, अस्त्र निर्माण (सुदर्शन, त्रिशूल), जगन्नाथ विग्रह निर्माण कथा |
+| [ ] | **750** | **श्रीरामाष्टकम्**<br>([`ramashtakam.md`](file:///a:/GitHub/Gyankosh/src/content/library/ramashtakam.md)) | `Stotra` | स्तोत्र-रत्नावली (गीताप्रेस कोड 65) | राम स्तोत्र खण्ड (महर्षि वेदव्यास विरचित, ८ श्लोक) | 'भजे विशेषसुन्दरं समस्तपापखण्डनम्', स्वभक्तचित्तरञ्जनं सदैव राममद्वयम्, अद्वैत भावार्थ |
+| [ ] | **760** | **श्रीरामरक्षास्तोत्रम्**<br>([`ram-raksha-stotram.md`](file:///a:/GitHub/Gyankosh/src/content/library/ram-raksha-stotram.md)) | `Stotra` | स्तोत्र-रत्नावली (गीताप्रेस कोड 65) | राम स्तोत्र खण्ड (बुधकौशिक ऋषि विरचित, ३८ श्लोक) | 'चरितं रघुनाथस्य शतकोटिप्रविस्तरम्', अङ्ग रक्षा मन्त्र, 'रामो राजमणिः सदा विजयते', फलश्रुति |
+| [ ] | **770** | **श्रीरामचन्द्र कृपालु भजु मन**<br>([`shri-ramachandra-kripalu.md`](file:///a:/GitHub/Gyankosh/src/content/library/shri-ramachandra-kripalu.md)) | `Stotra` | विनय-पत्रिका सटीक (गीताप्रेस कोड 108 / 109) | राम वन्दना (पद ४५: 'श्रीरामचन्द्र कृपालु भजु मन हरण भवभय दारुणं') | नवकञ्ज लोचन कञ्ज मुख, 'कन्दर्प अगणित अमित छबि नवनील नीरद सुन्दरम्', स्रग्धरा/गीति भाव |
+| [ ] | **780** | **श्री कामतानाथ स्तुति**<br>([`kamtanath-stuti.md`](file:///a:/GitHub/Gyankosh/src/content/library/kamtanath-stuti.md)) | `Stotra` | चित्रकूट दर्शन एवं कामदनाथ माहात्म्य (कामतानाथ मन्दिर ट्रस्ट, चित्रकूट / गीताप्रेस तीर्थाङ्क कोड 132) | कामतानाथ स्तुति एवं ध्यान श्लोक | कामदगिरि परिक्रमा, कामतानाथ मुखारविन्द दर्शन, पयस्विनी तट महिमा |
+| [ ] | **790** | **आरती श्री कामदनाथ जी की**<br>([`kamtanath-aarti.md`](file:///a:/GitHub/Gyankosh/src/content/library/kamtanath-aarti.md)) | `Aarti` | चित्रकूट दर्शन (कामतानाथ मन्दिर ट्रस्ट, चित्रकूट धाम) | महाआरती खण्ड ('आरती श्री कामदनाथ हरे') | चित्रकूट के अधिष्ठाता देव की सांध्य एवं प्रातः महाआरती |
+| [ ] | **800** | **श्री राम प्राकट्य वंदना (भए प्रगट कृपाला)**<br>([`ram-janma-stuti.md`](file:///a:/GitHub/Gyankosh/src/content/library/ram-janma-stuti.md)) | `Stotra` | श्रीरामचरितमानस बालकाण्ड (गीताप्रेस कोड 1, 2, 7) | बालकाण्ड छन्द १९१ ('भए प्रगट कृपाला दीनदयाला कौसल्या हितकारी') | 'हरषित महतारी मुनि मन हारी अद्भुत रूप बिचारी', लोचन अभिरामा, उपजा जब ज्ञाना |
+| [ ] | **810** | **श्री जानकी स्तुति एवं जानकीनाथ भजन**<br>([`janaki-stuti.md`](file:///a:/GitHub/Gyankosh/src/content/library/janaki-stuti.md)) | `Stotra` | विनय-पत्रिका (गीताप्रेस कोड 108) / कवितावली / मानस बालकाण्ड | सीता स्तुति एवं विनयपत्रिका पद १५८ ('जानकीनाथ सहाय करैं जब') | 'जनकसुता जग जननि जानकी', 'जानकीनाथ सहाय करैं जब कौन बिगाड़ करै नर तेरो' |
+| [ ] | **820** | **श्री मन्दाकिनी (पयस्विनी) स्तोत्रम्**<br>([`mandakini-stotram.md`](file:///a:/GitHub/Gyankosh/src/content/library/mandakini-stotram.md)) | `Stotra` | वाल्मीकीय रामायण सटीक (गीताप्रेस कोड 75) / तीर्थाङ्क | अयोध्याकाण्ड सर्ग ९५ (भगवान राम द्वारा सीता जी को मन्दाकिनी वर्णन, १८ श्लोक) | 'विचित्रपुलिनां रम्यां हंससारससेविताम्', पयस्विनी पावन तीर्थ, मुनियों का स्नान |
+| [ ] | **830** | **श्रीरामचरितमानस — चित्रकूट प्रसंग एवं भरत-मिलाप**<br>([`ramcharitmanas-chitrakoot-prasang.md`](file:///a:/GitHub/Gyankosh/src/content/library/ramcharitmanas-chitrakoot-prasang.md)) | `Purana` | श्रीरामचरितमानस अयोध्याकाण्ड (गीताप्रेस कोड 1, 2, 7) | अयोध्याकाण्ड दोहा १३०-१४० (वाल्मीकि-राम संवाद) एवं दोहा २३८-२५० (भरत-मिलाप) | चित्रकूट निवास निर्णय, कोल-किरात प्रेम, कामदगिरि महिमा, भरत जी की पादुका ग्रहण |
+| [ ] | **840** | **विनयपत्रिका — चित्रकूट महिमा एवं राम-निवेदन**<br>([`vinaya-patrika-chitrakoot.md`](file:///a:/GitHub/Gyankosh/src/content/library/vinaya-patrika-chitrakoot.md)) | `Stotra` | विनय-पत्रिका सटीक (गीताप्रेस कोड 108 / 109) | चित्रकूट महिमा पद (पद २६४ 'अब चित चेति चित्रकूटहि चलु', पद २६५, १७४ 'जाके प्रिय न राम बैदेही') | तुलसीदास जी का आत्म-बोधन, चित्रकूट की परम पावनता, शरणागति भाव |
+| [ ] | **850** | **श्री हनुमान बाहुक**<br>([`hanuman-bahuk.md`](file:///a:/GitHub/Gyankosh/src/content/library/hanuman-bahuk.md)) | `Stotra` | श्रीहनुमान-बाहुक सटीक (गीताप्रेस कोड 1530 / गुटका) | सम्पूर्ण ४४ छन्द (छप्पय, सवैया, घनाक्षरी/कवित्त, झूलना) | बाहु-पीड़ा मुक्ति, कलि-दोष निवारण, छन्द १-४४ की संख्या व क्रमबद्धता, ब्रजभाषा वर्तनी |
+| [ ] | **860** | **श्रीरामसहस्रनाम स्तोत्रम्**<br>([`ram-sahasranama.md`](file:///a:/GitHub/Gyankosh/src/content/library/ram-sahasranama.md)) | `Stotra` | श्रीरामसहस्रनामस्तोत्रम् (गीताप्रेस कोड 1876 / आनन्दरामायण राज्यकाण्ड) | भगवान शिव-पार्वती संवाद (पूर्वपीठिका, १००० पावन नाम, फलश्रुति) | मर्यादा पुरुषोत्तम के १००० दिव्य नाम, ध्यान श्लोक, नामानुक्रमणिका, 'ॐ रामचन्द्राय नमः' आदि |
+
+---
+
+## 🔍 Standard Operating Procedure (SOP) for Physical Verification
+
+When verifying a text from Gyankosh against a physical book, execute the following 5-point verification protocol:
+
+### 1. वर्तनी एवं अक्षर-शुद्धि (Orthography & Character Accuracy)
+- **हलन्त एवं विसर्ग**: Ensure accurate presence of halanta (्) and visarga (ः) (e.g. `नमः`, `जगत्`, `शान्तम्`).
+- **अनुस्वार vs अनुनासिक / चन्द्रबिन्दु**: Distinguish strictly between bindu (ं) and chandrabindu (ँ) in Awadhi/Hindi (e.g. `कपि करि हृदयं विचार` vs `हियँ`, `कौसल्या हितकारी`).
+- **अवग्रह चिह्न ('ऽ')**: Verify the Sanskrit avagraha representing elided 'अ' (e.g. `सोऽहम्`, `तेऽधिकम्`, `शिवोऽहम्`).
+- **संयुक्ताक्षर**: Check conjunct consonants (e.g. `र्द्ध`, `त्त्व`, `ङ्क`, `ञ्च`, `ष्ट`).
+
+### 2. छन्द एवं श्लोक संख्या (Metre & Verse Numbering)
+- Verify that **no verses, stanzas, chaupais, or dohas are missing**.
+- Check that the verse count matches the standard traditional numbering (e.g. Bhagavad Gita Ch 2 = 72 shlokas, Hanuman Bahuk = 44 verses, Sundarkand = 60 dohas).
+- Ensure initial Dhyana Shlokas (ध्यानम्) and concluding Phalasruti (फलश्रुति) are properly cataloged and formatted.
+
+### 3. अन्वय एवं पदच्छेद (Anvaya & Word Order)
+- For Sanskrit classical stotras, verify that the compound words (सामासिक पद) are parsed smoothly so learners can understand each individual term without distorting sandhi rules.
+
+### 4. हिन्दी अनुवाद एवं भावार्थ (Hindi Translation & Commentary)
+- Ensure the Hindi meaning preserves the theological and devotional nuance established by Gita Press commentators (such as Swami Ramsukhdas, Jayadayal Goyandka, or Hanuman Prasad Poddar).
+- Avoid modern colloquial distortions; maintain sacred elevated Hindi (उदात्त एवं प्रामाणिक भाषा).
+
+### 5. साइन-ऑफ एवं ट्रैकिंग (Sign-off & Tracking)
+- Once verified, toggle the checkbox from `[ ]` to `[x]` in this document.
+- Note any rare patha-bheda (पाठ-भेद / textual variations) with a comment in the text's Markdown frontmatter.
+
+---
+
+## 📜 Completed Library Roadmap & Phase History
+
+Gyankosh content has been developed systematically across 7 dedicated phases, accumulating **86 master texts**:
+
+### 📌 Phase 1: Foundations of Devotion (Daily Chalisas & Aartis) [COMPLETED]
+- [x] **12 Daily Chalisas**: Hanuman, Shiva, Durga, Ganesh, Lakshmi, Saraswati, Shani, Surya, Krishna, Ram, Gayatri, Bhairav.
+- [x] **6 Daily Aartis**: Om Jai Jagdish Hare, Jai Ganesh Deva, Aarti Kunjbihari Ki, Jai Shiva Omkara, Jai Ambe Gauri, Aarti Keejai Hanuman Lala Ki.
+
+### 📌 Phase 2: Complete Srimad Bhagavad Gita (P0 — 18 Chapters) [COMPLETED]
+- [x] **सम्पूर्ण १८ अध्याय (All 18 Chapters)**: अर्जुनविषादयोग से मोक्षसंन्यासयोग पर्यन्त (अध्याय १ से १८, ७०० श्लोक अन्वय एवं भावार्थ सहित).
+
+### 📌 Phase 3: Sacred Vedic Suktams & Key Sahasranamas (P1) [COMPLETED]
+- [x] **Vedic Suktams**: श्री सूक्तम्, पुरुष सूक्तम्, नारायण सूक्तम्, दुर्गा सूक्तम्.
+- [x] **Classical Sahasranamas**: श्रीविष्णुसहस्रनाम स्तोत्रम् (महाभारत), श्री ललिता सहस्रनाम स्तोत्रम् (ब्रह्माण्ड पुराण).
+- [x] **Master Stotras**: शिवमहिम्नः स्तोत्रम्, कनकधारा स्तोत्रम्, रुद्राष्टकम्, नवग्रह स्तोत्रम्, गंगा स्तोत्रम्.
+
+### 📌 Phase 4: Principal Upanishads (Mukhya Upanishads — P1) [COMPLETED]
+- [x] **७ मुख्य उपनिषद् (7 Principal Upanishads)**:
+  - ईशावास्योपनिषद् (`isha-upanishad.md`) — शुक्ल यजुर्वेद (१८ मन्त्र)
+  - केनोपनिषद् (`kena-upanishad.md`) — सामवेद (४ खण्ड)
+  - कठोपनिषद् (`katha-upanishad.md`) — कृष्ण यजुर्वेद (नचिकेता-यम संवाद)
+  - प्रश्नोपनिषद् (`prashna-upanishad.md`) — अथर्ववेद (६ प्रश्न)
+  - मुण्डकोपनिषद् (`mundaka-upanishad.md`) — अथर्ववेद (*सत्यमेव जयते*)
+  - माण्डूक्योपनिषद् (`mandukya-upanishad.md`) — अथर्ववेद (ॐ एवं तुरीय चेतना)
+  - तैत्तिरीयोपनिषद् (`taittiriya-upanishad.md`) — शीक्षा, ब्रह्मानन्द, भृगुवल्ली
+
+### 📌 Phase 5: Practical Wisdom, Niti, Puranic Selections & Daily Stotras [COMPLETED]
+- [x] **चाणक्य नीति** (`chanakya-niti.md`) — सम्पूर्ण १७ अध्याय
+- [x] **विदुर नीति** (`vidura-niti.md`) — महाभारत उद्योगपर्व (८ अध्याय)
+- [x] **अष्टावक्र गीता** (`ashtavakra-gita.md`) — अद्वैत वेदान्त (२० प्रकरण)
+- [x] **दुर्गा सप्तशती मुख्य त्रय** (`durga-saptashati-traya.md`) — कवच, अर्गला, कीलक
+- [x] **गोपी गीत** (`gopi-geet.md`) — श्रीमद्भागवत महापुराण १०.३१
+- [x] **दामोदराष्टकम्** (`damodarashtakam.md`) — सत्यव्रत मुनि कृत
+- [x] **ऋग्वेद मण्डल १ सूक्त १** (`rigveda-mandala1.md`) — अग्नि सूक्तम्
+
+### 📌 Phase 6: Lord Vishwakarma Sacred Collection (श्री विश्वकर्मा पञ्चरत्न) [COMPLETED]
+- [x] **श्री विश्वकर्मा चालीसा** (`vishwakarma-chalisa.md`)
+- [x] **आरती श्री विश्वकर्मा जी की** (`vishwakarma-aarti.md`)
+- [x] **विश्वकर्मा सूक्तम्** (`vishwakarma-suktam.md`) — ऋग्वेद १०.८१-८२
+- [x] **श्री विश्वकर्मा स्तोत्रम् एवं अष्टकम्** (`vishwakarma-stotram.md`)
+- [x] **श्री विश्वकर्मा पुराण** (`vishwakarma-puran.md`) — स्कन्द पुराण नागर खण्ड
+
+### 📌 Phase 7: Shri Ram, Hanuman Bahuk & Chitrakoot Mahatmya Collection [COMPLETED]
+- [x] **श्रीरामाष्टकम्** (`ramashtakam.md`) — महर्षि व्यास विरचित
+- [x] **श्रीरामरक्षास्तोत्रम्** (`ram-raksha-stotram.md`) — बुधकौशिक विरचित अमोघ रक्षा-कवच
+- [x] **श्रीरामचन्द्र कृपालु भजु मन** (`shri-ramachandra-kripalu.md`) — विनयपत्रिका पद ४५
+- [x] **श्री कामतानाथ स्तुति** (`kamtanath-stuti.md`) — चित्रकूट धाम कामदगिरि
+- [x] **आरती श्री कामदनाथ जी की** (`kamtanath-aarti.md`) — कामदगिरि महाआरती
+- [x] **श्री राम प्राकट्य वंदना (भए प्रगट कृपाला)** (`ram-janma-stuti.md`) — मानस बालकाण्ड
+- [x] **श्री जानकी स्तुति एवं जानकीनाथ भजन** (`janaki-stuti.md`) — जानकीनाथ सहाय करैं जब
+- [x] **श्री मन्दाकिनी स्तोत्रम्** (`mandakini-stotram.md`) — वाल्मीकि रामायण अयोध्याकाण्ड सर्ग ९५
+- [x] **श्रीरामचरितमानस — चित्रकूट प्रसंग एवं भरत-मिलाप** (`ramcharitmanas-chitrakoot-prasang.md`)
+- [x] **विनयपत्रिका — चित्रकूट महिमा एवं राम-निवेदन** (`vinaya-patrika-chitrakoot.md`)
+- [x] **श्री हनुमान बाहुक** (`hanuman-bahuk.md`) — गोस्वामी तुलसीदास कृत ४४ पावन पद
+- [x] **श्रीरामसहस्रनाम स्तोत्रम्** (`ram-sahasranama.md`) — आनन्द रामायण राज्यकाण्ड (१,००० दिव्य नाम)
+
+---
+
+*Last updated: Master Physical Verification Edition, Oct 2026*

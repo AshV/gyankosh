@@ -11,9 +11,9 @@
 | Metric | Value |
 | :--- | :--- |
 | **Source of Truth** | [`src/data/weights.json`](file:///a:/GitHub/Gyankosh/src/data/weights.json) |
-| **Total Sacred Texts** | `85` |
-| **Highest Weight Allocated** | `850` |
-| **Next Recommended Weight** | **`860`** (increment by 10) |
+| **Total Sacred Texts** | `86` |
+| **Highest Weight Allocated** | `860` |
+| **Next Recommended Weight** | **`870`** (increment by 10) |
 | **Default Fallback Weight** | `1000` |
 
 ---
@@ -31,7 +31,8 @@ Gyankosh assigns weights in blocks of 10 to allow future insertions without renu
 | **560 – 600** | **Niti Shastra & Classical Suktams** | Chanakya Niti, Vidura Niti, Durga/Narayana Suktams, Rigveda |
 | **610 – 690** | **Additional Stotras & Deva Chalisas** | Ganga, Navagraha, Shani, Saraswati, Krishna, Ram, Gayatri, Surya, Bhairav |
 | **700 – 740** | **Lord Vishwakarma Corpus** | Chalisa (700), Aarti (710), Suktam (720), Stotram (730), Puran (740) |
-| **750+** | **Next Planned Additions** | Ready for next texts |
+| **750 – 860** | **Lord Rama, Hanuman & Chitrakoot Corpus** | Ramashtakam (750), Ram Raksha (760), Bahuk (850), Ram Sahasranama (860) |
+| **870+** | **Next Planned Additions** | Ready for next texts |
 
 ---
 
@@ -124,6 +125,8 @@ Gyankosh assigns weights in blocks of 10 to allow future insertions without renu
 | **830** | Purana | श्रीरामचरितमानस — चित्रकूट प्रसंग एवं भरत-मिलाप | `ramcharitmanas-chitrakoot-prasang` |
 | **840** | Stotra | विनयपत्रिका — चित्रकूट महिमा एवं राम-निवेदन | `vinaya-patrika-chitrakoot` |
 | **850** | Stotra | श्री हनुमान बाहुक | `hanuman-bahuk` |
+| **860** | Stotra | श्रीरामसहस्रनाम स्तोत्रम् | `ram-sahasranama` |
 
 ---
-*Last updated: Sep 15, 2026*
+*Last updated: Master Physical Verification Edition, Oct 2026*
+
