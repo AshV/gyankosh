@@ -2,18 +2,17 @@
 
 > 🎯 **Master Verification Directive**: Every sacred text in Gyankosh is verified word-for-word against authoritative physical scriptures.  
 > 🏛️ **Primary Publisher Standard**: **गीता प्रेस, गोरखपुर (Gita Press, Gorakhpur)** — revered for scholarly textual accuracy, authentic sandhi/anvaya, and affordable, non-profit pricing. Complementary editions from **चौखम्बा (Chaukhamba)** and **मन्दिर ट्रस्ट (Temple Trusts)** are used for specialized texts.  
-> ⚖️ **Single Source of Truth**: [`src/data/weights.json`](file:///a:/GitHub/Gyankosh/src/data/weights.json) & [`WEIGHTS.md`](file:///a:/GitHub/Gyankosh/WEIGHTS.md)  
-> 📊 **Current Library Status**: **91 Sacred Texts Total** | **0 Unverified** placeholder entries | 100% full content.
+> ⚖️ **Single Source of Truth**: [`src/data/weights.json`](file:///a:/GitHub/Gyanko> 📊 **Current Library Status**: **97 Sacred Texts Total** | **0 Unverified** placeholder entries | 100% full content.
 
 ---
 
 ## ⚡ Quick Navigation
 
 1. [📚 Optimized Physical Book Purchasing Guide (16 Books Total)](#-optimized-physical-book-purchasing-guide)
-   - [Tier 1: The Essential Core 5 Compilations (Covers 68+ Texts ~ 75%)](#tier-1-the-essential-core-5-compilations-covers-68-texts--75)
-   - [Tier 2: Extended Classical Pack (4 Books — Brings Coverage to 78 Texts ~ 86%)](#tier-2-extended-classical-pack-4-books--brings-coverage-to-78-texts--86)
+   - [Tier 1: The Essential Core 5 Compilations (Covers 74+ Texts ~ 76%)](#tier-1-the-essential-core-5-compilations-covers-68-texts--75)
+   - [Tier 2: Extended Classical Pack (4 Books — Brings Coverage to 84 Texts ~ 87%)](#tier-2-extended-classical-pack-4-books--brings-coverage-to-78-texts--86)
    - [Tier 3: Specialized Wisdom & Sahasranama Pack (7 Books — 100% Coverage)](#tier-3-specialized-wisdom--sahasranama-pack-7-books--100-coverage)
-2. [📋 Master 91-Text Verification Checklist (Interactive)](#-master-91-text-verification-checklist)
+2. [📋 Master 97-Text Verification Checklist (Interactive)](#-master-91-text-verification-checklist)
 3. [🔍 Standard Operating Procedure (SOP) for Text Verification](#-standard-operating-procedure-sop-for-physical-verification)
 4. [📜 Completed Library Roadmap & Phase History (Phases 1 to 8)](#-completed-library-roadmap--phase-history)
 
@@ -21,17 +20,17 @@
 
 ## 📚 Optimized Physical Book Purchasing Guide
 
-Rather than buying 91 individual thin booklets (which would cost more, clutter bookshelves, and often contain non-standard bazaar errors), the entire Gyankosh library is engineered to be verified using just **16 authoritative physical compilations** (संग्रह ग्रन्थ).
+Rather than buying 97 individual thin booklets (which would cost more, clutter bookshelves, and often contain non-standard bazaar errors), the entire Gyankosh library is engineered to be verified using just **16 authoritative physical compilations** (संग्रह ग्रन्थ).
 
 ### 🏷️ Purchasing Summary Table
 
 | # | ग्रन्थ का नाम (Book Title) | प्रकाशक एवं कोड (Publisher & Code) | मूल्य (Est. Price) | Gyankosh Texts Covered | कवर्ड ग्रन्थों की संख्या |
-| :-: | :--- | :--- | :-: | :--- | :-: |
+| :-: | :--- | :--- | :--- | :--- | :-: |
 | **1** | **स्तोत्र-रत्नावली (सटीक)** | गीताप्रेस कोड: **65** | ₹140 | विष्णुसहस्रनाम, शिवताण्डव, शिवमहिम्न, रुद्राष्टक, कनकधारा, महिषासुरमर्दिनी, आदित्यहृदय, मधुराष्टक, कालभैरवाष्टक, नवग्रह, गंगा, दामोदराष्टक, रामरक्षा, रामाष्टक, श्रीसूक्त, पुरुषसूक्त, नारायणसूक्त, गोपीगीत, **शिवपञ्चाक्षर, शिवमानसपूजा, द्वादशज्योतिर्लिङ्ग, शिवाष्टोत्तरशतनाम स्तोत्र एवं नामावली** | **23 Texts** |
 | **2** | **श्रीमद्भगवद्गीता (सटीक)** | गीताप्रेस कोड: **11** / **16** / **18** | ₹60 – ₹200 | सम्पूर्ण भगवद्गीता (अध्याय १ से १८) | **18 Texts** |
 | **3** | **चालीसा संग्रह / आरती-चालीसा** | गीताप्रेस कोड: **1374** / **1404** | ₹40 – ₹60 | शिव, दुर्गा, गणेश, लक्ष्मी, सरस्वती, शनि, सूर्य, कृष्ण, राम, गायत्री, भैरव चालीसा + ६ दैनिक महाआरतियां | **17 Texts** |
 | **4** | **ईशादि नौ उपनिषद् (सानुवाद)** | गीताप्रेस कोड: **90** / **610** | ₹110 | ईश, केन, कठ, प्रश्न, मुण्डक, माण्डूक्य, तैत्तिरीय उपनिषद् | **7 Texts** |
-| **5** | **श्रीरामचरितमानस (सटीक)** | गीताप्रेस कोड: **1** / **2** / **7** | ₹220 – ₹350 | सुन्दरकाण्ड, राम प्राकट्य (भए प्रगट कृपाला), चित्रकूट प्रसंग एवं भरत-मिलाप | **3 Texts** |
+| **5** | **श्रीरामचरितमानस (सटीक)** | गीताप्रेस कोड: **1** / **2** / **7** | ₹220 – ₹350 | **सम्पूर्ण ७ काण्ड (बाल, अयोध्या, अरण्य, किष्किन्धा, सुन्दर, लङ्का, उत्तरकाण्ड)** + राम प्राकट्य (भए प्रगट कृपाला), चित्रकूट प्रसंग एवं भरत-मिलाप | **9 Texts** |
 | **6** | **श्रीहनुमान-बाहुक / हनुमत्-उपासना** | गीताप्रेस कोड: **1530** / **1445** | ₹30 – ₹50 | हनुमान बाहुक (४४ पद), हनुमान चालीसा, संकटमोचन हनुमानाष्टक, बजरंग बाण | **4 Texts** |
 | **7** | **विनय-पत्रिका (सटीक)** | गीताप्रेस कोड: **108** / **109** | ₹80 – ₹120 | श्रीरामचन्द्र कृपालु भजु मन (पद ४५), चित्रकूट महिमा पद, जानकी स्तुति | **3 Texts** |
 | **8** | **श्रीदुर्गासप्तशती (सटीक)** | गीताप्रेस कोड: **104** / **118** | ₹70 – ₹110 | दुर्गा सप्तशती मुख्य त्रय (कवच, अर्गला, कीलक), दुर्गा सूक्तम् | **2 Texts** |
@@ -42,8 +41,7 @@ Rather than buying 91 individual thin booklets (which would cost more, clutter b
 | **13** | **श्रीरामसहस्रनामस्तोत्रम्** | गीताप्रेस कोड: **1876** (या आनन्दरामायण) | ₹50 – ₹90 | श्रीरामसहस्रनाम स्तोत्रम् (आनन्द रामायण / शिव-पार्वती संवाद) | **1 Text** |
 | **14** | **श्री विश्वकर्मा पुराण एवं माहात्म्य** | रणधीर प्रकाशन / देहाती पुस्तक भण्डार | ₹70 – ₹120 | विश्वकर्मा चालीसा, आरती, सूक्त, स्तोत्रम् व अष्टकम्, पुराण कथा | **5 Texts** |
 | **15** | **चित्रकूट दर्शन एवं कामदनाथ माहात्म्य** | कामतानाथ मन्दिर ट्रस्ट / कल्याण तीर्थाङ्क (132) | ₹50 – ₹100 | श्री कामतानाथ स्तुति, कामदनाथ आरती, मन्दाकिनी स्तोत्रम् | **3 Texts** |
-| **16** | **ऋग्वेद संहिता (प्रथम मण्डल)** | गीताप्रेस कोड: **1947** / चौखम्बा | ₹180 – ₹250 | ऋग्वेद मण्डल १, सूक्त १ (अग्नि सूक्त) | **1 Text** |
-| **कुल** | **१६ भौतिक ग्रन्थ (Complete Master Pack)** | — | **~₹1,200 – ₹1,800** | **सम्पूर्ण ९१ ग्रन्थ (100% of Gyankosh)** | **91 Texts** |
+| **कुल** | **१६ भौतिक ग्रन्थ (Complete Master Pack)** | — | **~₹1,200 – ₹1,800** | **सम्पूर्ण ९७ ग्रन्थ (100% of Gyankosh)** | **97 Texts** |
 
 ---
 
@@ -172,6 +170,12 @@ Rather than buying 91 individual thin booklets (which would cost more, clutter b
 | [ ] | **890** | **द्वादशज्योतिर्लिङ्ग स्मरणम् एवं स्तोत्रम्**<br>([`dwadash-jyotirlinga-stotram.md`](file:///a:/GitHub/Gyankosh/src/content/library/dwadash-jyotirlinga-stotram.md)) | `Stotra` | स्तोत्र-रत्नावली (गीताप्रेस कोड 65) / शिवपुराण कोटिरुद्रसंहिता १ | द्वादश ज्योतिर्लिङ्ग खण्ड (महर्षि व्यास विरचित, ६ श्लोक मय फलश्रुति) | १२ ज्योतिर्लिङ्गों के नाम व स्थान: सोमनाथ, मल्लिकार्जुन, महाकाल, ॐकार, वैद्यनाथ, भीमशङ्कर, रामेश, नागेश, विश्वेश, त्र्यम्बक, केदार, घुश्मेश |
 | [ ] | **900** | **श्रीशिवाष्टोत्तरशतनामस्तोत्रम्**<br>([`shiva-ashtottara-shatanama-stotram.md`](file:///a:/GitHub/Gyankosh/src/content/library/shiva-ashtottara-shatanama-stotram.md)) | `Stotra` | स्तोत्र-रत्नावली (गीताप्रेस कोड 65) / स्कन्दपुराण | शिव स्तोत्र खण्ड (अनुष्टुप् छन्द, १६ श्लोक मय १०८ नाम व फलश्रुति) | १०८ नाम: शिव, महेश्वर, शम्भु, पिनाकी, शशिशेखर से लेकर तारक, परमेश्वर पर्यन्त |
 | [ ] | **910** | **श्रीशिवाष्टोत्तरशतनामावली**<br>([`shiva-ashtottara-shatanamavali.md`](file:///a:/GitHub/Gyankosh/src/content/library/shiva-ashtottara-shatanamavali.md)) | `Stotra` | स्तोत्र-रत्नावली (गीताप्रेस कोड 65) / शिव पूजापद्धति | १०८ नामावली अर्चना मन्त्राः (ॐ ... नमः) | १०८ अर्चना मन्त्र (चतुर्थी विभक्ति सानुवाद): 'ॐ शिवाय नमः' से 'ॐ परमेश्वराय नमः' तक |
+| [ ] | **920** | **श्रीरामचरितमानस — बालकाण्ड**<br>([`ramcharitmanas-balakand.md`](file:///a:/GitHub/Gyankosh/src/content/library/ramcharitmanas-balakand.md)) | `Purana` | श्रीरामचरितमानस सटीक (गीताप्रेस कोड 1 / 2 / 7) | प्रथम सोपान (सम्पूर्ण ३६१ दोहे, मंगलाचरण, शिव-पार्वती विवाह, राम जन्म, धनुष-यज्ञ, सीता-राम विवाह) | 'वर्णानामर्थसंघानां', 'जो सुमिरत सिधि होइ', 'बंदउ गुरु पद पदुम परागा', 'भए प्रगट कृपाला', सीता स्वयंवर |
+| [ ] | **930** | **श्रीरामचरितमानस — अयोध्याकाण्ड**<br>([`ramcharitmanas-ayodhyakand.md`](file:///a:/GitHub/Gyankosh/src/content/library/ramcharitmanas-ayodhyakand.md)) | `Purana` | श्रीरामचरितमानस सटीक (गीताप्रेस कोड 1 / 2 / 7) | द्वितीय सोपान (सम्पूर्ण ३२६ दोहे, राज्याभिषेक मन्त्रणा, राम-वन गमन, केवट प्रसंग, चित्रकूट निवास, दशरथ मरण, भरत मिलाप) | 'यस्याङ्के च विभाति', 'श्रीगुरु चरन सरोज रज', केवट प्रेम, वाल्मीकि संवाद, कामदगिरि, पादुका ग्रहण |
+| [ ] | **940** | **श्रीरामचरितमानस — अरण्यकाण्ड**<br>([`ramcharitmanas-aranyakand.md`](file:///a:/GitHub/Gyankosh/src/content/library/ramcharitmanas-aranyakand.md)) | `Purana` | श्रीरामचरितमानस सटीक (गीताप्रेस कोड 1 / 2 / 7) | तृतीय सोपान (सम्पूर्ण ४६ दोहे, अत्रि-अनुसूया मिलन, पञ्चवटी निवास, शूर्पणखा प्रसंग, खर-दूषण वध, सीता हरण, जटायु मोक्ष, शबरी नवधा भक्ति) | 'मूलं धर्मतरोर्विवेकजलधेः', 'उमा राम गुन गूढ़', लक्ष्मण गीता उपदेश, नवधा भक्ति प्रसंग |
+| [ ] | **950** | **श्रीरामचरितमानस — किष्किन्धाकाण्ड**<br>([`ramcharitmanas-kishkindhakand.md`](file:///a:/GitHub/Gyankosh/src/content/library/ramcharitmanas-kishkindhakand.md)) | `Purana` | श्रीरामचरितमानस सटीक (गीताप्रेस कोड 1 / 2 / 7) | चतुर्थ सोपान (सम्पूर्ण ३० दोहे, पम्पा सरोवर, हनुमान-राम मिलन, सुग्रीव सख्य, बालि वध, वर्षा-शरद वर्णन, सीता-खोज) | 'कुन्देन्दीवरसुन्दरावतिबलौ', 'मुक्ति जन्म महि जानि', बालि उद्धार, वर्षा-शरद रूपक |
+| [ ] | **960** | **श्रीरामचरितमानस — लङ्काकाण्ड**<br>([`ramcharitmanas-lankakand.md`](file:///a:/GitHub/Gyankosh/src/content/library/ramcharitmanas-lankakand.md)) | `Purana` | श्रीरामचरितमानस सटीक (गीताप्रेस कोड 1 / 2 / 7) | षष्ठ सोपान (सम्पूर्ण १२१ दोहे, नल-नील सेतु निर्माण, अंगद दूत प्रसंग, महायुद्ध, लक्ष्मण-शक्ति, मेघनाद-कुम्भकर्ण-रावण वध, विभीषण राज्याभिषेक) | 'रामं कामारिसेव्यं', 'लव निमेष परमानु जुग', अंगद चरण रोपण, रावण वध, मन्दोदरी विलाप, अग्निपरीक्षा |
+| [ ] | **970** | **श्रीरामचरितमानस — उत्तरकाण्ड**<br>([`ramcharitmanas-uttarakand.md`](file:///a:/GitHub/Gyankosh/src/content/library/ramcharitmanas-uttarakand.md)) | `Purana` | श्रीरामचरितमानस सटीक (गीताप्रेस कोड 1 / 2 / 7) | सप्तम सोपान (सम्पूर्ण १३० दोहे, श्रीराम राज्याभिषेक, रामराज्य वर्णन, कागभुशुण्डि-गरुड़ संवाद, मानस रोग निरूपण, रामायण आरती व माहात्म्य) | 'केकीकण्ठाभनीलं', 'रहा एक दिन अवधि कर', रामराज्य महिमा, ज्ञान-दीपक, मानस रोग, कलिमल विध्वंसन |
 
 ---
 

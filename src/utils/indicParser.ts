@@ -13,7 +13,7 @@
 // ─── Block-type definitions ────────────────────────────────────────────────
 
 type BlockType =
-  | 'Shloka' | 'Mantra' | 'Chaupai' | 'Doha' | 'Soratha' | 'Prose'
+  | 'Shloka' | 'Mantra' | 'Chaupai' | 'Doha' | 'Soratha' | 'Chhanda' | 'Chhand' | 'Prose'
   | 'Translation' | 'Bhavarth'
   | 'Speaker' | 'Uvacha'
   | 'Instruction' | 'Viniyoga'
@@ -31,7 +31,7 @@ interface ParseState {
 
 // Block types that get the verse counter
 const VERSE_BLOCKS: ReadonlySet<BlockType> = new Set([
-  'Shloka', 'Mantra', 'Chaupai', 'Doha', 'Soratha', 'Prose',
+  'Shloka', 'Mantra', 'Chaupai', 'Doha', 'Soratha', 'Chhanda', 'Chhand', 'Prose',
 ]);
 
 // Tag regex: matches [TagName] at start of a trimmed block

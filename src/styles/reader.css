@@ -948,13 +948,15 @@ body.hide-numbering .verse-block {
   letter-spacing: 0.02em;
 }
 
-/* Chaupai & Doha */
+/* Chaupai & Doha & Chhanda */
 .block--chaupai .pada {
   font-weight: 500;
 }
 
 .block--doha .pada,
-.block--soratha .pada {
+.block--soratha .pada,
+.block--chhanda .pada,
+.block--chhand .pada {
   font-weight: 600;
 }
 

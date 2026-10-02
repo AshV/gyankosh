@@ -11,9 +11,9 @@
 | Metric | Value |
 | :--- | :--- |
 | **Source of Truth** | [`src/data/weights.json`](file:///a:/GitHub/Gyankosh/src/data/weights.json) |
-| **Total Sacred Texts** | `91` |
-| **Highest Weight Allocated** | `910` |
-| **Next Recommended Weight** | **`920`** (increment by 10) |
+| **Total Sacred Texts** | `97` |
+| **Highest Weight Allocated** | `970` |
+| **Next Recommended Weight** | **`980`** (increment by 10) |
 | **Default Fallback Weight** | `1000` |
 
 ---
@@ -132,6 +132,12 @@ Gyankosh assigns weights in blocks of 10 to allow future insertions without renu
 | **890** | Stotra | द्वादशज्योतिर्लिङ्ग स्मरणम् एवं स्तोत्रम् | `dwadash-jyotirlinga-stotram` |
 | **900** | Stotra | श्रीशिवाष्टोत्तरशतनामस्तोत्रम् | `shiva-ashtottara-shatanama-stotram` |
 | **910** | Stotra | श्रीशिवाष्टोत्तरशतनामावली | `shiva-ashtottara-shatanamavali` |
+| **920** | Purana | श्रीरामचरितमानस — बालकाण्ड | `ramcharitmanas-balakand` |
+| **930** | Purana | श्रीरामचरितमानस — अयोध्याकाण्ड | `ramcharitmanas-ayodhyakand` |
+| **940** | Purana | श्रीरामचरितमानस — अरण्यकाण्ड | `ramcharitmanas-aranyakand` |
+| **950** | Purana | श्रीरामचरितमानस — किष्किन्धाकाण्ड | `ramcharitmanas-kishkindhakand` |
+| **960** | Purana | श्रीरामचरितमानस — लङ्काकाण्ड | `ramcharitmanas-lankakand` |
+| **970** | Purana | श्रीरामचरितमानस — उत्तरकाण्ड | `ramcharitmanas-uttarakand` |
 
 ---
 *Last updated: Master Physical Verification Edition, Oct 2026*
