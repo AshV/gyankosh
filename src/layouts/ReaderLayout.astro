@@ -34,6 +34,8 @@ export interface Props {
   tags?: string[];
   context?: string;
   seoTitle?: string;
+  prevText?: { slug: string; title: string } | null;
+  nextText?: { slug: string; title: string } | null;
 }
 
 const {
@@ -53,6 +55,8 @@ const {
   showNumbering = true,
   tags = [],
   context,
+  prevText,
+  nextText,
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -100,6 +104,10 @@ const ogImage = image || (slug
       keywords={keywords}
       jsonLd={jsonLd}
     />
+
+    <!-- Sequence Navigation Links for SEO Crawlers -->
+    {prevText && <link rel="prev" href={`${base}/read/${prevText.slug}`} title={prevText.title} />}
+    {nextText && <link rel="next" href={`${base}/read/${nextText.slug}`} title={nextText.title} />}
 
     <!-- Restore user font preferences immediately before paint -->
     <script is:inline define:vars={{ defaultShowNumbering: showNumbering }}>
@@ -456,11 +464,22 @@ const ogImage = image || (slug
           <h2 class="completion-title">पाठ संपूर्ण हुआ</h2>
           <p class="completion-subtitle">श्रद्धा एवं भक्ति से किया गया पाठ सदैव फलदायी होता है।</p>
           <div class="completion-actions">
-            <button id="btn-completion-restart" class="completion-btn completion-btn--primary" type="button">
-              <span>🔄</span> <span>पुनः पढ़ें</span>
-            </button>
-            <a href={category ? `${base}/category/${category.toLowerCase()}` : `${base}/`} class="completion-btn completion-btn--secondary" id="btn-completion-browse">
-              <span>📚</span> <span>अन्य ग्रंथ पढ़ें</span>
+            {nextText ? (
+              <a href={`${base}/read/${nextText.slug}`} class="completion-btn completion-btn--primary" id="btn-completion-next">
+                <span>⏩</span> <span>अगला: {nextText.title}</span>
+              </a>
+            ) : (
+              <button id="btn-completion-restart" class="completion-btn completion-btn--primary" type="button">
+                <span>🔄</span> <span>पुनः पढ़ें</span>
+              </button>
+            )}
+            {nextText && (
+              <button id="btn-completion-restart" class="completion-btn completion-btn--secondary" type="button">
+                <span>🔄</span> <span>पुनः पढ़ें</span>
+              </button>
+            )}
+            <a href={category ? `${base}/category/${category.toLowerCase()}` : `${base}/`} class="completion-btn completion-btn--outline" id="btn-completion-browse">
+              <span>📚</span> <span>अन्य ग्रंथ</span>
             </a>
             <button id="btn-completion-share" class="completion-btn completion-btn--outline" type="button">
               <span>🔗</span> <span>साझा करें</span>

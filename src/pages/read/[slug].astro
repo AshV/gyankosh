@@ -9,27 +9,21 @@ import { getCollection } from 'astro:content';
 import { parseIndicMarkdown } from '../../utils/indicParser';
 import ReaderLayout from '../../layouts/ReaderLayout.astro';
 import { sortTexts } from '../../utils/sorting';
-
-const categoryMeta: Record<string, { nameHindi: string }> = {
-  Veda:      { nameHindi: 'वेद' },
-  Upanishad: { nameHindi: 'उपनिषद्' },
-  Gita:      { nameHindi: 'गीता' },
-  Chalisa:   { nameHindi: 'चालीसा' },
-  Purana:    { nameHindi: 'पुराण' },
-  Stotra:    { nameHindi: 'स्तोत्र' },
-  Aarti:     { nameHindi: 'आरती' },
-  Other:     { nameHindi: 'अन्य' },
-};
+import { getCategoryHindi } from '../../data/categoryMeta';
 
 export async function getStaticPaths() {
   const allTexts = sortTexts(await getCollection('library'));
-  return allTexts.map(entry => ({
+  return allTexts.map((entry, index) => ({
     params: { slug: entry.id },
-    props: { entry },
+    props: {
+      entry,
+      prevText: index > 0 ? { slug: allTexts[index - 1].id, title: allTexts[index - 1].data.title } : null,
+      nextText: index < allTexts.length - 1 ? { slug: allTexts[index + 1].id, title: allTexts[index + 1].data.title } : null,
+    },
   }));
 }
 
-const { entry } = Astro.props;
+const { entry, prevText, nextText } = Astro.props;
 const { data } = entry;
 
 // ── Build-time parsing ──────────────────────────────────────
@@ -39,14 +33,11 @@ const { data } = entry;
 const parsedHtml = parseIndicMarkdown(entry.body, { showNumbering: data.showNumbering });
 
 // ── Resolve URLs ─────────────────────────────────────────────
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const canonicalUrl = `https://www.ashishvishwakarma.com/gyankosh/read/${entry.id}`;
-const coverImageUrl = data.coverImage
-  ? `https://www.ashishvishwakarma.com/gyankosh${data.coverImage.startsWith('/') ? '' : '/'}${data.coverImage}`
-  : `https://www.ashishvishwakarma.com/gyankosh/covers/${entry.id}.webp`;
-const ogImageUrl = `https://www.ashishvishwakarma.com/gyankosh/og/${entry.id}.jpg`;
+const siteUrl = 'https://www.ashishvishwakarma.com/gyankosh';
+const canonicalUrl = `${siteUrl}/read/${entry.id}`;
+const ogImageUrl = `${siteUrl}/og/${entry.id}.jpg`;
 const catKey = data.category;
-const catNameHindi = categoryMeta[catKey]?.nameHindi ?? catKey;
+const catNameHindi = getCategoryHindi(catKey);
 
 // ── SEO Title & High-Intent Meta Description ────────────────
 const seoTitle = `${data.title} — शुद्ध पाठ एवं प्रामाणिक हिन्दी अर्थ`;
@@ -58,6 +49,22 @@ const languages = data.language?.toLowerCase().includes('sanskrit')
   ? ['sa', 'hi']
   : [data.language || 'hi'];
 
+// ── Keywords from tags & high-intent terms (deduplicated) ───
+const keywords = [...new Set([
+  data.title,
+  `${data.title} पाठ`,
+  `${data.title} अर्थ सहित`,
+  `${data.title} भावार्थ`,
+  catNameHindi,
+  data.category,
+  ...(data.tags ?? []),
+  'सनातन धर्म',
+  'हिन्दू धर्मग्रंथ',
+  'संस्कृत श्लोक',
+  'शुद्ध उच्चारण',
+  ...(data.author ? [data.author] : []),
+])];
+
 // ── JSON-LD Schema (Book) — enriched ─────────────────────────
 const jsonLdBook: Record<string, unknown> = {
   '@context': 'https://schema.org',
@@ -67,6 +74,7 @@ const jsonLdBook: Record<string, unknown> = {
   'description': data.description,
   'inLanguage': languages,
   'genre': data.category,
+  'keywords': keywords.join(', '),
   'url': canonicalUrl,
   'image': ogImageUrl,
   'isAccessibleForFree': true,
@@ -74,12 +82,12 @@ const jsonLdBook: Record<string, unknown> = {
   'isPartOf': {
     '@type': 'WebSite',
     'name': 'ज्ञानकोश',
-    'url': 'https://www.ashishvishwakarma.com/gyankosh',
+    'url': siteUrl,
   },
   'publisher': {
     '@type': 'Organization',
     'name': 'ज्ञानकोश',
-    'url': 'https://www.ashishvishwakarma.com/gyankosh',
+    'url': siteUrl,
   },
 };
 
@@ -107,13 +115,13 @@ const jsonLdBreadcrumb = {
       '@type': 'ListItem',
       'position': 1,
       'name': 'ज्ञानकोश',
-      'item': 'https://www.ashishvishwakarma.com/gyankosh/',
+      'item': `${siteUrl}/`,
     },
     {
       '@type': 'ListItem',
       'position': 2,
       'name': catNameHindi,
-      'item': `https://www.ashishvishwakarma.com/gyankosh/category/${catKey.toLowerCase()}`,
+      'item': `${siteUrl}/category/${catKey.toLowerCase()}`,
     },
     {
       '@type': 'ListItem',
@@ -123,22 +131,6 @@ const jsonLdBreadcrumb = {
     },
   ],
 };
-
-// ── Keywords from tags & high-intent terms ───────────────────
-const keywords = [
-  data.title,
-  `${data.title} पाठ`,
-  `${data.title} अर्थ सहित`,
-  `${data.title} भावार्थ`,
-  catNameHindi,
-  data.category,
-  ...(data.tags ?? []),
-  'सनातन धर्म',
-  'हिन्दू धर्मग्रंथ',
-  'संस्कृत श्लोक',
-  'शुद्ध उच्चारण',
-];
-if (data.author) keywords.push(data.author);
 ---
 
 <ReaderLayout
@@ -158,6 +150,8 @@ if (data.author) keywords.push(data.author);
   showNumbering={data.showNumbering}
   tags={data.tags}
   context={data.context}
+  prevText={prevText}
+  nextText={nextText}
 >
   <!--
     The parsed HTML is injected here via set:html.
