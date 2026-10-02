@@ -61,17 +61,9 @@ const resolvedCoverImage = coverImage
   ? (coverImage.startsWith('http') ? coverImage : `${base}${coverImage.startsWith('/') ? '' : '/'}${coverImage}`)
   : `${base}/covers/${slug}.webp`;
 
-const resolvedWebpImage = resolvedCoverImage.endsWith('.jpg')
-  ? resolvedCoverImage.replace(/\.jpg$/, '.webp')
-  : resolvedCoverImage;
-
-const resolvedJpgImage = resolvedCoverImage.endsWith('.webp')
-  ? resolvedCoverImage.replace(/\.webp$/, '.jpg')
-  : resolvedCoverImage;
-
-const ogImage = image || (coverImage
-  ? (coverImage.startsWith('http') ? coverImage : `https://www.ashishvishwakarma.com${base}${coverImage.startsWith('/') ? '' : '/'}${coverImage}`.replace(/\.webp$/, '.jpg'))
-  : `https://www.ashishvishwakarma.com${base}/covers/${slug}.jpg`);
+const ogImage = image || (slug
+  ? `https://www.ashishvishwakarma.com${base}/og/${slug}.jpg`
+  : `https://www.ashishvishwakarma.com${base}/og-default.jpg`);
 ---
 
 <!doctype html>
@@ -351,9 +343,9 @@ const ogImage = image || (coverImage
             
             <div class="cover-art-frame">
               <picture>
-                <source srcset={resolvedWebpImage} type="image/webp" />
+                <source srcset={resolvedCoverImage} type={resolvedCoverImage.endsWith('.webp') ? 'image/webp' : 'image/jpeg'} />
                 <img 
-                  src={resolvedJpgImage} 
+                  src={resolvedCoverImage} 
                   alt={title} 
                   class="cover-art-img"
                   loading="eager"

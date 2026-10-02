@@ -12,7 +12,9 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "node scripts/generate-og-cards.mjs && astro build",
+    "og:generate": "node scripts/generate-og-cards.mjs",
+    "og:generate:force": "node scripts/generate-og-cards.mjs --force",
     "preview": "astro preview",
     "serve": "http-server dist -p 4321 -c-1 --cors -o",
     "preview:serve": "node scripts/preview-server.mjs",

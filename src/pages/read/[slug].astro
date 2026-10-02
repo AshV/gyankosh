@@ -43,7 +43,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const canonicalUrl = `https://www.ashishvishwakarma.com/gyankosh/read/${entry.id}`;
 const coverImageUrl = data.coverImage
   ? `https://www.ashishvishwakarma.com/gyankosh${data.coverImage.startsWith('/') ? '' : '/'}${data.coverImage}`
-  : `https://www.ashishvishwakarma.com/gyankosh/covers/${entry.id}.jpg`;
+  : `https://www.ashishvishwakarma.com/gyankosh/covers/${entry.id}.webp`;
+const ogImageUrl = `https://www.ashishvishwakarma.com/gyankosh/og/${entry.id}.jpg`;
 const catKey = data.category;
 const catNameHindi = categoryMeta[catKey]?.nameHindi ?? catKey;
 
@@ -67,7 +68,7 @@ const jsonLdBook: Record<string, unknown> = {
   'inLanguage': languages,
   'genre': data.category,
   'url': canonicalUrl,
-  'image': coverImageUrl,
+  'image': ogImageUrl,
   'isAccessibleForFree': true,
   'license': 'https://creativecommons.org/licenses/by-sa/4.0/',
   'isPartOf': {
@@ -151,7 +152,7 @@ if (data.author) keywords.push(data.author);
   coverColor={data.coverColor}
   coverImage={data.coverImage}
   slug={entry.id}
-  image={coverImageUrl}
+  image={ogImageUrl}
   keywords={keywords}
   jsonLd={[jsonLdBook, jsonLdBreadcrumb]}
   showNumbering={data.showNumbering}
