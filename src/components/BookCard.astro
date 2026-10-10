@@ -72,7 +72,6 @@ const resolvedJpgImage = resolvedCoverImage.endsWith('.webp')
 const stats = body ? computeBuildReadingStats(body) : null;
 const minutes = readingMinutes ?? stats?.estimatedMinutes;
 const readingTimeLabel = minutes ? `⏱ ~${toHindiDigits(minutes)} मिनट` : null;
-const countLabel = stats?.countLabel || null;
 ---
 
 <div
@@ -81,25 +80,10 @@ const countLabel = stats?.countLabel || null;
   data-category={category}
   data-read-url={readUrl}
 >
-  <!-- Sacred Header: Inscription & Title -->
+  <!-- Sacred Header: Centered Book Title Enclosed in ॥ -->
   <div class="book-card-header">
-    <div class="book-card-header-top">
-      <span class="book-card-invocation">॥ श्रीहरिः ॥</span>
-      <span
-        class="chip"
-        aria-label={`${meta.nameHindi} श्रेणी`}
-      >
-        {meta.icon} {meta.nameHindi}
-      </span>
-    </div>
-
     <a href={readUrl} class="book-card-title-link">
-      <h3 class="book-card-title">{title}</h3>
-      {author && (
-        <span class="book-card-author">
-          <span class="author-icon" aria-hidden="true">✍️</span> {author}
-        </span>
-      )}
+      <h3 class="book-card-title">॥ {title} ॥</h3>
     </a>
   </div>
 
@@ -130,20 +114,16 @@ const countLabel = stats?.countLabel || null;
       </a>
     </div>
 
-    <!-- Right Details Column: Description, Metadata & Action Ribbon -->
+    <!-- Right Details Column: Metadata & Action Ribbon -->
     <div class="book-card-details">
-      <!-- Poetic Devotional Description Snippet -->
-      {description && (
-        <p class="book-card-desc" title={description}>{description}</p>
-      )}
-
-      <!-- Metadata Badges: Verse Count, Language & Reading Duration -->
+      <!-- Metadata Badges: Category, Language & Reading Duration -->
       <div class="book-card-meta-row">
-        {countLabel && (
-          <span class="verse-count-badge" title="रचना विस्तार">
-            {countLabel}
-          </span>
-        )}
+        <span
+          class="chip"
+          aria-label={`${meta.nameHindi} श्रेणी`}
+        >
+          {meta.icon} {meta.nameHindi}
+        </span>
         <span class="language-badge">{resolvedLanguage}</span>
         {readingTimeLabel && (
           <span
