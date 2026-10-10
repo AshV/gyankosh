@@ -158,3 +158,10 @@ sequenceDiagram
 | `npm run db:export` | Serializes local SQLite database into Git Markdown files. |
 | `npm run db:check` | Runs round-trip integrity check (verifies 108/108 files produce 0 diff). |
 | `npm run build` | Builds production static bundle for GitHub Pages. |
+
+---
+
+## 🔮 Future Backlog & Mobile App Roadmap
+For the catalog of deferred features (Daily Playlists, Japa Mala, Quote Cards, Audio Chanting, and Web vs. App evaluation matrix), see:
+👉 **[`FUTURE_ROADMAP.md`](FUTURE_ROADMAP.md)**
+
