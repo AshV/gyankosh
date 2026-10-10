@@ -72,6 +72,7 @@ const resolvedJpgImage = resolvedCoverImage.endsWith('.webp')
 const stats = body ? computeBuildReadingStats(body) : null;
 const minutes = readingMinutes ?? stats?.estimatedMinutes;
 const readingTimeLabel = minutes ? `⏱ ~${toHindiDigits(minutes)} मिनट` : null;
+const countLabel = stats?.countLabel || null;
 ---
 
 <div
@@ -80,46 +81,69 @@ const readingTimeLabel = minutes ? `⏱ ~${toHindiDigits(minutes)} मिनट`
   data-category={category}
   data-read-url={readUrl}
 >
-  <!-- Generated / Album Cover Art (100% Unobstructed) -->
-  <div class="book-card-cover">
-    <a href={readUrl} class="book-card-cover-link" aria-label={`पठन: ${title}`}>
-      <picture class="book-card-cover-picture">
-        <source srcset={resolvedWebpImage} type="image/webp" />
-        <img 
-          src={resolvedJpgImage} 
-          alt={`${title}${author ? ` — ${author}` : ''} पुस्तक आवरण`} 
-          class="book-card-cover-img"
-          loading="lazy"
-          decoding="async"
-          width="240"
-          height="340"
-          onerror="this.style.display='none'; const pat = this.closest('.book-card-cover-link')?.querySelector('.book-card-cover-pattern'); if (pat) pat.style.display = 'flex';"
-        />
-      </picture>
-      <div 
-        class="book-card-cover-pattern" 
-        style={`background: linear-gradient(135deg, ${coverColor}, color-mix(in hsl, ${coverColor}, black 35%));`}
-        aria-hidden="true"
+  <!-- Sacred Header: Inscription & Title -->
+  <div class="book-card-header">
+    <div class="book-card-header-top">
+      <span class="book-card-invocation">॥ श्रीहरिः ॥</span>
+      <span
+        class="chip"
+        aria-label={`${meta.nameHindi} श्रेणी`}
       >
-        <span class="book-card-cover-title" aria-hidden="true">{title.charAt(0)}</span>
-      </div>
+        {meta.icon} {meta.nameHindi}
+      </span>
+    </div>
+
+    <a href={readUrl} class="book-card-title-link">
+      <h3 class="book-card-title">{title}</h3>
+      {author && (
+        <span class="book-card-author">
+          <span class="author-icon" aria-hidden="true">✍️</span> {author}
+        </span>
+      )}
     </a>
   </div>
 
-  <!-- Card Body -->
-  <div class="book-card-body">
-    <a href={readUrl} class="book-card-title-link">
-      <p class="book-card-title">{title}</p>
-    </a>
-
-    <div class="book-card-footer">
-      <div class="book-card-badges">
-        <span
-          class="chip"
-          aria-label={`${meta.nameHindi} श्रेणी`}
+  <!-- Plaque Main: 3:4 Cover Art on Left + Details & Actions on Right -->
+  <div class="book-card-main">
+    <div class="book-card-cover">
+      <a href={readUrl} class="book-card-cover-link" aria-label={`पठन: ${title}`} tabindex="-1">
+        <picture class="book-card-cover-picture">
+          <source srcset={resolvedWebpImage} type="image/webp" />
+          <img 
+            src={resolvedJpgImage} 
+            alt={`${title}${author ? ` — ${author}` : ''} पुस्तक आवरण`} 
+            class="book-card-cover-img"
+            loading="lazy"
+            decoding="async"
+            width="140"
+            height="187"
+            onerror="this.style.display='none'; const pat = this.closest('.book-card-cover-link')?.querySelector('.book-card-cover-pattern'); if (pat) pat.style.display = 'flex';"
+          />
+        </picture>
+        <div 
+          class="book-card-cover-pattern" 
+          style={`background: linear-gradient(135deg, ${coverColor}, color-mix(in hsl, ${coverColor}, black 35%));`}
+          aria-hidden="true"
         >
-          {meta.icon} {meta.nameHindi}
-        </span>
+          <span class="book-card-cover-title" aria-hidden="true">{title.charAt(0)}</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- Right Details Column: Description, Metadata & Action Ribbon -->
+    <div class="book-card-details">
+      <!-- Poetic Devotional Description Snippet -->
+      {description && (
+        <p class="book-card-desc" title={description}>{description}</p>
+      )}
+
+      <!-- Metadata Badges: Verse Count, Language & Reading Duration -->
+      <div class="book-card-meta-row">
+        {countLabel && (
+          <span class="verse-count-badge" title="रचना विस्तार">
+            {countLabel}
+          </span>
+        )}
         <span class="language-badge">{resolvedLanguage}</span>
         {readingTimeLabel && (
           <span
@@ -143,7 +167,7 @@ const readingTimeLabel = minutes ? `⏱ ~${toHindiDigits(minutes)} मिनट`
         <span class="progress-label"></span>
       </span>
 
-      <!-- Action Buttons (Save & Share) in Footer -->
+      <!-- Action Buttons (Save, Share, Read CTA) -->
       <div class="book-card-actions" role="toolbar" aria-label="त्वरित क्रियाएं">
         <button
           type="button"
@@ -174,6 +198,12 @@ const readingTimeLabel = minutes ? `⏱ ~${toHindiDigits(minutes)} मिनट`
             <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
           </svg>
         </button>
+        <a href={readUrl} class="book-card-read-cta" aria-label={`पाठ करें: ${title}`}>
+          <span>पाठ करें</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </a>
       </div>
     </div>
   </div>

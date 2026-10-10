@@ -1348,7 +1348,7 @@ body.chanting-mode .verse-translation {
 .cover-art-frame {
   width: 100%;
   max-width: 240px;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 3 / 4;
   border-radius: 6px;
   overflow: hidden;
   border: 2px solid var(--color-border);

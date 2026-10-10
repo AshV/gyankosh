@@ -23,7 +23,7 @@
   --color-text-muted:       #4a3f35;       /* Secondary prose text */
   --color-text-faint:       #7d6e5e;       /* Footnotes & metadata */
   
-  /* Sacred Accents */
+  /* Sacred Accents & Royal Gold Tokens (राजकीय स्वर्ण आभा) */
   --color-accent:           #8e1b14;       /* Sacred vermillion red */
   --color-accent-soft:      #faecea;       /* Soft red highlight */
   --color-gold:             #b87e28;       /* Auspicious golden rule */
@@ -31,6 +31,18 @@
   --color-speaker:          #8e1b14;       /* Red speaker headings */
   --color-instruction:      #8e1b14;       /* Sacred invocations */
   --color-translation-bg:   #f7f2e4;       /* Soft ivory box for Bhavarth */
+
+  /* Metallic Royal Gold Palette */
+  --gold-primary:           #d4af37;       /* Royal Metallic Gold */
+  --gold-bright:            #f6e27a;       /* Luminous Gold Shimmer */
+  --gold-deep:              #a37c15;       /* Burnished Gold Shadow */
+  --gold-border:            rgba(212, 175, 55, 0.45);
+  --gold-border-bright:     #d4af37;
+  --gold-text:              #7d5308;       /* Deep Gold / Amber Ink */
+  --gold-glow:              0 0 20px rgba(212, 175, 55, 0.28);
+  --gold-aura:              linear-gradient(135deg, rgba(212, 175, 55, 0.16) 0%, rgba(246, 226, 122, 0.06) 50%, transparent 100%);
+  --gold-btn-bg:            linear-gradient(135deg, #d8ac34 0%, #f4d368 45%, #caa024 75%, #a67c10 100%);
+  --gold-btn-hover:         linear-gradient(135deg, #e3b93e 0%, #fae07b 45%, #d8ac34 75%, #b58914 100%);
 
   /* Typography */
   --font-devanagari:        'Tiro Devanagari Sanskrit', 'Martel', serif;
@@ -285,49 +297,176 @@ a:hover { opacity: 0.8; }
 
 .book-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
   gap: var(--space-lg);
 }
 
-/* ─── Book Card (Traditional Sacred Book Cover Style) ────── */
+/* ─── Book Card (Sacred Granth Plaque — Royal Golden Repoussé Frame) ─── */
 .book-card {
   display: flex;
   flex-direction: column;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  background: var(--color-bg-card);
-  border: 2px solid var(--color-border);
+  position: relative;
+  background: 
+    radial-gradient(circle at 100% 0%, rgba(246, 226, 122, 0.16) 0%, transparent 45%),
+    linear-gradient(165deg, #ffffff 0%, #fffdf8 50%, #faf3e2 100%);
+  border: 14px solid transparent;
+  border-image-source: url('/gyankosh/borders/sacred-gold-frame.webp');
+  border-image-slice: 107 fill;
+  border-image-width: 14px;
+  border-image-repeat: round;
   text-decoration: none;
   color: inherit;
-  transition: transform var(--transition-med), border-color var(--transition-med), box-shadow var(--transition-med);
-  box-shadow: 0 10px 30px rgba(70, 50, 30, 0.1), 0 1px 4px rgba(70, 50, 30, 0.05);
-  position: relative;
+  transition: transform var(--transition-med), box-shadow var(--transition-med), filter var(--transition-med);
+  box-shadow: 
+    0 6px 22px rgba(160, 110, 30, 0.12), 
+    0 2px 6px rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  height: 100%;
 }
 
-/* Remove dashed outline to create a unified modern look */
 .book-card::before {
   display: none;
 }
 
 .book-card:hover {
-  transform: translateY(-8px);
-  border-color: var(--color-gold);
+  transform: translateY(-5px);
+  filter: brightness(1.03);
   box-shadow: 
-    0 20px 40px rgba(70, 50, 30, 0.16), 
-    0 0 0 1px var(--color-gold),
-    0 6px 12px rgba(70, 50, 30, 0.08);
+    0 18px 44px rgba(180, 130, 20, 0.28), 
+    0 0 28px rgba(212, 175, 55, 0.35);
+}
+
+/* 1. Sacred Header: Title on Top with Royal Gold Crown, Inscription & Pillar */
+.book-card-header {
+  padding: 0.85rem 1rem 0.75rem 1rem;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.28);
+  background: var(--gold-aura);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border-left: 4px solid var(--gold-primary);
+  gap: 0.25rem;
+}
+
+.book-card-header::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--gold-primary) 0%, #f6e27a 40%, var(--gold-primary) 70%, transparent 100%);
+  opacity: 0.85;
+}
+
+.book-card-header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 0.5rem;
+  margin-bottom: 0.15rem;
+}
+
+.book-card-invocation {
+  font-family: var(--font-devanagari);
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--gold-text);
+  letter-spacing: 1.5px;
+  opacity: 0.85;
+  user-select: none;
+}
+
+.book-card-title-link {
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
+  display: block;
+}
+
+.book-card-title {
+  font-family: var(--font-title);
+  font-size: 1.2rem;
+  color: #17130e;
+  line-height: 1.35;
+  font-weight: 700;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: color var(--transition-fast), text-shadow var(--transition-fast);
+}
+
+.book-card:hover .book-card-title {
+  color: #9b2820;
+  text-shadow: 0 0 1px rgba(212, 175, 55, 0.4);
+}
+
+.book-card-author {
+  font-family: var(--font-devanagari);
+  font-size: 0.78rem;
+  color: var(--gold-text);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: 0.2rem;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.author-icon {
+  font-size: 0.75rem;
+  opacity: 0.85;
+}
+
+/* 2. Plaque Main: 3:4 Cover Miniature with Gold Bezel + Details & Actions */
+.book-card-main {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  padding: 0.85rem 1rem;
+  gap: 1rem;
+  flex: 1;
 }
 
 .book-card-cover {
-  width: 100%;
-  aspect-ratio: 1 / 1;
+  width: 120px;
+  min-width: 120px;
+  max-width: 125px;
+  aspect-ratio: 3 / 4;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  background: #f5eedd;
+  border: 1.5px solid rgba(212, 175, 55, 0.65);
+  box-shadow: 
+    0 6px 16px rgba(45, 25, 10, 0.16),
+    0 0 0 1px rgba(255, 245, 215, 0.8) inset;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
-  background: var(--color-bg-elevated);
-  border-bottom: none;
-  overflow: hidden;
+  transition: border-color var(--transition-med), box-shadow var(--transition-med);
+}
+
+.book-card:hover .book-card-cover {
+  border-color: #f3e5ab;
+  box-shadow: 
+    0 8px 24px rgba(184, 134, 11, 0.32),
+    0 0 12px rgba(212, 175, 55, 0.25);
+}
+
+.book-card-cover-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
 }
 
 .book-card-cover-picture {
@@ -342,23 +481,22 @@ a:hover { opacity: 0.8; }
   object-fit: cover;
   object-position: center;
   display: block;
-  transition: transform var(--transition-med);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   z-index: 2;
 }
 
 .book-card:hover .book-card-cover-img {
-  transform: scale(1.05);
+  transform: scale(1.08);
 }
 
 /* Fallback cover pattern */
 .book-card-cover-pattern {
-  display: none; /* Shown as flex via JS onerror */
+  display: none;
   width: 100%;
   height: 100%;
   position: relative;
   align-items: center;
   justify-content: center;
-  border-bottom: 1px solid var(--color-border-subtle);
 }
 
 .book-card-cover-pattern[style*="display: flex"] {
@@ -368,41 +506,194 @@ a:hover { opacity: 0.8; }
 .book-card-cover-pattern::after {
   content: '';
   position: absolute;
-  inset: 12px;
-  border: 1px dashed rgba(255, 255, 255, 0.3);
+  inset: 8px;
+  border: 1px dashed rgba(255, 255, 255, 0.45);
   pointer-events: none;
 }
 
 .book-card-cover-title {
   font-family: var(--font-title);
-  font-size: 3rem;
+  font-size: 2.2rem;
   color: #ffffff;
   text-align: center;
   text-shadow: 0 4px 8px rgba(0,0,0,0.4);
   z-index: 1;
 }
 
-.book-card-body {
-  padding: var(--space-lg);
+/* 3. Right Column: Details, Description, Badges & Action Toolbar */
+.book-card-details {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  justify-content: space-between;
   flex: 1;
-  background: var(--color-bg-card);
+  min-width: 0;
+  gap: 0.5rem;
 }
 
-.book-card-title {
-  font-family: var(--font-title);
-  font-size: 1.25rem;
-  color: var(--color-ink);
-  line-height: 1.45;
+.book-card-desc {
+  font-family: var(--font-devanagari);
+  font-size: 0.81rem;
+  color: #4a3c2c;
+  line-height: 1.48;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.1px;
+}
+
+.book-card-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: center;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.55rem;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-family: var(--font-devanagari);
   font-weight: 700;
-  text-align: left;
-  transition: color var(--transition-fast);
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.22) 0%, rgba(184, 134, 11, 0.12) 100%);
+  color: var(--gold-text);
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  box-shadow: 0 1px 3px rgba(184, 134, 11, 0.08);
 }
 
-.book-card:hover .book-card-title {
-  color: var(--color-accent);
+.verse-count-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.68rem;
+  font-family: var(--font-devanagari);
+  font-weight: 600;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.16) 0%, rgba(246, 226, 122, 0.08) 100%);
+  color: var(--gold-text);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  white-space: nowrap;
+}
+
+.language-badge,
+.reading-time-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem 0.48rem;
+  border-radius: 6px;
+  font-size: 0.68rem;
+  font-family: var(--font-devanagari);
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.95);
+  color: #5c4731;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  white-space: nowrap;
+}
+
+.book-card-progress {
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  color: #15803d;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 0.2rem 0.55rem;
+  background: rgba(34, 197, 94, 0.08);
+  border-radius: 6px;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  width: fit-content;
+  font-weight: 600;
+}
+
+.progress-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 6px #22c55e;
+}
+
+/* Actions Toolbar */
+.book-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 0.6rem;
+  border-top: 1px solid rgba(212, 175, 55, 0.25);
+}
+
+.card-action-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--gold-text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  box-shadow: 0 1px 3px rgba(184, 134, 11, 0.08);
+  transition: all var(--transition-fast);
+}
+
+.card-action-btn:hover {
+  background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
+  color: #ffffff;
+  border-color: #996515;
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 4px 12px rgba(184, 134, 11, 0.35);
+}
+
+.card-action-btn:active {
+  transform: scale(0.95);
+}
+
+.card-action-btn.is-saved {
+  background: linear-gradient(135deg, #a72318 0%, #801810 100%);
+  color: #fffdf7;
+  border-color: #d4af37;
+  box-shadow: 0 0 0 1px #d4af37, 0 3px 8px rgba(167, 35, 24, 0.35);
+}
+
+.card-action-btn.is-saved svg {
+  fill: currentColor;
+}
+
+.book-card-read-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-left: auto;
+  padding: 0.32rem 0.85rem;
+  border-radius: 6px;
+  background: var(--gold-btn-bg);
+  color: #241402;
+  font-family: var(--font-devanagari);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 2px 8px rgba(184, 134, 11, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.book-card-read-cta:hover {
+  background: var(--gold-btn-hover);
+  color: #1a0e01;
+  box-shadow: 0 5px 16px rgba(184, 134, 11, 0.45), 0 0 8px rgba(246, 226, 122, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transform: translateY(-1px);
 }
 
 /* ─── Book Card Grid Item & Performance Containment ──────── */
@@ -410,7 +701,7 @@ a:hover { opacity: 0.8; }
   opacity: 1;
   transform: none;
   content-visibility: auto;
-  contain-intrinsic-size: 280px 360px;
+  contain-intrinsic-size: 340px 240px;
 }
 
 /* Progressive enhancement: gentle reveal only when JavaScript initializes and motion is allowed */
@@ -434,90 +725,29 @@ html.has-js .book-card-wrapper.will-reveal.visible {
   }
 }
 
-
-
-.book-card-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-xs);
-  margin-top: auto;
-  padding-top: var(--space-sm);
-  border-top: 1px solid var(--color-border-subtle);
-  position: relative;
-}
-
-.chip {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.2rem 0.6rem;
-  border-radius: var(--radius-sm);
-  font-size: 0.75rem;
-  font-family: var(--font-devanagari);
-  font-weight: 600;
-  background: var(--color-accent-soft);
-  color: var(--color-accent);
-  border: none;
-}
-
-.book-card-progress {
-  font-family: var(--font-ui);
-  font-size: 0.75rem;
-  color: var(--color-text-faint);
-  display: flex;
-  align-items: center;
-  gap: var(--space-xs);
-  margin-left: auto;
-  transition: opacity var(--transition-fast);
-}
-
-.book-card:hover .book-card-progress {
-  opacity: 0;
-}
-
-.progress-dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--color-accent);
-}
-
-/* ─── Unified Catalog Enhancements ───────────────────────── */
-
-.book-card-badges {
-  display: flex;
-  gap: 0.35rem;
-  flex-wrap: wrap;
-  align-items: center;
-  flex: 1;
-  min-width: 0;
-}
-
-.language-badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.2rem 0.5rem;
-  border-radius: var(--radius-sm);
-  font-size: 0.7rem;
-  font-family: var(--font-devanagari);
-  font-weight: 600;
-  background: var(--color-bg-elevated);
-  color: var(--color-text-muted);
-  border: none;
-}
-
-.reading-time-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  padding: 0.2rem 0.5rem;
-  border-radius: var(--radius-sm);
-  font-size: 0.7rem;
-  font-family: var(--font-devanagari);
-  font-weight: 600;
-  background: var(--color-bg-elevated);
-  color: var(--color-text-muted);
-  border: 1px solid var(--color-border-subtle);
-  white-space: nowrap;
+@media (max-width: 480px) {
+  .book-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+  .book-card {
+    border-width: 10px;
+  }
+  .book-card-main {
+    padding: 0.65rem 0.75rem;
+    gap: 0.75rem;
+  }
+  .book-card-cover {
+    width: 98px;
+    min-width: 98px;
+    max-width: 98px;
+  }
+  .book-card-header {
+    padding: 0.65rem 0.75rem 0.5rem 0.75rem;
+  }
+  .book-card-title {
+    font-size: 1.05rem;
+  }
 }
 
 .book-card-cta {
@@ -749,75 +979,16 @@ html.has-js .book-card-wrapper.will-reveal.visible {
   }
 }
 
-/* ─── Card Quick Actions (Save & Share) in Footer ─────────── */
-.book-card-actions {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex-shrink: 0;
-  margin-left: auto;
-}
-
-.card-action-btn {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  border: 1px solid var(--color-border-subtle);
-  background: var(--color-bg-elevated);
-  color: var(--color-text-muted);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  padding: 0;
-  box-shadow: 0 1px 2px rgba(70, 50, 30, 0.05);
-  transition: all var(--transition-fast);
-}
-
-.card-action-btn:hover {
-  background: var(--color-accent-soft);
-  color: var(--color-accent);
-  border-color: var(--color-accent);
-  transform: translateY(-1px) scale(1.08);
-  box-shadow: 0 2px 6px rgba(142, 27, 20, 0.15);
-}
-
-.card-action-btn:active {
-  transform: scale(0.94);
-}
-
-.card-action-btn.is-saved {
-  background: var(--color-accent);
-  color: #fffdf7;
-  border-color: var(--color-accent);
-  box-shadow: 0 2px 6px rgba(142, 27, 20, 0.25);
-}
-
-.card-action-btn.is-saved svg {
-  fill: currentColor;
-}
-
-.book-card-cover-link {
-  display: block;
-  width: 100%;
-  height: 100%;
-  text-decoration: none;
-  color: inherit;
-}
-
-.book-card-title-link {
-  text-decoration: none;
-  color: inherit;
-}
-
-/* ─── Saved Shelf (Always on top) ────────────────────────── */
+/* ─── Saved Shelf (Always on top — Royal Golden Frame) ───────── */
 .saved-shelf {
-  background: var(--color-bg-card);
-  border: 2px solid var(--color-border);
-  border-radius: var(--radius-lg);
+  background: 
+    radial-gradient(circle at 100% 0%, rgba(246, 226, 122, 0.12) 0%, transparent 45%),
+    linear-gradient(165deg, #ffffff 0%, #fffdf8 60%, #faf3e2 100%);
+  border: 1.5px solid var(--gold-border);
+  border-radius: 12px;
   padding: var(--space-lg);
   margin-bottom: var(--space-xl);
-  box-shadow: var(--shadow-card);
+  box-shadow: 0 6px 24px rgba(184, 134, 11, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.95);
   position: relative;
 }
 
@@ -827,7 +998,7 @@ html.has-js .book-card-wrapper.will-reveal.visible {
   gap: 0.25rem;
   margin-bottom: var(--space-md);
   padding-bottom: var(--space-xs);
-  border-bottom: 2px solid var(--color-border);
+  border-bottom: 2px solid var(--gold-primary);
 }
 
 .saved-shelf-header .catalog-section-title {
@@ -1753,6 +1924,112 @@ body.reader-night-mode {
   --color-translation-bg: #1c1713;
   --shadow-paper: 0 4px 20px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.3);
   --shadow-card: 0 2px 10px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.2);
+
+  /* Royal Gold Night Tokens */
+  --gold-primary: #e5b85c;
+  --gold-bright: #fbe28c;
+  --gold-deep: #b8860b;
+  --gold-border: rgba(229, 184, 92, 0.35);
+  --gold-border-bright: #e5b85c;
+  --gold-text: #f0c465;
+  --gold-glow: 0 0 25px rgba(229, 184, 92, 0.35);
+  --gold-aura: linear-gradient(135deg, rgba(229, 184, 92, 0.18) 0%, rgba(251, 226, 140, 0.05) 50%, transparent 100%);
+  --gold-btn-bg: linear-gradient(135deg, #caa024 0%, #e6be44 45%, #b8860b 80%, #8f6508 100%);
+  --gold-btn-hover: linear-gradient(135deg, #dab034 0%, #f7d35b 45%, #caa024 80%, #a37c15 100%);
+}
+
+/* Night Mode Book Card Enhancements */
+html.reader-night-mode .book-card,
+body.reader-night-mode .book-card {
+  background: 
+    radial-gradient(circle at 100% 0%, rgba(229, 184, 92, 0.1) 0%, transparent 50%),
+    linear-gradient(165deg, #241d18 0%, #191411 100%);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.55);
+}
+
+html.reader-night-mode .book-card:hover,
+body.reader-night-mode .book-card:hover {
+  filter: brightness(1.15) drop-shadow(0 0 16px rgba(229, 184, 92, 0.35));
+  box-shadow: 
+    0 16px 40px rgba(0, 0, 0, 0.75), 
+    0 0 28px rgba(229, 184, 92, 0.35);
+}
+
+html.reader-night-mode .book-card-header,
+body.reader-night-mode .book-card-header {
+  background: linear-gradient(135deg, rgba(229, 184, 92, 0.18) 0%, rgba(229, 184, 92, 0.03) 100%);
+  border-bottom-color: rgba(229, 184, 92, 0.25);
+  border-left-color: #e5b85c;
+}
+
+html.reader-night-mode .book-card-title,
+body.reader-night-mode .book-card-title {
+  color: #fcf4e4;
+}
+
+html.reader-night-mode .book-card:hover .book-card-title,
+body.reader-night-mode .book-card:hover .book-card-title {
+  color: #f97364;
+  text-shadow: 0 0 2px rgba(229, 184, 92, 0.5);
+}
+
+html.reader-night-mode .book-card-author,
+body.reader-night-mode .book-card-author {
+  color: #e5b85c;
+}
+
+html.reader-night-mode .book-card-invocation,
+body.reader-night-mode .book-card-invocation {
+  color: #e5b85c;
+}
+
+html.reader-night-mode .book-card-desc,
+body.reader-night-mode .book-card-desc {
+  color: #cfbfad;
+}
+
+html.reader-night-mode .verse-count-badge,
+body.reader-night-mode .verse-count-badge {
+  background: rgba(45, 35, 28, 0.95);
+  color: #f3e5ab;
+  border-color: rgba(229, 184, 92, 0.35);
+}
+
+html.reader-night-mode .book-card-cover,
+body.reader-night-mode .book-card-cover {
+  background: #1c1613;
+  border-color: rgba(229, 184, 92, 0.5);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+}
+
+html.reader-night-mode .language-badge,
+html.reader-night-mode .reading-time-badge,
+body.reader-night-mode .language-badge,
+body.reader-night-mode .reading-time-badge {
+  background: rgba(36, 29, 24, 0.95);
+  color: #dfd0bb;
+  border-color: rgba(229, 184, 92, 0.3);
+}
+
+html.reader-night-mode .card-action-btn,
+body.reader-night-mode .card-action-btn {
+  background: #2a221b;
+  border-color: rgba(229, 184, 92, 0.4);
+  color: #f3e5ab;
+}
+
+html.reader-night-mode .card-action-btn:hover,
+body.reader-night-mode .card-action-btn:hover {
+  background: linear-gradient(135deg, #e5b85c 0%, #b8860b 100%);
+  color: #17130e;
+}
+
+html.reader-night-mode .saved-shelf,
+body.reader-night-mode .saved-shelf {
+  background: 
+    radial-gradient(circle at 100% 0%, rgba(229, 184, 92, 0.1) 0%, transparent 45%),
+    linear-gradient(165deg, #241d18 0%, #191411 100%);
+  border-color: rgba(229, 184, 92, 0.4);
 }
 
 /* ─── PWA Banner Responsive Overrides ───────── */
