@@ -21,6 +21,7 @@
 | **11**| **Audio Chanting & Sync** | Web audio player | Background audio playback with screen locked + Bluetooth car audio | **App-First** |
 | **12**| **Japa Mala (१०८ मनके माला)** | Not natural on keyboard/mouse | Perfect with haptic vibration on each bead click | **Mobile App Only** |
 | **13**| **Scholarly Commentaries & Q&A** | Best on desktop for in-depth typing & scholarly reading | Read-only mode | **Web-First** |
+| **14**| **3D Pothi Page-Flip & Interactive Leaf Curl** | Stripped from Web Reader to guarantee ultra-lightweight, instant loading | GPU-accelerated 3D folio turning with finger-curl physics & haptic feedback | **Mobile App Dedicated** |
 
 ---
 
@@ -131,10 +132,20 @@
 
 ---
 
+### 📖 Group 6: Premium Interactive Reading & Folio Physics (Mobile App Dedicated)
+
+#### 6.1 3D Vertical Pothi Page-Flip & Gesture Leaf Curl
+* **Concept**: Authentic sacred pothi vertical leaf flip animation (*पन्ना पलट*):
+  * Physical touch gesture tracking where user's thumb bends and curls the paper folio upward in true 3D space (`rotateX`, `translateZ`, specular lighting sheen).
+  * Subtle haptic feedback (`vibrate(12)`) on page turn.
+  * Deferred from web reader to keep the static web app ultra-lightweight, zero-overhead, and instantly responsive on all devices.
+
+---
+
 ## 📌 Decision Log & Revisit Checklist
 
 When ready to prioritize new features, use this checklist:
 
 - [ ] **Phase A (Web Enhancements)**: Printable Pothi PDF (`@media print`), Social Quote Card Generator (Canvas), Deep Verse Permalinks.
-- [ ] **Phase B (Mobile App MVP)**: Pre-bundled offline SQLite (`database/gyankosh.db`), Japa Mala Haptic Counter, Nitya-Niyam Playlists.
+- [ ] **Phase B (Mobile App MVP)**: Pre-bundled offline SQLite (`database/gyankosh.db`), 3D Pothi Page-Flip & Touch Curl Physics, Japa Mala Haptic Counter, Nitya-Niyam Playlists.
 - [ ] **Phase C (Automation & Devotion)**: Daily Shloka Notifications, Panchang Tithi Matching, Audio Chanting Sync.

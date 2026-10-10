@@ -5,7 +5,7 @@
  *
  * Visual & Typographic Identity:
  * - Single authentic sacred paper book theme (off-white warm paper, red border frames, rich black ink).
- * - 3D Vertical Page-Flip Animation (पन्ना पलट).
+ * - Continuous scroll reading engine (सहज स्क्रोल पठन).
  * - Running page header: ॥ ग्रंथ शीर्षक ॥
  * - Devanagari numerals and traditional sacred speaker / verse markers.
  * - Sacred Aarambh cover screen with album artwork and fullscreen entry on start.
@@ -145,37 +145,8 @@ const ogImage = image || (slug
           document.documentElement.classList.remove('reader-night-mode');
         }
 
-        // Reading Mode: 'scroll' (default) | '3d' | 'lite'
-        var readingMode = prefs.readingMode || 'scroll';
-        if (readingMode === 'scroll') {
-          document.documentElement.classList.add('reader-scroll-mode');
-          document.documentElement.classList.remove('reader-lite-mode');
-        } else {
-          document.documentElement.classList.remove('reader-scroll-mode');
-          // Conditional device capability detection for animations (3D vs Lite)
-          var animPref = readingMode; // '3d' | 'lite'
-          var isLite = false;
-          if (animPref === 'lite') {
-            isLite = true;
-          } else if (animPref === '3d') {
-            isLite = false;
-          } else {
-            // Automatic detection based on device hardware and preferences
-            var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            var isSaveData = navigator.connection && navigator.connection.saveData === true;
-            var isLowMemory = typeof navigator.deviceMemory === 'number' && navigator.deviceMemory <= 3;
-            var isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent || '');
-            var isLowCpu = typeof navigator.hardwareConcurrency === 'number' && isMobile && navigator.hardwareConcurrency <= 4;
-            if (prefersReducedMotion || isSaveData || isLowMemory || isLowCpu) {
-              isLite = true;
-            }
-          }
-          if (isLite) {
-            document.documentElement.classList.add('reader-lite-mode');
-          } else {
-            document.documentElement.classList.remove('reader-lite-mode');
-          }
-        }
+        // Reading Mode: Clean continuous scroll
+        document.documentElement.classList.add('reader-scroll-mode');
       })();
     </script>
   </head>
@@ -421,20 +392,7 @@ const ogImage = image || (slug
           </div>
         </div>
 
-        <!-- Tap zones for quick thumb-tap navigation -->
-        <div class="tap-zone tap-zone--prev" id="tap-prev" title="पिछला पृष्ठ" aria-label="पिछला पृष्ठ"></div>
-        <div class="tap-zone tap-zone--center" id="tap-center" title="पठन क्षेत्र" aria-label="पठन क्षेत्र"></div>
-        <div class="tap-zone tap-zone--next" id="tap-next" title="अगला पृष्ठ" aria-label="अगला पृष्ठ"></div>
 
-        <!-- Floating Navigation Buttons -->
-        <div class="flip-floating-nav" id="flip-floating-nav" aria-label="पृष्ठ नियंत्रण">
-          <button id="btn-page-up" class="flip-nav-btn" title="पिछला पृष्ठ (Up)" aria-label="पिछला पृष्ठ">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
-          </button>
-          <button id="btn-page-down" class="flip-nav-btn" title="अगला पृष्ठ (Down)" aria-label="अगला पृष्ठ">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
-          </button>
-        </div>
 
         <!-- Dynamic 3D Pothi Folio Stage -->
         <div class="reader-stage" id="reader-stage" aria-live="polite">
@@ -566,15 +524,7 @@ const ogImage = image || (slug
             {author && <p class="reader-info-author">रचयिता / ऋषि: <strong>{author}</strong></p>}
             {context && <p class="reader-info-context">{context}</p>}
 
-            <!-- Reading Mode Setting (पठन शैली) -->
-            <div class="reader-info-setting-row">
-              <span class="setting-row-label">पठन शैली:</span>
-              <div class="anim-toggle-group" id="reading-mode-toggle-group" role="radiogroup" aria-label="पठन शैली चुनें">
-                <button type="button" class="anim-opt-btn" data-mode="scroll" title="सामान्य स्क्रोल — सभी उपकरणों पर सहज">स्क्रोल</button>
-                <button type="button" class="anim-opt-btn" data-mode="3d" title="पूर्ण 3D पन्ना पलट">3D पन्ना</button>
-                <button type="button" class="anim-opt-btn" data-mode="lite" title="द्रुत 2D पन्ना पलट">द्रुत Lite</button>
-              </div>
-            </div>
+
 
             <!-- Theme / Appearance Setting (थीम स्वरूप) -->
             <div class="reader-info-setting-row">
@@ -758,7 +708,7 @@ const ogImage = image || (slug
     </div>
 
     <!-- ══════════════════════════════════════════════════════
-         Client-Side 3D Pothi Page-Flip Engine
+         Client-Side Continuous Scroll Reader Engine
          ══════════════════════════════════════════════════════ -->
 
     <!-- Errata / Typo Reporting Modal (Option A) -->

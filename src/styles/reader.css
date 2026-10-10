@@ -180,19 +180,22 @@ html.is-fullscreen .reader-viewport,
   stroke: currentColor;
 }
 
-/* ─── 3D True Vertical Book/Folio Page-Turn Viewport ────── */
+/* ─── Reader Continuous Scroll Viewport ─────────────────── */
 .reader-viewport {
   flex: 1;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
   position: relative;
-  perspective: 2500px;
-  perspective-origin: 50% 25%;
   background: radial-gradient(ellipse at 50% 30%, #f6ebd7 0%, #e6d7b8 60%, #cab790 100%);
   user-select: none;
   -webkit-user-select: none;
-  touch-action: pan-x;
   padding: 6px 8px;
   box-sizing: border-box;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
 }
 
 @media (max-width: 640px) {
@@ -201,34 +204,21 @@ html.is-fullscreen .reader-viewport,
   }
 }
 
-/* ─── Scroll Mode Viewport (स्क्रोल पठन मोड) ─────────────── */
-html.reader-scroll-mode .reader-viewport {
-  overflow-y: auto;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
-  touch-action: pan-y;
-  perspective: none;
-  scroll-behavior: smooth;
-  /* Custom scrollbar matching sacred aesthetic */
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-border) transparent;
-}
-
-html.reader-scroll-mode .reader-viewport::-webkit-scrollbar {
+.reader-viewport::-webkit-scrollbar {
   width: 5px;
 }
 
-html.reader-scroll-mode .reader-viewport::-webkit-scrollbar-track {
+.reader-viewport::-webkit-scrollbar-track {
   background: transparent;
 }
 
-html.reader-scroll-mode .reader-viewport::-webkit-scrollbar-thumb {
+.reader-viewport::-webkit-scrollbar-thumb {
   background: var(--color-border);
   border-radius: 99px;
 }
 
-/* In scroll mode, the stage becomes a single long scroll container */
-html.reader-scroll-mode .reader-stage {
+/* Continuous Scroll Stage */
+.reader-stage {
   position: relative;
   width: 100%;
   height: auto;
@@ -240,14 +230,8 @@ html.reader-scroll-mode .reader-stage {
   box-sizing: border-box;
 }
 
-/* Hide the 3D stacked-paper pseudo-elements in scroll mode */
-html.reader-scroll-mode .reader-stage::before,
-html.reader-scroll-mode .reader-stage::after {
-  display: none;
-}
-
-/* The single scroll-mode page is a long sacred manuscript roll */
-html.reader-scroll-mode .reader-page {
+/* Sacred Manuscript Continuous Roll Page */
+.reader-page {
   position: relative;
   inset: auto;
   width: 100%;
@@ -262,13 +246,13 @@ html.reader-scroll-mode .reader-page {
     inset 0 0 45px rgba(210, 190, 155, 0.2);
   border-radius: 4px;
   overflow: visible;
-  /* Elegant fade-in when scroll mode activates */
-  will-change: auto;
-  contain: none;
   padding: 1rem 1.25rem 1.5rem;
+  box-sizing: border-box;
+  background: var(--color-bg-card, #fffdf7);
+  border: 3px double var(--color-border);
 }
 
-html.reader-scroll-mode .reader-page.active-page {
+.reader-page.active-page {
   z-index: 1;
 }
 
@@ -288,11 +272,6 @@ html.reader-scroll-mode .reader-content > * + * {
 }
 
 /* Hide floating nav and tap zones in scroll mode */
-html.reader-scroll-mode .flip-floating-nav,
-html.reader-scroll-mode .tap-zone {
-  display: none;
-}
-
 /* Scroll progress in bottom bar shows % instead of page X/Y */
 html.reader-scroll-mode .reader-page-info {
   font-size: 0.88rem;
@@ -310,135 +289,6 @@ html.reader-scroll-mode .reader-page-info {
   opacity: 0 !important;
   pointer-events: none !important;
   visibility: hidden !important;
-}
-
-/* Book Folio Stage (With realistic stacked paper block depth) */
-.reader-stage {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  max-width: 82ch;
-  margin: 0 auto;
-  transform-style: preserve-3d;
-}
-
-/* Stacked underlying page edge depth (thickness of real paper volume) */
-.reader-stage::before {
-  content: '';
-  position: absolute;
-  inset: 4px 4px -5px 4px;
-  background: #ded0b2;
-  border-radius: 4px;
-  border: 1px solid rgba(120, 85, 50, 0.25);
-  box-shadow: 
-    0 12px 35px rgba(50, 30, 15, 0.22),
-    0 4px 10px rgba(50, 30, 15, 0.12);
-  z-index: 0;
-  pointer-events: none;
-}
-
-.reader-stage::after {
-  content: '';
-  position: absolute;
-  inset: 2px 2px -2px 2px;
-  background: #eae0c7;
-  border-radius: 3px;
-  border: 1px solid rgba(120, 85, 50, 0.2);
-  z-index: 0;
-  pointer-events: none;
-}
-
-/* Authentic Sacred Paper Book Page (with organic corner wave & paper curvature) */
-.reader-page {
-  position: absolute;
-  inset: 0;
-  padding: 0.65rem 0.85rem;
-  box-sizing: border-box;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  background: var(--color-bg-card);
-  background-image: 
-    /* Bottom-right corner paper wave lift & highlight */
-    radial-gradient(circle at 99% 99%, rgba(255, 255, 255, 0.8) 0%, rgba(215, 185, 140, 0.3) 25%, transparent 60%),
-    /* Bottom-left corner paper wave lift & highlight */
-    radial-gradient(circle at 1% 99%, rgba(255, 255, 255, 0.65) 0%, rgba(215, 185, 140, 0.25) 24%, transparent 60%),
-    /* Bottom edge organic paper wave shadow */
-    radial-gradient(ellipse at 50% 100%, rgba(190, 160, 115, 0.2) 0%, transparent 75%),
-    /* Subtle paper texture grain */
-    repeating-linear-gradient(45deg, rgba(160, 120, 70, 0.015) 0px, rgba(160, 120, 70, 0.015) 2px, transparent 2px, transparent 4px),
-    /* Main surface light */
-    radial-gradient(ellipse at 50% 15%, rgba(255, 252, 245, 0.96), rgba(246, 238, 222, 0.98)),
-    /* Top gutter fold shadow */
-    linear-gradient(to bottom, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0.01) 3%, transparent 8%);
-  
-  /* Traditional double-line border with softer organic bottom corners */
-  border: 3px double var(--color-border);
-  border-radius: 3px 3px 7px 6px / 3px 3px 10px 9px;
-  box-shadow: 
-    0 10px 28px rgba(50, 30, 15, 0.16),
-    0 2px 6px rgba(50, 30, 15, 0.08),
-    -4px 14px 22px -3px rgba(45, 25, 10, 0.25), /* Bottom-left corner paper lift shadow */
-    4px 14px 22px -3px rgba(45, 25, 10, 0.28),  /* Bottom-right corner paper lift shadow */
-    inset 0 0 35px rgba(210, 190, 155, 0.2),
-    inset 0 -12px 18px -6px rgba(180, 145, 95, 0.15); /* Bottom edge soft paper crease */
-  
-  transform-origin: 50% 0%;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  contain: layout paint;
-  z-index: 1;
-  opacity: 0;
-  pointer-events: none;
-}
-
-@media (max-width: 640px) {
-  .reader-page {
-    padding: 0.45rem 0.55rem;
-  }
-}
-
-/* Isolate GPU layer only on active or currently animating pages to conserve memory on older phones */
-.reader-page.active-page,
-.reader-page.page-curling,
-.reader-page.page-under-curl,
-.reader-page.flip-turn-forward-enter,
-.reader-page.flip-turn-forward-exit,
-.reader-page.flip-turn-backward-enter,
-.reader-page.flip-turn-backward-exit {
-  will-change: transform, opacity;
-}
-
-/* Inner decorative frame line (traditional Indian press ornament with soft paper corners) */
-.reader-page::before {
-  content: '';
-  position: absolute;
-  inset: 3px;
-  border: 1px solid var(--color-border-subtle);
-  border-radius: 2px 2px 5px 4px;
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* Dynamic Page Lighting & Specular Sheen (Real Paper Reflection & Shadow Sweep) */
-.reader-page::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.25) 0%,
-    rgba(0, 0, 0, 0.04) 15%,
-    rgba(255, 255, 255, 0.6) 45%,
-    rgba(0, 0, 0, 0.12) 75%,
-    rgba(0, 0, 0, 0.35) 100%
-  );
-  opacity: 0;
-  pointer-events: none;
-  border-radius: inherit;
-  z-index: 25;
-  transition: opacity 0.4s ease;
 }
 
 /* Running Header at Top of Page: Document Title */
@@ -518,195 +368,7 @@ html.reader-scroll-mode .reader-page-info {
   opacity: 0 !important;
 }
 
-/* ── 3D Hardware-Accelerated Keyframe Animations for Vertical Folio/Pothi Flip ── */
 
-/* Forward Page Turn (Next): Bottom edge curls up & flips over top in 3D (GPU accelerated, no box-shadow thrashing) */
-.reader-page.flip-turn-forward-exit {
-  opacity: 1;
-  pointer-events: none;
-  z-index: 20;
-  animation: pageFlipForwardExit 0.52s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-}
-
-@keyframes pageFlipForwardExit {
-  0% {
-    transform: translate3d(0, 0, 0) rotateX(0deg);
-  }
-  30% {
-    transform: translate3d(0, -10%, 35px) rotateX(40deg);
-  }
-  65% {
-    transform: translate3d(0, -52%, 50px) rotateX(95deg);
-    opacity: 0.95;
-  }
-  100% {
-    transform: translate3d(0, -110%, 0) rotateX(180deg);
-    opacity: 0;
-  }
-}
-
-.reader-page.flip-turn-forward-exit::after {
-  opacity: 0.85;
-}
-
-/* The incoming page revealed underneath */
-.reader-page.flip-turn-forward-enter {
-  opacity: 1;
-  pointer-events: none;
-  z-index: 9;
-  animation: pageFlipForwardEnter 0.52s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-}
-
-@keyframes pageFlipForwardEnter {
-  0% {
-    transform: translate3d(0, 0, 0) scale(0.985);
-    opacity: 0.85;
-  }
-  100% {
-    transform: translate3d(0, 0, 0) scale(1);
-    opacity: 1;
-  }
-}
-
-/* Backward Page Turn (Prev): Previous leaf drops down from top and settles */
-.reader-page.flip-turn-backward-enter {
-  opacity: 1;
-  pointer-events: none;
-  z-index: 20;
-  animation: pageFlipBackwardEnter 0.52s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-}
-
-@keyframes pageFlipBackwardEnter {
-  0% {
-    transform: translate3d(0, -110%, 0) rotateX(180deg);
-    opacity: 0;
-  }
-  35% {
-    transform: translate3d(0, -55%, 50px) rotateX(95deg);
-    opacity: 0.95;
-  }
-  75% {
-    transform: translate3d(0, -10%, 25px) rotateX(25deg);
-    opacity: 1;
-  }
-  100% {
-    transform: translate3d(0, 0, 0) rotateX(0deg);
-    opacity: 1;
-  }
-}
-
-.reader-page.flip-turn-backward-enter::after {
-  opacity: 0.85;
-}
-
-.reader-page.flip-turn-backward-exit {
-  opacity: 1;
-  pointer-events: none;
-  z-index: 9;
-  animation: pageFlipBackwardExit 0.52s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-}
-
-@keyframes pageFlipBackwardExit {
-  0% {
-    transform: translate3d(0, 0, 0) scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: translate3d(0, 0, 0) scale(0.985);
-    opacity: 0.85;
-  }
-  100% {
-    transform: translate3d(0, 0, 0) scale(1);
-    opacity: 1;
-  }
-}
-
-/* ─── Lite / High-Performance Mode (पुराने एवं कमज़ोर फोन हेतु द्रुत 2D मोड) ─── */
-html.reader-lite-mode .reader-viewport {
-  perspective: none !important;
-  -webkit-perspective: none !important;
-}
-
-html.reader-lite-mode .reader-stage {
-  transform-style: flat !important;
-  -webkit-transform-style: flat !important;
-}
-
-html.reader-lite-mode .reader-stage::before,
-html.reader-lite-mode .reader-stage::after {
-  box-shadow: 0 4px 10px rgba(50, 30, 15, 0.1) !important;
-}
-
-html.reader-lite-mode .reader-page {
-  box-shadow: 0 3px 10px rgba(50, 30, 15, 0.1) !important;
-  background-image: none !important;
-  background-color: var(--color-bg-card) !important;
-}
-
-html.reader-lite-mode .reader-page::after {
-  display: none !important;
-}
-
-/* Snappy 2D Animations for Lite Mode (0.22s, low CPU/GPU overhead) */
-html.reader-lite-mode .reader-page.flip-turn-forward-exit {
-  animation: litePageForwardExit 0.22s ease-out forwards !important;
-}
-
-html.reader-lite-mode .reader-page.flip-turn-forward-enter {
-  animation: litePageForwardEnter 0.22s ease-out forwards !important;
-}
-
-html.reader-lite-mode .reader-page.flip-turn-backward-enter {
-  animation: litePageBackwardEnter 0.22s ease-out forwards !important;
-}
-
-html.reader-lite-mode .reader-page.flip-turn-backward-exit {
-  animation: litePageBackwardExit 0.22s ease-out forwards !important;
-}
-
-@keyframes litePageForwardExit {
-  0% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-28px);
-    opacity: 0;
-  }
-}
-
-@keyframes litePageForwardEnter {
-  0% {
-    transform: translateY(28px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes litePageBackwardEnter {
-  0% {
-    transform: translateY(-28px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes litePageBackwardExit {
-  0% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(28px);
-    opacity: 0;
-  }
-}
 
 /* Page Number in traditional pothi footer */
 .page-footer-bar {
@@ -1055,8 +717,6 @@ body.chanting-mode .verse-translation {
 
 .reader-shell.has-cover-screen .reader-stage,
 .has-cover-screen .reader-stage,
-.reader-shell.has-cover-screen .flip-floating-nav,
-.has-cover-screen .flip-floating-nav,
 .reader-shell.has-cover-screen .tap-zone,
 .has-cover-screen .tap-zone,
 .reader-shell.has-cover-screen .reader-bottombar,
@@ -1225,43 +885,6 @@ body.chanting-mode .verse-translation {
     min-width: 38px;
     font-size: 0.82rem;
   }
-}
-
-/* Floating Navigation Buttons */
-.flip-floating-nav {
-  position: absolute;
-  right: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  z-index: 40;
-}
-
-.flip-nav-btn {
-  width: 38px;
-  height: 38px;
-  border-radius: var(--radius-sm);
-  background: var(--color-bg-card);
-  border: 1.5px solid var(--color-border);
-  color: var(--color-accent);
-  display: grid;
-  place-items: center;
-  box-shadow: var(--shadow-card);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-}
-
-.flip-nav-btn:hover:not(:disabled) {
-  background: var(--color-accent);
-  color: #fffdf7;
-  transform: scale(1.05);
-}
-
-.flip-nav-btn:disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
 }
 
 /* ─── Sacred Aarambh Cover Screen (आरम्भ आवरण) ───────── */
@@ -1505,10 +1128,6 @@ body.chanting-mode .verse-translation {
   html.hide-numbering .verse-block,
   body.hide-numbering .verse-block {
     padding-left: 0.35rem;
-  }
-
-  .flip-floating-nav {
-    display: none; /* Rely on bottom bar and tap zones on mobile */
   }
 
   /* Cover Screen Mobile Optimization — ensures no cropping of cover art */
@@ -1774,11 +1393,6 @@ body.chanting-mode .verse-translation {
   background: var(--color-accent);
   font-weight: 600;
   box-shadow: 0 1px 4px rgba(140, 40, 0, 0.25);
-}
-
-/* Hide flip-only animation setting row when in scroll mode */
-html.reader-scroll-mode .reader-info-setting-row--flipanim {
-  display: none;
 }
 
 .reader-info-tradition-note {

@@ -1,6 +1,6 @@
 /**
  * src/scripts/reader.js
- * Client-side reader engine (3D Flip & Continuous Scroll) for Gyankosh.
+ * Lightweight client-side continuous scroll reader engine for Gyankosh.
  */
 
 const shell = document.getElementById('reader-shell');
@@ -36,20 +36,7 @@ const base = config.base || shell?.dataset.base || '';
       }
 
       function isScrollMode() {
-        return ROOT.classList.contains('reader-scroll-mode');
-      }
-
-      function isLiteMode() {
-        return ROOT.classList.contains('reader-lite-mode');
-      }
-
-      function evaluateDeviceCapability() {
-        var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        var isSaveData = navigator.connection && navigator.connection.saveData === true;
-        var isLowMemory = typeof navigator.deviceMemory === 'number' && navigator.deviceMemory <= 3;
-        var isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent || '');
-        var isLowCpu = typeof navigator.hardwareConcurrency === 'number' && isMobile && navigator.hardwareConcurrency <= 4;
-        return prefersReducedMotion || isSaveData || isLowMemory || isLowCpu;
+        return true;
       }
 
       function triggerHaptic(pattern = 10) {
@@ -58,705 +45,6 @@ const base = config.base || shell?.dataset.base || '';
         }
       }
 
-      /* ── Gyankosh Vertical Pothi Page Flip Engine ── */
-      class GyankoshReader {
-        constructor() {
-          this.stage = document.getElementById('reader-stage');
-          this.rawSource = document.getElementById('reader-raw-source');
-          this.viewport = document.getElementById('reader-viewport');
-          this.pageInfo = document.getElementById('page-info');
-          this.progressBar = document.getElementById('reading-progress');
-          
-          this.pages = [];
-          this.currentPageIndex = 0;
-          this.isFlipping = false;
-
-          this.init();
-        }
-
-        init() {
-          this.buildPages();
-          this.setupEvents();
-          this.restorePosition();
-        }
-
-        /* Build authentic sacred book pages without splitting shlokas */
-        buildPages() {
-          if (!this.rawSource || !this.stage) return;
-          
-          this.stage.innerHTML = '';
-          this.pages = [];
-
-          const isChanting = document.documentElement.classList.contains('chanting-mode') || document.body.classList.contains('chanting-mode');
-
-          const childElements = Array.from(this.rawSource.children).filter(
-            el => !el.classList.contains('sr-only') && (!isChanting || (!el.classList.contains('translation-block') && !el.classList.contains('block--translation') && !el.classList.contains('block--bhavarth')))
-          );
-
-          if (childElements.length === 0) return;
-
-          // Stacking optimization: Mobile stacks automatically via CSS media query (@media max-width: 640px)
-          // For desktop, measure using a single off-screen scratch element instead of thousands of body append/removes
-          const isMobile = window.innerWidth <= 640;
-          if (!isMobile) {
-            const stageWidth = this.stage.clientWidth || window.innerWidth;
-            const availableTextWidth = Math.max(120, stageWidth - 55);
-            const scratch = document.createElement('div');
-            scratch.style.cssText = 'position:absolute; visibility:hidden; left:-9999px; top:-9999px; width:max-content; display:inline-flex; flex-wrap:nowrap; column-gap:0.35em; font-family:var(--reader-font-family); font-size:var(--reader-font-size); line-height:var(--reader-line-height);';
-            document.body.appendChild(scratch);
-
-            childElements.forEach((node) => {
-              if (node.classList.contains('verse-block')) {
-                const lines = node.querySelectorAll('.verse-line');
-                let verseNeedsStacking = false;
-                for (let li = 0; li < lines.length; li++) {
-                  const line = lines[li];
-                  if (line.children.length > 1) {
-                    scratch.textContent = line.textContent;
-                    if (scratch.offsetWidth > availableTextWidth) {
-                      verseNeedsStacking = true;
-                      break;
-                    }
-                  }
-                }
-                if (verseNeedsStacking) {
-                  node.classList.add('verse--stacked');
-                } else {
-                  node.classList.remove('verse--stacked');
-                }
-              }
-            });
-            document.body.removeChild(scratch);
-          }
-
-          // Measurement box
-          const measureBox = document.createElement('div');
-          measureBox.style.cssText = 'position:absolute; visibility:hidden; width:' + 
-            (this.stage.clientWidth || window.innerWidth) + 'px; font-size:var(--reader-font-size); line-height:var(--reader-line-height);';
-          document.body.appendChild(measureBox);
-
-          // Helpers for identifying semantic Indic blocks
-          const isTranslation = (el) => {
-            if (!el) return false;
-            return el.classList.contains('translation-block') ||
-                   el.classList.contains('block--translation') ||
-                   el.classList.contains('block--bhavarth');
-          };
-
-          const isVerse = (el) => {
-            if (!el) return false;
-            return el.classList.contains('verse-block');
-          };
-
-          const isSpeaker = (el) => {
-            if (!el) return false;
-            return el.classList.contains('speaker-block');
-          };
-
-          const isInstruction = (el) => {
-            if (!el) return false;
-            return el.classList.contains('instruction-block');
-          };
-
-          // Accurate height measurement for a group of nodes including inter-block spacing
-          const measureNodes = (nodes) => {
-            const container = document.createElement('div');
-            container.style.cssText = 'display:flex; flex-direction:column;';
-            nodes.forEach(n => container.appendChild(n.cloneNode(true)));
-            measureBox.appendChild(container);
-            const h = container.offsetHeight + 8;
-            measureBox.removeChild(container);
-            return h;
-          };
-
-          // Reserve space for compact sacred header (no page footer)
-          const maxPageHeight = Math.max(260, this.stage.clientHeight - 30);
-
-          let currentPageNodes = [];
-          let currentHeight = 0;
-
-          for (let i = 0; i < childElements.length; i++) {
-            const node = childElements[i];
-
-            // 1. Check for Speaker + Verse (+ Translation) cohesive group
-            if (isSpeaker(node) && childElements[i + 1] && isVerse(childElements[i + 1])) {
-              const nextEl = childElements[i + 1];
-              const afterNext = childElements[i + 2];
-
-              // Check if followed by Translation as well (Speaker + Verse + Translation)
-              if (afterNext && isTranslation(afterNext)) {
-                const trioHeight = measureNodes([node, nextEl, afterNext]);
-                if (trioHeight <= maxPageHeight) {
-                  if (currentHeight + trioHeight <= maxPageHeight) {
-                    currentPageNodes.push(node.cloneNode(true), nextEl.cloneNode(true), afterNext.cloneNode(true));
-                    currentHeight += trioHeight;
-                    i += 2;
-                    continue;
-                  } else if (currentPageNodes.length > 0) {
-                    this.pages.push(currentPageNodes);
-                    currentPageNodes = [node.cloneNode(true), nextEl.cloneNode(true), afterNext.cloneNode(true)];
-                    currentHeight = trioHeight;
-                    i += 2;
-                    continue;
-                  }
-                }
-              }
-
-              // Otherwise check Speaker + Verse pair
-              const pairHeight = measureNodes([node, nextEl]);
-              if (pairHeight <= maxPageHeight) {
-                if (currentHeight + pairHeight <= maxPageHeight) {
-                  currentPageNodes.push(node.cloneNode(true), nextEl.cloneNode(true));
-                  currentHeight += pairHeight;
-                  i += 1;
-                  continue;
-                } else if (currentPageNodes.length > 0) {
-                  this.pages.push(currentPageNodes);
-                  currentPageNodes = [node.cloneNode(true), nextEl.cloneNode(true)];
-                  currentHeight = pairHeight;
-                  i += 1;
-                  continue;
-                }
-              }
-            }
-
-            // 2. Check for Verse + Translation cohesive pair
-            if (isVerse(node) && childElements[i + 1] && isTranslation(childElements[i + 1])) {
-              const nextEl = childElements[i + 1];
-              const pairHeight = measureNodes([node, nextEl]);
-
-              if (pairHeight <= maxPageHeight) {
-                if (currentHeight + pairHeight <= maxPageHeight) {
-                  // Both fit on current page
-                  currentPageNodes.push(node.cloneNode(true), nextEl.cloneNode(true));
-                  currentHeight += pairHeight;
-                  i += 1;
-                  continue;
-                } else if (currentPageNodes.length > 0) {
-                  // Don't split them! Start both together on a fresh page
-                  this.pages.push(currentPageNodes);
-                  currentPageNodes = [node.cloneNode(true), nextEl.cloneNode(true)];
-                  currentHeight = pairHeight;
-                  i += 1;
-                  continue;
-                }
-              }
-            }
-
-            // 3. Check for Instruction header + immediate next element (avoid orphan section headers)
-            if (isInstruction(node) && childElements[i + 1]) {
-              const nextEl = childElements[i + 1];
-              const pairHeight = measureNodes([node, nextEl]);
-
-              if (pairHeight <= maxPageHeight && currentHeight + pairHeight > maxPageHeight && currentPageNodes.length > 0) {
-                // Header would be orphaned at the bottom of current page; move it to next page
-                this.pages.push(currentPageNodes);
-                currentPageNodes = [node.cloneNode(true)];
-                currentHeight = measureNodes([node]);
-                continue;
-              }
-            }
-
-            // 4. Standard single node placement (single verse, standalone instruction, or large blocks)
-            const nodeHeight = measureNodes([node]);
-
-            if (currentHeight + nodeHeight > maxPageHeight && currentPageNodes.length > 0) {
-              this.pages.push(currentPageNodes);
-              currentPageNodes = [node.cloneNode(true)];
-              currentHeight = nodeHeight;
-            } else {
-              currentPageNodes.push(node.cloneNode(true));
-              currentHeight += nodeHeight;
-            }
-          }
-
-          if (currentPageNodes.length > 0) {
-            this.pages.push(currentPageNodes);
-          }
-
-          document.body.removeChild(measureBox);
-
-          const totalPages = this.pages.length || 1;
-
-          // Render authentic pothi folio pages (without redundant page footer)
-          this.pageElements = this.pages.map((nodeList, idx) => {
-            const pageDiv = document.createElement('div');
-            pageDiv.className = 'reader-page' + (idx === this.currentPageIndex ? ' active-page' : '');
-            pageDiv.setAttribute('data-page-index', idx);
-            pageDiv.setAttribute('role', 'group');
-            pageDiv.setAttribute('aria-label', `पृष्ठ ${idx + 1} कुल ${totalPages}`);
-
-            // Running Page Header: Document Title
-            const pageHeader = document.createElement('div');
-            pageHeader.className = 'page-header-invocation';
-            pageHeader.innerHTML = `॥ ${bookTitle} ॥`;
-            pageDiv.appendChild(pageHeader);
-
-            // Page Content Body
-            const contentWrap = document.createElement('div');
-            contentWrap.className = 'reader-content';
-            contentWrap.style.padding = '0';
-            contentWrap.style.margin = '0 auto';
-
-            nodeList.forEach(n => contentWrap.appendChild(n));
-            pageDiv.appendChild(contentWrap);
-
-            this.stage.appendChild(pageDiv);
-            return pageDiv;
-          });
-
-          this.updateUI();
-        }
-
-        /* Apply real-time interactive paper curl on scroll or drag (GPU-accelerated translate3d) */
-        applyInteractiveCurl(progress) {
-          if (this.isFlipping || !this.pageElements || this.pageElements.length <= 1 || isLiteMode()) return;
-
-          const total = this.pages.length;
-          const curr = this.currentPageIndex;
-          const currPage = this.pageElements[curr];
-
-          if (!currPage) return;
-
-          if (progress > 0) {
-            // Curled UP (Moving towards Next Page)
-            if (curr >= total - 1) {
-              // At end of book: rubber-band elastic curl
-              const p = Math.min(0.2, progress * 0.35);
-              currPage.classList.add('page-curling');
-              currPage.style.transform = `translate3d(0, ${-p * 35}px, ${p * 25}px) rotateX(${p * 45}deg)`;
-              return;
-            }
-
-            const p = Math.min(0.65, progress);
-            const rot = Math.min(65, p * 95);
-            const y = -p * 65;
-            const z = p * 45;
-
-            currPage.classList.add('page-curling');
-            currPage.style.setProperty('--curl-sheen-opacity', `${Math.min(0.8, p * 1.5)}`);
-            currPage.style.transform = `translate3d(0, ${y}px, ${z}px) rotateX(${rot}deg)`;
-
-            const nextPage = this.pageElements[curr + 1];
-            if (nextPage) {
-              nextPage.classList.add('page-under-curl');
-              nextPage.style.transform = `translate3d(0, 0, 0) scale(${0.985 + p * 0.015})`;
-              nextPage.style.opacity = '1';
-            }
-          } else if (progress < 0) {
-            // Curled DOWN (Moving towards Previous Page)
-            if (curr <= 0) {
-              // At start of book: subtle rubber-band
-              const p = Math.min(0.2, Math.abs(progress) * 0.35);
-              currPage.classList.add('page-curling');
-              currPage.style.transform = `translate3d(0, ${p * 25}px, 0) rotateX(${-p * 30}deg)`;
-              return;
-            }
-
-            const p = Math.min(0.65, Math.abs(progress));
-            const prevPage = this.pageElements[curr - 1];
-            if (prevPage) {
-              const rot = Math.max(115, 180 - p * 95);
-              const y = -110 + (p * 55);
-              const z = p * 45;
-
-              prevPage.classList.add('page-curling');
-              prevPage.style.setProperty('--curl-sheen-opacity', `${Math.min(0.8, p * 1.5)}`);
-              prevPage.style.transform = `translate3d(0, ${y}%, ${z}px) rotateX(${rot}deg)`;
-              prevPage.style.opacity = `${Math.min(1, p * 2.8)}`;
-            }
-          }
-        }
-
-        /* Cancel/Snap-back interactive curl smoothly */
-        cancelInteractiveCurl() {
-          if (!this.pageElements) return;
-
-          if (isLiteMode()) {
-            this.pageElements.forEach((el, idx) => {
-              el.className = 'reader-page' + (idx === this.currentPageIndex ? ' active-page' : '');
-            });
-            return;
-          }
-
-          this.pageElements.forEach((el) => {
-            el.classList.remove('page-curling', 'page-under-curl');
-            el.classList.add('page-curl-cancelling');
-            el.style.transform = '';
-            el.style.boxShadow = '';
-            el.style.opacity = '';
-            el.style.removeProperty('--curl-sheen-opacity');
-          });
-
-          setTimeout(() => {
-            this.pageElements?.forEach((el, idx) => {
-              el.classList.remove('page-curl-cancelling');
-              el.className = 'reader-page' + (idx === this.currentPageIndex ? ' active-page' : '');
-            });
-          }, 340);
-        }
-
-        /* 3D Realistic Book Page Turn (पन्ना पलट) */
-        flipToPage(newIndex, direction = 'down') {
-          if (newIndex < 0 || newIndex >= this.pages.length || this.isFlipping) return;
-          if (newIndex === this.currentPageIndex) return;
-
-          triggerHaptic(12);
-
-          if (typeof resetWakeLockActivityTimer === 'function') {
-            resetWakeLockActivityTimer();
-          }
-
-          this.isFlipping = true;
-
-          // Clear any inline drag transforms
-          this.pageElements?.forEach((el) => {
-            el.classList.remove('page-curling', 'page-under-curl', 'page-curl-cancelling');
-            el.style.transform = '';
-            el.style.boxShadow = '';
-            el.style.opacity = '';
-            el.style.removeProperty('--curl-sheen-opacity');
-          });
-
-          const oldIndex = this.currentPageIndex;
-          const oldPage = this.pageElements[oldIndex];
-          const newPage = this.pageElements[newIndex];
-
-          const isForward = direction === 'down' || direction === 'next' || newIndex > oldIndex;
-
-          if (isForward) {
-            newPage.className = 'reader-page flip-turn-forward-enter';
-            oldPage.className = 'reader-page flip-turn-forward-exit';
-          } else {
-            newPage.className = 'reader-page flip-turn-backward-enter';
-            oldPage.className = 'reader-page flip-turn-backward-exit';
-          }
-
-          this.currentPageIndex = newIndex;
-          this.updateUI();
-
-          const flipDuration = isLiteMode() ? 240 : 530;
-          setTimeout(() => {
-            this.pageElements.forEach((el, idx) => {
-              el.className = 'reader-page' + (idx === this.currentPageIndex ? ' active-page' : '');
-            });
-            this.isFlipping = false;
-            this.savePosition();
-            // Trigger completion screen on last page after a brief reading pause
-            if (this.currentPageIndex >= this.pages.length - 1 && !window.__gyankoshCompletionTriggered) {
-              window.__gyankoshCompletionTriggered = true;
-              setTimeout(() => { if (typeof showCompletionScreen === 'function') showCompletionScreen(); }, 1800);
-            }
-          }, flipDuration);
-        }
-
-        nextPage() {
-          this.flipToPage(this.currentPageIndex + 1, 'next');
-        }
-
-        prevPage() {
-          this.flipToPage(this.currentPageIndex - 1, 'prev');
-        }
-
-        updateUI() {
-          const total = this.pages.length || 1;
-          const current = this.currentPageIndex + 1;
-          const pct = Math.round((current / total) * 100);
-
-          if (this.pageInfo) {
-            this.pageInfo.textContent = `${toHindiDigits(current)} / ${toHindiDigits(total)}`;
-          }
-
-          if (this.progressBar) {
-            this.progressBar.style.width = pct + '%';
-            this.progressBar.setAttribute('aria-valuenow', pct);
-          }
-
-          if (!window.__isGyankoshScrubbing) {
-            const fill = document.getElementById('reader-scrubber-fill');
-            const thumb = document.getElementById('reader-scrubber-thumb');
-            const track = document.getElementById('reader-scrubber-track');
-            if (fill) fill.style.width = pct + '%';
-            if (thumb) thumb.style.left = pct + '%';
-            if (track) track.setAttribute('aria-valuenow', pct);
-          }
-
-          const btnUp = document.getElementById('btn-page-up');
-          const btnDown = document.getElementById('btn-page-down');
-          const btnBottomPrev = document.getElementById('btn-bottom-prev');
-          const btnBottomNext = document.getElementById('btn-bottom-next');
-          const btnRestart = document.getElementById('btn-restart');
-
-          if (btnRestart) btnRestart.disabled = this.currentPageIndex === 0;
-          if (btnUp) btnUp.disabled = this.currentPageIndex === 0;
-          if (btnBottomPrev) btnBottomPrev.disabled = this.currentPageIndex === 0;
-          
-          if (btnDown) btnDown.disabled = this.currentPageIndex >= total - 1;
-          if (btnBottomNext) btnBottomNext.disabled = this.currentPageIndex >= total - 1;
-        }
-
-        savePosition() {
-          const total = this.pages.length || 1;
-          const isCompleted = (this.currentPageIndex >= total - 1);
-          const percent = Math.round(((this.currentPageIndex + 1) / total) * 100);
-          try {
-            localStorage.setItem(PROGRESS_KEY, JSON.stringify({
-              pageIndex: this.currentPageIndex,
-              percent,
-              scrollPercent: percent,
-              isCompleted,
-              ts: Date.now()
-            }));
-          } catch {}
-        }
-
-        restorePosition() {
-          try {
-            const saved = JSON.parse(localStorage.getItem(PROGRESS_KEY) || '{}');
-            if (saved) {
-              const isAtEnd = saved.isCompleted ||
-                (typeof saved.percent === 'number' && saved.percent >= 99.5) ||
-                (typeof saved.scrollPercent === 'number' && saved.scrollPercent >= 99.5) ||
-                (typeof saved.pageIndex === 'number' && saved.pageIndex >= this.pages.length - 1);
-              if (isAtEnd) {
-                this.currentPageIndex = 0;
-                localStorage.removeItem(PROGRESS_KEY);
-                this.pageElements?.forEach((el, idx) => {
-                  el.className = 'reader-page' + (idx === 0 ? ' active-page' : '');
-                });
-                this.updateUI();
-                return;
-              }
-
-              if (typeof saved.pageIndex === 'number' && saved.pageIndex < this.pages.length) {
-                this.currentPageIndex = saved.pageIndex;
-              } else if (typeof saved.scrollPercent === 'number' && this.pages.length > 0) {
-                this.currentPageIndex = Math.min(Math.round((saved.scrollPercent / 100) * (this.pages.length - 1)), this.pages.length - 1);
-              }
-              this.pageElements?.forEach((el, idx) => {
-                el.className = 'reader-page' + (idx === this.currentPageIndex ? ' active-page' : '');
-              });
-              this.updateUI();
-            }
-          } catch {}
-        }
-
-        setupEvents() {
-          // Navigation Buttons
-          document.getElementById('btn-page-up')?.addEventListener('click', () => this.prevPage());
-          document.getElementById('btn-page-down')?.addEventListener('click', () => this.nextPage());
-          document.getElementById('btn-bottom-prev')?.addEventListener('click', () => this.prevPage());
-          document.getElementById('btn-bottom-next')?.addEventListener('click', () => this.nextPage());
-          document.getElementById('btn-restart')?.addEventListener('click', () => this.flipToPage(0, 'prev'));
-
-          // On small screens, touching anywhere on the reading viewport enters fullscreen if not already active
-          const enterFullscreenOnTouch = (e) => {
-            if (isCoverScreenActive()) return;
-            if (isSmallScreen() && !isFullscreenActive()) {
-              if (!e.target.closest('button, a, input, select')) {
-                enterFullscreen();
-              }
-            }
-          };
-
-          this.viewport?.addEventListener('pointerup', enterFullscreenOnTouch, { passive: true });
-
-          // Tap Zones (Top/Left = Prev, Bottom/Right = Next)
-          document.getElementById('tap-prev')?.addEventListener('click', (e) => {
-            if (isCoverScreenActive()) return;
-            e.stopPropagation();
-            this.prevPage();
-          });
-          document.getElementById('tap-next')?.addEventListener('click', (e) => {
-            if (isCoverScreenActive()) return;
-            e.stopPropagation();
-            this.nextPage();
-          });
-          document.getElementById('tap-center')?.addEventListener('click', (e) => {
-            if (isCoverScreenActive()) return;
-            e.stopPropagation();
-            this.nextPage();
-          });
-
-          // Touch Gestures with Live Real-time Paper Curl Feedback (rAF throttled for older devices)
-          let touchStartY = 0;
-          let touchStartX = 0;
-          let isTouchDragging = false;
-          let touchProgress = 0;
-          let touchRafId = null;
-
-          this.viewport?.addEventListener('touchstart', (e) => {
-            if (isCoverScreenActive() || this.isFlipping) return;
-            touchStartY = e.touches[0].clientY;
-            touchStartX = e.touches[0].clientX;
-            isTouchDragging = true;
-            touchProgress = 0;
-          }, { passive: true });
-
-          this.viewport?.addEventListener('touchmove', (e) => {
-            if (isCoverScreenActive() || !isTouchDragging || this.isFlipping) return;
-            const currentY = e.touches[0].clientY;
-            const currentX = e.touches[0].clientX;
-            const diffY = touchStartY - currentY;
-            const diffX = touchStartX - currentX;
-
-            const effectiveDiff = Math.abs(diffY) >= Math.abs(diffX) ? diffY : diffX;
-            const stageHeight = this.stage.clientHeight || window.innerHeight;
-            touchProgress = effectiveDiff / (stageHeight * 0.38);
-
-            if (!isLiteMode()) {
-              if (!touchRafId) {
-                touchRafId = requestAnimationFrame(() => {
-                  this.applyInteractiveCurl(touchProgress);
-                  touchRafId = null;
-                });
-              }
-            }
-          }, { passive: true });
-
-          this.viewport?.addEventListener('touchend', (e) => {
-            if (touchRafId) {
-              cancelAnimationFrame(touchRafId);
-              touchRafId = null;
-            }
-            if (isCoverScreenActive()) {
-              isTouchDragging = false;
-              return;
-            }
-            if (!isTouchDragging) return;
-            isTouchDragging = false;
-
-            if (this.isFlipping) return;
-
-            const swipeThreshold = isLiteMode() ? 0.12 : 0.16;
-            if (touchProgress > swipeThreshold) {
-              if (this.currentPageIndex < this.pages.length - 1) {
-                this.nextPage();
-              } else {
-                this.cancelInteractiveCurl();
-              }
-            } else if (touchProgress < -swipeThreshold) {
-              if (this.currentPageIndex > 0) {
-                this.prevPage();
-              } else {
-                this.cancelInteractiveCurl();
-              }
-            } else {
-              this.cancelInteractiveCurl();
-            }
-          }, { passive: true });
-
-          this.viewport?.addEventListener('touchcancel', () => {
-            if (touchRafId) {
-              cancelAnimationFrame(touchRafId);
-              touchRafId = null;
-            }
-            isTouchDragging = false;
-            this.cancelInteractiveCurl();
-          }, { passive: true });
-
-          // Mouse Wheel / Trackpad Scroll with Live Dynamic Paper Curl (Active ONLY after opening text)
-          let wheelProgress = 0;
-          let wheelResetTimer = null;
-          let wheelRafId = null;
-
-          this.viewport?.addEventListener('wheel', (e) => {
-            if (isCoverScreenActive()) return;
-
-            e.preventDefault();
-            if (this.isFlipping) return;
-
-            clearTimeout(wheelResetTimer);
-
-            const delta = (Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX) || 0;
-            wheelProgress += delta * 0.0035;
-            wheelProgress = Math.max(-0.6, Math.min(0.6, wheelProgress));
-
-            if (!isLiteMode()) {
-              if (!wheelRafId) {
-                wheelRafId = requestAnimationFrame(() => {
-                  this.applyInteractiveCurl(wheelProgress);
-                  wheelRafId = null;
-                });
-              }
-            }
-
-            const wheelThreshold = isLiteMode() ? 0.12 : 0.18;
-            if (wheelProgress > wheelThreshold) {
-              wheelProgress = 0;
-              if (this.currentPageIndex < this.pages.length - 1) {
-                this.nextPage();
-              } else {
-                this.cancelInteractiveCurl();
-              }
-            } else if (wheelProgress < -wheelThreshold) {
-              wheelProgress = 0;
-              if (this.currentPageIndex > 0) {
-                this.prevPage();
-              } else {
-                this.cancelInteractiveCurl();
-              }
-            } else {
-              wheelResetTimer = setTimeout(() => {
-                wheelProgress = 0;
-                this.cancelInteractiveCurl();
-              }, 180);
-            }
-          }, { passive: false });
-
-          // Keyboard navigation (Active ONLY after opening text)
-          document.addEventListener('keydown', (e) => {
-            if (isCoverScreenActive()) return;
-            if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === 'j') {
-              e.preventDefault();
-              this.nextPage();
-            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'PageUp' || e.key === 'k') {
-              e.preventDefault();
-              this.prevPage();
-            } else if (e.key === ' ' && !e.target.matches('input, select, textarea')) {
-              e.preventDefault();
-              if (e.shiftKey) this.prevPage();
-              else this.nextPage();
-            }
-          });
-
-          // Responsive Resize
-          let resizeTimeout = null;
-          window.addEventListener('resize', () => {
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(() => {
-              const prevPage = this.currentPageIndex;
-              this.buildPages();
-              this.currentPageIndex = Math.min(prevPage, this.pages.length - 1);
-              this.pageElements?.forEach((el, idx) => {
-                el.className = 'reader-page' + (idx === this.currentPageIndex ? ' active-page' : '');
-              });
-              this.updateUI();
-            }, 200);
-          });
-        }
-
-        findPageForTocId(tocId) {
-          if (!this.pageElements || this.pageElements.length === 0) return -1;
-          for (let i = 0; i < this.pageElements.length; i++) {
-            const pageEl = this.pageElements[i];
-            if (pageEl.querySelector(`[data-toc-id="${tocId}"]`)) {
-              return i;
-            }
-          }
-          return -1;
-        }
-
-        getCurrentTocId() {
-          if (!this.pageElements || this.pageElements.length === 0) return null;
-          const pageEl = this.pageElements[this.currentPageIndex];
-          if (!pageEl) return null;
-          const firstTocEl = pageEl.querySelector('[data-toc-id]');
-          return firstTocEl ? firstTocEl.getAttribute('data-toc-id') : null;
-        }
-      }
-
-      let gyankoshReaderInstance = null;
 
       /* ── Gyankosh Scroll Reader Engine (स्क्रोल पठन) ── */
       class GyankoshScrollReader {
@@ -1283,8 +571,9 @@ const base = config.base || shell?.dataset.base || '';
           const blocks = wrap.querySelectorAll('.verse-block, .speaker-block, .instruction-block, .translation-block');
           if (!blocks || blocks.length === 0) return;
 
-          // If lite mode or low memory device, reveal all immediately with no animation overhead
-          if (isLiteMode() || evaluateDeviceCapability()) {
+          // If user prefers reduced motion, reveal all immediately
+          const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          if (prefersReducedMotion) {
             blocks.forEach(b => b.classList.add('verse-revealed'));
             return;
           }
@@ -1446,17 +735,7 @@ const base = config.base || shell?.dataset.base || '';
           localStorage.setItem(PREF_KEY, JSON.stringify({ ...prefs, chanting: nextChanting }));
         } catch {}
         updateChantingUI(nextChanting);
-        if (isScrollMode()) {
-          gyankoshScrollInstance?.rebuild();
-        } else if (gyankoshReaderInstance) {
-          const prevPageIndex = gyankoshReaderInstance.currentPageIndex;
-          gyankoshReaderInstance.buildPages();
-          gyankoshReaderInstance.currentPageIndex = Math.min(prevPageIndex, gyankoshReaderInstance.pages.length - 1);
-          gyankoshReaderInstance.pageElements?.forEach((el, idx) => {
-            el.className = 'reader-page' + (idx === gyankoshReaderInstance.currentPageIndex ? ' active-page' : '');
-          });
-          gyankoshReaderInstance.updateUI();
-        }
+        gyankoshScrollInstance?.rebuild();
       });
 
       /* ── Font Size Controls (अक्षर आकार छोटा/बड़ा करें) ── */
@@ -1470,11 +749,7 @@ const base = config.base || shell?.dataset.base || '';
         } catch {}
         if (window.GyankoshLoader) window.GyankoshLoader.show('पृष्ठ पुनर्गठित हो रहे हैं...', 120);
         setTimeout(() => {
-          if (isScrollMode()) {
-            gyankoshScrollInstance?.rebuild();
-          } else {
-            gyankoshReaderInstance?.buildPages();
-          }
+          gyankoshScrollInstance?.rebuild();
           if (window.GyankoshLoader) window.GyankoshLoader.hide();
         }, 20);
       }
@@ -1512,51 +787,31 @@ const base = config.base || shell?.dataset.base || '';
         if (isSmallScreen() && !isFullscreenActive()) {
           enterFullscreen();
         }
-        if (isScrollMode()) {
-          if (!gyankoshScrollInstance) {
-            gyankoshScrollInstance = new GyankoshScrollReader();
-            gyankoshScrollInstance.initVerseFocusCache(); // Win 4: hydrate pref cache
-          } else {
-            gyankoshScrollInstance.rebuild();
-          }
-          const onCoverDismissed = () => {
-            if (!skipRestore) {
-              gyankoshScrollInstance?.restoreScrollPosition();
-            }
-            gyankoshScrollInstance?.setupEntryAnimations();
-            gyankoshScrollInstance?.updateVerseFocus();
-            if (window.GyankoshLoader) window.GyankoshLoader.hide();
-            btnAarambh?.classList.remove('btn-loading');
-          };
-          setTimeout(onCoverDismissed, 460);
+        if (!gyankoshScrollInstance) {
+          gyankoshScrollInstance = new GyankoshScrollReader();
+          gyankoshScrollInstance.initVerseFocusCache();
         } else {
-          if (!gyankoshReaderInstance) {
-            gyankoshReaderInstance = new GyankoshReader();
-          } else {
-            gyankoshReaderInstance.buildPages();
-          }
-          setTimeout(() => {
-            if (window.GyankoshLoader) window.GyankoshLoader.hide();
-            btnAarambh?.classList.remove('btn-loading');
-          }, 460);
+          gyankoshScrollInstance.rebuild();
         }
+        const onCoverDismissed = () => {
+          if (!skipRestore) {
+            gyankoshScrollInstance?.restoreScrollPosition();
+          }
+          gyankoshScrollInstance?.setupEntryAnimations();
+          gyankoshScrollInstance?.updateVerseFocus();
+          if (window.GyankoshLoader) window.GyankoshLoader.hide();
+          btnAarambh?.classList.remove('btn-loading');
+        };
+        setTimeout(onCoverDismissed, 460);
         resetWakeLockActivityTimer();
       }
 
       // Pre-initialize reader engine only if cover screen is not active
       function initReaderEngine() {
-        if (isCoverScreenActive()) {
-          return;
-        }
-        if (isScrollMode()) {
-          if (!gyankoshScrollInstance) {
-            gyankoshScrollInstance = new GyankoshScrollReader();
-            gyankoshScrollInstance.initVerseFocusCache(); // Win 4: hydrate pref cache
-          }
-        } else {
-          if (!gyankoshReaderInstance) {
-            gyankoshReaderInstance = new GyankoshReader();
-          }
+        if (isCoverScreenActive()) return;
+        if (!gyankoshScrollInstance) {
+          gyankoshScrollInstance = new GyankoshScrollReader();
+          gyankoshScrollInstance.initVerseFocusCache();
         }
       }
 
@@ -1859,10 +1114,8 @@ const base = config.base || shell?.dataset.base || '';
       // Restart button on completion screen
       document.getElementById('btn-completion-restart')?.addEventListener('click', () => {
         hideCompletionScreen();
-        if (isScrollMode() && gyankoshScrollInstance) {
+        if (gyankoshScrollInstance) {
           gyankoshScrollInstance.scrollToTop();
-        } else if (gyankoshReaderInstance) {
-          gyankoshReaderInstance.flipToPage(0, 'prev');
         }
       });
 
@@ -2013,11 +1266,7 @@ const base = config.base || shell?.dataset.base || '';
         readerTocBtn?.setAttribute('aria-expanded', 'true');
 
         let currentTocId = null;
-        if (isScrollMode() && gyankoshScrollInstance) {
-          currentTocId = gyankoshScrollInstance.getCurrentTocId();
-        } else if (gyankoshReaderInstance) {
-          currentTocId = gyankoshReaderInstance.getCurrentTocId();
-        }
+        currentTocId = gyankoshScrollInstance ? gyankoshScrollInstance.getCurrentTocId() : null;
 
         const listEl = document.getElementById('reader-toc-list');
         if (listEl) {
@@ -2063,17 +1312,10 @@ const base = config.base || shell?.dataset.base || '';
       }
 
       function performNavigation(tocId) {
-        if (isScrollMode() && gyankoshScrollInstance) {
+        if (gyankoshScrollInstance) {
           const target = document.querySelector(`#reader-stage [data-toc-id="${tocId}"]`);
           if (target) {
             target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-          setTimeout(() => { if (window.GyankoshLoader) window.GyankoshLoader.hide(); }, 240);
-        } else if (gyankoshReaderInstance) {
-          const pageIdx = gyankoshReaderInstance.findPageForTocId(tocId);
-          if (pageIdx !== -1) {
-            const dir = pageIdx >= gyankoshReaderInstance.currentPageIndex ? 'next' : 'prev';
-            gyankoshReaderInstance.flipToPage(pageIdx, dir);
           }
           setTimeout(() => { if (window.GyankoshLoader) window.GyankoshLoader.hide(); }, 240);
         } else {
@@ -2138,22 +1380,15 @@ const base = config.base || shell?.dataset.base || '';
       document.getElementById('toc-btn-goto-start')?.addEventListener('click', () => {
         closeTocDrawer();
         if (isCoverScreenActive()) startReading();
-        if (isScrollMode() && gyankoshScrollInstance) {
-          gyankoshScrollInstance.scrollToTop();
-        } else if (gyankoshReaderInstance) {
-          gyankoshReaderInstance.flipToPage(0, 'prev');
-        }
+        gyankoshScrollInstance?.scrollToTop();
       });
 
       document.getElementById('toc-btn-goto-end')?.addEventListener('click', () => {
         closeTocDrawer();
         if (isCoverScreenActive()) startReading();
-        if (isScrollMode() && gyankoshScrollInstance) {
+        if (gyankoshScrollInstance?.viewport) {
           const vp = gyankoshScrollInstance.viewport;
-          if (vp) vp.scrollTo({ top: vp.scrollHeight, behavior: 'smooth' });
-        } else if (gyankoshReaderInstance) {
-          const lastIdx = gyankoshReaderInstance.pages.length - 1;
-          gyankoshReaderInstance.flipToPage(lastIdx, 'next');
+          vp.scrollTo({ top: vp.scrollHeight, behavior: 'smooth' });
         }
       });
 
@@ -2177,7 +1412,7 @@ const base = config.base || shell?.dataset.base || '';
           if (!tocItems || tocItems.length === 0) {
             return { badge: '', pct };
           }
-          if (isScrollMode() && gyankoshScrollInstance?.viewport) {
+          if (gyankoshScrollInstance?.viewport) {
             const vp = gyankoshScrollInstance.viewport;
             const scrollHeight = vp.scrollHeight - vp.clientHeight;
             const targetTop = (pct / 100) * scrollHeight;
@@ -2192,10 +1427,6 @@ const base = config.base || shell?.dataset.base || '';
               }
             }
             return { badge: activeItem ? activeItem.badge : '', pct };
-          } else if (gyankoshReaderInstance) {
-            const total = gyankoshReaderInstance.pages.length;
-            const targetIdx = Math.min(total - 1, Math.round((pct / 100) * (total - 1)));
-            return { badge: `पृष्ठ ${toHindiDigits(targetIdx + 1)}`, pct };
           }
           return { badge: '', pct };
         }
@@ -2221,7 +1452,7 @@ const base = config.base || shell?.dataset.base || '';
 
         function applyScrub(pct, smooth = false) {
           const clamped = Math.max(0, Math.min(100, pct));
-          if (isScrollMode() && gyankoshScrollInstance?.viewport) {
+          if (gyankoshScrollInstance?.viewport) {
             const vp = gyankoshScrollInstance.viewport;
             const scrollHeight = vp.scrollHeight - vp.clientHeight;
             const targetTop = (clamped / 100) * scrollHeight;
@@ -2230,10 +1461,6 @@ const base = config.base || shell?.dataset.base || '';
             } else {
               vp.scrollTop = targetTop;
             }
-          } else if (gyankoshReaderInstance) {
-            const total = gyankoshReaderInstance.pages.length;
-            const targetIdx = Math.min(total - 1, Math.round((clamped / 100) * (total - 1)));
-            gyankoshReaderInstance.flipToPage(targetIdx);
           }
         }
 
@@ -2404,79 +1631,6 @@ const base = config.base || shell?.dataset.base || '';
           }
         }
       });
-
-      /* ── Reading Mode Preference Handler (पठन शैली: स्क्रोल / 3D पोथी / Lite) ── */
-      const readingModeToggleGroup = document.getElementById('reading-mode-toggle-group');
-
-      function syncReadingModeUI() {
-        const prefs = loadPrefs();
-        const currentMode = prefs.readingMode || 'scroll';
-        const buttons = readingModeToggleGroup?.querySelectorAll('.anim-opt-btn');
-        buttons?.forEach(btn => {
-          const mode = btn.getAttribute('data-mode');
-          if (mode === currentMode) {
-            btn.classList.add('active');
-            btn.setAttribute('aria-checked', 'true');
-          } else {
-            btn.classList.remove('active');
-            btn.setAttribute('aria-checked', 'false');
-          }
-        });
-      }
-
-      readingModeToggleGroup?.addEventListener('click', (e) => {
-        const target = e.target.closest('.anim-opt-btn');
-        if (!target) return;
-        const mode = target.getAttribute('data-mode'); // 'scroll' | '3d' | 'lite'
-        const prefs = loadPrefs();
-        prefs.readingMode = mode;
-        try {
-          localStorage.setItem(PREF_KEY, JSON.stringify(prefs));
-        } catch {}
-
-        if (window.GyankoshLoader) {
-          window.GyankoshLoader.show('पठन शैली बदल रही है...', 60);
-        }
-
-        // Apply mode classes
-        if (mode === 'scroll') {
-          ROOT.classList.add('reader-scroll-mode');
-          ROOT.classList.remove('reader-lite-mode');
-          showGyankoshToast('↓ स्क्रोल पठन मोड सक्रिय');
-          // Destroy flip engine; start scroll engine
-          gyankoshReaderInstance = null;
-          gyankoshScrollInstance = null;
-          setTimeout(() => {
-            if (!isCoverScreenActive()) {
-              gyankoshScrollInstance = new GyankoshScrollReader();
-              gyankoshScrollInstance.restoreScrollPosition();
-            }
-            if (window.GyankoshLoader) window.GyankoshLoader.hide();
-          }, 60);
-        } else {
-          ROOT.classList.remove('reader-scroll-mode');
-          if (mode === 'lite') {
-            ROOT.classList.add('reader-lite-mode');
-            showGyankoshToast('⚡ द्रुत Lite मोड सक्रिय');
-          } else {
-            ROOT.classList.remove('reader-lite-mode');
-            showGyankoshToast('✨ 3D पन्ना पलट सक्रिय');
-          }
-          // Destroy scroll engine; start flip engine
-          gyankoshScrollInstance = null;
-          gyankoshReaderInstance = null;
-          setTimeout(() => {
-            if (!isCoverScreenActive()) {
-              gyankoshReaderInstance = new GyankoshReader();
-            }
-            if (window.GyankoshLoader) window.GyankoshLoader.hide();
-          }, 60);
-        }
-        syncReadingModeUI();
-        closeInfoModal();
-      });
-
-      syncReadingModeUI();
 
       /* ── Night / Dark Reading Mode (रात्रि पठन मोड) ── */
       const nightModeToggle = document.getElementById('night-mode-toggle');
