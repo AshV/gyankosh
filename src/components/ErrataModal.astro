@@ -1,0 +1,366 @@
+---
+/**
+ * src/components/ErrataModal.astro
+ * Crowdsourced Typo & Errata Reporting Modal for Gyankosh.
+ * Allows readers to report text/matra discrepancies directly from the reader.
+ */
+export interface Props {
+  slug: string;
+  title: string;
+}
+
+const { slug, title } = Astro.props;
+---
+
+<div id="errata-modal-backdrop" class="errata-modal-backdrop" aria-hidden="true" style="display: none;">
+  <div class="errata-modal-card" role="dialog" aria-modal="true" aria-labelledby="errata-modal-title">
+    
+    <!-- Modal Header -->
+    <div class="errata-modal-header">
+      <div class="errata-modal-header-titles">
+        <span class="errata-modal-super">॥ सनातन पाठ शुद्धि सेवा ॥</span>
+        <h3 id="errata-modal-title" class="errata-modal-title">अशुद्धि सूचित करें</h3>
+        <span class="errata-modal-book-label">{title}</span>
+      </div>
+      <button type="button" id="errata-modal-close-btn" class="errata-close-btn" aria-label="बंद करें">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Modal Form -->
+    <form id="errata-form" class="errata-form">
+      <input type="hidden" name="text_slug" value={slug} />
+      <input type="hidden" id="errata-verse-id" name="verse_id" value="" />
+
+      <div class="errata-form-field">
+        <label for="errata-selected-text" class="errata-label">वर्तमान पाठ / अशुद्ध शब्द (Original text):</label>
+        <textarea
+          id="errata-selected-text"
+          name="selected_text"
+          rows="2"
+          class="errata-textarea"
+          placeholder="जिस पद अथवा शब्द में अशुद्धि प्रतीत हो, उसे यहाँ लिखें..."
+        ></textarea>
+      </div>
+
+      <div class="errata-form-field">
+        <label for="errata-suggested-text" class="errata-label">
+          शुद्ध पाठ / आपका संशोधन (Suggested fix) <span class="errata-req">*</span>:
+        </label>
+        <textarea
+          id="errata-suggested-text"
+          name="suggested_text"
+          rows="2"
+          class="errata-textarea errata-textarea--highlight"
+          required
+          placeholder="कृपया शुद्ध देवनागरी पाठ यहाँ दर्ज करें..."
+        ></textarea>
+      </div>
+
+      <div class="errata-form-field">
+        <label for="errata-book-ref" class="errata-label">प्रामाणिक भौतिक ग्रन्थ एवं पृष्ठ संदर्भ (Book Reference):</label>
+        <input
+          type="text"
+          id="errata-book-ref"
+          name="book_reference"
+          class="errata-input"
+          placeholder="उदा. गीताप्रेस गोरखपुर (पुस्तक कोड १३७४, पृष्ठ ४)"
+        />
+      </div>
+
+      <div class="errata-form-field">
+        <label for="errata-user-note" class="errata-label">अतिरिक्त टिप्पणी / सन्दर्भ (Optional Note):</label>
+        <input
+          type="text"
+          id="errata-user-note"
+          name="user_note"
+          class="errata-input"
+          placeholder="मात्रा भेद, पाठान्तर अथवा विशिष्ट विवरण..."
+        />
+      </div>
+
+      <div class="errata-modal-footer">
+        <div id="errata-status-msg" class="errata-status-msg" style="display: none;"></div>
+        <button type="submit" id="errata-submit-btn" class="errata-submit-btn">
+          <span>🚩 संशोधन प्रेषित करें</span>
+        </button>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+<style>
+  .errata-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(18, 14, 17, 0.75);
+    backdrop-filter: blur(4px);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    animation: errataFadeIn 0.2s ease-out;
+  }
+
+  @keyframes errataFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .errata-modal-card {
+    background: #fdfbf7; /* Authentic Pothi Warm Parchment */
+    color: #261f22;
+    width: 100%;
+    max-width: 520px;
+    border-radius: 12px;
+    border: 2px solid #b8860b;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 0 4px rgba(184, 134, 11, 0.2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Noto Sans Devanagari', 'Inter', sans-serif;
+  }
+
+  .errata-modal-header {
+    background: #f7f1e5;
+    border-bottom: 1px solid #e2d5c3;
+    padding: 16px 20px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .errata-modal-super {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #a83232;
+    letter-spacing: 0.5px;
+  }
+
+  .errata-modal-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #4a2c00;
+    margin: 2px 0;
+  }
+
+  .errata-modal-book-label {
+    font-size: 0.8rem;
+    color: #7a6352;
+  }
+
+  .errata-close-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #7a6352;
+    padding: 4px;
+    border-radius: 4px;
+    transition: all 0.15s;
+  }
+  .errata-close-btn:hover {
+    color: #a83232;
+    background: rgba(168, 50, 50, 0.1);
+  }
+
+  .errata-form {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .errata-form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .errata-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #4a3b32;
+  }
+
+  .errata-req {
+    color: #c0392b;
+  }
+
+  .errata-textarea, .errata-input {
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 0.95rem;
+    font-family: 'Noto Sans Devanagari', 'Inter', sans-serif;
+    background: #fff;
+    border: 1px solid #d4c5b3;
+    border-radius: 6px;
+    color: #221d1b;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .errata-textarea:focus, .errata-input:focus {
+    border-color: #b8860b;
+    box-shadow: 0 0 0 2px rgba(184, 134, 11, 0.2);
+  }
+  .errata-textarea--highlight {
+    background: #fffdf9;
+    border-color: #c9932b;
+  }
+
+  .errata-modal-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 6px;
+  }
+
+  .errata-submit-btn {
+    background: linear-gradient(135deg, #a83232 0%, #8b1e1e 100%);
+    color: #fff;
+    border: 1px solid #751414;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Noto Sans Devanagari', 'Inter', sans-serif;
+    transition: all 0.2s;
+    box-shadow: 0 2px 6px rgba(139, 30, 30, 0.3);
+  }
+  .errata-submit-btn:hover {
+    background: linear-gradient(135deg, #b83d3d 0%, #9e2323 100%);
+    box-shadow: 0 4px 12px rgba(139, 30, 30, 0.4);
+  }
+
+  .errata-status-msg {
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    text-align: center;
+  }
+  .errata-status-msg.success {
+    background: rgba(39, 174, 96, 0.15);
+    color: #1e824c;
+    border: 1px solid rgba(39, 174, 96, 0.3);
+  }
+  .errata-status-msg.error {
+    background: rgba(192, 57, 43, 0.15);
+    color: #c0392b;
+    border: 1px solid rgba(192, 57, 43, 0.3);
+  }
+</style>
+
+<script>
+  import { submitErrataReport } from '../utils/anonymousAuth';
+
+  function initErrataModal() {
+    const backdrop = document.getElementById('errata-modal-backdrop');
+    const closeBtn = document.getElementById('errata-modal-close-btn');
+    const form = document.getElementById('errata-form') as HTMLFormElement | null;
+    const statusMsg = document.getElementById('errata-status-msg');
+    const submitBtn = document.getElementById('errata-submit-btn') as HTMLButtonElement | null;
+
+    if (!backdrop || !form) return;
+
+    // Open function
+    (window as any).__openErrataModal = function(selectedText = '', verseId = '') {
+      backdrop.style.display = 'flex';
+      backdrop.setAttribute('aria-hidden', 'false');
+
+      const textInput = document.getElementById('errata-selected-text') as HTMLTextAreaElement | null;
+      const verseInput = document.getElementById('errata-verse-id') as HTMLInputElement | null;
+      if (textInput && selectedText) textInput.value = selectedText;
+      if (verseInput && verseId) verseInput.value = verseId;
+
+      if (statusMsg) {
+        statusMsg.style.display = 'none';
+        statusMsg.className = 'errata-status-msg';
+      }
+    };
+
+    // Close function
+    function closeModal() {
+      backdrop.style.display = 'none';
+      backdrop.setAttribute('aria-hidden', 'true');
+    }
+
+    closeBtn?.addEventListener('click', closeModal);
+    backdrop.addEventListener('click', (e) => {
+      if (e.target === backdrop) closeModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && backdrop.style.display !== 'none') {
+        closeModal();
+      }
+    });
+
+    // Form submit
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!submitBtn) return;
+
+      const formData = new FormData(form);
+      const textSlug = formData.get('text_slug') as string;
+      const verseId = formData.get('verse_id') as string;
+      const selectedText = formData.get('selected_text') as string;
+      const suggestedText = formData.get('suggested_text') as string;
+      const bookRef = formData.get('book_reference') as string;
+      const userNote = formData.get('user_note') as string;
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = '⏳ प्रेषित किया जा रहा है...';
+
+      try {
+        const result = await submitErrataReport({
+          textSlug,
+          verseId,
+          selectedText,
+          suggestedText,
+          bookReference: bookRef,
+          userNote,
+        });
+
+        if (statusMsg) {
+          statusMsg.textContent = result.message;
+          statusMsg.className = 'errata-status-msg success';
+          statusMsg.style.display = 'block';
+        }
+
+        setTimeout(() => {
+          closeModal();
+          form.reset();
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = '🚩 संशोधन प्रेषित करें';
+          }
+        }, 2200);
+      } catch (err) {
+        if (statusMsg) {
+          statusMsg.textContent = 'सुझाव प्रेषित करने में त्रुटि उत्पन्न हुई।';
+          statusMsg.className = 'errata-status-msg error';
+          statusMsg.style.display = 'block';
+        }
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = '🚩 संशोधन प्रेषित करें';
+        }
+      }
+    });
+  }
+
+  // Auto initialize on load
+  if (typeof window !== 'undefined') {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initErrataModal);
+    } else {
+      initErrataModal();
+    }
+  }
+</script>

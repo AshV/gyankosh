@@ -79,3 +79,9 @@ coverage/
 .turbo/
 .vercel/
 .netlify/
+
+# Local SQLite Databases & CMS Working Cache
+database/*.db
+database/*.sqlite
+database/*.sqlite3
+database/gyankosh.db

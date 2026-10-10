@@ -14,6 +14,7 @@ import '../styles/global.css';
 import '../styles/reader.css';
 import SEO from '../components/SEO.astro';
 import SacredLoader from '../components/SacredLoader.astro';
+import ErrataModal from '../components/ErrataModal.astro';
 import { tagToSlug } from '../utils/tags';
 import { getCategoryLabel } from '../data/categoryMeta';
 
@@ -613,6 +614,19 @@ const ogImage = image || (slug
               </div>
             </div>
 
+            <!-- Report Typo Action Button (पाठ शुद्धि सेवा) -->
+            <div class="reader-info-setting-row" style="margin-top: 14px; border-top: 1px dashed rgba(184, 134, 11, 0.3); padding-top: 12px;">
+              <button
+                type="button"
+                class="anim-opt-btn"
+                onclick="window.__openErrataModal && window.__openErrataModal()"
+                style="width: 100%; justify-content: center; gap: 6px; font-weight: 600; color: #a83232; border-color: rgba(168, 50, 50, 0.4);"
+                title="यदि किसी पद अथवा मात्रा में अशुद्धि दिखे तो सूचित करें"
+              >
+                ⚠️ पाठ में अशुद्धि सूचित करें
+              </button>
+            </div>
+
             <div class="reader-info-tradition-note">
               <span>पारम्परिक सनातन पाठ • सार्वजनिक कार्यक्षेत्र (Public Domain)</span>
             </div>
@@ -747,9 +761,28 @@ const ogImage = image || (slug
          Client-Side 3D Pothi Page-Flip Engine
          ══════════════════════════════════════════════════════ -->
 
-        <!-- Reader Engine Configuration & Client Bundle -->
+    <!-- Errata / Typo Reporting Modal (Option A) -->
+    <ErrataModal slug={slug} title={title} />
+
+    <!-- Reader Engine Configuration & Client Bundle -->
     <script is:inline define:vars={{ slug, bookTitle: title, base }}>
       window.__GYANKOSH_READER__ = { slug, bookTitle, base };
+      try {
+        const anonKey = 'gyankosh_anon_device_id';
+        let anonId = localStorage.getItem(anonKey);
+        if (!anonId) {
+          anonId = 'gk_anon_' + (crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2, 15));
+          localStorage.setItem(anonKey, anonId);
+        }
+        const apiUrl = window.__GYANKOSH_API_URL__ || '';
+        if (apiUrl && navigator.sendBeacon) {
+          navigator.sendBeacon(`${apiUrl}/api/analytics/event`, JSON.stringify({
+            anon_device_id: anonId,
+            event_type: 'read_start',
+            text_slug: slug,
+          }));
+        }
+      } catch (_) {}
     </script>
     <script src="../scripts/reader.js"></script>
   </body>

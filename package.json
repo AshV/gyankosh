@@ -22,6 +22,10 @@
     "weights:sync": "node scripts/list-weights.mjs --sync",
     "fonts:download": "node scripts/download-fonts.mjs",
     "covers:optimize": "node scripts/optimize-covers.mjs",
+    "db:ingest": "php scripts/pipeline/md-to-sqlite.php",
+    "db:export": "php scripts/pipeline/sqlite-to-md.php",
+    "db:check": "php scripts/pipeline/sqlite-to-md.php --check",
+    "cms": "frankenphp php-server --listen 127.0.0.1:8080 --root tools/cms",
     "astro": "astro"
   },
   "dependencies": {
