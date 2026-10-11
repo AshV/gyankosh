@@ -157,6 +157,69 @@ To ensure prompt depth and absolute consistency, every prompt must be engineered
 
 ---
 
+### 11. बजरंग बाण (`bajrang-baan`)
+* **Tradition**: Theme 1 (Rama & Vaishnava Bhakti)
+* **Master Prompt**:
+  ```text
+  Museum-grade classical Indian devotional oil painting of Lord Hanuman in his invincible, heroic protective form (Veera Hanuman) as invoked in the sacred Bajrang Baan. Resolute, fearless, yet deeply compassionate divine countenance, standing firmly in a heroic protective stance (Veerasana) upon an ancient carved temple plinth. Powerful muscular golden form glowing with the radiance of a million suns, wearing an ornate jewel-studded golden crown (Kirita-Mukuta), pearls and red rose garland (Vanamala), sacred white Yajnopavita, and glowing saffron-golden Pitambara silk dhoti with a flowing red silk uttariya scarf. In his raised right hand he wields the heavy golden thunderbolt mace (Vajra-Gada) crackling with divine golden protective light, while his left hand holds the luminous Dronagiri mountain with glowing Sanjeevani herbs. Brilliant radiating golden solar aura (Prabhamandala) glowing behind his head, dispelling all shadows and malevolent forces. Background features ancient stone temple pillars with warm flickering bronze ghee lamps casting amber chiaroscuro light, with scattered marigold and pink lotus petals. Color palette: Sacred Saffron (#E67E22), Pitambara Gold (#D4AF37), Warm Sindoor Orange (#D35400), and Temple Stone Amber (#A06535). Masterwork devotional fine art in authentic Gita Press and Raja Ravi Varma oil painting heritage, heroic spiritual majesty (Veera and Bhakti Rasa), rich oil glazes. Strict 3:4 vertical portrait ratio, zero text, no words, no letters, no Devanagari, no English writing, no artificial frames or borders, pure sacred painting.
+  ```
+
+---
+
+### 12. आदित्यहृदय स्तोत्रम् (`aditya-hridaya-stotram`)
+* **Tradition**: Theme 1 / Vedic Solar (Vaishnava)
+* **Master Prompt**:
+  ```text
+  Museum-grade classical Indian devotional oil painting of Lord Surya Bhagavan (the Sun God as revealed in the sacred Aditya Hridaya Stotram). Resplendent solar deity with glowing golden complexion, wearing an opulent jewel-encrusted solar crown (Surya Mukuta), earrings, and radiant vermilion-and-gold silk robes. In his two hands he gracefully holds two blooming red lotuses (Rakta Padma). Behind him blazes an immense, brilliant cosmic sunburst halo (Surya Prabhamandala) filling the dawn sky with celestial golden light. He rides across the celestial heavens upon a majestic golden chariot (Saptashva Ratha) driven by the red-hued charioteer Aruna, drawn across dawn clouds by seven magnificent divine white horses with golden harnesses leaping in graceful unison across the horizon. Below on the misty earth near the sacred ocean, venerable Sage Agastya stands instructing warrior Lord Sri Rama who listens reverently with folded hands in Anjali Mudra. Color palette: Blazing Solar Gold (#F59E0B), Deep Vermilion (#B91C1C), Sacred Saffron (#EA580C), Stallion White (#FFFFFF), and Dawn Sapphire Blue (#1E3A8A). Masterwork devotional fine art in authentic Gita Press and Raja Ravi Varma oil painting heritage, sublime solar brilliance, cosmic grandeur and spiritual protection. Strict 3:4 vertical portrait ratio, zero text, no words, no letters, no Devanagari, no English writing, no artificial frames or borders, pure sacred painting.
+  ```
+
+---
+
+### 13. महिषासुरमर्दिनी स्तोत्रम् (`mahishasura-mardini-stotram`)
+* **Tradition**: Theme 3 (Devi & Shakta Parayan)
+* **Master Prompt**:
+  ```text
+  Museum-grade classical Indian devotional oil painting of Goddess Durga as Mahishasura Mardini (the Slayer of Mahishasura as celebrated in the sacred Mahishasura Mardini Stotram). Magnificent eighteen-armed divine form radiating supreme maternal power, courage, and transcendental serenity amidst dynamic cosmic battle. Divine complexion glowing like molten gold (Tapta-Kanchana), wearing an ornate jewel-studded golden crown (Kirita-Mukuta), pearl necklaces, and a billowing crimson-red silk saree with intricate gold zari embroidery. She rides her powerful, roaring golden lion (Simha) which fiercely attacks the demon buffalo. With her primary hands she forcefully thrusts the blazing golden Trishula (trident) into the chest of the defeated demon Mahishasura emerging from the buffalo. In her multiple divine hands she holds celestial weapons: the glowing Sudarshana Chakra, Conch (Shankha), sharp Khadga sword, golden bow and arrow, polished shield, and mace. A brilliant radiating sunburst halo (Prabhamandala) illuminates the battlefield. Background of dramatic storm clouds, lightning strikes, celestial flowers showered by devas, and distant mountain peaks. Color palette: Deep Sindoor Crimson (#941919), Kumkum Maroon (#660F10), Radiant Temple Gold (#E5A93C), Polished Steel (#CAD2C5), and Storm Midnight Navy (#181D26). Masterwork devotional fine art in authentic Gita Press and Raja Ravi Varma oil painting heritage, epic spiritual heroism (Veera and Raudra-Shanta Rasa), rich oil glazes. Strict 3:4 vertical portrait ratio, zero text, no words, no letters, no Devanagari, no English writing, no artificial frames or borders, pure sacred painting.
+  ```
+
+---
+
+### 14. कालभैरवाष्टकम् (`kala-bhairava-ashtakam`)
+* **Tradition**: Theme 2 (Shiva & Rudra Stotras)
+* **Master Prompt**:
+  ```text
+  Museum-grade classical Indian devotional oil painting of Lord Kala Bhairava (the divine guardian of Kashi as revered in the sacred Kala Bhairava Ashtakam). Powerful, majestic cosmic form with radiant dark sapphire-blue complexion, sharp compassionate yet awe-inspiring gaze, third eye glowing upon his forehead, with a delicate crescent moon adorning his fiery matted locks. He is adorned with sacred Rudraksha beads, coiled serpent ornaments, and a sacred garland of skulls (Mundamala). In his four divine hands he wields the sacred golden Trishula (trident), a cosmic Damru drum, a sharp gleaming sword (Khadga), and a golden Kapala vessel. Standing loyally beside him is his noble, powerful black dog vahana (Shvana) wearing a delicate golden collar. Setting: the ancient stone ghats of Varanasi (Kashi) at midnight twilight, with sacred river Ganga reflecting the silver light of the full moon and distant temple oil deepak lamps casting mystical golden-amber chiaroscuro reflections across ancient stone temple pillars. Color palette: Midnight Lapis Azure (#0A1128), Sacred Bhasma Ash (#8D99AE), Burnished Temple Brass Gold (#D4AF37), Mystical Crimson (#990000), and Charcoal Night (#1C1C1C). Masterwork devotional fine art in authentic Gita Press and Raja Ravi Varma oil painting heritage, awe-inspiring spiritual sovereignty (Raudra, Bhairava and Shanta Rasa), rich oil glazes. Strict 3:4 vertical portrait ratio, zero text, no words, no letters, no Devanagari, no English writing, no artificial frames or borders, pure sacred painting.
+  ```
+
+---
+
+### 15. श्रीविष्णुसहस्रनाम स्तोत्रम् (`vishnu-sahasranama`)
+* **Tradition**: Theme 1 (Vaishnava Bhakti)
+* **Master Prompt**:
+  ```text
+  Museum-grade classical Indian devotional oil painting of Supreme Lord Maha Vishnu in his transcendental cosmic form of Sheshashayi Vishnu (Anantashayana) resting in Vaikuntha upon the celestial milky ocean (Kshirasagara). The Supreme Lord reclines in divine yogic slumber upon the coils of the thousand-headed golden serpent king Ananta Shesha, whose glowing jewel-crested hoods fan out overhead like a majestic divine canopy. Dark radiant monsoon-cloud complexion (Neelamegha Shyamala), wearing an opulent jewel-encrusted golden crown (Kirita-Mukuta), shimmering yellow Pitambara silk robes, sacred pearl necklaces, the glowing Kaustubha gem upon his chest, and a fragrant forest garland (Vanamala). In his four divine hands he holds the luminous Sudarshana Chakra, sacred white Conch (Panchajanya Shankha), golden mace (Kaumodaki Gada), and a blooming pink lotus (Padma). Goddess Mahalakshmi sits gracefully at his lotus feet, massaging them in deep reverence. From his navel rises a sacred lotus upon which Lord Brahma sits in deep meditation. Celestial golden light, floating lotuses on the milky waves, and devas showering Parijata flowers from the heavens. Color palette: Milky Ocean Azure (#153243), Divine Pitambara Gold (#D4AF37), Sacred Lotus Pink (#E06D8C), Lapis Navy (#0F4C81), and Celestial White (#F8F9FA). Masterwork devotional fine art in authentic Gita Press and Raja Ravi Varma oil painting heritage, supreme transcendental peace and cosmic majesty (Shanta and Bhakti Rasa). Strict 3:4 vertical portrait ratio, zero text, no words, no letters, no Devanagari, no English writing, no artificial frames or borders, pure sacred painting.
+  ```
+
+---
+
+### 16. विदुर नीति (`vidura-niti`)
+* **Tradition**: Theme 5 (Niti & Darshan Wisdom)
+* **Master Prompt**:
+  ```text
+  Museum-grade classical Indian historical and philosophical oil painting depicting Mahatma Vidura imparting righteous moral wisdom and statecraft (Vidura Niti from the Mahabharata). In a regal Hastinapur palace council chamber at midnight, the venerable and wise Mahatma Vidura sits in a dignified counseling posture upon a carved teakwood chauki platform. Wise penetrating eyes, serene countenance, adorned in natural ecru silk khadi angavastra, sacred rudraksha beads, and white sacred thread (Yajnopavita), with his right hand raised in gentle didactic gesture (Vyakhyana Mudra) counseling the troubled blind King Dhritarashtra who sits listening in sorrowful contemplation upon the ornate royal throne. In the foreground sits a low wooden table with ancient rolled palm-leaf manuscripts (Talapatra) and a heavy antique burnished brass oil lamp (Deepak) with warm flickering golden flame casting rich chiaroscuro amber light across the stone pillars and royal tapestries. Color palette: Antique Teakwood Brown (#3D2612), Warm Aged Parchment (#EFE3C3), Burnished Brass Gold (#B8860B), Royal Maroon (#581845), and Sandstone Ochre (#C2A675). Masterwork historical fine art in authentic Gita Press and Raja Ravi Varma academic oil painting heritage, profound philosophical gravitas and moral sovereignty (Shanta and Niti Rasa). Strict 3:4 vertical portrait ratio, zero text, no words, no letters, no Devanagari, no English writing, no artificial frames or borders, pure sacred painting.
+  ```
+
+---
+
+### 17. कठोपनिषद् (`katha-upanishad`)
+* **Tradition**: Theme 4 (Upanishads & Vedas - Jnana Kanda)
+* **Master Prompt**:
+  ```text
+  Museum-grade classical Indian devotional oil painting depicting the profound Upanishadic dialogue of the Katha Upanishad between youthful seeker Nachiketa and Lord Yama (Dharmaraja). In an ancient, majestic Vedic realm of truth and cosmic law, the noble and awe-inspiring Lord Yama sits upon an ornate carved stone throne, holding his sacred staff of cosmic justice (Danda); his countenance is venerable, majestic, and full of deep reverence for the boy's uncompromising spiritual wisdom. Standing before him in fearless devotion with folded hands (Anjali Mudra) is the youthful, radiant brahmachari Nachiketa, dressed in simple saffron bark-cloth and sacred thread, asking for the supreme secret of the immortal Self (Atman) that transcends death. Between them burns the sacred sacrificial Nachiketa Fire (Agnihotra Kunda) with fragrant golden flames, illuminating the ancient stone hall and birch-bark manuscripts with rich amber chiaroscuro light. Ethereal golden divine radiance permeates the atmosphere, symbolizing transcendental Self-realization (Atma-Vidya). Color palette: Sacred Havana Amber (#D97706), Sandalwood Ivory (#F5EBE0), Vedic Terracotta (#A0522D), Deep Bronze (#4A3728), and Solar Gold (#FBBF24). Masterwork philosophical fine art in authentic Gita Press and Raja Ravi Varma oil painting heritage, profound transcendental stillness, spiritual wisdom (Shanta and Jnana Rasa). Strict 3:4 vertical portrait ratio, zero text, no words, no letters, no Devanagari, no English writing, no artificial frames or borders, pure sacred painting.
+  ```
+
+---
+
 ## 🛠️ 5. Image Conversion & Deployment Pipeline
 
 Once an image is generated via `generate_image`, run the following Node.js processing pipeline to produce both Retina-ready WebP and JPEG fallbacks at uniform 3:4 proportions:
