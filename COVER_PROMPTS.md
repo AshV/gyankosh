@@ -1,149 +1,185 @@
-# 🎨 Gyankosh Cover Art Prompts Registry
+# 🎨 Gyankosh Sacred Cover Art Design System & Prompt Registry
 
-This document stores curated prompts for generating high-quality **1:1 square** cover art using Gemini (or any modern AI image model).
-All prompts are designed with authentic Indian iconography, classical fine art styling (Raja Ravi Varma / Gita Press / Classical Indian Fresco aesthetics), rich color palettes, and cinematic lighting.
+> **Standard Version**: 2.0 (Post-Golden Frame Redesign)  
+> **Aspect Ratio**: 3:4 Portrait (`896 × 1200` Master Generation → `768 × 1024` WebP / JPEG)  
+> **Artistic Lineage**: Classical Gita Press Devotional Heritage & Raja Ravi Varma Academic Realism  
+> **Status**: Verified with Masterwork Pilot Generation
 
 ---
 
-## 🪷 Chitrakoot & Sri Rama Sacred Series
+## 🏛️ 1. Core Principles & Negative Constraints
 
-### 1. श्रीरामरक्षास्तोत्रम् (Shri Ram Raksha Stotram)
-- **Target File**: `public/covers/ram-raksha-stotram.jpg` & `.webp`
-- **Slug**: `ram-raksha-stotram`
-- **Aspect Ratio**: `1:1`
-- **Style**: Classical North Indian Devotional / Sacred Indian Temple Art / Raja Ravi Varma aesthetic
-- **Prompt**:
-```text
-Magnificent 1:1 square sacred Indian devotional painting depicting Lord Rama as the supreme protector (Vajra Panjara Rama). Lord Rama is seated in serene lotus posture (baddhapadmasana) beneath a sacred Kalpavriksha tree, surrounded by a radiant golden and azure divine aura, holding his divine golden bow Kodanda and shining arrows. Adorned in bright pitambara yellow silk robes, ornate Vedic gold jewelry, pearl necklaces, and a luminous gem-studded crown. Mother Sita is seated gracefully on his left, and Lakshmana stands vigilantly with bow on his right. Ethereal golden light, sacred Sanskrit armor motifs gently glowing around, classical Indian temple art aesthetic, Raja Ravi Varma style, ultra-detailed, masterpiece.
+To ensure 100% aesthetic harmony and eliminate the inconsistencies found in previous iterations (such as 80s bazaar posters, synthetic brown banners, and mismatched square crops), every cover image generated for Gyankosh must adhere to three foundational rules:
+
+### A. Strict 3:4 Vertical Aspect Ratio
+* **Why**: The redesigned Gyankosh card architecture (`BookCard.astro`) features a dedicated left column thumbnail frame with `aspect-ratio: 3 / 4` (rendered at `120 × 160px` up to `140 × 187px`).
+* **Requirement**: Generation must use `3:4` vertical portrait mode (`896 × 1200` master). This frames the complete sacred form from the divine crown (*मुकुट*) to the lotus feet (*चरण कमल*) with zero awkward cropping.
+
+### B. 100% Pure Text-Free Sacred Painting (Zero AI Typography)
+* **Why**: The web card header **already displays the sacred title in vector Devanagari** (`॥ श्री हनुमान चालीसा ॥`) with gold divider flourish.
+* **Negative Prompt Rule**: **STRICTLY NO TEXT, NO LETTERS, NO DEVANAGARI, NO ENGLISH, NO COMPUTER-GENERATED BANNER STRIPS, NO TITLE BOXES, NO WATERMARKS, NO SIGNATURES.** Any digital lettering instantly destroys the timeless museum-grade quality.
+
+### C. Zero Artificial Outer Frames
+* **Why**: The web card UI **already surrounds the entire card with an authentic repoussé golden temple frame** (`public/borders/sacred-gold-frame.webp`).
+* **Requirement**: No thick rectangular frames or decorative border stripes inside the artwork itself. The background should extend edge-to-edge with organic temple architecture (*गर्भगृह तोरण, मेहराब, स्तम्भ*), sacred rivers, or cosmic skies.
+
+---
+
+## 🎨 2. The 5 Sacred Indic Color Traditions
+
+Every grantha in Gyankosh belongs strictly to one of **5 authentic spiritual traditions**, each defined by a precise color palette, sacred natural pigments, symbolic lighting, and spiritual mood (*रस*):
+
+| Tradition | Symbolic Hues & Hex Codes | Natural Indic Pigments | Lighting & Atmosphere | Key Granthas |
+| :--- | :--- | :--- | :--- | :--- |
+| **1. Rama & Vaishnava Bhakti** | **Sacred Saffron** (`#E67E22`)<br/>**Pitambara Gold** (`#D4AF37`)<br/>**Dandakaranya Emerald** (`#1B4D3E`)<br/>**Warm Sindoor** (`#D35400`) | Haridra (Turmeric), Hingula (Vermilion), Swarna Bhasma (Gold Leaf) | Warm Brahmamuhurta dawn light, gentle golden prabhamandala halo, incense and rose glow | Hanuman Chalisa, Bajrang Baan, Sundarkand, Ram Raksha, Ramcharitmanas, Bhagavad Gita, Vishnu Sahasranama |
+| **2. Shiva & Rudra Stotras** | **Kailash Azure** (`#0D1B2A`)<br/>**Camphor White** (`#F7F9FB`)<br/>**Sacred Bhasma Ash** (`#8D99AE`)<br/>**Nilakantha Blue** (`#0F4C81`)<br/>**Burnished Brass** (`#C5A059`) | Karpoora (Camphor), Vibhuti (Sacred Ash), Lapis Lazuli, Neelam | Moonlit Himalayan Sandhya (twilight), cosmic starlight, glowing crescent moon, flickering camphor aarti lamps | Shiva Tandav, Rudrashtakam, Mahimna Stotra, Panchakshara, Lingashtakam, Bhairava Ashtakam |
+| **3. Devi & Shakta Parayan** | **Deep Sindoor Crimson** (`#941919`)<br/>**Kumkum Maroon** (`#660F10`)<br/>**Radiant Temple Gold** (`#E5A93C`)<br/>**Nelumbo Lotus Pink** (`#E06D8C`) | Kumkuma, Raktachandana (Red Sandalwood), Manahshila | Golden hour Navaratri temple sanctum (*गर्भगृह*), glowing bronze 108-deepak lamps, falling red hibiscus petals | Durga Chalisa, Durga Saptashati, Mahishasura Mardini, Sri Suktam, Kali Chalisa, Lalita Sahasranama |
+| **4. Upanishads & Vedas (Jnana Kanda)** | **Sacred Havana Amber** (`#D97706`)<br/>**Sandalwood Ivory** (`#F5EBE0`)<br/>**Vedic Terracotta** (`#A0522D`)<br/>**Hiranyagarbha Solar Gold** (`#FBBF24`) | Chandana (Sandalwood), Gairika (Red Ochre), Agnihotra Bhasma | Dawn mist over sacred riverbank, rising golden smoke from sacrificial Havan Kunda, shade of ancient Banyan tree | Isha, Katha, Kena, Mandukya, Mundaka, Prashna Upanishad, Rigveda, Purusha Suktam, Shanti Path |
+| **5. Niti, Darshan & Purana (Wisdom)** | **Antique Teakwood** (`#3D2612`)<br/>**Warm Aged Parchment** (`#EFE3C3`)<br/>**Burnished Brass** (`#B8860B`)<br/>**Takshashila Sandstone** (`#C2A675`) | Kajal (Lampblack Ink), Talapatra (Palm-Leaf), Pital (Brass) | Takshashila scholar's chamber, warm chiaroscuro light from bronze oil lamp (deepak), antique birch-bark manuscripts | Chanakya Niti, Vidura Niti, Bhartrihari Niti Shatakam, Ashtavakra Gita, Puranas |
+
+---
+
+## 📐 3. The Multi-Layered Deep Prompt Formula
+
+To ensure prompt depth and absolute consistency, every prompt must be engineered using this **6-Layer Architecture**:
+
+```
+[Layer 1: Master Art Lineage & Medium]
+"Museum-grade classical Indian devotional oil painting on fine canvas in the authentic Gita Press and Raja Ravi Varma heritage fine art tradition..."
+
+[Layer 2: Divine Subject, Posture & Mudra]
+"Depicting [Deity / Sage] in [specific seated/standing/dynamic posture] with [Abhaya/Dhyana/Chin Mudra]..."
+
+[Layer 3: Sacred Attire, Ornaments & Ayudhas]
+"Adorned with [Kirita-Mukuta crown], [Vanamala/Rudraksha garland], [Pitambara silk/tiger skin], holding [specific weapons/attributes] in specific hands..."
+
+[Layer 4: Sacred Sanctum / Environment & Lighting]
+"Set within [ancient carved stone Garbhagriha / Kailash snowy peaks / Tapovan riverbank], illuminated by [flickering ghee oil lamps / celestial golden dawn rays / cosmic moonlit aura]..."
+
+[Layer 5: Explicit Named Color Palette & Codes]
+"Dominant color palette: [Primary Color + Hex], [Secondary Color + Hex], [Supporting Accent Tones]..."
+
+[Layer 6: Strict Negative Constraints]
+"Strict 3:4 vertical portrait aspect ratio, zero text, no words, no letters, no Devanagari, no English writing, no artificial frames or border stripes, no modern 3D CGI cartoon look, pure sacred painting."
 ```
 
 ---
 
-### 2. श्रीरामचन्द्र कृपालु भजु मन (Shri Ramachandra Kripalu)
-- **Target File**: `public/covers/shri-ramachandra-kripalu.jpg` & `.webp`
-- **Slug**: `shri-ramachandra-kripalu`
-- **Aspect Ratio**: `1:1`
-- **Style**: Gita Press Gorakhpur lithograph & classical Bhakti oil painting style
-- **Prompt**:
-```text
-Enchanting and deeply devotional 1:1 square artwork illustrating the sublime beauty of Shri Ramachandra ("नवनीलनीरद सुन्दरम्"). Lord Rama stands gracefully with gentle lotus eyes (nava-kanja lochana), glowing soft bluish-cyan complexion, adorned in sparkling yellow pitambara robes that shine like lightning against monsoon clouds, wearing a majestic crown and long fragrant floral and pearl garlands. Saint Tulsidas is depicted in humble adoration in the foreground on the sacred stone ghats of Mandakini at Chitrakoot. Soft twilight atmosphere, floating river diyas, blooming lotuses, rich warm divine illumination, masterclass traditional Indian fine art.
-```
+## 📜 4. Master Prompt Catalog for Flagship Granthas
+
+### 1. श्री हनुमान चालीसा (`hanuman-chalisa`)
+* **Tradition**: Theme 1 (Rama & Vaishnava Bhakti)
+* **Master Prompt**:
+  ```text
+  Museum-grade classical Indian devotional oil painting of Lord Hanuman in divine seated meditation posture (Dhyana mudra) on a sacred golden pedestal inside an ancient stone temple sanctum (Garbhagriha). Powerful, divine, compassionate golden complexion, wearing a resplendent jewel-encrusted golden crown (Kirita-Mukuta), pearls and fragrant red rose garland (Vanamala), sacred white sacred thread (Yajnopavita), and glowing saffron-golden Pitambara silk dhoti. An ornate golden mace (Gada) rests gracefully beside him. His right hand is raised in reassuring blessing (Abhaya Mudra) while his left hand rests gently on his knee. Radiant golden aura (Prabhamandala) glowing behind his head. Background features warm flickering ghee oil lamps (Deepak) casting soft amber chiaroscuro light across ancient carved stone temple pillars, with scattered fresh pink lotus and marigold flower petals. Rich color palette: Sacred Saffron (#E67E22), Pitambara Gold (#D4AF37), Warm Sindoor Orange (#D35400), and Temple Stone Amber. Masterwork devotional fine art in the authentic Gita Press and Raja Ravi Varma heritage oil painting tradition, richly textured canvas brushwork, divine serenity, spiritual gravitas. Strict vertical 3:4 portrait aspect ratio, zero text, no words, no letters, no Devanagari, no English writing, no outer borders, no modern CGI, pure sacred painting.
+  ```
 
 ---
 
-### 3. श्री कामतानाथ स्तुति (Shri Kamatanath Stuti)
-- **Target File**: `public/covers/kamtanath-stuti.jpg` & `.webp`
-- **Slug**: `kamtanath-stuti`
-- **Aspect Ratio**: `1:1`
-- **Style**: Sacred Pilgrimage Landscape / Divine Indian Devotional Art
-- **Prompt**:
-```text
-Sacred 1:1 square devotional painting depicting the holy Kamadgiri hill (Lord Kamatanath) at Chitrakoot Dham. The verdant, lush holy hill rises majestically enveloped in a celestial emerald and golden divine aura, symbolizing the wish-fulfilling presence of Lord Rama and Mother Sita during their 11-year forest stay. Devotees in traditional saffron and white attire are seen walking on the sacred parikrama path under ancient Peepal and Banyan trees, offering flowers and water. Ancient stone temple shrines marking the holy gates (Dwaar) with fluttering saffron dhwajas. Serene spiritual mist, morning golden sunrays breaking through forest canopies, classical Indian fine art painting style.
-```
+### 2. शिव ताण्डव स्तोत्रम् (`shiva-tandava-stotram`)
+* **Tradition**: Theme 2 (Shiva & Rudra Stotras)
+* **Master Prompt**:
+  ```text
+  Museum-grade classical Indian devotional oil painting depicting Lord Shiva performing the cosmic Ananda Tandava dance of divine creation and dissolution atop the snow-covered sacred peaks of Mount Kailash. Majestic, serene, cosmic form with radiant camphor-white complexion (Karpoora Gaura) and deep spiritual calm amid dynamic cosmic motion. His flying matted locks (Jata) billow outwards, cradling the crescent moon (Chandra) and the sacred cascading waters of River Ganga illuminated like liquid silver light. Around his neck coils the serpent Vasuki, with a delicate blue throat (Nilakantha) glowing softly. In his upper right hand he holds the cosmic drum (Damru) pulsating with the primordial rhythm of creation (Nada-Brahma), while his upper left hand holds the blazing divine Trishula. Glowing third eye on his forehead marked with three horizontal lines of sacred white ash (Tripundra). Wears a tiger skin (Vyaghra-Charma) and sacred Rudraksha beads. Midnight Himalayan sky behind with swirling starlight, nebulas, and moonlit snow ridges. Color palette: Kailash Azure and Lapis Lazuli (#0D1B2A, #1B263B), Camphor White (#F7F9FB), Sacred Bhasma Ash Grey (#8D99AE), Nilakantha Blue (#0F4C81), and Burnished Brass Gold. Masterwork devotional fine art in classical Gita Press and Raja Ravi Varma heritage oil tradition, deep chiaroscuro, cosmic sublimity. Strict 3:4 vertical portrait orientation, zero text, no letters, no Devanagari, no English, no outer frames or artificial borders, pure sacred painting.
+  ```
 
 ---
 
-### 4. आरती श्री कामदनाथ जी की (Aarti Shri Kamadnath Ji Ki)
-- **Target File**: `public/covers/kamtanath-aarti.jpg` & `.webp`
-- **Slug**: `kamtanath-aarti`
-- **Aspect Ratio**: `1:1`
-- **Style**: Divine Temple Sandhya Aarti / Golden Hour Indian Temple Painting
-- **Prompt**:
-```text
-Splendid 1:1 square Indian temple art painting capturing the grand evening Aarti (Maha Aarti) of Bhagwan Kamatanath at the sanctum sanctorum of Kamadgiri temple, Chitrakoot. Hindu priests in traditional dhotis and angavastrams holding multi-tiered brass Pancha-Deepa aarti lamps with vibrant orange-yellow camphor flames, casting a warm golden radiance over the adorned sacred shila vigraha of Kamatanath Ji. Golden tulsi garlands, fragrant rose petals, billowing frankincense and dhoop smoke creating mystical light rays, conch shells and brass temple bells ringing in the background. Ultra-detailed, festive, devotional Indian sacred art masterpiece.
-```
+### 3. श्री दुर्गा चालीसा (`durga-chalisa`)
+* **Tradition**: Theme 3 (Devi & Shakta Parayan)
+* **Master Prompt**:
+  ```text
+  Museum-grade classical Indian devotional oil painting of Maa Durga (Sherawali) in majestic eight-armed divine form, seated gracefully upon a powerful, noble golden lion (Simharudha) amidst blooming sacred pink Nelumbo lotuses. Her countenance radiates supreme maternal grace, compassion, and indomitable courage. Her divine complexion glows like molten gold (Tapta-Kanchana). She wears a radiant jewel-studded golden crown (Kirita-Mukuta), ornate pearl necklaces, and a luxurious heavy silk Kanjeevaram crimson-red saree embroidered with intricate gold zari borders. In her eight sacred hands she holds divine ayudhas: the golden Trishula (trident), glowing Sudarshana Chakra, Conch (Shankha), bow and arrow, Khadga sword, lotus flower, and her primary right hand is raised in supreme fear-dispelling Abhaya Mudra. Behind her head shines a magnificent radiating golden sunburst halo (Prabhamandala). Ethereal red hibiscus and jasmine flower petals float through the atmosphere. Background features a sacred temple sanctum with glowing bronze ghee lamps (Aarti Deepaks) casting warm divine amber light. Dominant color palette: Deep Sindoor Crimson (#941919), Kumkum Maroon (#660F10), Radiant Temple Gold (#E5A93C), and Soft Lotus Pink (#E06D8C). Masterwork devotional fine art in the authentic Gita Press and Raja Ravi Varma heritage oil painting tradition, rich oil glazes, magnificent spiritual presence. Strict vertical 3:4 portrait aspect ratio, zero text, no words, no letters, no Devanagari, no English script, no artificial frames or border strips, pure sacred painting.
+  ```
 
 ---
 
-### 5. श्री राम प्राकट्य वंदना / भए प्रगट कृपाला (Ram Janma Stuti)
-- **Target File**: `public/covers/ram-janma-stuti.jpg` & `.webp`
-- **Slug**: `ram-janma-stuti`
-- **Aspect Ratio**: `1:1`
-- **Style**: Classical Ayodhya Royal Palace / Divine Epiphany Painting
-- **Prompt**:
-```text
-Celestial 1:1 square sacred Indian painting depicting the miraculous divine manifestation of Lord Rama ("भए प्रगट कृपाला दीनदयाला कौसल्या हितकारी"). Inside the ornate royal palace chambers of Ayodhya adorned with marble pillars, silk draperies, and floral garlands on Chaitra Navami noon. The divine Lord reveals his wondrous four-armed Vishnu swaroop (holding Shankha, Chakra, Gada, Padma) bathed in supernatural sapphire and golden celestial light, smiling lovingly at Queen Kaushalya who stands in tearful, folded-hands ecstasy and awe. Ethereal apsaras showering fragrant Parijata flowers from celestial clouds above, Gita Press classical devotional art style.
-```
+### 4. चाणक्य नीति (`chanakya-niti`)
+* **Tradition**: Theme 5 (Niti & Darshan Wisdom)
+* **Master Prompt**:
+  ```text
+  Museum-grade classical Indian historical fine art oil painting of Acharya Chanakya (Kautilya) in his study chamber at the ancient university of Takshashila. The venerable master of statecraft is seated in dignified contemplation upon a carved teakwood chauki platform. Sharp intellect, intense penetrating gaze, shaved head with a traditional Brahmin sikha (tuft), clad in simple elegant natural ecru khadi angavastra and uttariya scarf, wearing rudraksha beads and sacred thread (Yajnopavita). In his hand he holds an ancient iron stylus (Shalaka) inscribing timeless Sanskrit aphorisms onto palm-leaf manuscripts (Talapatra / Bhojapatra) bound with sacred red Mauli threads. A heavy antique burnished brass oil lamp (Deepak) with warm golden ghee flame sits on a low wooden table, casting rich chiaroscuro amber light across the scholar's workspace, stone Takshashila pillars, carved bookshelves with rolled Sanskrit scrolls, and an antique clay inkpot. Color palette: Antique Teakwood Brown (#3D2612), Warm Aged Parchment (#EFE3C3), Burnished Brass Gold (#B8860B), Lampblack Ink (#1A1A1A), and Takshashila Sandstone Ochre (#C2A675). Masterwork historical and philosophical fine art in classical academic oil painting tradition, warm atmospheric golden glow, profound wisdom and gravitas. Strict 3:4 vertical portrait ratio, zero text, no modern typography, no digital borders or banners, pure sacred historical painting.
+  ```
 
 ---
 
-### 6. श्री जानकी स्तुति (Janaki Stuti - Chitrakoot Sati Anasuya Prasang)
-- **Target File**: `public/covers/janaki-stuti.jpg` & `.webp`
-- **Slug**: `janaki-stuti`
-- **Aspect Ratio**: `1:1`
-- **Style**: Vedic Hermitage / Sacred Indian Classical Fine Art
-- **Prompt**:
-```text
-Sublime 1:1 square classical Indian artwork capturing Mother Sita (Janaki) at the hermitage of Maharshi Atri and Sati Anasuya in the holy groves of Chitrakoot. Mother Sita is adorned in divine, unfading celestial celestial garments and jewels gifted by venerable Mother Anasuya, glowing with transcendent grace and purity. Sage Anasuya affectionately blesses Sita beneath a serene forest hermitage thatched hut beside the Mandakini river. Deer resting gently nearby, flowering creepers, sacred sacrificial fire (havan kunda) with gentle sacred smoke, radiant afternoon golden sunlight filtering through Shal and Kadamba trees, Raja Ravi Varma style oil painting.
-```
+### 5. ईशावास्योपनिषद् (`isha-upanishad`)
+* **Tradition**: Theme 4 (Upanishads & Vedas - Jnana Kanda)
+* **Master Prompt**:
+  ```text
+  Museum-grade classical Indian devotional oil painting representing the sublime Vedic wisdom of the Isha Upanishad (Ishavasya Upanishad). In a serene Vedic Tapovan hermitage at dawn, a venerable ancient Vedic Rishi with a long silver beard, radiant countenance, and luminous eyes sits in Padmasana upon a sacred deer skin beneath the shade of an ancient sprawling Banyan tree near the misty banks of a sacred river. Before the sage, a sacred carved stone Havan Kunda burns with pure golden sacrificial Agnihotra fire, fragrant curls of holy smoke rising gracefully into the morning sky. Two youthful disciples with folded hands (Anjali Mudra) listen in deep reverence. The entire atmosphere is suffused with an ethereal, omnipresent golden divine light (Hiranyagarbha Prabha) breaking through the morning mist, visually personifying the immortal verse 'Ishavasyam Idam Sarvam' (The Divine pervades all existence). Sacred birch-bark manuscripts (Bhojapatra) and a simple terracotta Kamandalu rest beside the sage. Color palette: Sacred Havana Amber (#D97706), Sandalwood Ivory (#F5EBE0), Vedic Terracotta (#A0522D), Dawn Solar Gold (#FBBF24), and Tapovan Forest Ochre (#7A6136). Masterwork classical fine art in authentic Gita Press and Raja Ravi Varma heritage oil painting tradition, serene transcendental stillness, sacred Upanishadic gravitas. Strict 3:4 vertical portrait ratio, zero text, no English, no Devanagari, no artificial borders or banners, pure sacred painting.
+  ```
 
 ---
 
-### 7. मन्दाकिनी वर्णनम् (Mandakini Varnanam - Valmiki Ramayana)
-- **Target File**: `public/covers/mandakini-stotram.jpg` & `.webp`
-- **Slug**: `mandakini-stotram`
-- **Aspect Ratio**: `1:1`
-- **Style**: Epic Sanskrit Poetic Landscape / Classical Indian Landscape Painting
-- **Prompt**:
-```text
-Breathtaking 1:1 square classical Indian landscape painting portraying the sacred Mandakini river at Chitrakoot as described by Lord Rama to Sita in the Valmiki Ramayana (Sarga 95). Lord Rama and Mother Sita stand serenely on a blossom-laden scenic bank of the crystal-clear Mandakini river, pointing towards swans, chakravaka birds, and floating pink lotuses. Sages and rishis performing morning sandhya prayers immersed in the sparkling sacred water with raised arms to the rising sun. Pristine verdant hills of Chitrakoot in the backdrop, blooming flowering trees shedding colorful petals onto the water, ethereal morning golden dawn ambiance, masterpiece classical Indian painting.
-```
+### 6. श्रीमद्भगवद्गीता (`bhagavad-gita`)
+* **Tradition**: Theme 1 (Vaishnava Bhakti / Gitopadesh)
+* **Master Prompt**:
+  ```text
+  Museum-grade classical Indian devotional oil painting of Gitopadesh on the sacred battlefield of Kurukshetra. Lord Sri Krishna with radiant dark cloud complexion (Megha-Shyam) and peacock feather (Mayura-Pankha) crown stands upon the golden chariot (Ratha), gently revealing transcendental wisdom with hand in Chin Mudra. Arjuna kneels before him with folded hands in deep surrender, his celestial bow Gandiva resting beside him. Four magnificent white horses with golden harnesses stand poised in divine stillness. Divine golden dawn sunlight pierces through misty battlefield clouds, illuminating the chariot and Lord Krishna's glowing yellow Pitambara silk robe. Color palette: Divine Pitambara Gold (#D4AF37), Lapis Cloud Blue (#1B263B), Sacred Vermilion (#D35400), and Pure White (#FFFFFF). Masterwork devotional fine art in Gita Press and Raja Ravi Varma oil tradition, profound philosophical gravitas. Strict vertical 3:4 portrait ratio, zero text, no words, no letters, no borders.
+  ```
 
 ---
 
-### 8. श्रीरामचरितमानस चित्रकूट प्रसंग (Ramcharitmanas Chitrakoot Prasang)
-- **Target File**: `public/covers/ramcharitmanas-chitrakoot-prasang.jpg` & `.webp`
-- **Slug**: `ramcharitmanas-chitrakoot-prasang`
-- **Aspect Ratio**: `1:1`
-- **Style**: Emotional Bhakti Painting / Bharat Milap Epic Scene
-- **Prompt**:
-```text
-Deeply emotional and evocative 1:1 square sacred Indian epic painting depicting the historic Bharat Milap at Chitrakoot Dham. Lord Rama in forest ascetic attire (valkala bark garments, matted hair jatadhari) rushes forward with open arms and embraces his beloved brother Bharata with overwhelming love and tears of pure devotion. Lakshmana, Shatrughna, Mother Sita, and Sage Vasishtha look on with profound reverence in the natural forest courtyard of Chitrakoot. Gentle deer and peacocks observing peacefully, majestic Chitrakoot hill in the background, soft emotional warm lighting, masterclass Awadhi Bhakti tradition artwork.
-```
+### 7. श्री रामरक्षा स्तोत्रम् (`ram-raksha-stotram`)
+* **Tradition**: Theme 1 (Rama & Vaishnava Bhakti)
+* **Master Prompt**:
+  ```text
+  Museum-grade classical Indian devotional oil painting of Maryada Purushottam Lord Sri Rama in divine standing posture (Prasanna Mudra) inside a majestic Ayodhya royal pavilion. Golden crown (Kirita-Mukuta), serene lotus eyes (Rajeeva Lochana), dark cerulean blue complexion (Neelambuja Shyamala). His left hand holds the legendary Kodanda bow resting gracefully on the ground, while his right hand holds a golden arrow (Bana). A quiver of sacred arrows strapped to his back. Wearing radiant golden Pitambara silk and a fragrant garland of Tulsi and white Parijata flowers. Behind his head radiates a brilliant solar aura (Surya Prabha). Warm amber lighting with carved sandstone pillars and delicate marigold garlands. Color palette: Sarayu Blue (#1C3F60), Sacred Pitambara Gold (#D4AF37), Tulsi Emerald (#1B4D3E), and Royal Crimson (#8B0000). Masterwork Gita Press classical oil style, royal serenity and divine protection. Strict 3:4 vertical portrait orientation, zero text, no borders.
+  ```
 
 ---
 
-### 9. विनयपत्रिका चित्रकूट माहात्म्य (Vinaya Patrika Chitrakoot)
-- **Target File**: `public/covers/vinaya-patrika-chitrakoot.jpg` & `.webp`
-- **Slug**: `vinaya-patrika-chitrakoot`
-- **Aspect Ratio**: `1:1`
-- **Style**: Mystic Bhakti Saint Painting / Meditative Twilight Atmosphere
-- **Prompt**:
-```text
-Mystical and contemplative 1:1 square devotional art depicting Goswami Tulsidas deep in meditation on the sacred stone ghats of Chitrakoot ("चित्रकूट सब दिन बसहु"). Saint Tulsidas, clad in simple ascetic saffron cloth with tulsi kanthi mala and sandalwood tilak, sits under an ancient banyan tree with palm-leaf manuscript and quill, gazing in ecstatic devotion toward the sacred Kamadgiri hill. In the twilight sky above, a faint, ethereal divine vision of Lord Rama, Sita, and Lakshmana walking through the Chitrakoot forest is softly visible like a luminous celestial memory. Warm earthen oil lamps floating on the river, deep spiritual tranquility, traditional Indian fine art.
-```
+### 8. सुन्दरकाण्ड (`sundarkand`)
+* **Tradition**: Theme 1 (Rama & Vaishnava Bhakti)
+* **Master Prompt**:
+  ```text
+  Dramatic classical Indian devotional oil painting of Lord Hanuman in colossal yet devotional form leaping across the ocean towards Lanka. Muscular golden-furred body glowing with the radiance of a thousand suns, flowing red silk uttariya scarf trailing dramatically behind him in the wind. Fearless, resolute, and compassionate expression with eyes fixed on the distant shore. Beneath him surge the dark sapphire waves of the ocean reflecting golden moonlight and dawn embers, with sea creatures and flying celestial beings showering white Parijata blossoms from the clouds above. Radiant golden morning sun rising on the horizon. Color palette: Saffron Gold (#E67E22), Ocean Sapphire (#0F2B48), Dawn Crimson (#C0392B), and Glowing Gold (#F1C40F). Masterwork devotional fine art in classical Gita Press heritage tradition, epic heroism and divine devotion (Veera and Bhakti Rasa). Strict 3:4 vertical portrait format, zero text, no letters, no borders.
+  ```
 
 ---
 
-### 10. श्री हनुमान बाहुक (Shri Hanuman Bahuk - 44 Padas)
-- **Target File**: `public/covers/hanuman-bahuk.jpg` & `.webp`
-- **Slug**: `hanuman-bahuk`
-- **Aspect Ratio**: `1:1`
-- **Style**: Heroic & Healing Sacred Art / Maha-Vira Sankat-Mochan
-- **Prompt**:
-```text
-Powerful and awe-inspiring 1:1 square sacred Indian devotional painting of Lord Hanuman in his supreme healing and protector form (Maha Sankat Mochan & Rog-Haraka). Lord Hanuman stands triumphant and colossal with radiant golden-copper complexion, holding his mighty golden Gada in his right hand, his left hand raised in the Abhaya Mudra of fearless blessing and healing. His eyes radiate divine compassion and invincible strength, his long tail curving majestically upwards with a protective halo. In the foreground, Saint Tulsidas sits with folded hands in humble surrender, surrounded by warm divine golden healing rays emanating from Hanuman's feet and dispelling dark shadows and illness. Dynamic, spiritual, classical Indian temple art style, 8k masterpiece.
-```
+### 9. श्री रुद्राष्टकम् (`rudrashtak`)
+* **Tradition**: Theme 2 (Shiva & Rudra Stotras)
+* **Master Prompt**:
+  ```text
+  Museum-grade classical Indian devotional oil painting of Lord Shiva as Vishwanatha in deep meditative trance (Dhyanastha) atop a granite rock on the banks of holy river Ganga in Kashi. Luminous camphor-white complexion (Karpoora Gaura), serene closed eyes, crescent moon adorning his high matted dreadlocks (Jata-Mukuta). River Ganga cascades gently from his locks into the misty river below. Coiled around his blue neck (Nilakantha) is the serpent Vasuki. Forehead adorned with sacred white Vibhuti tripundra mark and glowing third eye. A divine Trishula stands beside him tied with a small Damru. Flickering brass lamps and floating earthen deepaks in the dark river create golden reflections. Color palette: Deep Ganga Midnight (#0B192C), Camphor White (#F7F9FB), Sacred Ash (#8D99AE), and Flickering Deepak Gold (#FFB703). Masterwork classical Gita Press fine art oil tradition, profound meditative peace (Shanta Rasa). Strict 3:4 vertical portrait, zero text, no frames.
+  ```
 
 ---
 
-## 🛠️ Post-Generation Optimization Command
+### 10. श्री सूक्तम् (`sri-suktam`)
+* **Tradition**: Theme 3 (Devi & Shakta / Lakshmi)
+* **Master Prompt**:
+  ```text
+  Museum-grade classical Indian devotional oil painting of Goddess Mahalakshmi seated upon an enormous blooming pink Nelumbo lotus (Kamalavasini) in the middle of a golden celestial lake (Kshirasagara). Radiant molten-golden complexion (Hiranya-Varna), gentle compassionate maternal smile, wearing a glittering gold-embroidered crimson silk saree and opulent Vedic gold jewelry with emeralds and pearls. In her four hands she holds two fragrant pink lotuses, while her right lower hand displays the fear-dispelling Abhaya Mudra and her left lower hand shows Varada Mudra showering a gentle stream of golden coins. Flanked on either side by two majestic white royal elephants (Gajaraja) gently bathing her with sacred water from golden urns. Golden dawn sky filled with celestial light and floating fragrant flowers. Dominant color palette: Hiranya Gold (#E5A93C), Deep Crimson (#941919), Lotus Pink (#E06D8C), and Ivory White (#F8F9FA). Masterwork classical Tanjore and Raja Ravi Varma fine art oil tradition, supreme prosperity and auspiciousness. Strict 3:4 vertical portrait ratio, zero text, no borders.
+  ```
 
-Once you have generated any of the 1:1 images and placed them in `public/covers/`:
-```bash
-# Optimize and generate matching .webp versions automatically
-npm run covers:optimize
-```
-Or process a specific image using Node/Sharp:
+---
+
+## 🛠️ 5. Image Conversion & Deployment Pipeline
+
+Once an image is generated via `generate_image`, run the following Node.js processing pipeline to produce both Retina-ready WebP and JPEG fallbacks at uniform 3:4 proportions:
+
 ```javascript
-const sharp = require('sharp');
-const file = 'public/covers/<slug>.jpg';
-sharp(file)
-  .resize({ width: 420, height: 420, fit: 'cover' })
-  .jpeg({ quality: 85, mozjpeg: true, progressive: true })
-  .toFile('public/covers/<slug>.jpg');
-sharp(file)
-  .resize({ width: 420, height: 420, fit: 'cover' })
-  .webp({ quality: 85, effort: 4 })
-  .toFile('public/covers/<slug>.webp');
+import sharp from 'sharp';
+import path from 'path';
+
+async function optimizeCover(inputPath, slug) {
+  const destDir = path.resolve('public/covers');
+  
+  // 1. WebP (768 × 1024 px, Quality 88, effort 6)
+  await sharp(inputPath)
+    .resize(768, 1024, { fit: 'cover', position: 'center' })
+    .webp({ quality: 88, effort: 6 })
+    .toFile(path.join(destDir, `${slug}.webp`));
+
+  // 2. JPEG Fallback (768 × 1024 px, Quality 88, mozjpeg)
+  await sharp(inputPath)
+    .resize(768, 1024, { fit: 'cover', position: 'center' })
+    .jpeg({ quality: 88, mozjpeg: true })
+    .toFile(path.join(destDir, `${slug}.jpg`));
+    
+  console.log(`✓ Processed cover for: ${slug}`);
+}
 ```
