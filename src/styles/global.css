@@ -675,32 +675,157 @@ html.has-js .book-card-wrapper.will-reveal.visible {
 }
 
 @media (max-width: 480px) {
+  .container {
+    padding: 0 0.75rem;
+  }
+
   .book-grid {
     grid-template-columns: 1fr;
-    gap: var(--space-md);
+    gap: 0.85rem;
   }
+
+  .book-card-wrapper {
+    border-radius: 8px;
+    contain-intrinsic-size: 320px 200px;
+  }
+
   .book-card {
-    border-width: 10px;
+    border-width: 9px;
+    border-image-width: 9px;
+    border-radius: 8px;
+    clip-path: inset(0 round 8px);
   }
+
+  .book-card-header {
+    padding: 0.55rem 0.75rem 0.45rem;
+  }
+
+  .book-card-title {
+    font-size: 1.12rem;
+    line-height: 1.35;
+  }
+
   .book-card-main {
-    padding: 0.65rem 0.75rem;
+    padding: 0.65rem 0.75rem 0.7rem;
     gap: 0.75rem;
   }
+
   .book-card-cover {
-    width: 98px;
-    min-width: 98px;
-    max-width: 98px;
+    width: 96px;
+    min-width: 96px;
+    max-width: 96px;
+    border-radius: 6px;
+    border-width: 1.5px;
   }
-  .book-card-header {
-    padding: 0.65rem 0.75rem 0.5rem 0.75rem;
+
+  .book-card-details {
+    gap: 0.35rem;
+    min-width: 0;
   }
-  .book-card-title {
-    font-size: 1.05rem;
+
+  .book-card-meta-row {
+    gap: 0.28rem;
+  }
+
+  .chip {
+    font-size: 0.7rem;
+    padding: 0.16rem 0.48rem;
+    border-radius: 4px;
+  }
+
+  .language-badge,
+  .reading-time-badge {
+    font-size: 0.66rem;
+    padding: 0.16rem 0.42rem;
+    border-radius: 4px;
+  }
+
+  .book-card-actions {
+    padding-top: 0.5rem;
+    margin-top: auto;
+    gap: 0.4rem;
+  }
+
+  .card-action-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .book-card-read-cta {
+    padding: 0.35rem 0.75rem;
+    font-size: 0.8rem;
+    gap: 0.25rem;
+  }
+
+  .results-bar {
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.35rem;
+    font-size: 0.88rem;
+  }
+
+  .catalog-section-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .tag-section {
+    padding: 1.25rem 0;
+  }
+
+  .tag-section-title {
+    font-size: 1.2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .tag-chip {
+    font-size: 0.76rem;
+    padding: 0.2rem 0.55rem;
   }
 }
 
-.book-card-cta {
-  display: none;
+/* ─── Ultra-Narrow Screens (360px - 375px) ────────────────── */
+@media (max-width: 375px) {
+  .container {
+    padding: 0 0.55rem;
+  }
+
+  .book-card {
+    border-width: 8px;
+    border-image-width: 8px;
+  }
+
+  .book-card-header {
+    padding: 0.5rem 0.65rem 0.4rem;
+  }
+
+  .book-card-title {
+    font-size: 1.05rem;
+  }
+
+  .book-card-main {
+    padding: 0.55rem 0.65rem 0.6rem;
+    gap: 0.6rem;
+  }
+
+  .book-card-cover {
+    width: 88px;
+    min-width: 88px;
+    max-width: 88px;
+  }
+
+  .book-card-actions {
+    gap: 0.32rem;
+  }
+
+  .card-action-btn {
+    width: 30px;
+    height: 30px;
+  }
+
+  .book-card-read-cta {
+    padding: 0.32rem 0.65rem;
+    font-size: 0.76rem;
+  }
 }
 
 
@@ -916,15 +1041,18 @@ html.has-js .book-card-wrapper.will-reveal.visible {
   .hero-category-bubbles,
   .category-bubbles-nav {
     display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
     margin-top: 0.4rem !important;
-    gap: 0.4rem 0.45rem !important;
+    gap: 0.35rem 0.4rem !important;
     padding: 0 !important;
   }
 
   .category-bubble {
-    padding: 0.32rem 0.68rem !important;
-    font-size: 0.88rem !important;
+    padding: 0.28rem 0.62rem !important;
+    font-size: 0.84rem !important;
     gap: 0.25rem !important;
+    touch-action: manipulation;
   }
 }
 
