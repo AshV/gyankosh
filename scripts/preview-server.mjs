@@ -50,5 +50,5 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(PORT, () => {
-  console.log(`Preview server listening on http://localhost:${PORT}/gyankosh/`);
+  console.log(`Preview server listening on http://localhost:${PORT}/`);
 });

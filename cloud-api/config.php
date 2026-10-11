@@ -22,6 +22,8 @@ return [
     
     // Allowed CORS origins
     'allowed_origins' => [
+        'https://gyankosh.app',
+        'https://www.gyankosh.app',
         'https://www.ashishvishwakarma.com',
         'https://ashv.github.io',
         'http://localhost:4321',

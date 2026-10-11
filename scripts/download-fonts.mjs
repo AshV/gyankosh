@@ -95,8 +95,8 @@ async function main() {
 
   let transformedCss = cssText;
   for (const [remoteUrl, localName] of urlMap.entries()) {
-    // Note: Gyankosh uses base /gyankosh
-    const localUrl = `/gyankosh/fonts/${localName}`;
+    // Self-hosted fonts at root
+    const localUrl = `/fonts/${localName}`;
     transformedCss = transformedCss.replaceAll(remoteUrl, localUrl);
   }
 

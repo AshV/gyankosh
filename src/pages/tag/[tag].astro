@@ -49,7 +49,8 @@ const { tagName, tagSlug, texts } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const meta = getTagMetadata(tagSlug || tagName);
 
-const canonicalUrl = `https://www.ashishvishwakarma.com/gyankosh/tag/${tagSlug || tagToSlug(tagName)}`;
+const siteOrigin = Astro.site ? Astro.site.origin : 'https://gyankosh.app';
+const canonicalUrl = `${siteOrigin}/tag/${tagSlug || tagToSlug(tagName)}`;
 
 // Resolve Cover Image for OpenGraph & Display
 // Priority: Custom Tag Cover -> First Book Cover -> Site Default
@@ -59,7 +60,7 @@ const displayCoverUrl = rawCover.startsWith('http')
   : `${base}${rawCover.startsWith('/') ? '' : '/'}${rawCover}`;
 const ogImageUrl = rawCover.startsWith('http')
   ? rawCover
-  : `https://www.ashishvishwakarma.com${base}${rawCover.startsWith('/') ? '' : '/'}${rawCover}`;
+  : `${siteOrigin}${base}${rawCover.startsWith('/') ? '' : '/'}${rawCover}`;
 
 const pageTitle = `${tagName} — ज्ञानकोश`;
 const pageDescription = meta.description
@@ -80,7 +81,7 @@ const jsonLdCollection = {
       '@type': 'ListItem',
       'position': idx + 1,
       'name': text.data.title,
-      'url': `https://www.ashishvishwakarma.com/gyankosh/library/${text.id}`,
+      'url': `${siteOrigin}/read/${text.id}`,
     })),
   },
 };
@@ -93,7 +94,7 @@ const jsonLdBreadcrumb = {
       '@type': 'ListItem',
       'position': 1,
       'name': 'ज्ञानकोश',
-      'item': 'https://www.ashishvishwakarma.com/gyankosh/',
+      'item': `${siteOrigin}/`,
     },
     {
       '@type': 'ListItem',

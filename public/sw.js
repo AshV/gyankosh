@@ -4,26 +4,26 @@
  * and zero-network overhead for immutable Vite assets.
  */
 
-const VERSION = 'v7';
+const VERSION = 'v8';
 const CACHE_SHELL = `gyankosh-shell-${VERSION}`;
 const CACHE_CONTENT = `gyankosh-content-${VERSION}`;
 const CACHE_MEDIA = `gyankosh-media-${VERSION}`;
 
 const CURRENT_CACHES = [CACHE_SHELL, CACHE_CONTENT, CACHE_MEDIA];
-const BASE = '/gyankosh';
+const BASE = '';
 
 // Core assets to pre-cache on install
 // Win 6: Heavy PWA icons (512px) excluded — browser fetches them on demand
 // when adding to home screen. Keeps install payload lean on slow networks.
 const PRECACHE_ASSETS = [
-  `${BASE}/`,
-  `${BASE}/search-catalog.json`,
-  `${BASE}/manifest.webmanifest`,
-  `${BASE}/favicon.svg`,
-  `${BASE}/favicon.ico`,
-  `${BASE}/logo.png`,
-  `${BASE}/apple-touch-icon.png`,
-  `${BASE}/pwa-192x192.png`,
+  '/',
+  '/search-catalog.json',
+  '/manifest.webmanifest',
+  '/favicon.svg',
+  '/favicon.ico',
+  '/logo.png',
+  '/apple-touch-icon.png',
+  '/pwa-192x192.png',
 ];
 
 // Max items per dynamic cache (LRU/FIFO trim)
@@ -200,7 +200,7 @@ self.addEventListener('fetch', (event) => {
         if (networkRes) return networkRes;
 
         // Fallback to home page if available in cache
-        const homeCached = await caches.match(`${BASE}/`);
+        const homeCached = await caches.match('/');
         if (homeCached) return homeCached;
 
         // Sacred Indic Offline Fallback Page
@@ -224,7 +224,7 @@ self.addEventListener('fetch', (event) => {
                 <div style="font-size: 3rem; margin-bottom: 1rem;">🕉️</div>
                 <h1>आप वर्तमान में ऑफलाइन हैं</h1>
                 <p>यह पृष्ठ अभी कैशे में उपलब्ध नहीं है। कृपया इंटरनेट कनेक्शन पुनः स्थापित होने पर पुनः प्रयास करें, या पहले से पढ़े गए ग्रंथों को पढ़ें।</p>
-                <a href="${BASE}/">ज्ञानकोश मुख्य पृष्ठ</a>
+                <a href="/">ज्ञानकोश मुख्य पृष्ठ</a>
               </div>
             </body>
           </html>`,

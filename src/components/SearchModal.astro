@@ -92,7 +92,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 <script>
   import { normalizeSearchText, scoreSearchItem, type SearchCatalogItem } from '../utils/search';
 
-  const base = (import.meta.env.BASE_URL || '/gyankosh').replace(/\/$/, '');
+  const base = (import.meta.env.BASE_URL ?? '').replace(/\/$/, '');
 
   function toHindiDigits(num: number): string {
     const digits = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];

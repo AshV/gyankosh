@@ -68,14 +68,47 @@ const resolvedCoverImage = coverImage
   ? (coverImage.startsWith('http') ? coverImage : `${base}${coverImage.startsWith('/') ? '' : '/'}${coverImage}`)
   : `${base}/covers/${slug}.webp`;
 
+const siteOrigin = (Astro.site ? Astro.site.origin : 'https://gyankosh.app');
 const ogImage = image || (slug
-  ? `https://www.ashishvishwakarma.com${base}/og/${slug}.jpg`
-  : `https://www.ashishvishwakarma.com${base}/og-default.jpg`);
+  ? `${siteOrigin}${base}/og/${slug}.jpg`
+  : `${siteOrigin}${base}/og-default.jpg`);
 ---
 
 <!doctype html>
 <html lang="hi" dir="ltr" class={!showNumbering ? 'hide-numbering' : ''}>
   <head>
+    <!-- Seamless Domain & Legacy Subpath Forwarding -->
+    <script is:inline>
+      (function () {
+        try {
+          var loc = window.location;
+          var host = loc.hostname.toLowerCase();
+          var path = loc.pathname;
+          var targetDomain = 'gyankosh.app';
+
+          var isLegacyHost = host === 'www.ashishvishwakarma.com' ||
+                             host === 'ashishvishwakarma.com' ||
+                             host === 'ashv.github.io' ||
+                             host.endsWith('.github.io');
+
+          var hasLegacyPath = path === '/gyankosh' || path.indexOf('/gyankosh/') === 0;
+
+          if (isLegacyHost || hasLegacyPath) {
+            var cleanPath = path;
+            if (hasLegacyPath) {
+              cleanPath = path.replace(/^\/gyankosh(?:\/|$)/, '/');
+              if (!cleanPath.startsWith('/')) cleanPath = '/' + cleanPath;
+            }
+            var targetHost = (isLegacyHost || host === targetDomain) ? targetDomain : host;
+            var targetUrl = 'https://' + targetHost + cleanPath + loc.search + loc.hash;
+            if (loc.href !== targetUrl) {
+              loc.replace(targetUrl);
+            }
+          }
+        } catch (e) {}
+      })();
+    </script>
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#8e1b14" id="theme-color-meta" />

@@ -7,7 +7,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const canonicalUrl = 'https://www.ashishvishwakarma.com/gyankosh/parichay';
+const siteOrigin = Astro.site ? Astro.site.origin : 'https://gyankosh.app';
+const canonicalUrl = `${siteOrigin}/parichay`;
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -19,7 +20,7 @@ const jsonLd = {
   'mainEntity': {
     '@type': 'Organization',
     'name': 'ज्ञानकोश',
-    'url': 'https://www.ashishvishwakarma.com/gyankosh',
+    'url': siteOrigin,
     'description': 'सनातन वैदिक एवं पौराणिक धर्मग्रंथों का पावन, विशुद्ध एवं विज्ञापन-मुक्त डिजिटल संग्रह।',
     'founder': {
       '@type': 'Person',

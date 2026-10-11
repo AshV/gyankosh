@@ -18,7 +18,7 @@ export async function GET(context: APIContext) {
     items: allTexts.map(text => ({
       title: text.data.title,
       description: text.data.description,
-      link: `/gyankosh/read/${text.id}`,
+      link: `/read/${text.id}`,
       categories: [text.data.category],
       ...(text.data.author && { author: text.data.author }),
     })),

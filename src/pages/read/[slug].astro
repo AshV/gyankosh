@@ -34,7 +34,7 @@ const parsedHtml = parseIndicMarkdown(entry.body, { showNumbering: data.showNumb
 const readingStats = computeBuildReadingStats(entry.body);
 
 // ── Resolve URLs ─────────────────────────────────────────────
-const siteUrl = 'https://www.ashishvishwakarma.com/gyankosh';
+const siteUrl = Astro.site ? Astro.site.origin : 'https://gyankosh.app';
 const canonicalUrl = `${siteUrl}/read/${entry.id}`;
 const ogImageUrl = `${siteUrl}/og/${entry.id}.jpg`;
 const catKey = data.category;

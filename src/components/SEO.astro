@@ -33,13 +33,14 @@ const {
 const siteName = 'ज्ञानकोश — सनातन धर्मग्रंथ';
 const fullTitle = `${title} | ${siteName}`;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const defaultOgImage = `https://www.ashishvishwakarma.com${base}/og-default.jpg`;
+const siteOrigin = (Astro.site ? Astro.site.origin : 'https://gyankosh.app');
+const defaultOgImage = `${siteOrigin}${base}/og-default.jpg`;
 
 let resolvedImage = image || defaultOgImage;
 if (resolvedImage && !resolvedImage.startsWith('http://') && !resolvedImage.startsWith('https://')) {
   const cleanPath = resolvedImage.startsWith('/') ? resolvedImage : `/${resolvedImage}`;
-  const pathWithBase = cleanPath.startsWith(base) ? cleanPath : `${base}${cleanPath}`;
-  resolvedImage = `https://www.ashishvishwakarma.com${pathWithBase}`;
+  const pathWithBase = (base && !cleanPath.startsWith(base)) ? `${base}${cleanPath}` : cleanPath;
+  resolvedImage = `${siteOrigin}${pathWithBase}`;
 }
 
 const imageType = resolvedImage.endsWith('.png') ? 'image/png' : (resolvedImage.endsWith('.webp') ? 'image/webp' : 'image/jpeg');

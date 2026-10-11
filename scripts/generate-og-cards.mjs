@@ -2,15 +2,15 @@ import fs from 'node:fs';
 import path from 'node:path';
 import sharp from 'sharp';
 
-const libDir = path.resolve('a:/GitHub/Gyankosh/src/content/library');
-const coversDir = path.resolve('a:/GitHub/Gyankosh/public/covers');
-const outDir = path.resolve('a:/GitHub/Gyankosh/public/og');
+const libDir = path.resolve('src/content/library');
+const coversDir = path.resolve('public/covers');
+const outDir = path.resolve('public/og');
 
 if (!fs.existsSync(outDir)) {
   fs.mkdirSync(outDir, { recursive: true });
 }
 
-const logoPath = path.resolve('a:/GitHub/Gyankosh/public/logo.png');
+const logoPath = path.resolve('public/logo.png');
 
 // Category Hindi label mapping
 const categoryLabels = {
@@ -168,7 +168,7 @@ async function generateAllOg() {
       <!-- Footer Credentials -->
       <g transform="translate(70, 520)">
         <text x="0" y="0" font-family="system-ui, sans-serif" font-size="18" font-weight="600" fill="#f3d078" letter-spacing="0.5">
-          ashishvishwakarma.com/gyankosh
+          gyankosh.app
         </text>
         <text x="0" y="26" font-family="'Noto Sans Devanagari', sans-serif" font-size="14" fill="#a39386">
           सनातन धर्म के १०८ पावन ग्रन्थों का प्रामाणिक डिजिटल संग्रह

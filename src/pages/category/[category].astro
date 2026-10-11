@@ -43,10 +43,11 @@ const categoryMeta: Record<string, { icon: string; nameHindi: string; descriptio
 const meta = categoryMeta[category] ?? { icon: '📜', nameHindi: category, description: `${category} श्रेणी के पावन धर्मग्रंथ।` };
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const canonicalUrl = `https://www.ashishvishwakarma.com/gyankosh/category/${category.toLowerCase()}`;
+const siteOrigin = Astro.site ? Astro.site.origin : 'https://gyankosh.app';
+const canonicalUrl = `${siteOrigin}/category/${category.toLowerCase()}`;
 const categoryCover = texts[0]?.data?.coverImage
-  ? (texts[0].data.coverImage.startsWith('http') ? texts[0].data.coverImage : `https://www.ashishvishwakarma.com/gyankosh${texts[0].data.coverImage.startsWith('/') ? '' : '/'}${texts[0].data.coverImage}`)
-  : 'https://www.ashishvishwakarma.com/gyankosh/og-default.jpg';
+  ? (texts[0].data.coverImage.startsWith('http') ? texts[0].data.coverImage : `${siteOrigin}${texts[0].data.coverImage.startsWith('/') ? '' : '/'}${texts[0].data.coverImage}`)
+  : `${siteOrigin}/og-default.jpg`;
 
 const jsonLdCollection = {
   '@context': 'https://schema.org',
@@ -65,7 +66,7 @@ const jsonLdBreadcrumb = {
       '@type': 'ListItem',
       'position': 1,
       'name': 'ज्ञानकोश',
-      'item': 'https://www.ashishvishwakarma.com/gyankosh/',
+      'item': `${siteOrigin}/`,
     },
     {
       '@type': 'ListItem',

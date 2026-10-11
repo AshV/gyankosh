@@ -1,6 +1,6 @@
 # ==============================================================================
 # Gyankosh (ज्ञानकोश) — Robots Configuration
-# https://www.ashishvishwakarma.com/gyankosh/
+# https://gyankosh.app/
 #
 # Strategy:
 # 1. Full Access: Organic Search Engines (SEO) & Live AI Search/Citations (GEO).
@@ -87,10 +87,9 @@ Disallow: /gyankosh/search-catalog.json
 Disallow: /search-catalog.json
 Disallow: /gyankosh/sw.js
 Disallow: /sw.js
-Disallow: /gyankosh/*?*
 Disallow: /*?*
 
 # ------------------------------------------------------------------------------
 # Sitemap
 # ------------------------------------------------------------------------------
-Sitemap: https://www.ashishvishwakarma.com/gyankosh/sitemap-index.xml
+Sitemap: https://gyankosh.app/sitemap-index.xml

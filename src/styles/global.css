@@ -313,7 +313,7 @@ a:hover { opacity: 0.8; }
     radial-gradient(circle at 100% 0%, rgba(246, 226, 122, 0.16) 0%, transparent 45%),
     linear-gradient(165deg, #ffffff 0%, #fffdf8 50%, #faf3e2 100%);
   border: 14px solid transparent;
-  border-image-source: url('/gyankosh/borders/sacred-gold-frame.webp');
+  border-image-source: url('/borders/sacred-gold-frame.webp');
   border-image-slice: 107 fill;
   border-image-width: 14px;
   border-image-repeat: round;
