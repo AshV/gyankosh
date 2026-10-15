@@ -47,6 +47,9 @@ const base = config.base || shell?.dataset.base || '';
 
 
       /* ── Gyankosh Scroll Reader Engine (स्क्रोल पठन) ── */
+      let gyankoshScrollInstance = null;
+      let tocItems = [];
+
       class GyankoshScrollReader {
         constructor() {
           this.stage = document.getElementById('reader-stage');
@@ -615,8 +618,6 @@ const base = config.base || shell?.dataset.base || '';
         }
       }
 
-      let gyankoshScrollInstance = null;
-
       /* ── Fullscreen Controls ── */
       function isFullscreenActive() {
         return !!(
@@ -789,6 +790,7 @@ const base = config.base || shell?.dataset.base || '';
           gyankoshScrollInstance?.updateVerseFocus();
           if (window.GyankoshLoader) window.GyankoshLoader.hide();
           btnAarambh?.classList.remove('btn-loading');
+          isStartingReading = false;
         };
         setTimeout(onCoverDismissed, 460);
         resetWakeLockActivityTimer();
@@ -806,12 +808,6 @@ const base = config.base || shell?.dataset.base || '';
       function setupReaderInit() {
         initTableOfContents();
         initReaderEngine();
-      }
-
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', setupReaderInit);
-      } else {
-        setupReaderInit();
       }
 
       /* ── Sacred Temple Bell (मंदिर की घण्टी) Synthesis via Web Audio API ── */
@@ -1132,7 +1128,6 @@ const base = config.base || shell?.dataset.base || '';
       const readerTocClose = document.getElementById('reader-toc-close');
       const readerTocBackdrop = document.getElementById('reader-toc-backdrop');
       const rawSource = document.getElementById('reader-raw-source');
-      let tocItems = [];
 
       function initTableOfContents() {
         if (tocItems.length > 0) return;
@@ -2297,6 +2292,13 @@ const base = config.base || shell?.dataset.base || '';
         }
       }
       initReaderToolbarAutoHide();
+
+      // Safely initialize reader (TOC & engine) after all DOM bindings and variables are loaded
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', setupReaderInit);
+      } else {
+        setupReaderInit();
+      }
 
       // PWA Service Worker Registration
       if ('serviceWorker' in navigator) {
