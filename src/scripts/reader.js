@@ -255,25 +255,27 @@ const base = config.base || shell?.dataset.base || '';
           if (!vp) return;
           const scrollTop = vp.scrollTop;
           const scrollHeight = vp.scrollHeight - vp.clientHeight;
-          const pct = scrollHeight > 0 ? Math.round((scrollTop / scrollHeight) * 100) : 0;
-          this._lastPct = pct;
+          const pctFloat = scrollHeight > 0 ? Math.min(100, Math.max(0, (scrollTop / scrollHeight) * 100)) : 0;
+          const pctInt = Math.round(pctFloat);
+          this._lastPct = pctInt;
 
           if (this.progressBar) {
-            this.progressBar.style.width = pct + '%';
-            this.progressBar.setAttribute('aria-valuenow', pct);
+            this.progressBar.style.width = pctFloat.toFixed(2) + '%';
+            this.progressBar.setAttribute('aria-valuenow', pctInt);
           }
 
-          if (this.pageInfo) {
-            this.pageInfo.textContent = `${toHindiDigits(pct)}%`;
+          if (this.pageInfo && this._lastDisplayedPct !== pctInt) {
+            this._lastDisplayedPct = pctInt;
+            this.pageInfo.textContent = `${toHindiDigits(pctInt)}%`;
           }
 
           if (!window.__isGyankoshScrubbing) {
             const fill = document.getElementById('reader-scrubber-fill');
             const thumb = document.getElementById('reader-scrubber-thumb');
             const track = document.getElementById('reader-scrubber-track');
-            if (fill) fill.style.width = pct + '%';
-            if (thumb) thumb.style.left = pct + '%';
-            if (track) track.setAttribute('aria-valuenow', pct);
+            if (fill) fill.style.width = pctFloat.toFixed(2) + '%';
+            if (thumb) thumb.style.left = pctFloat.toFixed(2) + '%';
+            if (track) track.setAttribute('aria-valuenow', pctInt);
           }
 
           // Fix 2: Gate section index scan — skip if scroll moved < 6px since last check
@@ -295,11 +297,11 @@ const base = config.base || shell?.dataset.base || '';
             }
           }
 
-          this.updateNavBtns(pct);
+          this.updateNavBtns(pctInt);
 
           // Debounce save
           clearTimeout(this._scrollSaveTimer);
-          this._scrollSaveTimer = setTimeout(() => this.saveScrollPosition(pct), 400);
+          this._scrollSaveTimer = setTimeout(() => this.saveScrollPosition(pctInt), 400);
           // Note: completion screen is now handled by setupCompletionObserver() (IntersectionObserver on sentinel)
 
           if (typeof resetWakeLockActivityTimer === 'function') {
@@ -308,6 +310,7 @@ const base = config.base || shell?.dataset.base || '';
         }
 
         updateScrollUI() {
+          this._lastDisplayedPct = 0;
           if (this.pageInfo) this.pageInfo.textContent = `${toHindiDigits(0)}%`;
           if (this.progressBar) {
             this.progressBar.style.width = '0%';
@@ -1399,7 +1402,35 @@ const base = config.base || shell?.dataset.base || '';
 
         if (!track || !rail || !fill || !thumb) return;
 
+        let isPointerDown = false;
         let isDragging = false;
+        let startX = 0;
+        let startY = 0;
+        let dragRafId = null;
+        let pendingPct = null;
+        let animatingTimer = null;
+
+        // Cached TOC positions to eliminate layout thrashing during drag
+        let cachedTocOffsets = null;
+        function getCachedTocOffsets() {
+          if (cachedTocOffsets) return cachedTocOffsets;
+          cachedTocOffsets = [];
+          if (!tocItems || tocItems.length === 0) return cachedTocOffsets;
+          const renderedElements = document.querySelectorAll('#reader-stage [data-toc-id]');
+          for (let i = 0; i < renderedElements.length; i++) {
+            const el = renderedElements[i];
+            const tocId = el.getAttribute('data-toc-id');
+            const match = tocItems.find(t => t.tocId === tocId);
+            if (match) {
+              cachedTocOffsets.push({ top: el.offsetTop, badge: match.badge });
+            }
+          }
+          return cachedTocOffsets;
+        }
+
+        window.addEventListener('resize', () => {
+          cachedTocOffsets = null;
+        });
 
         function findVerseAtPct(pct) {
           if (!tocItems || tocItems.length === 0) {
@@ -1409,36 +1440,37 @@ const base = config.base || shell?.dataset.base || '';
             const vp = gyankoshScrollInstance.viewport;
             const scrollHeight = vp.scrollHeight - vp.clientHeight;
             const targetTop = (pct / 100) * scrollHeight;
-            const renderedElements = document.querySelectorAll('#reader-stage [data-toc-id]');
-            let activeItem = tocItems[0];
-            for (let i = 0; i < renderedElements.length; i++) {
-              const el = renderedElements[i];
-              if (el.offsetTop <= targetTop + 80) {
-                const tocId = el.getAttribute('data-toc-id');
-                const match = tocItems.find(t => t.tocId === tocId);
-                if (match) activeItem = match;
+            const offsets = getCachedTocOffsets();
+            let badge = tocItems[0]?.badge || '';
+            for (let i = 0; i < offsets.length; i++) {
+              if (offsets[i].top <= targetTop + 80) {
+                badge = offsets[i].badge;
+              } else {
+                break;
               }
             }
-            return { badge: activeItem ? activeItem.badge : '', pct };
+            return { badge, pct };
           }
           return { badge: '', pct };
         }
 
         function updateScrubberVisuals(pct, showTip = true) {
           const clamped = Math.max(0, Math.min(100, pct));
-          fill.style.width = clamped + '%';
-          thumb.style.left = clamped + '%';
-          track.setAttribute('aria-valuenow', Math.round(clamped));
+          const pctStr = clamped.toFixed(2) + '%';
+          const pctInt = Math.round(clamped);
+          fill.style.width = pctStr;
+          thumb.style.left = pctStr;
+          track.setAttribute('aria-valuenow', pctInt);
 
           if (isScrollMode() && pageInfo) {
-            pageInfo.textContent = `${toHindiDigits(Math.round(clamped))}%`;
+            pageInfo.textContent = `${toHindiDigits(pctInt)}%`;
           }
 
           if (showTip && tooltip && tooltipBadge && tooltipPct) {
             const info = findVerseAtPct(clamped);
             tooltipBadge.textContent = info.badge;
-            tooltipPct.textContent = `${toHindiDigits(Math.round(clamped))}%`;
-            tooltip.style.left = clamped + '%';
+            tooltipPct.textContent = `${toHindiDigits(pctInt)}%`;
+            tooltip.style.left = pctStr;
             tooltip.style.display = 'flex';
           }
         }
@@ -1457,6 +1489,18 @@ const base = config.base || shell?.dataset.base || '';
           }
         }
 
+        function scheduleDragScroll(pct) {
+          pendingPct = pct;
+          if (dragRafId) return;
+          dragRafId = requestAnimationFrame(() => {
+            dragRafId = null;
+            if (pendingPct !== null) {
+              applyScrub(pendingPct, false);
+              pendingPct = null;
+            }
+          });
+        }
+
         function getPctFromEvent(e) {
           const rect = rail.getBoundingClientRect();
           const clientX = e.touches && e.touches.length > 0 ? e.touches[0].clientX : e.clientX;
@@ -1464,42 +1508,81 @@ const base = config.base || shell?.dataset.base || '';
           return Math.max(0, Math.min(100, ratio * 100));
         }
 
-        function onStart(e) {
+        function onPointerDown(e) {
           if (isCoverScreenActive()) return;
-          isDragging = true;
-          window.__isGyankoshScrubbing = true;
-          track.classList.add('is-dragging');
-          const pct = getPctFromEvent(e);
-          updateScrubberVisuals(pct, true);
-          applyScrub(pct, false);
+          isPointerDown = true;
+          isDragging = false;
+          const clientX = e.touches && e.touches.length > 0 ? e.touches[0].clientX : e.clientX;
+          const clientY = e.touches && e.touches.length > 0 ? e.touches[0].clientY : e.clientY;
+          startX = clientX;
+          startY = clientY;
+          getCachedTocOffsets(); // Warm up offsets cache
         }
 
-        function onMove(e) {
-          if (!isDragging) return;
-          if (e.cancelable) e.preventDefault();
-          const pct = getPctFromEvent(e);
-          updateScrubberVisuals(pct, true);
-          applyScrub(pct, false);
+        function onPointerMove(e) {
+          if (!isPointerDown) return;
+          const clientX = e.touches && e.touches.length > 0 ? e.touches[0].clientX : e.clientX;
+          const clientY = e.touches && e.touches.length > 0 ? e.touches[0].clientY : e.clientY;
+          const dist = Math.hypot(clientX - startX, clientY - startY);
+
+          if (!isDragging && dist >= 4) {
+            isDragging = true;
+            window.__isGyankoshScrubbing = true;
+            track.classList.add('is-dragging');
+            track.classList.remove('is-animating');
+            clearTimeout(animatingTimer);
+          }
+
+          if (isDragging) {
+            if (e.cancelable) e.preventDefault();
+            const pct = getPctFromEvent(e);
+            updateScrubberVisuals(pct, true);
+            scheduleDragScroll(pct);
+          }
         }
 
-        function onEnd(e) {
-          if (!isDragging) return;
+        function onPointerUp(e) {
+          if (!isPointerDown) return;
+          const wasDragging = isDragging;
+          isPointerDown = false;
           isDragging = false;
           window.__isGyankoshScrubbing = false;
           track.classList.remove('is-dragging');
+
+          if (dragRafId) {
+            cancelAnimationFrame(dragRafId);
+            dragRafId = null;
+          }
+
+          if (!wasDragging) {
+            // It was a click or tap to jump! Glide smoothly to destination
+            const pct = getPctFromEvent(e);
+            track.classList.add('is-animating');
+            updateScrubberVisuals(pct, true);
+            applyScrub(pct, true);
+
+            clearTimeout(animatingTimer);
+            animatingTimer = setTimeout(() => {
+              track.classList.remove('is-animating');
+            }, 380);
+          } else if (pendingPct !== null) {
+            applyScrub(pendingPct, false);
+            pendingPct = null;
+          }
+
           if (tooltip) {
             setTimeout(() => {
-              if (!isDragging) tooltip.style.display = 'none';
+              if (!isDragging && !isPointerDown) tooltip.style.display = 'none';
             }, 800);
           }
         }
 
         // Pointer / Touch / Mouse Listeners on Track
         track.addEventListener('mousedown', (e) => {
-          onStart(e);
-          const handleMouseMove = (ev) => onMove(ev);
+          onPointerDown(e);
+          const handleMouseMove = (ev) => onPointerMove(ev);
           const handleMouseUp = (ev) => {
-            onEnd(ev);
+            onPointerUp(ev);
             window.removeEventListener('mousemove', handleMouseMove);
             window.removeEventListener('mouseup', handleMouseUp);
           };
@@ -1508,19 +1591,19 @@ const base = config.base || shell?.dataset.base || '';
         });
 
         track.addEventListener('touchstart', (e) => {
-          onStart(e);
+          onPointerDown(e);
         }, { passive: false });
 
         window.addEventListener('touchmove', (e) => {
-          if (isDragging) onMove(e);
+          if (isPointerDown) onPointerMove(e);
         }, { passive: false });
 
         window.addEventListener('touchend', (e) => {
-          if (isDragging) onEnd(e);
+          if (isPointerDown) onPointerUp(e);
         });
 
         window.addEventListener('touchcancel', (e) => {
-          if (isDragging) onEnd(e);
+          if (isPointerDown) onPointerUp(e);
         });
 
         // Hover tooltip on desktop
@@ -1531,24 +1614,24 @@ const base = config.base || shell?.dataset.base || '';
           if (tooltip && tooltipBadge && tooltipPct) {
             tooltipBadge.textContent = info.badge;
             tooltipPct.textContent = `${toHindiDigits(Math.round(pct))}%`;
-            tooltip.style.left = pct + '%';
+            tooltip.style.left = pct.toFixed(2) + '%';
             tooltip.style.display = 'flex';
           }
         });
 
         track.addEventListener('mousemove', (e) => {
-          if (isCoverScreenActive() || isDragging) return;
+          if (isCoverScreenActive() || isDragging || isPointerDown) return;
           const pct = getPctFromEvent(e);
           const info = findVerseAtPct(pct);
           if (tooltip && tooltipBadge && tooltipPct) {
             tooltipBadge.textContent = info.badge;
             tooltipPct.textContent = `${toHindiDigits(Math.round(pct))}%`;
-            tooltip.style.left = pct + '%';
+            tooltip.style.left = pct.toFixed(2) + '%';
           }
         });
 
         track.addEventListener('mouseleave', () => {
-          if (!isDragging && tooltip) {
+          if (!isDragging && !isPointerDown && tooltip) {
             tooltip.style.display = 'none';
           }
         });
@@ -1557,24 +1640,26 @@ const base = config.base || shell?.dataset.base || '';
         track.addEventListener('keydown', (e) => {
           if (isCoverScreenActive()) return;
           let currentPct = parseFloat(track.getAttribute('aria-valuenow')) || 0;
+          let next = null;
           if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+            next = Math.min(100, currentPct + 2.5);
+          } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+            next = Math.max(0, currentPct - 2.5);
+          } else if (e.key === 'Home') {
+            next = 0;
+          } else if (e.key === 'End') {
+            next = 100;
+          }
+
+          if (next !== null) {
             e.preventDefault();
-            const next = Math.min(100, currentPct + 2.5);
+            track.classList.add('is-animating');
             updateScrubberVisuals(next, true);
             applyScrub(next, true);
-          } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-            e.preventDefault();
-            const prev = Math.max(0, currentPct - 2.5);
-            updateScrubberVisuals(prev, true);
-            applyScrub(prev, true);
-          } else if (e.key === 'Home') {
-            e.preventDefault();
-            updateScrubberVisuals(0, true);
-            applyScrub(0, true);
-          } else if (e.key === 'End') {
-            e.preventDefault();
-            updateScrubberVisuals(100, true);
-            applyScrub(100, true);
+            clearTimeout(animatingTimer);
+            animatingTimer = setTimeout(() => {
+              track.classList.remove('is-animating');
+            }, 380);
           }
         });
       }

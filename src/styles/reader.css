@@ -827,6 +827,7 @@ body.chanting-mode .verse-translation {
   border-radius: 3px;
   width: 0%;
   pointer-events: none;
+  will-change: width;
 }
 
 .reader-scrubber-thumb {
@@ -841,7 +842,23 @@ body.chanting-mode .verse-translation {
   transform: translate(-50%, -50%);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.28);
   pointer-events: none;
+  will-change: left, transform;
   transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+/* Smooth gliding transition when clicking/tapping on track to jump or stepping via keyboard */
+.reader-scrubber-track.is-animating .reader-scrubber-fill {
+  transition: width 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.reader-scrubber-track.is-animating .reader-scrubber-thumb {
+  transition: left 0.35s cubic-bezier(0.25, 1, 0.5, 1), transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+/* Zero transition lag during direct dragging */
+.reader-scrubber-track.is-dragging .reader-scrubber-fill,
+.reader-scrubber-track.is-dragging .reader-scrubber-thumb {
+  transition: none !important;
 }
 
 .reader-scrubber-track:hover .reader-scrubber-thumb,
