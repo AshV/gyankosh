@@ -178,17 +178,34 @@ const festivePayload = {
             <span class="festive-occasion-label">${match.name}</span>
             ${subtitleHtml}
           </div>
-          <button
-            type="button"
-            class="festive-dismiss-btn"
-            aria-label="शुभकामना संदेश बन्द करें"
-            title="बन्द करें"
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="18" y1="6" x2="6" y2="18"></line>
-              <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
-          </button>
+          <div class="festive-actions-group">
+            <button
+              type="button"
+              class="festive-share-btn"
+              aria-label="शुभकामना संदेश साझा करें"
+              title="शुभकामना संदेश साझा करें"
+            >
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="18" cy="5" r="3"></circle>
+                <circle cx="6" cy="12" r="3"></circle>
+                <circle cx="18" cy="19" r="3"></circle>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+              </svg>
+              <span class="festive-share-label">साझा करें</span>
+            </button>
+            <button
+              type="button"
+              class="festive-dismiss-btn"
+              aria-label="शुभकामना संदेश बन्द करें"
+              title="बन्द करें"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
         </div>
         <div class="festive-body">
           <p class="festive-greeting-text">${match.greeting}</p>
@@ -198,6 +215,67 @@ const festivePayload = {
     `;
 
     banner.style.display = 'block';
+
+    // Share button click handler
+    const shareBtn = container.querySelector('.festive-share-btn');
+    if (shareBtn) {
+      shareBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if ('vibrate' in navigator) {
+          try { navigator.vibrate(10); } catch (_) {}
+        }
+
+        const origin = window.location.origin;
+        const homeUrl = origin + (base || '') + '/';
+        const occasionTitle = match.name || 'पावन पर्व';
+        const greetingText = match.greeting || '';
+
+        let suggestedSection = '';
+        if (match.books && match.books.length > 0) {
+          const sectionLabel = isAnnual ? '🌸 इस पावन अवसर पर अनुशंसित पाठ:' : '🌸 आज के पावन स्वाध्याय एवं आराधना:';
+          const booksList = match.books
+            .map((b) => `• ${b.title}: ${origin}${base || ''}/read/${b.id}`)
+            .join('\n');
+          suggestedSection = `\n\n${sectionLabel}\n${booksList}`;
+        }
+
+        const footerLabel = `\n\nज्ञानकोश — शुद्ध पाठ एवं प्रामाणिक हिन्दी अर्थ:\n${homeUrl}`;
+        const fullShareText = `॥ ${occasionTitle} ॥\n${greetingText}${suggestedSection}${footerLabel}`;
+
+        const shareData = {
+          title: `${occasionTitle} — ज्ञानकोश`,
+          text: fullShareText,
+          url: homeUrl,
+        };
+
+        if (navigator.share) {
+          try {
+            await navigator.share(shareData);
+            return;
+          } catch (err) {
+            if (err && err.name === 'AbortError') return;
+          }
+        }
+
+        let copied = false;
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(fullShareText);
+            copied = true;
+          }
+        } catch (_) {}
+
+        if (copied) {
+          if (typeof window.showGyankoshToast === 'function') {
+            window.showGyankoshToast('🌸 पावन शुभकामना एवं पाठ लिंक कॉपी किए गए!');
+          }
+        } else {
+          window.prompt('शुभकामना संदेश कॉपी करें:', fullShareText);
+        }
+      });
+    }
 
     const dismissBtn = container.querySelector('.festive-dismiss-btn');
     if (dismissBtn) {
@@ -286,6 +364,60 @@ const festivePayload = {
     padding: 0.15rem 0.55rem;
     border-radius: 999px;
     border: 1px solid rgba(142, 27, 20, 0.15);
+  }
+
+  .festive-banner :global(.festive-actions-group) {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .festive-banner :global(.festive-share-btn) {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: rgba(142, 27, 20, 0.08);
+    border: 1px solid rgba(142, 27, 20, 0.2);
+    color: var(--color-accent, #8e1b14);
+    font-family: var(--font-devanagari);
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.28rem 0.65rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+    line-height: 1.2;
+  }
+
+  .festive-banner :global(.festive-share-btn:hover) {
+    background: rgba(142, 27, 20, 0.15);
+    border-color: rgba(142, 27, 20, 0.35);
+    transform: translateY(-1px);
+  }
+
+  .festive-banner :global(.festive-share-btn:active) {
+    transform: translateY(0);
+  }
+
+  :global(.reader-night-mode) .festive-banner :global(.festive-share-btn) {
+    background: rgba(217, 119, 6, 0.12);
+    border-color: rgba(217, 119, 6, 0.25);
+    color: var(--color-accent, #d97706);
+  }
+
+  :global(.reader-night-mode) .festive-banner :global(.festive-share-btn:hover) {
+    background: rgba(217, 119, 6, 0.2);
+    border-color: rgba(217, 119, 6, 0.4);
+  }
+
+  @media (max-width: 420px) {
+    .festive-banner :global(.festive-share-label) {
+      display: none;
+    }
+    .festive-banner :global(.festive-share-btn) {
+      padding: 0.35rem;
+      border-radius: 50%;
+    }
   }
 
   .festive-banner :global(.festive-dismiss-btn) {
