@@ -617,23 +617,9 @@ const ogImage = image || (slug
         </div>
       </div>
 
-      <!-- Bottom Bar (Navigation with Restart, Up/Down Arrows, and Font Controls) -->
+      <!-- Bottom Bar (Auto-scroll, Progress Scrubber, and Font Controls) -->
       <footer class="reader-bottombar" role="navigation" aria-label="पठन नियंत्रण">
         <div class="bottombar-group bottombar-group--nav">
-          <!-- Restart from Beginning Button -->
-          <button
-            id="btn-restart"
-            class="icon-btn"
-            aria-label="प्रारम्भ से पढ़ें"
-            title="प्रारम्भ से पढ़ें"
-            style="padding:0.4rem 0.65rem;"
-          >
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
-              <path d="M1 4v6h6"/>
-              <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
-            </svg>
-          </button>
-
           <!-- Auto-Scroll Play/Pause Button (स्वचालित पठन) -->
           <button
             id="btn-auto-scroll"
@@ -663,17 +649,6 @@ const ogImage = image || (slug
             aria-label="स्वचालित गति बदलें"
             title="गति बदलें (क्लिक करें)"
           >१x</button>
-
-          <!-- Previous Page Button (Arrow Up) -->
-          <button
-            id="btn-bottom-prev"
-            class="icon-btn"
-            aria-label="पिछला पृष्ठ"
-            title="पिछला पृष्ठ"
-            style="padding:0.4rem 0.65rem;"
-          >
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
-          </button>
         </div>
 
         <!-- Interactive Progress Scrubber / Slider (प्रगति स्लाइडर) -->
@@ -706,19 +681,6 @@ const ogImage = image || (slug
         </div>
 
         <div class="bottombar-group bottombar-group--controls">
-          <!-- Next Page Button (Arrow Down) -->
-          <button
-            id="btn-bottom-next"
-            class="icon-btn"
-            aria-label="अगला पृष्ठ"
-            title="अगला पृष्ठ"
-            style="padding:0.4rem 0.65rem;"
-          >
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
-          </button>
-
-          <div class="bottombar-separator" aria-hidden="true"></div>
-
           <!-- Font Size Decrease Control -->
           <button
             id="font-decrease"

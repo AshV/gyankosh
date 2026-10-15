@@ -220,12 +220,9 @@ const base = config.base || shell?.dataset.base || '';
             });
           }, { passive: true });
 
-          // Navigation buttons scroll to next/prev section
+          // Floating/Header navigation buttons scroll to next/prev section (if present)
           document.getElementById('btn-page-up')?.addEventListener('click', () => this.scrollToPrevSection());
           document.getElementById('btn-page-down')?.addEventListener('click', () => this.scrollToNextSection());
-          document.getElementById('btn-bottom-prev')?.addEventListener('click', () => this.scrollToPrevSection());
-          document.getElementById('btn-bottom-next')?.addEventListener('click', () => this.scrollToNextSection());
-          document.getElementById('btn-restart')?.addEventListener('click', () => this.scrollToTop());
 
           // Keyboard navigation
           document.addEventListener('keydown', (e) => {
@@ -330,14 +327,10 @@ const base = config.base || shell?.dataset.base || '';
         updateNavBtns(pct) {
           const atTop = pct <= 0;
           const atBottom = pct >= 99;
-          ['btn-page-up', 'btn-bottom-prev', 'btn-restart'].forEach(id => {
-            const btn = document.getElementById(id);
-            if (btn) btn.disabled = atTop;
-          });
-          ['btn-page-down', 'btn-bottom-next'].forEach(id => {
-            const btn = document.getElementById(id);
-            if (btn) btn.disabled = atBottom;
-          });
+          const btnUp = document.getElementById('btn-page-up');
+          if (btnUp) btnUp.disabled = atTop;
+          const btnDown = document.getElementById('btn-page-down');
+          if (btnDown) btnDown.disabled = atBottom;
         }
 
         scrollToNextSection() {
