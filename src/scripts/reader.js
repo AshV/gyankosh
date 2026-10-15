@@ -1672,10 +1672,49 @@ const base = config.base || shell?.dataset.base || '';
       const readerInfoClose = document.getElementById('reader-info-close');
       const readerInfoBackdrop = document.getElementById('reader-info-backdrop');
 
+      function initInfoModalTabs() {
+        const tabBtns = document.querySelectorAll('.reader-modal-tab');
+        const paneContext = document.getElementById('pane-context');
+        const paneSettings = document.getElementById('pane-settings');
+        const switchBtn = document.getElementById('btn-switch-to-settings');
+
+        function selectTab(target) {
+          tabBtns.forEach(btn => {
+            const isMatch = btn.getAttribute('data-tab') === target;
+            btn.classList.toggle('active', isMatch);
+            btn.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+          });
+          if (paneContext) paneContext.style.display = target === 'context' ? 'block' : 'none';
+          if (paneSettings) paneSettings.style.display = target === 'settings' ? 'block' : 'none';
+        }
+
+        tabBtns.forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            selectTab(btn.getAttribute('data-tab'));
+          });
+        });
+
+        switchBtn?.addEventListener('click', (e) => {
+          e.stopPropagation();
+          selectTab('settings');
+        });
+      }
+
+      initInfoModalTabs();
+
       function openInfoModal() {
         if (!readerInfoModal) return;
         readerInfoModal.style.display = 'flex';
         readerInfoBtn?.setAttribute('aria-expanded', 'true');
+        const activeTab = document.querySelector('.reader-modal-tab.active');
+        if (activeTab) {
+          const target = activeTab.getAttribute('data-tab');
+          const paneContext = document.getElementById('pane-context');
+          const paneSettings = document.getElementById('pane-settings');
+          if (paneContext) paneContext.style.display = target === 'context' ? 'block' : 'none';
+          if (paneSettings) paneSettings.style.display = target === 'settings' ? 'block' : 'none';
+        }
       }
 
       function closeInfoModal() {

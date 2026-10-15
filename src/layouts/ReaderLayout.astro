@@ -552,66 +552,101 @@ const ogImage = image || (slug
               </svg>
             </button>
           </div>
-          <div class="reader-info-body">
-            <h3 class="reader-info-book-title">{title}</h3>
-            {author && <p class="reader-info-author">रचयिता / ऋषि: <strong>{author}</strong></p>}
-            {context && <p class="reader-info-context">{context}</p>}
 
-
-
-            <!-- Theme / Appearance Setting (थीम स्वरूप) -->
-            <div class="reader-info-setting-row">
-              <span class="setting-row-label">थीम स्वरूप:</span>
-              <div class="anim-toggle-group" id="theme-toggle-group" role="radiogroup" aria-label="थीम चुनें">
-                <button type="button" class="anim-opt-btn" data-theme="day" title="दिवस मोड — पावन ताम्रपत्र">☀️ दिवस</button>
-                <button type="button" class="anim-opt-btn" data-theme="night" title="रात्रि मोड — नेत्र-सुखद गहरा काष्ठ">🌙 रात्रि</button>
-              </div>
-            </div>
-
-            <!-- Auto-scroll Speed Setting (स्वचालित पठन गति) -->
-            <div class="reader-info-setting-row">
-              <span class="setting-row-label">स्वचालित गति:</span>
-              <div class="anim-toggle-group" id="autoscroll-speed-toggle-group" role="radiogroup" aria-label="स्वचालित गति चुनें">
-                <button type="button" class="anim-opt-btn active" data-speed="slow" title="धीमा (१x) — ध्यान एवं जप हेतु">धीमा (१x)</button>
-                <button type="button" class="anim-opt-btn" data-speed="medium" title="मध्यम (१.५x) — सामान्य लयबद्ध पठन">मध्यम (१.५x)</button>
-                <button type="button" class="anim-opt-btn" data-speed="fast" title="द्रुत (२x) — द्रुत पारायण">द्रुत (२x)</button>
-              </div>
-            </div>
-
-            <!-- Verse Focus Setting (श्लोक ध्यान केंद्र) -->
-            <div class="reader-info-setting-row">
-              <span class="setting-row-label">श्लोक ध्यान:</span>
-              <div class="anim-toggle-group" id="verse-focus-toggle-group" role="radiogroup" aria-label="श्लोक ध्यान केंद्र चुनें">
-                <button type="button" class="anim-opt-btn active" data-focus="on" title="श्लोक ध्यान केंद्र — पढ़ते समय वर्तमान श्लोक प्रकाशित रहेगा">सक्रिय</button>
-                <button type="button" class="anim-opt-btn" data-focus="off" title="सामान्य — बिना प्रकाश प्रभाव">सामान्य</button>
-              </div>
-            </div>
-
-            <!-- Line-Height Setting (पंक्ति अन्तर) -->
-            <div class="reader-info-setting-row">
-              <span class="setting-row-label">पंक्ति अन्तर:</span>
-              <div class="anim-toggle-group" id="line-height-toggle-group" role="radiogroup" aria-label="पंक्ति अन्तर चुनें">
-                <button type="button" class="anim-opt-btn active" data-lh="normal" title="सामान्य (१.९x) — मानक अन्तर">सामान्य</button>
-                <button type="button" class="anim-opt-btn" data-lh="relaxed" title="विस्तृत (२.३x) — खुला अन्तर">विस्तृत</button>
-                <button type="button" class="anim-opt-btn" data-lh="loose" title="अति-विस्तृत (२.७x) — स्पष्ट पठन">अति-विस्तृत</button>
-              </div>
-            </div>
-
-            <!-- Report Typo Action Button (पाठ शुद्धि सेवा) -->
-            <div class="reader-info-setting-row" style="margin-top: 14px; border-top: 1px dashed rgba(184, 134, 11, 0.3); padding-top: 12px;">
-              <button
-                type="button"
-                class="anim-opt-btn"
-                onclick="window.__openErrataModal && window.__openErrataModal()"
-                style="width: 100%; justify-content: center; gap: 6px; font-weight: 600; color: #a83232; border-color: rgba(168, 50, 50, 0.4);"
-                title="यदि किसी पद अथवा मात्रा में अशुद्धि दिखे तो सूचित करें"
-              >
-                ⚠️ पाठ में अशुद्धि सूचित करें
+          {context && (
+            <div class="reader-modal-tabs" role="tablist" aria-label="मोडल अनुभाग">
+              <button type="button" class="reader-modal-tab active" data-tab="context" role="tab" aria-selected="true" id="tab-btn-context">
+                <span>📖 पावन परिचय</span>
+              </button>
+              <button type="button" class="reader-modal-tab" data-tab="settings" role="tab" aria-selected="false" id="tab-btn-settings">
+                <span>⚙️ पठन सेटिंग</span>
               </button>
             </div>
+          )}
 
-            <div class="reader-info-tradition-note">
-              <span>पारम्परिक सनातन पाठ • सार्वजनिक कार्यक्षेत्र (Public Domain)</span>
+          <div class="reader-info-body">
+            {context && (
+              <div class="reader-tab-pane reader-tab-pane--context" id="pane-context">
+                <h3 class="reader-info-book-title">{title}</h3>
+                {author && <p class="reader-info-author">रचयिता / ऋषि: <strong>{author}</strong></p>}
+                <div class="reader-info-context">
+                  <p>{context}</p>
+                </div>
+                <div class="reader-info-context-footer">
+                  <button type="button" class="reader-tab-switch-btn" id="btn-switch-to-settings">
+                    <span>⚙️ पठन सेटिंग अनुकूलित करें →</span>
+                  </button>
+                </div>
+                <div class="reader-info-tradition-note">
+                  <span>पारम्परिक सनातन पाठ • सार्वजनिक कार्यक्षेत्र (Public Domain)</span>
+                </div>
+              </div>
+            )}
+
+            <div class="reader-tab-pane reader-tab-pane--settings" id="pane-settings" style={context ? 'display:none;' : ''}>
+              {!context && (
+                <>
+                  <h3 class="reader-info-book-title">{title}</h3>
+                  {author && <p class="reader-info-author">रचयिता / ऋषि: <strong>{author}</strong></p>}
+                </>
+              )}
+
+              <!-- Theme / Appearance Setting (थीम स्वरूप) -->
+              <div class="reader-info-setting-row">
+                <span class="setting-row-label">थीम स्वरूप:</span>
+                <div class="anim-toggle-group" id="theme-toggle-group" role="radiogroup" aria-label="थीम चुनें">
+                  <button type="button" class="anim-opt-btn" data-theme="day" title="दिवस मोड — पावन ताम्रपत्र">☀️ दिवस</button>
+                  <button type="button" class="anim-opt-btn" data-theme="night" title="रात्रि मोड — नेत्र-सुखद गहरा काष्ठ">🌙 रात्रि</button>
+                </div>
+              </div>
+
+              <!-- Auto-scroll Speed Setting (स्वचालित पठन गति) -->
+              <div class="reader-info-setting-row">
+                <span class="setting-row-label">स्वचालित गति:</span>
+                <div class="anim-toggle-group" id="autoscroll-speed-toggle-group" role="radiogroup" aria-label="स्वचालित गति चुनें">
+                  <button type="button" class="anim-opt-btn active" data-speed="slow" title="धीमा (१x) — ध्यान एवं जप हेतु">धीमा (१x)</button>
+                  <button type="button" class="anim-opt-btn" data-speed="medium" title="मध्यम (१.५x) — सामान्य लयबद्ध पठन">मध्यम (१.५x)</button>
+                  <button type="button" class="anim-opt-btn" data-speed="fast" title="द्रुत (२x) — द्रुत पारायण">द्रुत (२x)</button>
+                </div>
+              </div>
+
+              <!-- Verse Focus Setting (श्लोक ध्यान केंद्र) -->
+              <div class="reader-info-setting-row">
+                <span class="setting-row-label">श्लोक ध्यान:</span>
+                <div class="anim-toggle-group" id="verse-focus-toggle-group" role="radiogroup" aria-label="श्लोक ध्यान केंद्र चुनें">
+                  <button type="button" class="anim-opt-btn active" data-focus="on" title="श्लोक ध्यान केंद्र — पढ़ते समय वर्तमान श्लोक प्रकाशित रहेगा">सक्रिय</button>
+                  <button type="button" class="anim-opt-btn" data-focus="off" title="सामान्य — बिना प्रकाश प्रभाव">सामान्य</button>
+                </div>
+              </div>
+
+              <!-- Line-Height Setting (पंक्ति अन्तर) -->
+              <div class="reader-info-setting-row">
+                <span class="setting-row-label">पंक्ति अन्तर:</span>
+                <div class="anim-toggle-group" id="line-height-toggle-group" role="radiogroup" aria-label="पंक्ति अन्तर चुनें">
+                  <button type="button" class="anim-opt-btn active" data-lh="normal" title="सामान्य (१.९x) — मानक अन्तर">सामान्य</button>
+                  <button type="button" class="anim-opt-btn" data-lh="relaxed" title="विस्तृत (२.३x) — खुला अन्तर">विस्तृत</button>
+                  <button type="button" class="anim-opt-btn" data-lh="loose" title="अति-विस्तृत (२.७x) — स्पष्ट पठन">अति-विस्तृत</button>
+                </div>
+              </div>
+
+              <!-- Report Typo Action Button (पाठ शुद्धि सेवा) -->
+              <div class="reader-info-setting-row" style="margin-top: 10px; border-top: 1px dashed rgba(184, 134, 11, 0.3); padding-top: 10px;">
+                <button
+                  type="button"
+                  class="anim-opt-btn"
+                  onclick="window.__openErrataModal && window.__openErrataModal()"
+                  style="width: 100%; justify-content: center; gap: 6px; font-weight: 600; color: #a83232; border-color: rgba(168, 50, 50, 0.4);"
+                  title="यदि किसी पद अथवा मात्रा में अशुद्धि दिखे तो सूचित करें"
+                >
+                  ⚠️ पाठ में अशुद्धि सूचित करें
+                </button>
+              </div>
+
+              {!context && (
+                <div class="reader-info-tradition-note">
+                  <span>पारम्परिक सनातन पाठ • सार्वजनिक कार्यक्षेत्र (Public Domain)</span>
+                </div>
+              )}
             </div>
           </div>
         </div>
