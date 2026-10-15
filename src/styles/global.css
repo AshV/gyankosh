@@ -583,6 +583,12 @@ a:hover { opacity: 0.8; }
   flex-shrink: 0;
 }
 
+.card-action-btn svg {
+  fill: none;
+  stroke: currentColor;
+  display: block;
+}
+
 .card-action-btn:hover {
   background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
   color: #ffffff;

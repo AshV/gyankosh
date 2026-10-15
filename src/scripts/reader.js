@@ -2096,62 +2096,6 @@ const base = config.base || shell?.dataset.base || '';
         }
       }
 
-      /* ── Cover Screen Reading Stats (पठन सांख्यिकी) ── */
-      function computeReadingStats() {
-        const rawSource = document.getElementById('reader-raw-source');
-        if (!rawSource) return;
-
-        const verses = rawSource.querySelectorAll('.verse-block');
-        const totalVerses = verses.length;
-
-        const typeCounters = {};
-        verses.forEach((v) => {
-          const t = (v.getAttribute('data-block-type') || 'verse').toLowerCase();
-          typeCounters[t] = (typeCounters[t] || 0) + 1;
-        });
-
-        // Fast zero-allocation word counter
-        const fullText = rawSource.textContent || '';
-        let wordCount = 0;
-        let inWord = false;
-        for (let wi = 0; wi < fullText.length; wi++) {
-          const code = fullText.charCodeAt(wi);
-          if (code > 32) {
-            if (!inWord) { wordCount++; inWord = true; }
-          } else {
-            inWord = false;
-          }
-        }
-        const estMinutes = Math.max(1, Math.round(wordCount / 105));
-
-        const timeEl = document.getElementById('cover-stat-time');
-        const countEl = document.getElementById('cover-stat-count');
-
-        if (timeEl) {
-          timeEl.textContent = `⏱ ~${toHindiDigits(estMinutes)} मिनट पठन`;
-        }
-
-        if (countEl) {
-          const parts = [];
-          if (typeCounters.chaupai) parts.push(`${toHindiDigits(typeCounters.chaupai)} चौपाई`);
-          if (typeCounters.doha) parts.push(`${toHindiDigits(typeCounters.doha)} दोहा`);
-          if (typeCounters.shloka) parts.push(`${toHindiDigits(typeCounters.shloka)} श्लोक`);
-          if (typeCounters.mantra) parts.push(`${toHindiDigits(typeCounters.mantra)} मन्त्र`);
-          if (typeCounters.soratha) parts.push(`${toHindiDigits(typeCounters.soratha)} सोरठा`);
-          if (typeCounters.name) parts.push(`${toHindiDigits(typeCounters.name)} नाम`);
-
-          if (parts.length > 0) {
-            countEl.textContent = `📄 ${parts.join(', ')}`;
-          } else if (totalVerses > 0) {
-            countEl.textContent = `📄 ${toHindiDigits(totalVerses)} पद`;
-          } else {
-            countEl.style.display = 'none';
-          }
-        }
-      }
-
-      computeReadingStats();
-
       /* ── Background Screen Wake Lock (पठन के दौरान स्क्रीन ऑन रखें) ── */
       let screenWakeLock = null;
       let wakeLockIdleTimer = null;

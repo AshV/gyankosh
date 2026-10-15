@@ -350,59 +350,6 @@ html.reader-scroll-mode .reader-page-info {
   opacity: 0;
 }
 
-/* ── Interactive Live Drag/Scroll Paper Curl Classes ──────── */
-.reader-page.page-curling {
-  opacity: 1 !important;
-  pointer-events: none !important;
-  z-index: 20 !important;
-  transition: none !important;
-}
-
-.reader-page.page-curling::after {
-  opacity: var(--curl-sheen-opacity, 0.45);
-  transition: none !important;
-}
-
-.reader-page.page-under-curl {
-  opacity: 1 !important;
-  pointer-events: none !important;
-  z-index: 9 !important;
-  transition: none !important;
-}
-
-.reader-page.page-curl-cancelling {
-  transition: transform 0.32s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.32s ease !important;
-  pointer-events: none !important;
-}
-
-.reader-page.page-curl-cancelling::after {
-  transition: opacity 0.32s ease !important;
-  opacity: 0 !important;
-}
-
-
-
-/* Page Number in traditional pothi footer */
-.page-footer-bar {
-  margin-top: auto;
-  padding-top: 0.5rem;
-  border-top: 1px solid var(--color-border-subtle);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-family: var(--font-devanagari);
-  font-size: 0.8rem;
-  color: var(--color-text-faint);
-  flex-shrink: 0;
-}
-
-.page-corner-num {
-  font-family: var(--font-devanagari);
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--color-accent);
-}
-
 /* ─── Reader Content Area (Sacred Indic Typography) ──────── */
 .reader-content {
   font-feature-settings: "cjct" on, "pres" on, "abvs" on, "blws" on, "half" on, "vatu" on;
