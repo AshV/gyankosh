@@ -119,45 +119,89 @@ export function deriveSearchKeywords(entry: {
   };
 }): string[] {
   const keywords = new Set<string>();
+  const baseWords = new Set<string>();
 
-  // 1. Slug words (e.g. "hanuman-chalisa" -> "hanuman", "chalisa", "hanuman-chalisa")
   const slug = entry.id.replace(/\.md$/, '');
-  keywords.add(slug);
-  slug.split('-').forEach(part => {
-    if (part) keywords.add(part);
-  });
+  baseWords.add(slug);
+  slug.split('-').forEach(p => { if (p) baseWords.add(p.toLowerCase()); });
 
-  // 2. Category names in English & Hindi
-  const cat = entry.data.category;
-  keywords.add(cat.toLowerCase());
-  const catHindi = getCategoryHindi(cat);
-  if (catHindi) keywords.add(catHindi);
+  const cat = entry.data.category.toLowerCase();
+  baseWords.add(cat);
+  const catHindi = getCategoryHindi(entry.data.category);
+  if (catHindi) baseWords.add(catHindi);
 
-  // 3. Author in Hindi and slugified
   if (entry.data.author) {
-    keywords.add(entry.data.author);
-    keywords.add(tagToSlug(entry.data.author));
-  }
-
-  // 4. Tags in Hindi and English
-  for (const tag of entry.data.tags ?? []) {
-    keywords.add(tag);
-    const tagSlug = tagToSlug(tag);
-    if (tagSlug) {
-      keywords.add(tagSlug);
-      tagSlug.split('-').forEach(p => keywords.add(p));
+    baseWords.add(entry.data.author);
+    const aSlug = tagToSlug(entry.data.author);
+    if (aSlug) {
+      baseWords.add(aSlug);
+      aSlug.split('-').forEach(p => { if (p) baseWords.add(p.toLowerCase()); });
     }
   }
 
-  // 5. Expand with theological synonyms
-  for (const kw of Array.from(keywords)) {
-    const norm = kw.toLowerCase();
+  for (const tag of entry.data.tags ?? []) {
+    baseWords.add(tag);
+    const tagSlug = tagToSlug(tag);
+    if (tagSlug) {
+      baseWords.add(tagSlug);
+      tagSlug.split('-').forEach(p => { if (p) baseWords.add(p.toLowerCase()); });
+    }
+  }
+
+  // 1. Expand with theological synonyms
+  for (const w of Array.from(baseWords)) {
+    const norm = w.toLowerCase();
     if (THEOLOGICAL_ALIASES[norm]) {
       THEOLOGICAL_ALIASES[norm].forEach(alias => keywords.add(alias));
     }
   }
 
-  return Array.from(keywords);
+  // 2. Add transliterated tag slugs for Romanized searching
+  for (const tag of entry.data.tags ?? []) {
+    const tagSlug = tagToSlug(tag);
+    if (tagSlug) {
+      tagSlug.split('-').forEach(p => {
+        if (p && p.length > 2) keywords.add(p);
+      });
+    }
+  }
+
+  // 3. Meaningful terms from description (excluding common stop words, already known words, and short tokens)
+  if (entry.data.description) {
+    const descTokens = entry.data.description
+      .replace(/[—–.,;:!?'"“”‘’।॥()\[\]{}/\\<>+=*#_~`]/g, ' ')
+      .split(/\s+/)
+      .map(w => w.trim().toLowerCase())
+      .filter(w => w.length >= 3);
+
+    const STOP_WORDS = new Set([
+      'की', 'का', 'के', 'में', 'एवं', 'और', 'है', 'हैं', 'से', 'पर', 'द्वारा',
+      'कृत', 'श्री', 'यह', 'वह', 'भी', 'को', 'जो', 'तो', 'था', 'थी', 'थे',
+      'हो', 'हुए', 'गया', 'गई', 'गए', 'कर', 'करते', 'करना', 'लिए', 'साथ',
+      'the', 'and', 'for', 'with', 'this', 'that', 'from', 'into', 'over'
+    ]);
+
+    for (const token of descTokens) {
+      if (!STOP_WORDS.has(token)) {
+        keywords.add(token);
+      }
+    }
+  }
+
+  // Prune keywords already covered by title, slug, author, or tags
+  const titleNorm = normalizeSearchText(entry.data.title);
+  const slugNorm = normalizeSearchText(slug.replace(/-/g, ' '));
+  const authorNorm = entry.data.author ? normalizeSearchText(entry.data.author) : '';
+  const tagsNorm = (entry.data.tags ?? []).map(t => normalizeSearchText(t));
+
+  return Array.from(keywords).filter(kw => {
+    const normKw = normalizeSearchText(kw);
+    if (!normKw || normKw.length < 2) return false;
+    if (titleNorm.includes(normKw) || slugNorm.includes(normKw)) return false;
+    if (authorNorm && authorNorm.includes(normKw)) return false;
+    if (tagsNorm.some(t => t === normKw)) return false;
+    return true;
+  });
 }
 
 /**
@@ -177,7 +221,7 @@ export function scoreSearchItem(item: SearchCatalogItem, rawQuery: string): numb
   const normSlug = normalizeSearchText(item.slug.replace(/-/g, ' '));
   const normAuthor = normalizeSearchText(item.author || '');
   const normCategory = normalizeSearchText(item.category + ' ' + item.categoryHindi);
-  const normDesc = normalizeSearchText(item.description);
+  const normDesc = item.description ? normalizeSearchText(item.description) : '';
 
   // 1. Exact or prefix matches on Title
   if (normTitle === normQuery) {
@@ -219,7 +263,16 @@ export function scoreSearchItem(item: SearchCatalogItem, rawQuery: string): numb
       score += 25;
       tokenMatched = true;
     }
-    if (normDesc.includes(token)) {
+    if (item.tags && item.tags.length > 0) {
+      for (const tag of item.tags) {
+        if (normalizeSearchText(tag).includes(token)) {
+          score += 25;
+          tokenMatched = true;
+          break;
+        }
+      }
+    }
+    if (normDesc && normDesc.includes(token)) {
       score += 15;
       tokenMatched = true;
     }

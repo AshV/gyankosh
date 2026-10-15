@@ -29,7 +29,7 @@ export const GET: APIRoute = async () => {
     };
 
     if (text.data.author) item.author = text.data.author;
-    if (text.data.description) item.description = text.data.description;
+    // Note: description omitted from catalog payload; key search keywords are preserved in keywords.
 
     return item;
   });

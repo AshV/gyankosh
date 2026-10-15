@@ -73,52 +73,21 @@ const base = config.base || shell?.dataset.base || '';
 
         buildScrollView() {
           if (!this.rawSource || !this.stage) return;
+          if (this.stage.querySelector('.reader-page')) return;
           this.stage.innerHTML = '';
           this.sectionAnchors = [];
 
-          const isChanting = ROOT.classList.contains('chanting-mode') || document.body.classList.contains('chanting-mode');
+          // Ensure Table of Contents is initialized before nodes are moved
+          if (typeof initTableOfContents === 'function' && tocItems.length === 0) {
+            initTableOfContents();
+          }
 
+          // Single DOM tree optimization: Transfer nodes directly instead of cloning
           const childElements = Array.from(this.rawSource.children).filter(
-            el => !el.classList.contains('sr-only') &&
-              (!isChanting || (!el.classList.contains('translation-block') &&
-                !el.classList.contains('block--translation') &&
-                !el.classList.contains('block--bhavarth')))
+            el => !el.classList.contains('sr-only')
           );
 
           if (childElements.length === 0) return;
-
-          // Stacking optimization: Mobile stacks automatically via CSS media query (@media max-width: 640px)
-          const isMobile = window.innerWidth <= 640;
-          if (!isMobile) {
-            const stageWidth = this.stage.clientWidth || window.innerWidth;
-            const availableTextWidth = Math.max(120, stageWidth - 55);
-            const scratch = document.createElement('div');
-            scratch.style.cssText = 'position:absolute; visibility:hidden; left:-9999px; top:-9999px; width:max-content; display:inline-flex; flex-wrap:nowrap; column-gap:0.35em; font-family:var(--reader-font-family); font-size:var(--reader-font-size); line-height:var(--reader-line-height);';
-            document.body.appendChild(scratch);
-
-            childElements.forEach((node) => {
-              if (node.classList.contains('verse-block')) {
-                const lines = node.querySelectorAll('.verse-line');
-                let verseNeedsStacking = false;
-                for (let li = 0; li < lines.length; li++) {
-                  const line = lines[li];
-                  if (line.children.length > 1) {
-                    scratch.textContent = line.textContent;
-                    if (scratch.offsetWidth > availableTextWidth) {
-                      verseNeedsStacking = true;
-                      break;
-                    }
-                  }
-                }
-                if (verseNeedsStacking) {
-                  node.classList.add('verse--stacked');
-                } else {
-                  node.classList.remove('verse--stacked');
-                }
-              }
-            });
-            document.body.removeChild(scratch);
-          }
 
           // Wrap everything in a single page div (scroll is continuous)
           const pageDiv = document.createElement('div');
@@ -137,7 +106,7 @@ const base = config.base || shell?.dataset.base || '';
           contentWrap.style.padding = '0';
           contentWrap.style.margin = '0 auto';
 
-          // Insert anchors before each "section start" (speaker, instruction, or first verse of a group)
+          // Insert anchors before each "section start" and transfer elements directly
           childElements.forEach((node, i) => {
             const isSection = node.classList.contains('speaker-block') ||
               node.classList.contains('instruction-block') ||
@@ -153,8 +122,8 @@ const base = config.base || shell?.dataset.base || '';
               contentWrap.appendChild(anchor);
               this.sectionAnchors.push(anchor);
             }
-            const clone = node.cloneNode(true);
-            if (clone.classList.contains('verse-block')) {
+
+            if (node.classList.contains('verse-block') && !node.querySelector('.verse-copy-btn')) {
               const copyBtn = document.createElement('button');
               copyBtn.type = 'button';
               copyBtn.className = 'verse-copy-btn';
@@ -166,9 +135,9 @@ const base = config.base || shell?.dataset.base || '';
                   <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                 </svg>
               `;
-              clone.appendChild(copyBtn);
+              node.appendChild(copyBtn);
             }
-            contentWrap.appendChild(clone);
+            contentWrap.appendChild(node);
           });
 
           // Fix 3: Sentinel element at end of content for precise completion detection
@@ -201,12 +170,50 @@ const base = config.base || shell?.dataset.base || '';
 
           pageDiv.appendChild(contentWrap);
           this.stage.appendChild(pageDiv);
+          this.updateVerseStacking();
           this.updateScrollUI();
           this.setupEntryAnimations(contentWrap);
           this.setupCompletionObserver();
+
+          // Free redundant nodes from rawSource to eliminate duplicate memory
+          const srHeader = this.rawSource.querySelector('header.sr-only');
+          this.rawSource.replaceChildren(srHeader || '');
+
           // Cache verse blocks and initialize native focus observer
           this._verseBlocks = Array.from(this.stage.querySelectorAll('.verse-block'));
           this.setupVerseFocusObserver();
+        }
+
+        updateVerseStacking() {
+          const isMobile = window.innerWidth <= 640;
+          if (isMobile) return;
+          const stageWidth = this.stage?.clientWidth || window.innerWidth;
+          const availableTextWidth = Math.max(120, stageWidth - 55);
+          const scratch = document.createElement('div');
+          scratch.style.cssText = 'position:absolute; visibility:hidden; left:-9999px; top:-9999px; width:max-content; display:inline-flex; flex-wrap:nowrap; column-gap:0.35em; font-family:var(--reader-font-family); font-size:var(--reader-font-size); line-height:var(--reader-line-height);';
+          document.body.appendChild(scratch);
+
+          const verses = this.stage?.querySelectorAll('.verse-block') || [];
+          verses.forEach((node) => {
+            const lines = node.querySelectorAll('.verse-line');
+            let verseNeedsStacking = false;
+            for (let li = 0; li < lines.length; li++) {
+              const line = lines[li];
+              if (line.children.length > 1) {
+                scratch.textContent = line.textContent;
+                if (scratch.offsetWidth > availableTextWidth) {
+                  verseNeedsStacking = true;
+                  break;
+                }
+              }
+            }
+            if (verseNeedsStacking) {
+              node.classList.add('verse--stacked');
+            } else {
+              node.classList.remove('verse--stacked');
+            }
+          });
+          document.body.removeChild(scratch);
         }
 
         setupScrollEvents() {
@@ -431,23 +438,12 @@ const base = config.base || shell?.dataset.base || '';
           } catch {}
         }
 
-        // Called when chanting mode or font changes — rebuild and restore section
+        // Called when chanting mode or font changes — adjust layout without destroying DOM
         rebuild() {
-          if (this._entryObserver) {
-            this._entryObserver.disconnect();
-            this._entryObserver = null;
-          }
           this._currentFocusedVerse = null;
-          const prevSection = this.currentSectionIndex;
-          this.buildScrollView();
-          requestAnimationFrame(() => {
-            if (this.sectionAnchors[prevSection]) {
-              const anchor = this.sectionAnchors[prevSection];
-              const anchorTop = anchor.getBoundingClientRect().top;
-              const vpTop = this.viewport?.getBoundingClientRect().top || 0;
-              this.viewport?.scrollBy({ top: anchorTop - vpTop - 12, behavior: 'instant' });
-            }
-          });
+          this.updateVerseStacking();
+          this.onScroll();
+          this.updateVerseFocus();
         }
 
         // Win 4: Cached pref — avoids JSON.parse(localStorage) on every scroll rAF
@@ -696,7 +692,7 @@ const base = config.base || shell?.dataset.base || '';
 
       /* ── Chanting / Paath Mode (पाठ मोड — केवल मूल श्लोक) ── */
       const chantingBtn = document.getElementById('chanting-toggle');
-      const hasTranslations = Boolean(document.querySelector('#reader-raw-source .translation-block, #reader-raw-source .block--translation, #reader-raw-source .block--bhavarth'));
+      const hasTranslations = Boolean(document.querySelector('#reader-raw-source .translation-block, #reader-raw-source .block--translation, #reader-raw-source .block--bhavarth, #reader-stage .translation-block, #reader-stage .block--translation, #reader-stage .block--bhavarth'));
 
       if (chantingBtn) {
         if (!hasTranslations) {
@@ -731,7 +727,7 @@ const base = config.base || shell?.dataset.base || '';
           localStorage.setItem(PREF_KEY, JSON.stringify({ ...prefs, chanting: nextChanting }));
         } catch {}
         updateChantingUI(nextChanting);
-        gyankoshScrollInstance?.rebuild();
+        gyankoshScrollInstance?.onScroll();
       });
 
       /* ── Font Size Controls (अक्षर आकार छोटा/बड़ा करें) ── */
@@ -743,11 +739,7 @@ const base = config.base || shell?.dataset.base || '';
           const prefs = loadPrefs();
           localStorage.setItem(PREF_KEY, JSON.stringify({ ...prefs, fontSize: next }));
         } catch {}
-        if (window.GyankoshLoader) window.GyankoshLoader.show('पृष्ठ पुनर्गठित हो रहे हैं...', 120);
-        setTimeout(() => {
-          gyankoshScrollInstance?.rebuild();
-          if (window.GyankoshLoader) window.GyankoshLoader.hide();
-        }, 20);
+        gyankoshScrollInstance?.rebuild();
       }
 
       document.getElementById('font-decrease')?.addEventListener('click', (e) => {
@@ -1143,9 +1135,15 @@ const base = config.base || shell?.dataset.base || '';
       let tocItems = [];
 
       function initTableOfContents() {
-        if (!rawSource) return;
+        if (tocItems.length > 0) return;
+        const container = (rawSource && rawSource.children.length > 1) ? rawSource : document.getElementById('reader-stage');
+        if (!container) return;
         tocItems = [];
-        const children = Array.from(rawSource.children).filter(
+        const candidateChildren = container.id === 'reader-stage'
+          ? container.querySelectorAll('.verse-block, .speaker-block, .instruction-block')
+          : container.children;
+
+        const children = Array.from(candidateChildren).filter(
           el => !el.classList.contains('sr-only') &&
                 !el.classList.contains('translation-block') &&
                 !el.classList.contains('block--translation') &&
@@ -2230,6 +2228,75 @@ const base = config.base || shell?.dataset.base || '';
           window.location.href = destination;
         });
       }
+
+      /* ── Reader Bars Auto-Hide / Show on Scroll ── */
+      function initReaderToolbarAutoHide() {
+        const shellEl = document.getElementById('reader-shell');
+        const viewport = document.getElementById('reader-viewport');
+        const topbar = document.querySelector('.reader-topbar');
+        const bottombar = document.querySelector('.reader-bottombar');
+
+        if (viewport && topbar && bottombar) {
+          let lastScrollY = viewport.scrollTop;
+          let scrollRaf = null;
+          let isBarsHidden = false;
+
+          function hideBars() {
+            if (isBarsHidden) return;
+            if (shellEl?.classList.contains('has-cover-screen')) return;
+            const tocDrawer = document.getElementById('reader-toc-drawer');
+            if (tocDrawer && tocDrawer.style.display !== 'none') return;
+            const infoModal = document.getElementById('reader-info-modal');
+            if (infoModal && infoModal.style.display !== 'none') return;
+
+            isBarsHidden = true;
+            topbar.style.transform = 'translateY(-100%)';
+            bottombar.style.transform = 'translateY(100%)';
+            shellEl?.classList.add('is-bars-hidden');
+          }
+
+          function showBars() {
+            if (!isBarsHidden && topbar.style.transform === 'translateY(0px)') return;
+            isBarsHidden = false;
+            topbar.style.transform = 'translateY(0)';
+            bottombar.style.transform = 'translateY(0)';
+            shellEl?.classList.remove('is-bars-hidden');
+          }
+
+          viewport.addEventListener('scroll', () => {
+            if (!document.documentElement.classList.contains('reader-scroll-mode')) return;
+            if (scrollRaf) return;
+
+            scrollRaf = requestAnimationFrame(() => {
+              scrollRaf = null;
+              const currentScrollY = viewport.scrollTop;
+              const delta = currentScrollY - lastScrollY;
+
+              if (currentScrollY <= 25) {
+                showBars();
+              } else if (delta > 8 && currentScrollY > 60) {
+                hideBars();
+              } else if (delta < -8) {
+                showBars();
+              }
+              lastScrollY = currentScrollY;
+            });
+          }, { passive: true });
+
+          viewport.addEventListener('click', (e) => {
+            if (e.target.closest('button, a, .icon-btn, .topbar-actions, .bottombar-actions, .verse-copy-btn, input, select, textarea')) return;
+            const sel = window.getSelection ? window.getSelection().toString().trim() : '';
+            if (sel.length > 0) return;
+
+            if (isBarsHidden) {
+              showBars();
+            } else if (viewport.scrollTop > 60) {
+              hideBars();
+            }
+          });
+        }
+      }
+      initReaderToolbarAutoHide();
 
       // PWA Service Worker Registration
       if ('serviceWorker' in navigator) {
